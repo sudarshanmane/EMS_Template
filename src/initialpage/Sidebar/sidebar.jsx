@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Scrollbars } from "react-custom-scrollbars";
+import Header from "./header";
 
 const Sidebar = () => {
   const MenuMore = () => {
@@ -52,6 +53,7 @@ const Sidebar = () => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
+      <Header/>
       <Scrollbars
         autoHide
         autoHideTimeout={1000}
