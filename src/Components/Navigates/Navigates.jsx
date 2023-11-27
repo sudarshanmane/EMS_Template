@@ -36,7 +36,7 @@ import Expenseapprovedpanel from "../Panels/Expenseapprovedpanel";
 import ExpenseApprovalManager from "../Panels/ExpenseApprovalManager";
 import TableExpense from "../Screens/Dashboard/SubMenu/Table/TableExpense";
 import ReportPanel from "../Panels/ReportPanel";
-import Company from "../Screens/Dashboard/SubMenu/Company";
+// import Company from "../Screens/Dashboard/SubMenu/Company";
 import CardApprovedlist from "../Panels/CardApprovedlist";
 import CardRjectList from "../Panels/CardRjectList";
 import CardHoldList from "../Panels/CardholdList";

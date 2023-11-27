@@ -45,7 +45,7 @@ const Sidebar = () => {
   const handleMouseLeave = () => {
     setMouseOverSidebar(false);
   };
-    let pathname = "main/dashboard";
+  let pathname = "main/dashboard";
   return (
     <div
       className={`sidebar ${isSidebarExpanded ? "" : "hidden"}`}
@@ -53,7 +53,7 @@ const Sidebar = () => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <Header/>
+      <Header />
       <Scrollbars
         autoHide
         autoHideTimeout={1000}
@@ -68,7 +68,7 @@ const Sidebar = () => {
         <div className="sidebar-inner slimscroll">
           <div id="sidebar-menu" className="sidebar-menu">
             <ul className="list-inline-item list-unstyled links">
-              <li className="menu-title">
+              {/* <li className="menu-title">
                 <span>Main</span>
               </li>
               <li className="submenu">
@@ -113,7 +113,6 @@ const Sidebar = () => {
                   ""
                 )}
               </li>
-
               <li>
                 <Link to="/ui-components">
                   <i className="la la-puzzle-piece" /> <span>Components</span>
@@ -237,9 +236,292 @@ const Sidebar = () => {
                 ) : (
                   ""
                 )}
+              </li> */}
+              {/* ============================================== */}
+              <li className="menu-title">
+                <span>Management</span>
               </li>
+              <li className="submenu">
+                <Link
+                  to="#"
+                  className={isSideMenu == "user" ? "subdrop" : ""}
+                  onClick={() =>
+                    toggleSidebar(isSideMenu == "user" ? "" : "user")
+                  }
+                >
+                  <i className="la la-user" /> <span>User Management</span>{" "}
+                  <span className="menu-arrow" />
+                </Link>
+                {isSideMenu == "user" ? (
+                  <ul
+                    style={{
+                      display: isSideMenu == "user" ? "block" : "none",
+                    }}
+                  >
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("main/user") ? "active" : ""
+                        }
+                        to="/sidebar/addrole"
+                      >
+                        Add Role
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("main/employee-") ? "active" : ""
+                        }
+                        to="/sidebar/addusers"
+                      >
+                        Add User
+                      </Link>
+                    </li>
+                  </ul>
+                ) : (
+                  ""
+                )}
+              </li>
+              <li className="submenu">
+                <Link
+                  to="#"
+                  className={isSideMenu == "company" ? "subdrop" : ""}
+                  onClick={() =>
+                    toggleSidebar(isSideMenu == "company" ? "" : "company")
+                  }
+                >
+                  <i className="la la-building" />{" "}
+                  <span>Company Management</span>{" "}
+                  <span className="menu-arrow" />
+                </Link>
+                {isSideMenu == "company" ? (
+                  <ul>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("basicinputs") ? "active" : ""
+                        }
+                        to="/sidebar/companypanel"
+                      >
+                        Company List{" "}
+                      </Link>
+                    </li>
+                  </ul>
+                ) : (
+                  ""
+                )}
+              </li>
+
+              <li className="submenu">
+                <Link
+                  to="#"
+                  className={isSideMenu == "expense" ? "subdrop" : ""}
+                  onClick={() =>
+                    toggleSidebar(isSideMenu == "expense" ? "" : "expense")
+                  }
+                >
+                  <i className="la la-money" /> <span>Expense Management</span>{" "}
+                  <span className="menu-arrow" />
+                </Link>
+                {isSideMenu == "expense" ? (
+                  <ul>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("basicinputs") ? "active" : ""
+                        }
+                        to="/sidebar/expensepanel"
+                      >
+                        Add Expense{" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("inputgroups") ? "active" : ""
+                        }
+                        to="/sidebar/expensecategorypanel"
+                      >
+                        Add Expense Category{" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("horizontalform") ? "active" : ""
+                        }
+                        to="/sidebar/expensetypepanel"
+                      >
+                        Expense Type{" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("verticalform") ? "active" : ""
+                        }
+                        to="/sidebar/expenseapproval"
+                      >
+                        {" "}
+                        Expense Approval{" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("formmask") ? "active" : ""
+                        }
+                        to="/sidebar/expenseapprovalbyfinancemanager"
+                      >
+                        {" "}
+                        Expense Approval Manager{" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("formvalidation") ? "active" : ""
+                        }
+                        to="/sidebar/expenseitemizationpanel"
+                      >
+                        {" "}
+                        Expense Itemization{" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("formvalidation") ? "active" : ""
+                        }
+                        to="/sidebar/app/ui-interface/expense/formvalidation"
+                      >
+                        {" "}
+                        Expense Reports{" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("formvalidation") ? "active" : ""
+                        }
+                        to="/sidebar/expenseitemsetuppanel"
+                      >
+                        {" "}
+                        ExpenseItem Setup{" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("formvalidation") ? "active" : ""
+                        }
+                        to="/sidebar/externalaccountcodepanel"
+                      >
+                        {" "}
+                        External Accound Code{" "}
+                      </Link>
+                    </li>
+                  </ul>
+                ) : (
+                  ""
+                )}
+              </li>
+
+              <li className="submenu">
+                <Link
+                  to="#"
+                  className={isSideMenu == "card" ? "subdrop" : ""}
+                  onClick={() =>
+                    toggleSidebar(isSideMenu == "card" ? "" : "card")
+                  }
+                >
+                  <i className="la la-credit-card" />{" "}
+                  <span>Card Management</span> <span className="menu-arrow" />
+                </Link>
+                {isSideMenu == "card" ? (
+                  <ul>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("basicinputs") ? "active" : ""
+                        }
+                        to="/sidebar/applyforcard"
+                      >
+                        Apply For Card{" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("basicinputs") ? "active" : ""
+                        }
+                        to="/sidebar/cardapproval"
+                      >
+                        Card Approval{" "}
+                      </Link>
+                    </li>
+                  </ul>
+                ) : (
+                  ""
+                )}
+              </li>
+
+              <li className="menu-title">
+                <span>Reports</span>
+              </li>
+              <li>
+                <Link to="/sidebar/Reports">
+                  <i className="la la-file-text" /> <span>See Reports</span>
+                </Link>
+              </li>
+
+              {/* ============================================== */}
+
               <li className="menu-title">
                 <span>Extras</span>
+              </li>
+              <li className="submenu">
+                <Link
+                  to="#"
+                  className={isSideMenu == "profile" ? "subdrop" : ""}
+                  onClick={() =>
+                    toggleSidebar(isSideMenu == "profile" ? "" : "profile")
+                  }
+                >
+                  <i className="la la-user" /> <span>Profile</span>{" "}
+                  <span className="menu-arrow" />
+                </Link>
+                {isSideMenu == "profile" ? (
+                  <ul
+                    style={{
+                      display: isSideMenu == "profile" ? "block" : "none",
+                    }}
+                  >
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("main/user") ? "active" : ""
+                        }
+                        to="/sidebar/ProfileForm"
+                      >
+                        Update Profile
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("main/employee-") ? "active" : ""
+                        }
+                        to="/sidebar/ChangePasswordForm"
+                      >
+                        Change Password
+                      </Link>
+                    </li>
+                  </ul>
+                ) : (
+                  ""
+                )}
               </li>
               <li>
                 <Link to="#">
