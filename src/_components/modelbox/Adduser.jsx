@@ -27,13 +27,13 @@ const Adduser = () => {
                       <label>
                         First Name <span className="text-danger">*</span>
                       </label>
-                      <input className="form-control" type="text" />
+                      <input className="form-control" type="text" name="first_name"/>
                     </div>
                   </div>
                   <div className="col-sm-6">
                     <div className="input-block">
                       <label>Last Name</label>
-                      <input className="form-control" type="text" />
+                      <input className="form-control" type="text" name="last_name"/>
                     </div>
                   </div>
                   <div className="col-sm-6">
@@ -41,7 +41,7 @@ const Adduser = () => {
                       <label>
                         Username <span className="text-danger">*</span>
                       </label>
-                      <input className="form-control" type="text" />
+                      <input className="form-control" type="text" name="username"/>
                     </div>
                   </div>
                   <div className="col-sm-6">
@@ -49,25 +49,25 @@ const Adduser = () => {
                       <label>
                         Email <span className="text-danger">*</span>
                       </label>
-                      <input className="form-control" type="email" />
+                      <input className="form-control" type="email" name="email" />
                     </div>
                   </div>
                   <div className="col-sm-6">
                     <div className="input-block">
                       <label>Password</label>
-                      <input className="form-control" type="password" />
+                      <input className="form-control" type="password" name="" />
                     </div>
                   </div>
                   <div className="col-sm-6">
                     <div className="input-block">
                       <label>Confirm Password</label>
-                      <input className="form-control" type="password" />
+                      <input className="form-control" type="password" name="" />
                     </div>
                   </div>
                   <div className="col-sm-6">
                     <div className="input-block">
                       <label>Phone </label>
-                      <input className="form-control" type="text" />
+                      <input className="form-control" type="text" name=""/>
                     </div>
                   </div>
                   <div className="col-sm-6">
