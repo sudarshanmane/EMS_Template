@@ -52,6 +52,7 @@ const Sidebar = () => {
       id="sidebar"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      style={{ border: "10px solid yellow" }}
     >
       <Header />
       <Scrollbars
@@ -68,175 +69,6 @@ const Sidebar = () => {
         <div className="sidebar-inner slimscroll">
           <div id="sidebar-menu" className="sidebar-menu">
             <ul className="list-inline-item list-unstyled links">
-              {/* <li className="menu-title">
-                <span>Main</span>
-              </li>
-              <li className="submenu">
-                <Link
-                  to="#"
-                  className={isSideMenu == "dashboard" ? "subdrop" : ""}
-                  onClick={() =>
-                    toggleSidebar(isSideMenu == "dashboard" ? "" : "dashboard")
-                  }
-                >
-                  <i className="la la-dashboard" /> <span> Dashboard </span>{" "}
-                  <span className="menu-arrow" />
-                </Link>
-                {isSideMenu == "dashboard" ? (
-                  <ul
-                    style={{
-                      display: isSideMenu == "dashboard" ? "block" : "none",
-                    }}
-                  >
-                    <li>
-                      <Link
-                        className={
-                          pathname.includes("main/dashboard") ? "active" : ""
-                        }
-                        to="/app/main/dashboard"
-                      >
-                        Admin Dashboard
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className={
-                          pathname.includes("main/employee-") ? "active" : ""
-                        }
-                        to="/app/main"
-                      >
-                        Employee Dashboard
-                      </Link>
-                    </li>
-                  </ul>
-                ) : (
-                  ""
-                )}
-              </li>
-              <li>
-                <Link to="/ui-components">
-                  <i className="la la-puzzle-piece" /> <span>Components</span>
-                </Link>
-              </li>
-              <li className="submenu">
-                <Link
-                  to="#"
-                  className={isSideMenu == "forms" ? "subdrop" : ""}
-                  onClick={() =>
-                    toggleSidebar(isSideMenu == "forms" ? "" : "forms")
-                  }
-                >
-                  <i className="la la-object-group" /> <span> Forms </span>{" "}
-                  <span className="menu-arrow" />
-                </Link>
-                {isSideMenu == "forms" ? (
-                  <ul>
-                    <li>
-                      <Link
-                        className={
-                          pathname.includes("basicinputs") ? "active" : ""
-                        }
-                        to="/app/ui-interface/forms/basicinputs"
-                      >
-                        Basic Inputs{" "}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className={
-                          pathname.includes("inputgroups") ? "active" : ""
-                        }
-                        to="/app/ui-interface/forms/inputgroups"
-                      >
-                        Input Groups{" "}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className={
-                          pathname.includes("horizontalform") ? "active" : ""
-                        }
-                        to="/app/ui-interface/forms/horizontalform"
-                      >
-                        Horizontal Form{" "}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className={
-                          pathname.includes("verticalform") ? "active" : ""
-                        }
-                        to="/app/ui-interface/forms/verticalform"
-                      >
-                        {" "}
-                        Vertical Form{" "}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className={
-                          pathname.includes("formmask") ? "active" : ""
-                        }
-                        to="/app/ui-interface/forms/formmask"
-                      >
-                        {" "}
-                        Form Mask{" "}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className={
-                          pathname.includes("formvalidation") ? "active" : ""
-                        }
-                        to="/app/ui-interface/forms/formvalidation"
-                      >
-                        {" "}
-                        Form Validation{" "}
-                      </Link>
-                    </li>
-                  </ul>
-                ) : (
-                  ""
-                )}
-              </li>
-              <li className="submenu">
-                <Link
-                  to="/app/ui-interface/tables/basic"
-                  className={isSideMenu == "tables" ? "subdrop" : ""}
-                  onClick={() =>
-                    toggleSidebar(isSideMenu == "tables" ? "" : "tables")
-                  }
-                >
-                  <i className="la la-table" /> <span> Tables </span>{" "}
-                  <span className="menu-arrow" />
-                </Link>
-                {isSideMenu == "tables" ? (
-                  <ul>
-                    <li>
-                      <Link
-                        className={
-                          pathname.includes("tables/basic") ? "active" : ""
-                        }
-                        to="/app/ui-interface/tables/basic"
-                      >
-                        Basic Tables{" "}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className={
-                          pathname.includes("tables/data-table") ? "active" : ""
-                        }
-                        to="/app/ui-interface/tables/data-table"
-                      >
-                        Data Table{" "}
-                      </Link>
-                    </li>
-                  </ul>
-                ) : (
-                  ""
-                )}
-              </li> */}
               {/* ============================================== */}
               <li className="menu-title">
                 <span>Management</span>
@@ -263,7 +95,7 @@ const Sidebar = () => {
                         className={
                           pathname.includes("main/user") ? "active" : ""
                         }
-                        to="/sidebar/addrole"
+                        to="/home/role-add"
                       >
                         Add Role
                       </Link>
