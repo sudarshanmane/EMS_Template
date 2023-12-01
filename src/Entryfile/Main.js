@@ -19,18 +19,17 @@ import "../assets/css/select2.min.css";
 import "../assets/css/material.css";
 import "../assets/js/app.js";
 import "../assets/js/select2.min.js";
+// import "../assets/js/bootstrap-datetimepicker.min.js";
 import "../assets/js/multiselect.min.js";
 import "../assets/js/bootstrap.bundle.min.js";
 import "../assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css";
+// import "../assets/css/bootstrap-datetimepicker.min.css";
 import "../assets/css/style.css";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import userReducer from "./features/users";
-import Loginpage from "../initialpage/loginpage.jsx";
-import ForgotPassword from "../initialpage/forgotpassword.jsx";
-import Registrationpage from "../initialpage/RegistrationPage.jsx";
-import Lockscreen from "../initialpage/lockscreen.jsx";
-import Sidebar from "../initialpage/Sidebar/sidebar.jsx";
+
+import Navigates from "../Components/Navigates/Navigates.jsx";
 
 const store = configureStore({
   reducer: {
@@ -41,7 +40,8 @@ const store = configureStore({
 const MainApp = () => {
   return (
     <Provider store={store}>
-      <Router>
+      <Navigates></Navigates>
+      {/* <Router>
         <Routes>
           <Route path="/" element={<Navigate to="/app" />} />
           <Route path="/app" element={<App />} />
@@ -50,7 +50,7 @@ const MainApp = () => {
           <Route path="/register" element={<Registrationpage />} />
           <Route path="/sidebar" element={<Sidebar />} />
         </Routes>
-      </Router>
+      </Router> */}
     </Provider>
   );
 };

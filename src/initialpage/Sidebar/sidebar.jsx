@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Scrollbars } from "react-custom-scrollbars";
+import Header from "./header";
 
 const Sidebar = () => {
   const MenuMore = () => {
@@ -44,14 +45,16 @@ const Sidebar = () => {
   const handleMouseLeave = () => {
     setMouseOverSidebar(false);
   };
-    let pathname = "main/dashboard";
+  let pathname = "main/dashboard";
   return (
     <div
       className={`sidebar ${isSidebarExpanded ? "" : "hidden"}`}
       id="sidebar"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      style={{ border: "10px solid yellow" }}
     >
+      <Header />
       <Scrollbars
         autoHide
         autoHideTimeout={1000}
@@ -66,34 +69,35 @@ const Sidebar = () => {
         <div className="sidebar-inner slimscroll">
           <div id="sidebar-menu" className="sidebar-menu">
             <ul className="list-inline-item list-unstyled links">
+              {/* ============================================== */}
               <li className="menu-title">
-                <span>Main</span>
+                <span>Management</span>
               </li>
               <li className="submenu">
                 <Link
                   to="#"
-                  className={isSideMenu == "dashboard" ? "subdrop" : ""}
+                  className={isSideMenu == "user" ? "subdrop" : ""}
                   onClick={() =>
-                    toggleSidebar(isSideMenu == "dashboard" ? "" : "dashboard")
+                    toggleSidebar(isSideMenu == "user" ? "" : "user")
                   }
                 >
-                  <i className="la la-dashboard" /> <span> Dashboard </span>{" "}
+                  <i className="la la-user" /> <span>User Management</span>{" "}
                   <span className="menu-arrow" />
                 </Link>
-                {isSideMenu == "dashboard" ? (
+                {isSideMenu == "user" ? (
                   <ul
                     style={{
-                      display: isSideMenu == "dashboard" ? "block" : "none",
+                      display: isSideMenu == "user" ? "block" : "none",
                     }}
                   >
                     <li>
                       <Link
                         className={
-                          pathname.includes("main/dashboard") ? "active" : ""
+                          pathname.includes("main/user") ? "active" : ""
                         }
-                        to="/app/main/dashboard"
+                        to="/home/role-add"
                       >
-                        Admin Dashboard
+                        Add Role
                       </Link>
                     </li>
                     <li>
@@ -101,9 +105,38 @@ const Sidebar = () => {
                         className={
                           pathname.includes("main/employee-") ? "active" : ""
                         }
-                        to="/app/main"
+                        to="/sidebar/addusers"
                       >
-                        Employee Dashboard
+                        Add User
+                      </Link>
+                    </li>
+                  </ul>
+                ) : (
+                  ""
+                )}
+              </li>
+              <li className="submenu">
+                <Link
+                  to="#"
+                  className={isSideMenu == "company" ? "subdrop" : ""}
+                  onClick={() =>
+                    toggleSidebar(isSideMenu == "company" ? "" : "company")
+                  }
+                >
+                  <i className="la la-building" />{" "}
+                  <span>Company Management</span>{" "}
+                  <span className="menu-arrow" />
+                </Link>
+                {isSideMenu == "company" ? (
+                  <ul>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("basicinputs") ? "active" : ""
+                        }
+                        to="/sidebar/companypanel"
+                      >
+                        Company List{" "}
                       </Link>
                     </li>
                   </ul>
@@ -112,32 +145,27 @@ const Sidebar = () => {
                 )}
               </li>
 
-              <li>
-                <Link to="/ui-components">
-                  <i className="la la-puzzle-piece" /> <span>Components</span>
-                </Link>
-              </li>
               <li className="submenu">
                 <Link
                   to="#"
-                  className={isSideMenu == "forms" ? "subdrop" : ""}
+                  className={isSideMenu == "expense" ? "subdrop" : ""}
                   onClick={() =>
-                    toggleSidebar(isSideMenu == "forms" ? "" : "forms")
+                    toggleSidebar(isSideMenu == "expense" ? "" : "expense")
                   }
                 >
-                  <i className="la la-object-group" /> <span> Forms </span>{" "}
+                  <i className="la la-money" /> <span>Expense Management</span>{" "}
                   <span className="menu-arrow" />
                 </Link>
-                {isSideMenu == "forms" ? (
+                {isSideMenu == "expense" ? (
                   <ul>
                     <li>
                       <Link
                         className={
                           pathname.includes("basicinputs") ? "active" : ""
                         }
-                        to="/app/ui-interface/forms/basicinputs"
+                        to="/sidebar/expensepanel"
                       >
-                        Basic Inputs{" "}
+                        Add Expense{" "}
                       </Link>
                     </li>
                     <li>
@@ -145,9 +173,9 @@ const Sidebar = () => {
                         className={
                           pathname.includes("inputgroups") ? "active" : ""
                         }
-                        to="/app/ui-interface/forms/inputgroups"
+                        to="/sidebar/expensecategorypanel"
                       >
-                        Input Groups{" "}
+                        Add Expense Category{" "}
                       </Link>
                     </li>
                     <li>
@@ -155,9 +183,9 @@ const Sidebar = () => {
                         className={
                           pathname.includes("horizontalform") ? "active" : ""
                         }
-                        to="/app/ui-interface/forms/horizontalform"
+                        to="/sidebar/expensetypepanel"
                       >
-                        Horizontal Form{" "}
+                        Expense Type{" "}
                       </Link>
                     </li>
                     <li>
@@ -165,10 +193,10 @@ const Sidebar = () => {
                         className={
                           pathname.includes("verticalform") ? "active" : ""
                         }
-                        to="/app/ui-interface/forms/verticalform"
+                        to="/sidebar/expenseapproval"
                       >
                         {" "}
-                        Vertical Form{" "}
+                        Expense Approval{" "}
                       </Link>
                     </li>
                     <li>
@@ -176,10 +204,10 @@ const Sidebar = () => {
                         className={
                           pathname.includes("formmask") ? "active" : ""
                         }
-                        to="/app/ui-interface/forms/formmask"
+                        to="/sidebar/expenseapprovalbyfinancemanager"
                       >
                         {" "}
-                        Form Mask{" "}
+                        Expense Approval Manager{" "}
                       </Link>
                     </li>
                     <li>
@@ -187,10 +215,43 @@ const Sidebar = () => {
                         className={
                           pathname.includes("formvalidation") ? "active" : ""
                         }
-                        to="/app/ui-interface/forms/formvalidation"
+                        to="/sidebar/expenseitemizationpanel"
                       >
                         {" "}
-                        Form Validation{" "}
+                        Expense Itemization{" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("formvalidation") ? "active" : ""
+                        }
+                        to="/sidebar/app/ui-interface/expense/formvalidation"
+                      >
+                        {" "}
+                        Expense Reports{" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("formvalidation") ? "active" : ""
+                        }
+                        to="/sidebar/expenseitemsetuppanel"
+                      >
+                        {" "}
+                        ExpenseItem Setup{" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("formvalidation") ? "active" : ""
+                        }
+                        to="/sidebar/externalaccountcodepanel"
+                      >
+                        {" "}
+                        External Accound Code{" "}
                       </Link>
                     </li>
                   </ul>
@@ -198,37 +259,38 @@ const Sidebar = () => {
                   ""
                 )}
               </li>
+
               <li className="submenu">
                 <Link
-                  to="/app/ui-interface/tables/basic"
-                  className={isSideMenu == "tables" ? "subdrop" : ""}
+                  to="#"
+                  className={isSideMenu == "card" ? "subdrop" : ""}
                   onClick={() =>
-                    toggleSidebar(isSideMenu == "tables" ? "" : "tables")
+                    toggleSidebar(isSideMenu == "card" ? "" : "card")
                   }
                 >
-                  <i className="la la-table" /> <span> Tables </span>{" "}
-                  <span className="menu-arrow" />
+                  <i className="la la-credit-card" />{" "}
+                  <span>Card Management</span> <span className="menu-arrow" />
                 </Link>
-                {isSideMenu == "tables" ? (
+                {isSideMenu == "card" ? (
                   <ul>
                     <li>
                       <Link
                         className={
-                          pathname.includes("tables/basic") ? "active" : ""
+                          pathname.includes("basicinputs") ? "active" : ""
                         }
-                        to="/app/ui-interface/tables/basic"
+                        to="/sidebar/applyforcard"
                       >
-                        Basic Tables{" "}
+                        Apply For Card{" "}
                       </Link>
                     </li>
                     <li>
                       <Link
                         className={
-                          pathname.includes("tables/data-table") ? "active" : ""
+                          pathname.includes("basicinputs") ? "active" : ""
                         }
-                        to="/app/ui-interface/tables/data-table"
+                        to="/sidebar/cardapproval"
                       >
-                        Data Table{" "}
+                        Card Approval{" "}
                       </Link>
                     </li>
                   </ul>
@@ -236,8 +298,62 @@ const Sidebar = () => {
                   ""
                 )}
               </li>
+
+              <li className="menu-title">
+                <span>Reports</span>
+              </li>
+              <li>
+                <Link to="/sidebar/Reports">
+                  <i className="la la-file-text" /> <span>See Reports</span>
+                </Link>
+              </li>
+
+              {/* ============================================== */}
+
               <li className="menu-title">
                 <span>Extras</span>
+              </li>
+              <li className="submenu">
+                <Link
+                  to="#"
+                  className={isSideMenu == "profile" ? "subdrop" : ""}
+                  onClick={() =>
+                    toggleSidebar(isSideMenu == "profile" ? "" : "profile")
+                  }
+                >
+                  <i className="la la-user" /> <span>Profile</span>{" "}
+                  <span className="menu-arrow" />
+                </Link>
+                {isSideMenu == "profile" ? (
+                  <ul
+                    style={{
+                      display: isSideMenu == "profile" ? "block" : "none",
+                    }}
+                  >
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("main/user") ? "active" : ""
+                        }
+                        to="/sidebar/ProfileForm"
+                      >
+                        Update Profile
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("main/employee-") ? "active" : ""
+                        }
+                        to="/sidebar/ChangePasswordForm"
+                      >
+                        Change Password
+                      </Link>
+                    </li>
+                  </ul>
+                ) : (
+                  ""
+                )}
               </li>
               <li>
                 <Link to="#">

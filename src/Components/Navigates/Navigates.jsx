@@ -1,52 +1,9 @@
 import React from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import Login from "../Screens/Login/Login";
 import PrivateRoute from "../Screens/Login/PrivateRoute";
-import Page from "../Screens/Page";
-import Expenseitemization from "../Screens/Dashboard/SubMenu/Expenseitemization";
-import ExpenseItemSetup from "../Screens/Dashboard/SubMenu/ExpenseItemSetup";
-import Register from "../Screens/Login/Register";
-import Addcategory from "../Screens/Dashboard/SubMenu/Addcategory";
-import AddAccountCode from "../Screens/Dashboard/SubMenu/AddAccountCode";
-import CodeAccountGroup from "../Screens/Dashboard/SubMenu/CodeAccountGroup";
-import Roleadd from "../Screens/Dashboard/SubMenu/Roleadd";
-import AccountPeriodAdd from "../Screens/Dashboard/SubMenu/AccountPriodAdd";
-import Expensetypes from "../Screens/Dashboard/SubMenu/Expensetypes";
-import Users from "../Screens/Dashboard/SubMenu/Users";
-import ExpenseItemSetupPanel from "../Panels/ExpenseItemSetupPanel";
-import CategoryTypePanel from "../Panels/CategoryTypePanel";
-import ExternalAccountPanel from "../Panels/ExternalAccountPanel";
-import AddExternalAccountCode from "../Screens/Dashboard/SubMenu/AddExternalAccountCode";
-import ExpenseReport from "../Screens/Dashboard/SubMenu/ExpenseReport";
-import AccountCodePanel from "../Panels/AccountCodePanel";
-import AccountingCodeGroupPanel from "../Panels/AccountingCodeGroupPanel";
-import ExpenseItemizationPanel from "../Panels/ExpenseItemizationPanel";
-import ExpensePanel from "../Panels/ExpensePanel";
-import ExpenseTypePanel from "../Panels/ExpenseTypePanel";
-import UserPanel from "../Panels/UserPanel";
-import Addexpense from "../Screens/Dashboard/SubMenu/Addexpense";
-import ProfileForm from "../Screens/Dashboard/SubMenu/ProfileForm";
-import ChangePasswordForm from "../Screens/Dashboard/SubMenu/ChangePasswordForm";
-import Card from "../Screens/Dashboard/SubMenu/Card";
-import AboutUs from "../Screens/Dashboard/SubMenu/AboutUs";
-import ContactUs from "../Screens/Dashboard/SubMenu/ContactUs";
-import Reports from "../Screens/Dashboard/SubMenu/Reports";
-import CompanyPanel from "../Panels/CompanyPanel";
-import Expenseapprovedpanel from "../Panels/Expenseapprovedpanel";
-import ExpenseApprovalManager from "../Panels/ExpenseApprovalManager";
-import TableExpense from "../Screens/Dashboard/SubMenu/Table/TableExpense";
-import ReportPanel from "../Panels/ReportPanel";
-import Company from "../Screens/Dashboard/SubMenu/Company";
-import CardApprovedlist from "../Panels/CardApprovedlist";
-import CardRjectList from "../Panels/CardRjectList";
-import CardHoldList from "../Panels/CardholdList";
-import CardCount from "../Screens/Dashboard/SubMenu/CardCount";
-import OwnExpenseApprovedPanel from "../Panels/OwnExpenseApprovedPanel";
-import OwnExpenseRejectedPanel from "../Panels/OwnExpenseRejectedPanel";
-import OwnExpenseHoldPanel from "../Panels/OwnExpenseHoldPanel";
-import OwnExpenseDraftPanel from "../Panels/OwnExpenseDraftPanel";
-import AboutUsPage from "../Screens/Dashboard/SubMenu/AboutUsPage";
-import ContactUsPage from "../Screens/Dashboard/SubMenu/ContactUsPage";
+import Sidebar from "../../initialpage/Sidebar/sidebar";
+import { addRole } from "../../store/saga/CommonSagas";
+import Roleadd from "../Screens/RoleAdd/Roleadd";
 
 const Navigates = () => {
   return (
@@ -54,12 +11,13 @@ const Navigates = () => {
       <Routes>
         <Route
           path="/"
-          element={<Navigate to="/home/dashboard"></Navigate>}
+          element={<Navigate to="/home/role-add"></Navigate>}
         ></Route>
-
         <Route path="/home" element={<PrivateRoute></PrivateRoute>}>
-          <Route path="addusers" element={<Users></Users>}></Route>
-          <Route path="company" element={<Company></Company>}></Route>
+          <Route path="role-add" element={<Roleadd></Roleadd>}></Route>
+        </Route>
+        {/* <Route path="addusers" element={<Users></Users>}></Route> 
+         <Route path="company" element={<Company></Company>}></Route>
           <Route
             path="expenseitemization"
             element={<Expenseitemization></Expenseitemization>}
@@ -106,9 +64,8 @@ const Navigates = () => {
             path="reportpanel"
             element={<ReportPanel></ReportPanel>}
           ></Route>
-          <Route path="addexpense" element={<Addexpense></Addexpense>}></Route>
-          <Route path="addrole" element={<Roleadd></Roleadd>}></Route>
-          <Route
+          <Route path="addexpense" element={<Addexpense></Addexpense>}></Route> 
+          {/* <Route
             path="AccountPeriodAdd"
             element={<AccountPeriodAdd></AccountPeriodAdd>}
           ></Route>
@@ -244,7 +201,7 @@ const Navigates = () => {
           path="codegroup"
           element={<CodeAccountGroup></CodeAccountGroup>}
         ></Route>
-        <Route path="addrole" element={<Roleadd></Roleadd>}></Route>
+        <Route path="addrole" element={<></>}></Route>
         <Route
           path="AccountPeriodAdd"
           element={<AccountPeriodAdd></AccountPeriodAdd>}
@@ -256,7 +213,7 @@ const Navigates = () => {
         <Route
           path="/approved-cardlist"
           element={<CardApprovedlist></CardApprovedlist>}
-        ></Route>
+        ></Route> */}
       </Routes>
     </BrowserRouter>
   );

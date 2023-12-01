@@ -1,3 +1,4 @@
+// export { default as headerlogo } from "../assets/img/metamind.svg";
 export { default as headerlogo } from "../assets/img/logo.png";
 export { default as Applogo } from "../assets/img/logo2.png";
 export { default as logo3 } from "../assets/img/logo3.png";
