@@ -8,13 +8,14 @@ import {
   SearchOutlined,
 } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getCompanyList,
-  deleteCompanyListAction,
-  exportCompanyPanelAction,
-} from "../../store/Actions/Actions";
+// import {
+//   getCompanyList,
+//   deleteCompanyListAction,
+//   exportCompanyPanelAction,
+// } from "../../store/Actions/Actions";
+import { getCompanyList } from "../../store/Action/Actions";
 import { URLS } from "../../Globals/URLS";
-import Company from "../../Components/Screens/Dashboard/SubMenu/Company";
+import Company from "../../_components/screens/Company";
 
 const CompanyPanel = () => {
   const dispatch = useDispatch();

@@ -1,45 +1,53 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Table, Input, Button, Space, Modal, Pagination } from "antd";
+import { Table, Input, Button, Space, Switch, Modal, Pagination } from "antd";
 import {
+  SearchOutlined,
+  EditOutlined,
+  DeleteOutlined,
   DownloadOutlined,
   EyeOutlined,
-  SearchOutlined,
 } from "@ant-design/icons";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  deleteExpenseTypeAction,
-  exportExpenseTypeAction,
-  getExpenseTypePanelAction,
-} from "../../store/Actions/Actions";
-import Expensetypes from "../Screens/Dashboard/SubMenu/Expensetypes";
+  deleteExternalAccountCodeAction,
+  exportExternalAccountCodeAction,
+  getExternalAccountCodePanelAction,
+} from "../../store/Action/Actions";
+import AddExternalAccountCode from "../../_components/screens/AddExternalAccountCode";
 import { URLS } from "../../Globals/URLS";
 
-const ExpenseTypePanel = () => {
+function ExternalAccountPanel() {
   const dispatch = useDispatch();
-  const [viewCompanyData, setViewCompanyData] = useState(null);
-  const [allExpenseType, setAllExpenseType] = useState([]);
+
+  const [allItems, setAllItems] = useState([]);
   const [isAddFormVisible, setIsAddFormVisible] = useState(false);
   const [editItemData, setEditItemData] = useState(null);
   const [deleteItemData, setDeleteItemData] = useState(null);
   const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] =
     useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [viewCompanyData, setViewCompanyData] = useState(null);
+
   const [paginationCount, setPaginationCount] = useState({
     count: 0,
     page_size: 0,
   });
-  const [url, setUrl] = useState(URLS.EXPENSE_TYPE_PANEL_URL + "?page=1");
-  const expensePanelSelector = useSelector(
-    (state) => state.getExpenseTypePanelResult
+  const [url, setUrl] = useState(
+    URLS.EXTERNAL_ACCOUNT_CODE_PANEL_URL + "?page=1"
   );
 
+  const externalAccountCodeSelector = useSelector(
+    (state) => state.getExternalAccountCodeResult
+  );
+  console.log(externalAccountCodeSelector);
+
   function getPageDetails(url) {
-    dispatch(getExpenseTypePanelAction({ payload: {}, URL: url }));
+    dispatch(getExternalAccountCodePanelAction({ payload: {}, URL: url }));
   }
 
   function changePage(page, pageSize) {
-    let urlNew = URLS.EXPENSE_TYPE_PANEL_URL + "?page=" + page;
+    let urlNew = URLS.EXTERNAL_ACCOUNT_CODE_PANEL_URL + "?page=" + page;
     setUrl(urlNew);
     getPageDetails(urlNew);
   }
@@ -48,66 +56,66 @@ const ExpenseTypePanel = () => {
     getPageDetails(url);
   }, []);
 
-  function fetchExpenseTypeData(url) {
-    dispatch(getExpenseTypePanelAction({ payload: {}, URL: url }));
+  function fetchExternalCodeAccountData(url) {
+    dispatch(getExternalAccountCodePanelAction({ payload: {}, URL: url }));
   }
-
   const inputSearchRef = useRef();
-
   function handleSearch() {
     let searchTerm = inputSearchRef.current.input.value;
     setSearchTerm(searchTerm);
-    let urlForSearch = URLS.EXPENSE_TYPE_PANEL_URL;
-    const updatedUrl = searchTerm
-      ? `${urlForSearch}?search=${searchTerm}`
-      : url;
+    let urlForSearch = URLS.EXTERNAL_ACCOUNT_CODE_PANEL_URL;
+    const updatedUrl = searchTerm ? `${urlForSearch}?search=${searchTerm}` : url;
     getPageDetails(updatedUrl);
   }
   useEffect(() => {
-    fetchExpenseTypeData(url);
+    fetchExternalCodeAccountData(url);
   }, []);
 
   useEffect(() => {
-    if (expensePanelSelector) {
-      console.log(expensePanelSelector);
-      const expenseTypeList = expensePanelSelector.results.map(
+    if (externalAccountCodeSelector) {
+      const externalAccountCodeList = externalAccountCodeSelector.results.map(
         (element, index) => {
           return {
             srno: index + 1,
             id: element.id,
-            expense_type_name: element.expense_type_name,
-            accounting_coding_type:
-              element.accounting_coding_type?.accounting_code,
-            quantity_label: element.quantity_label,
-            amount_label: element.amount_label,
-            cost_formula: element.cost_formula,
-            quantity_formula: element.quantity_formula,
+            accounting_code: element.table.accounting_code,
+            account_code: element.account_code,
+            account_type: element.table.account_type,
+            enabled: element.enabled,
           };
         }
       );
-      setAllExpenseType(expenseTypeList);
+      setAllItems(externalAccountCodeList);
       let pageObj = { ...paginationCount };
-      pageObj.count = expensePanelSelector.count;
-      pageObj.page_size = expensePanelSelector.page_size;
+      pageObj.count = externalAccountCodeSelector.count;
+      pageObj.page_size = externalAccountCodeSelector.page_size;
       setPaginationCount(pageObj);
     }
-  }, [expensePanelSelector]);
+  }, [externalAccountCodeSelector]);
 
   const handleEdit = (record) => {
     setEditItemData(record);
     setIsAddFormVisible(true);
   };
 
-  const updateExpenseTypeResultSelector = useSelector(
-    (state) => state.updateExpenseTypeResult
+  // const handleDeleteConfirmation = () => {
+  //   const deletedItemId = deleteItemData.id;
+  //   setAllItems((prevItems) =>
+  //     prevItems.filter((item) => item.id !== deletedItemId)
+  //   );
+  //   setIsDeleteConfirmationVisible(false);
+  // };
+
+  const updateExternalAccountSelector = useSelector(
+    (state) => state.updateExternalAccountCodeResult
   );
 
   useEffect(() => {
-    if (updateExpenseTypeResultSelector) {
+    if (updateExternalAccountSelector) {
       setIsAddFormVisible(false);
       getPageDetails(url);
     }
-  }, [updateExpenseTypeResultSelector]);
+  }, [updateExternalAccountSelector]);
 
   useEffect(() => {
     if (isAddFormVisible) {
@@ -122,38 +130,39 @@ const ExpenseTypePanel = () => {
 
   const handleDeleteConfirmation = () => {
     const deletedItemId = deleteItemData.id;
-    dispatch(deleteExpenseTypeAction({ id: deletedItemId }));
+    dispatch(deleteExternalAccountCodeAction({ id: deletedItemId }));
     setIsDeleteConfirmationVisible(false);
-    setAllExpenseType((prevItems) =>
+    setAllItems((prevItems) =>
       prevItems.filter((item) => item.id !== deletedItemId)
     );
   };
 
   //export button functionality
-
   function downloadExlsFiles() {
-    let exportUrl = URLS.EXPENSE_TYPE_PANEL_URL + "?export=csv";
-
+    let exportUrl = URLS.EXTERNAL_ACCOUNT_CODE_PANEL_URL + "?export=csv";
+    
     // Append search term to the export URL if a search term exists
     if (searchTerm) {
       exportUrl += `&search=${searchTerm}`;
     }
-
-    dispatch(exportExpenseTypeAction({ URL: exportUrl }));
+  
+    dispatch(exportExternalAccountCodeAction({ URL: exportUrl }));
   }
-
-  const csvUrlSelector = useSelector((state) => state.exportExpenseTypeResult);
-
+  
+  const csvUrlSelector = useSelector(
+    (state) => state.exportExternalAccountResult
+  );
+  
   useEffect(() => {
     if (csvUrlSelector) {
       let csvURL = URLS.BASE_URL_EXPORT + csvUrlSelector.csv_file_name;
       console.log("csvURLcsvURL", csvURL);
-
+  
       let a = document.createElement("a");
       a.setAttribute("href", csvURL);
       a.setAttribute("download", "");
       a.textContent = "Download CSV File";
-
+  
       document.body.appendChild(a);
       a.click();
     }
@@ -201,7 +210,7 @@ const ExpenseTypePanel = () => {
       <br />
 
       <Table
-        dataSource={allExpenseType}
+        dataSource={allItems}
         pagination={false}
         columns={[
           {
@@ -210,30 +219,22 @@ const ExpenseTypePanel = () => {
             key: "srno",
           },
           {
-            title: "Name",
-            dataIndex: "expense_type_name",
-            key: "expense_type_name",
+            title: "Accounting Code",
+            dataIndex: "accounting_code",
+            key: "accounting_code",
           },
           {
-            title: "Account Code",
-            dataIndex: "accounting_coding_type",
-            key: "accounting_Code",
+            title: "Account Type",
+            dataIndex: "account_code",
+            key: "account_type",
           },
           {
-            title: "Quantity",
-            dataIndex: "quantity_label",
-            key: "quantity_label",
+            title: "Enabled",
+            dataIndex: "enabled",
+            key: "enabled",
+            render: (text, record) => <Switch checked={record.enabled} />,
           },
-          {
-            title: "Amount",
-            dataIndex: "amount_label",
-            key: "amount_label",
-          },
-          {
-            title: "Cost Formula",
-            dataIndex: "cost_formula",
-            key: "cost_formula",
-          },
+
           {
             title: "Actions",
             key: "actions",
@@ -249,39 +250,43 @@ const ExpenseTypePanel = () => {
                   icon={<DeleteOutlined />}
                   onClick={() => handleDelete(record)}
                 />
-
                 <Button
-                  type="success"
-                  icon={<EyeOutlined />}
-                  onClick={() => handleView(record)}
-                />
+            type="success"
+            icon={<EyeOutlined />}
+            onClick={() => handleView(record)}
+          />
               </Space>
             ),
           },
         ]}
       />
-
       <Pagination
         total={paginationCount.count}
-        showTotal={(total) => `Total ${allExpenseType.length} items`}
+        showTotal={(total) => `Total ${allItems.length} items`}
         pageSize={paginationCount.page_size}
         onChange={changePage}
       />
+
       <Modal
-        title={editItemData ? "Update Expense Type" : "Add Expense Type"}
+        title={
+          editItemData
+            ? "Update External Account Code"
+            : "Add External Account Code"
+        }
         open={isAddFormVisible}
         onCancel={() => setIsAddFormVisible(false)}
         onOk={() => setIsAddFormVisible(false)}
         width={600}
         footer={null}
       >
-        <Expensetypes
+        <AddExternalAccountCode
           initialData={editItemData || null}
           url={url}
           setIsAddFormVisible={setIsAddFormVisible}
           isAddForm={editItemData}
         />
       </Modal>
+
       <Modal
         title="Confirm Delete"
         open={isDeleteConfirmationVisible}
@@ -290,8 +295,9 @@ const ExpenseTypePanel = () => {
       >
         Are you sure you want to delete this item?
       </Modal>
+
       <Modal
-        title={viewCompanyData ? "View Expense Type" : "Update Expense Type"}
+        title={viewCompanyData ? "View External Account Code" : "Update External Account Code"}
         open={viewCompanyData}
         onCancel={() => {
           setIsAddFormVisible(false);
@@ -302,23 +308,23 @@ const ExpenseTypePanel = () => {
       >
         {viewCompanyData ? (
           <div>
-            <p>Name: {viewCompanyData.expense_type_name}</p>
-            <p>Account Code: {viewCompanyData.accounting_coding_type}</p>
-            <p>Quantity: {viewCompanyData.quantity_label}</p>
-            <p>Amount: {viewCompanyData.amount_label}</p>
-            <p>Cost Formula: {viewCompanyData.cost_formula}</p>
+            <p>Accounting Code: {viewCompanyData.accounting_code}</p>
+            <p>Account Type: {viewCompanyData.account_code}</p>
+           
+          
           </div>
         ) : (
-          <Expensetypes
+          <AddExternalAccountCode
             initialData={editItemData || null}
             url={url}
             setIsAddFormVisible={setIsAddFormVisible}
             isAddForm={editItemData}
           />
-        )}
+        )
+        }
       </Modal>
     </div>
   );
-};
+}
 
-export default ExpenseTypePanel;
+export default ExternalAccountPanel;

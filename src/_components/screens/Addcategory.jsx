@@ -6,8 +6,8 @@ import {
   addCategoryAction,
   getCategoryPanelAction,
   updateCategorypanle,
-} from "../../../../store/Actions/Actions";
-import { URLS } from "../../../../Globals/URLS";
+} from "../../store/Action/Actions";
+import {URLS} from "../../Globals/URLS";
 
 const Addcategory = ({  initialData, setIsAddFormVisible, isAddForm }) => {
   const [allExpenseType, setAllExpenseType] = useState([]);

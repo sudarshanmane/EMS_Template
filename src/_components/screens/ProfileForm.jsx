@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import { Form, Input, Button, Row, Col, Layout, message } from "antd";
-import { updateProfileuser } from "../../../../store/Actions/Actions";
+import { updateProfileuser } from "../../store/Action/Actions";
+import React from "react";
 
 const { Content } = Layout;
 
