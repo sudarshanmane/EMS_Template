@@ -16,6 +16,7 @@ const Navigates = () => {
         <Route path="/home" element={<PrivateRoute></PrivateRoute>}>
           <Route path="role-add" element={<Roleadd></Roleadd>}></Route>
         </Route>
+        
         {/* <Route path="addusers" element={<Users></Users>}></Route> 
          <Route path="company" element={<Company></Company>}></Route>
           <Route

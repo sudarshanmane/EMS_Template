@@ -52,7 +52,6 @@ const Sidebar = () => {
       id="sidebar"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      style={{ border: "10px solid yellow" }}
     >
       <Header />
       <Scrollbars
