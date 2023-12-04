@@ -41,16 +41,6 @@ const MainApp = () => {
   return (
     <Provider store={store}>
       <Navigates></Navigates>
-      {/* <Router>
-        <Routes>
-          <Route path="/" element={<Navigate to="/app" />} />
-          <Route path="/app" element={<App />} />
-          <Route path="/login" element={<Loginpage />} />
-          <Route path="/forgotpassword" element={<ForgotPassword />} />
-          <Route path="/register" element={<Registrationpage />} />
-          <Route path="/sidebar" element={<Sidebar />} />
-        </Routes>
-      </Router> */}
     </Provider>
   );
 };

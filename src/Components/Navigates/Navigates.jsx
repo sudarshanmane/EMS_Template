@@ -4,6 +4,7 @@ import PrivateRoute from "../Screens/Login/PrivateRoute";
 import Sidebar from "../../initialpage/Sidebar/sidebar";
 import { addRole } from "../../store/saga/CommonSagas";
 import Roleadd from "../Screens/RoleAdd/Roleadd";
+import Adduser from "../../_components/modelbox/Adduser";
 
 const Navigates = () => {
   return (
@@ -15,6 +16,7 @@ const Navigates = () => {
         ></Route>
         <Route path="/home" element={<PrivateRoute></PrivateRoute>}>
           <Route path="role-add" element={<Roleadd></Roleadd>}></Route>
+          <Route path="add-user" element={<Adduser></Adduser>}></Route>
         </Route>
         
         {/* <Route path="addusers" element={<Users></Users>}></Route> 

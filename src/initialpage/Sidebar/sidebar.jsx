@@ -68,7 +68,6 @@ const Sidebar = () => {
         <div className="sidebar-inner slimscroll">
           <div id="sidebar-menu" className="sidebar-menu">
             <ul className="list-inline-item list-unstyled links">
-              {/* ============================================== */}
               <li className="menu-title">
                 <span>Management</span>
               </li>
@@ -92,7 +91,7 @@ const Sidebar = () => {
                     <li>
                       <Link
                         className={
-                          pathname.includes("main/user") ? "active" : ""
+                          pathname.includes("role-add") ? "active" : ""
                         }
                         to="/home/role-add"
                       >
@@ -102,9 +101,9 @@ const Sidebar = () => {
                     <li>
                       <Link
                         className={
-                          pathname.includes("main/employee-") ? "active" : ""
+                          pathname.includes("role-user") ? "active" : ""
                         }
-                        to="/sidebar/addusers"
+                        to="/home/add-user"
                       >
                         Add User
                       </Link>
@@ -194,8 +193,7 @@ const Sidebar = () => {
                         }
                         to="/sidebar/expenseapproval"
                       >
-                        {" "}
-                        Expense Approval{" "}
+                        Expense Approval
                       </Link>
                     </li>
                     <li>
