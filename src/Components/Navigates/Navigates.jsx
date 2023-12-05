@@ -46,7 +46,7 @@ const Navigates = () => {
           <Route path="externalaccountcodepanel" element={<ExternalAccountPanel></ExternalAccountPanel>} ></Route>
           <Route path="ProfileForm" element={<ProfileForm></ProfileForm>} ></Route>
           <Route path="ChangePasswordForm" element={<ChangePasswordForm></ChangePasswordForm>}></Route>
-          </Route>
+        </Route>
 
         {/* <Route path="addusers" element={<Users></Users>}></Route> 
          <Route path="company" element={<Company></Company>}></Route>
