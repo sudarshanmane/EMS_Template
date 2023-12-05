@@ -13,7 +13,7 @@ import {
   eye,
 } from "../../../Entryfile/imagepath";
 import { keyboard, mouse, laptop } from "../../../Entryfile/imagepath";
-import Offcanvas from "../../../Entryfile/offcanvance";
+import Offcanvas from "../../../../src/Entryfile/offcanvance"
 
 const EmployeeProfile = () => {
   const { loginvalue } = useSelector((state) => state.user);

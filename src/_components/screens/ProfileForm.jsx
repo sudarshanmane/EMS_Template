@@ -53,7 +53,7 @@ const ProfileForm = () => {
 
   return (
     <Content>
-      <div>
+      {/* <div>
         <h1>Profile Update</h1>
         <Form form={form} onFinish={onFinish} layout="vertical">
           <Row gutter={[16, 24]}>
@@ -106,7 +106,57 @@ const ProfileForm = () => {
             </Button>
           </Form.Item>
         </Form>
-      </div>
+      </div> */}
+      <div className="row">
+            <div className="col-xl-6 d-flex">
+              <div className="card flex-fill">
+                <div className="card-header">
+                  <h4 className="card-title mb-0">Update Profile Form</h4>
+                </div>
+                <div className="card-body">
+                  <form action="#" onFinish={onFinish}>
+                    <div className="input-block row">
+                      <label className="col-lg-3 col-form-label">
+                        First Name
+                      </label>
+                      <div className="col-lg-9">
+                        <input type="text" className="form-control"  name="firstname" />
+                      </div>
+                    </div>
+                    <div className="input-block row">
+                      <label className="col-lg-3 col-form-label">
+                        Last Name
+                      </label>
+                      <div className="col-lg-9">
+                        <input type="text" className="form-control" name="lastname" />
+                      </div>
+                    </div>
+                    <div className="input-block row">
+                      <label className="col-lg-3 col-form-label">
+                        Email Address
+                      </label>
+                      <div className="col-lg-9">
+                        <input type="email" className="form-control"  name="email"/>
+                      </div>
+                    </div>
+                    <div className="input-block row">
+                      <label className="col-lg-3 col-form-label">
+                       Mobile
+                      </label>
+                      <div className="col-lg-9">
+                        <input type="text" className="form-control"  name="mobile" />
+                      </div>
+                    </div>
+                    <div className="text-end">
+                      <button type="submit" className="btn btn-primary">
+                       Update
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            </div>
     </Content>
   );
 };

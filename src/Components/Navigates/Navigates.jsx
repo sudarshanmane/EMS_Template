@@ -20,6 +20,9 @@ import ExpenseApprovalManager from "../../_components/panels/ExpenseApprovalMana
 import ExpenseItemizationPanel from "../../_components/panels/ExpenseItemizationPanel";
 import ExpenseItemSetupPanel from "../../_components/panels/ExpenseItemSetupPanel";
 import ExternalAccountPanel from "../../_components/panels/ExternalAccountPanel";
+import ClientProfile from "../../MainPage/Pages/Profile/clientprofile";
+import EmployeeProfile from "../../MainPage/Pages/Profile/employeeprofile";
+import ExpenseReport from "../../MainPage/HR/Reports/expensereport";
 
 const Navigates = () => {
   return (
@@ -46,6 +49,9 @@ const Navigates = () => {
           <Route path="externalaccountcodepanel" element={<ExternalAccountPanel></ExternalAccountPanel>} ></Route>
           <Route path="ProfileForm" element={<ProfileForm></ProfileForm>} ></Route>
           <Route path="ChangePasswordForm" element={<ChangePasswordForm></ChangePasswordForm>}></Route>
+          <Route path="client-profile" element={<ClientProfile></ClientProfile>}></Route>
+          <Route path="employee-profile" element={<EmployeeProfile></EmployeeProfile>}></Route>
+          <Route path="expense-reports" element={<ExpenseReport></ExpenseReport>}></Route>
         </Route>
 
         {/* <Route path="addusers" element={<Users></Users>}></Route> 

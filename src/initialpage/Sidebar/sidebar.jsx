@@ -126,14 +126,14 @@ const Sidebar = () => {
                   <span className="menu-arrow" />
                 </Link>
                 {isSideMenu == "company" ? (
-                  <ul  style={{
-                    display: isSideMenu == "company" ? "block" : "none",
-                  }}>
+                  <ul
+                    style={{
+                      display: isSideMenu == "company" ? "block" : "none",
+                    }}
+                  >
                     <li>
                       <Link
-                        className={
-                          pathname.includes("company") ? "active" : ""
-                        }
+                        className={pathname.includes("company") ? "active" : ""}
                         to="/home/companypanel"
                       >
                         Company List
@@ -171,7 +171,9 @@ const Sidebar = () => {
                     <li>
                       <Link
                         className={
-                          pathname.includes("add-expenseCategory") ? "active" : ""
+                          pathname.includes("add-expenseCategory")
+                            ? "active"
+                            : ""
                         }
                         to="/home/expensecategorypanel"
                       >
@@ -201,7 +203,9 @@ const Sidebar = () => {
                     <li>
                       <Link
                         className={
-                          pathname.includes("expenseApproval-manager") ? "active" : ""
+                          pathname.includes("expenseApproval-manager")
+                            ? "active"
+                            : ""
                         }
                         to="/home/expenseapprovalbyfinancemanager"
                       >
@@ -212,7 +216,9 @@ const Sidebar = () => {
                     <li>
                       <Link
                         className={
-                          pathname.includes("expenseItemization") ? "active" : ""
+                          pathname.includes("expenseItemization")
+                            ? "active"
+                            : ""
                         }
                         to="/home/expenseitemizationpanel"
                       >
@@ -245,7 +251,9 @@ const Sidebar = () => {
                     <li>
                       <Link
                         className={
-                          pathname.includes("externalAccount-code") ? "active" : ""
+                          pathname.includes("externalAccount-code")
+                            ? "active"
+                            : ""
                         }
                         to="/home/externalaccountcodepanel"
                       >
@@ -297,15 +305,101 @@ const Sidebar = () => {
                   ""
                 )}
               </li>
-
-              <li className="menu-title">
-                <span>Reports</span>
-              </li>
-              <li>
-                <Link to="/home/Reports">
-                  <i className="la la-file-text" /> <span>See Reports</span>
+              <li className="submenu">
+                <Link
+                  to="#"
+                  className={isSideMenu == "reports" ? "subdrop" : ""}
+                  onClick={() =>
+                    toggleSidebar(isSideMenu == "reports" ? "" : "reports")
+                  }
+                >
+                  <i className="la la-pie-chart" /> <span> Reports </span>{" "}
+                  <span className="menu-arrow" />
                 </Link>
+                {isSideMenu == "reports" ? (
+                  <ul>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("expense-") ? "active" : ""
+                        }
+                        to="/home/expense-reports"
+                      >
+                        {" "}
+                        Expense Report{" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("invoice-") ? "active" : ""
+                        }
+                        to="/home/invoice-reports"
+                      >
+                        {" "}
+                        Invoice Report{" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("payments-") ? "active" : ""
+                        }
+                        to="/home/payments-reports"
+                      >
+                        {" "}
+                        Payments Report{" "}
+                      </Link>
+                    </li>
+
+                    <li>
+                      <Link
+                        className={pathname.includes("user-") ? "active" : ""}
+                        to="/home/user-reports"
+                      >
+                        {" "}
+                        User Report{" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("employee-") ? "active" : ""
+                        }
+                        to="/home/employee-reports"
+                      >
+                        {" "}
+                        Employee Report{" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("payslip-") ? "active" : ""
+                        }
+                        to="/home/payslip-reports"
+                      >
+                        {" "}
+                        Payslip Report{" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("reports-") ? "active" : ""
+                        }
+                        to="/home/Reports"
+                      >
+                        {" "}
+                        See Reports{" "}
+                      </Link>
+                    </li>
+                  </ul>
+                ) : (
+                  ""
+                )}
               </li>
+             
 
               {/* ============================================== */}
 
@@ -313,7 +407,44 @@ const Sidebar = () => {
                 <span>Extras</span>
               </li>
               <li className="submenu">
-                {/* <Link
+                <Link
+                  to="#"
+                  className={isSideMenu == "profile" ? "subdrop" : ""}
+                  onClick={() =>
+                    toggleSidebar(isSideMenu == "profile" ? "" : "profile")
+                  }
+                >
+                  <i className="la la-user" /> <span> Profile </span>{" "}
+                  <span className="menu-arrow" />
+                </Link>
+                {isSideMenu == "profile" ? (
+                  <ul>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("profile/employee-") ? "active" : ""
+                        }
+                        to="/home/employee-profile"
+                      >
+                        {" "}
+                        Employee Profile{" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className={pathname.includes("client-") ? "active" : ""}
+                        to="/home/client-profile"
+                      >
+                        {" "}
+                        Client Profile{" "}
+                      </Link>
+                    </li>
+                  </ul>
+                ) : (
+                  ""
+                )}
+              </li>
+              {/* <Link
                   to="#"
                   className={isSideMenu == "profile" ? "subdrop" : ""}
                   onClick={() =>
@@ -353,7 +484,7 @@ const Sidebar = () => {
                 ) : (
                   ""
                 )} */}
-              </li>
+
               <li>
                 <Link to="#">
                   <i className="la la-file-text" /> <span>Documentation</span>
