@@ -1,0 +1,169 @@
+.expense_report {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 10px;
+    
+    .expense_report_header {
+      height: 50px;
+      display: flex;
+      
+     
+     
+  color: #266544;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  
+    .custom_expense_report_card {
+      margin-top: 30px;
+  
+      .antd_card {
+       
+        font-size: 16px;
+        box-shadow: 0 0 10px 0px rgba(0,0,0,.2);
+  
+        .antd_card_content_container {
+          display: flex;
+          align-items: center;
+        
+          border: 1px;
+        }
+  
+        .expense_chart_container {
+          width: 100%;
+          border: 1px solid rgba(0,0,0,.2);
+          height: 150px;
+        }
+      }
+      .ant-card-head {
+        border-bottom: 1px solid rgba(0,0,0,.2);
+        .ant-card-head-title {
+          font-size: 18px;
+        }
+      }
+      
+    }
+    .chart_task_status_container {
+      .line-chart-container {
+        border-color: rgba(0,0,0,.2);
+        width: 100%;
+    
+      
+      }
+  
+      .ant-divider {
+        border-color: rgba(0,0,0,.2);
+        padding: 0px;
+        margin: 0px;
+        margin-top: 5px;
+      }
+  
+      .antd_space {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 40% 28% 28%;
+        align-items: start;
+        height: 500px;
+        
+        .ant-space-item {
+          width: 100%;
+          border-radius: 8px;
+          
+          *{border-radius: 8px;}
+  
+  
+  .line-chart-container{box-shadow: 0 0 10px 0px rgba(0,0,0,.2);}
+  
+          .ant-card {
+            height: 500px;
+            border: 1px solid rgba(0,0,0,.2);
+            box-shadow: 0 0 10px 0px rgba(0,0,0,.2);
+            .ant-card-head {
+              border-top: solid 4px #266544;
+  
+              .ant-card-head-title {
+                font-size: 20px;
+                color: #266544;
+              }
+            }
+            .expense_approval {
+              .ant-badge {
+                margin-right: 2%;
+                 
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  #reactgooglegraph-1 {
+    border: 1px solid;
+    border-color: rgba(0,0,0,.2);
+  }
+  
+  .chart_task_status_container {
+    margin-top: 10px;
+    // display: flex;
+    align-items: center;
+    justify-content: center;
+    border-color: rgba(0, 0, 0, .2);
+    margin-bottom: 5%;
+    
+}
+  .ant-btn-success{background-color: #266544; color: #fff; transition: all 0.2s;}
+  .ant-btn-success:hover{opacity: .8;}
+  .expense_approval{background-color: rgba(38, 101, 68, 0.09);
+    padding: 15px;
+  h3{line-height: 1; margin-bottom: 10px;}
+  }
+  
+  
+  
+  
+  
+  
+  
+  .expense_approval{
+    
+    a{color: #266544; z-index: 99; position: relative; font-size: 16px;}
+    
+    position: relative; margin-bottom: 15px; border-radius: 0 !important;}
+  
+  
+  
+  .expense_approval:active, .expense_approval:hover, .expense_approval:focus {
+    outline: 0!important;
+    outline-offset: 0;
+  }
+  .expense_approval::before,
+  .expense_approval::after {
+    position: absolute;
+    content: "";
+  }
+  
+  
+  .expense_approval::before,
+  .expense_approval::after {
+    width: 30px; height:30px;
+    transition: 0.35s;
+  }
+  .expense_approval::before {
+    top: -5px; left: -5px;
+    border-left: 2px solid #266544;
+    border-top: 2px solid #266544;
+  }
+  .expense_approval::after {
+    bottom: -5px; right: -5px;
+    border-right: 2px solid #266544;
+    border-bottom: 2px solid #266544;
+  }
+  .expense_approval:hover::before,
+  .expense_approval:hover::after {
+    width: 102%;
+    height: 110%;
+  }
+  

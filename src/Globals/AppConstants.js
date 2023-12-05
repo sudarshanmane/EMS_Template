@@ -1,4 +1,3 @@
 export const APP_CONSTANTS = {
-    ROLE_ACTIONS: ["Add New Role", "Update Role Permissions", "Delete Role"],
-  };
-  
+  ROLE_ACTIONS: ["Add New Role", "Update Role Permissions", "Delete Role"],
+};

@@ -12,8 +12,8 @@ import {
   deleteExpenseitemizationAction,
   exportItemizationListAction,
   getPanelItemization,
-} from "../../store/Actions/Actions";
-import ExpenseItemizationField from "../Screens/Dashboard/SubMenu/ExpenseItemizationField";
+} from "../../store/Action/Actions";
+import ExpenseItemizationField from "../screens/ExpenseItemization";
 
 import { URLS } from "../../Globals/URLS";
 

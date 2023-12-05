@@ -3,7 +3,7 @@ import { UploadOutlined } from "@ant-design/icons";
 import { message, Upload } from "antd";
 import { Button, Form, Input, Row, Col, Select } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { applyCardAction } from "../../../../store/Actions/Actions";
+import {applyCardAction} from "../../store/Action/Actions"
 
 function Card() {
   const dispatch = useDispatch();

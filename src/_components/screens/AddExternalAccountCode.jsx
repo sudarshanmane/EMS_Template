@@ -6,8 +6,8 @@ import {
   getAccountingCodeAction,
   getExternalAccountCodePanelAction,
   updateExternalAccountCodeAction,
-} from "../../../../store/Actions/Actions";
-import { URLS } from "../../../../Globals/URLS";
+} from "../../store/Action/Actions";
+import { URLS } from "../../Globals/URLS";
 
 const AddExternalAccountCode = ({
   initialData,

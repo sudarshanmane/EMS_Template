@@ -8,8 +8,8 @@ import {
   getAccountingCodeAction,
   getExpenseItemSetupPanelAction,
   updateExpenseItemSetup,
-} from "../../../../store/Actions/Actions";
-import { URLS } from "../../../../Globals/URLS";
+} from "../../store/Action/Actions";
+import { URLS } from "../../Globals/URLS";
 
 const ExpenseItemSetup = ({ initialData, setIsAddFormVisible, isAddForm }) => {
   const dispatch = useDispatch();

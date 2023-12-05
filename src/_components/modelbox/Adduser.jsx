@@ -209,5 +209,6 @@ const Adduser = () => {
       </div>
     </>
   );
+  return <div>Add User</div>;
 };
 export default Adduser;

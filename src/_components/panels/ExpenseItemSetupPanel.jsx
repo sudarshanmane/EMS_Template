@@ -12,8 +12,8 @@ import {
   deleteExpenseItemSetupAction,
   exportExpenseItemSetupAction,
   getExpenseItemSetupPanelAction,
-} from "../../store/Actions/Actions";
-import ExpenseItemSetup from "../Screens/Dashboard/SubMenu/ExpenseItemSetup";
+} from "../../store/Action/Actions";
+import ExpenseItemSetup from "../../_components/screens/ExpenseItemSetup";
 import { URLS } from "../../Globals/URLS";
 
 function ExpenseItemSetupPanel() {

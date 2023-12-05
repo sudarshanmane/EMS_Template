@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Input, Button, Alert, Layout, message } from "antd";
-import { changePassword } from "../../../../store/Actions/Actions";
+import { changePassword } from "../../store/Action/Actions";
 
 
 

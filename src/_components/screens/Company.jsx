@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import { Button, Form, Input, Row, Col } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { updateCompanyList } from "../../../../store/Actions/Actions";
-import { getUser, setUser } from "../../../../utils/sessionStorage";
-import { URLS } from "../../../../Globals/URLS";
+import { updateCompanyList } from "../../store/Action/Actions";
+import { getUser, setUser } from "../../utils/sessionStorage";
+import { URLS } from "../../Globals/URLS";
 
 const Company = ({ initialData }) => {
   const dispatch = useDispatch();

@@ -3,10 +3,12 @@ import { Table, Input, Button, Space, Modal, Pagination } from "antd";
 import { DownloadOutlined, EyeOutlined, SearchOutlined } from "@ant-design/icons";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import { deleteCategorypanelAction, exportCategorylistAction, getCategoryPanelAction } from "../../store/Actions/Actions";
+import { deleteCategorypanelAction, exportCategorylistAction, getCategoryPanelAction } from "../../store/Action/Actions";
 import { useDispatch, useSelector } from "react-redux";
-import Addcategory from "../Screens/Dashboard/SubMenu/Addcategory";
+import Addcategory from "../../_components/screens/Addcategory"
 import { URLS } from "../../Globals/URLS";
+
+
 
 const CategoryTypePanel = () => {
   const [allCategoryType, setAllCategoryType] = useState([]);

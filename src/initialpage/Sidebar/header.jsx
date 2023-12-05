@@ -231,11 +231,11 @@ const Header = (props) => {
             <span>{ProfileName ? ` ${ProfileName}` : "Admin"}</span>
           </Link>
           <div className="dropdown-menu dropdown-menu-end">
-            <Link className="dropdown-item" to="/app/profile/employee-profile">
-              My Profile
+            <Link className="dropdown-item" to="/home/ProfileForm">
+            Update Profile
             </Link>
-            <Link className="dropdown-item" to="/settings/companysetting">
-              Settings
+            <Link className="dropdown-item" to="/home/ChangePasswordForm">
+            Change Password
             </Link>
             <Link className="dropdown-item" to="/login">
               Logout
@@ -255,11 +255,11 @@ const Header = (props) => {
           <i className="fa fa-ellipsis-v" />
         </Link>
         <div className="dropdown-menu dropdown-menu-end dropdown-menu-right">
-          <Link className="dropdown-item" to="/app/profile/employee-profile">
-            My Profile
+          <Link className="dropdown-item" to="/home/ProfileForm">
+            Update Profile
           </Link>
-          <Link className="dropdown-item" to="/settings/companysetting">
-            Settings
+          <Link className="dropdown-item" to="/home/ChangePasswordForm">
+           Change Password
           </Link>
           <Link className="dropdown-item" to="/login">
             Logout

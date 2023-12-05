@@ -16,8 +16,8 @@ import {
   getAccountingCodeAction,
   getExpenseTypePanelAction,
   updateExpenseTypeAction,
-} from "../../../../store/Actions/Actions";
-import { URLS } from "../../../../Globals/URLS";
+} from "../../store/Action/Actions";
+import { URLS } from "../../Globals/URLS";
 
 const Expensetypes = ({ initialData, setIsAddFormVisible, isAddForm }) => {
   const dispatch = useDispatch();

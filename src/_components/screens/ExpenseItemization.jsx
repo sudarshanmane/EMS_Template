@@ -2,8 +2,8 @@ import { Radio, message } from "antd";
 import React, { useEffect, useMemo, useState } from "react";
 import { Button, Form, Input, Row, Col, Upload, Modal, Select } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { EXpenseItemizationsubmit, getItemListonItemization,getPanelItemization,updateexpenseitemizationpanel } from "../../../../store/Actions/Actions";
-import { URLS } from "../../../../Globals/URLS";
+import { EXpenseItemizationsubmit, getItemListonItemization,getPanelItemization,updateexpenseitemizationpanel } from "../../store/Action/Actions";
+import { URLS } from "../../Globals/URLS";
 
 
 const ExpenseItemizationField = ({initialData, setIsAddFormVisible, isAddForm}) => {
