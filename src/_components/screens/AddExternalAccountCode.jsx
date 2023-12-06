@@ -99,172 +99,94 @@ const AddExternalAccountCode = ({
 
 
   return (
-    <div className="add_user_form_container">
-      {
+    <>
+      <div className="add_user_form_container">
         <div className="add_user_form custom-form">
-          <Form
-            layout="vertical"
-            name="complex-form"
-            onFinish={onFinish}
-            form={form}
-          >
-            <Col className="gutter-row" xs={10}>
-              <Form.Item>
-                <Form.Item name="table" label="Table">
-                  <Select
-                    allowClear
-                    style={{
-                      width: "100%",
-                    }}
-                    placeholder="Segmentslevel01"
-                    options={accountingCode}
-                  />
-                </Form.Item>
-              </Form.Item>
-            </Col>
-
-            <Col className="gutter-row" xs={10}>
-              <Form.Item>
-                <Form.Item
-                  name="account_code"
-                  label="Account Code"
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}
-                >
-                  <Input size="large" />
-                </Form.Item>
-              </Form.Item>
-            </Col>
-
-            <Col className="gutter-row" xs={10}>
-              <Form.Item>
-                <Form.Item name="describe" label="Describe" rules={[
-                    {
-                      required: true,
-                    },
-                  ]}>
-                  <Input size="large" />
-                </Form.Item>
-              </Form.Item>
-            </Col>
-
-            <Col className="gutter-row" xs={10}>
-            <Form.Item>
-              <Form.Item name="reference_id" label="Reference Id">
+          <form action="#" name="complex-form" onFinish={onFinish} form={form}>
+            <div className="input-block row">
+              <label className="col-lg-3 col-form-label">Table</label>
+              <div className="col-lg-9">
+                <Select size="large" defaultValue="Option1">
+                  <Option value="Option1">Option 1</Option>
+                  <Option value="Option2">Option 2</Option>
+                </Select>
+              </div>
+            </div>
+            <div className="input-block row">
+              <label className="col-lg-3 col-form-label">Account Type</label>
+              <div className="col-lg-9">
+                <Select size="large" defaultValue="Option1">
+                  <Option value="Option1">Option 1</Option>
+                  <Option value="Option2">Option 2</Option>
+                </Select>
+              </div>
+            </div>
+            
+            <div className="input-block row">
+              <label className="col-lg-3 col-form-label">Account Code</label>
+              <div className="col-lg-9">
                 <Input size="large" />
-              </Form.Item> </Form.Item>
-            </Col>
-            <Col className="gutter-row" xs={10}>
-            <Form.Item><Form.Item name="account_code_group" label="Account Code Group" rules={[
-                    {
-                      required: true,
-                    },
-                  ]}>
+              </div>
+            </div>
+            <div className="input-block row">
+              <label className="col-lg-3 col-form-label">
+              Describe
+              </label>
+              <div className="col-lg-9">
                 <Input size="large" />
-              </Form.Item> </Form.Item>
-            </Col>
-            <Col className="gutter-row" xs={10}>
-            <Form.Item><Form.Item name="account_type" label="Account Type" rules={[
-                    {
-                      required: true,
-                    },
-                  ]}>
-                <Select
-                  mode=""
-                  allowClear
-                  style={{
-                    width: "100%",
-                  }}
-                  placeholder="Please select"
-                  options={[
-                    {
-                      value: 1,
-                      label: "Global",
-                    },
-                    {
-                      value: 2,
-                      label: "Location",
-                    },
-                    {
-                      value: 3,
-                      label: "Group",
-                    },
-                    {
-                      value: 4,
-                      label: "User",
-                    },
-                    {
-                      value: 5,
-                      label: "Default Code",
-                    },
-                    {
-                      value: 6,
-                      label: "Use Tax",
-                    },
-                    {
-                      value: 7,
-                      label: "Freight",
-                    },
-                    {
-                      value: 8,
-                      label: "Custom 1-3",
-                    },
-                  ]}
-                />
-              </Form.Item> </Form.Item>
-            </Col>
+              </div>
+            </div>
+            <div className="input-block row">
+              <label className="col-lg-3 col-form-label">
+              Reference Id
+              </label>
+              <div className="col-lg-9">
+                <Input size="large" />
+              </div>
+            </div>
+            <div className="input-block row">
+              <label className="col-lg-3 col-form-label">
+              Account Code Group
+              </label>
+              <div className="col-lg-9">
+                <Input size="large" />
+              </div>
+            </div>
+            <div className="input-block row">
+              <label className="col-lg-3 col-form-label">
+              ParentRef1
 
-            <Col className="gutter-row" xs={10}>
-            <Form.Item><Form.Item name="parent_ref1" label="ParentRef1">
-                <Input.TextArea rows={8} mode="multiple" allowClear />
-              </Form.Item></Form.Item>
-            </Col>
-            <Col className="gutter-row label-static" lg={6} xs={24}>
-            <Form.Item><Form.Item
-                name="enabled"
-                label="Enabled"
-                className="label-static"
-              >
+              </label>
+              <div className="col-lg-9">
+                <Input size="large" />
+              </div>
+            </div>
+           
+
+            <div className="input-block row">
+              <label className="col-lg-3 col-form-label">
+              Enabled
+              </label>
+              <div className="col-lg-9">
                 <Radio.Group defaultValue={"True"}>
                   <Radio value={"True"}>Yes</Radio>
                   <Radio value={"False"}>No</Radio>
                 </Radio.Group>
-              </Form.Item></Form.Item>
-            </Col>
+              </div>
+            </div>
 
-            <Row>
-              <Col xs={3} style={{ display: "flex" }}>
-                <Button
-                  size="large"
-                  htmlType="submit"
-                  type="primary"
-                  style={{
-                    textAlign: "end",
-                    marginTop: "15px",
-                  }}
-                >
-                  Submit
-                </Button>
-                <Button
-                  size="large"
-                  htmlType="reset"
-                  type=""
-                  style={{
-                    textAlign: "end",
-                    marginTop: "15px",
-                  }}
-                >
-                  Clear Entries
-                </Button>
-              </Col>
-            </Row>
-          </Form>
+            <div className="text-end">
+              <Button type="primary" size="large" htmlType="submit">
+                Submit
+              </Button>
+              <Button type="" size="large" htmlType="reset">
+                Clear Entries
+              </Button>
+            </div>
+          </form>
         </div>
-      }
-    </div>
+      </div>
+    </>
   );
 };
 

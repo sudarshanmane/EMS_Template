@@ -7,6 +7,12 @@ import { deleteCategorypanelAction, exportCategorylistAction, getCategoryPanelAc
 import { useDispatch, useSelector } from "react-redux";
 import Addcategory from "../../_components/screens/Addcategory"
 import { URLS } from "../../Globals/URLS";
+import {
+  onShowSizeChange,
+  itemRender,
+} from "../../MainPage/paginationfunction";
+import Offcanvas from "../../Entryfile/offcanvance";
+
 
 
 
@@ -168,17 +174,41 @@ useEffect(() => {
 }, [csvUrlSelector]);
 
   return (
-    <div>
+    <>
+    <Offcanvas />
+    <div className="page-wrapper">
+        <div className="content container-fluid">
+          <div className="page-header">
+            <div className="row">
+              <div className="col">
+                <ul className="breadcrumb">
+                  <li className="breadcrumb-item">
+                    <Link to="/app/main/dashboard">Dashboard</Link>
+                  </li>
+                  <li className="breadcrumb-item active">Expense Category</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-sm-12">
+              <div className="card mb-0">
+                <div className="card-header">
+                  <h4 className="card-title mb-0">Expense Category</h4>
+                </div>
+                <div className="card-body">
+    <div className="table-responsive">
       <Space>
-      <Button
-        type="primary"
+      <button
+        type="button"
+        className="btn btn-primary me-1"
         onClick={() => {
           setEditItemData(null);
           setIsAddFormVisible(true);
         }}
       >
         Add
-      </Button>
+      </button>
 
       <Input
         placeholder="Search..."
@@ -188,21 +218,33 @@ useEffect(() => {
          ref={inputSearchRef} 
       />
 
-      <Button type="primary" icon={<SearchOutlined />}    onClick={handleSearch}>
+      <button type="primary"  className="btn btn-secondary me-1" icon={<SearchOutlined />}    onClick={handleSearch}>
         Search
-      </Button>
-      <Button
-        type="primary"
+      </button>
+      <button
+        type="button"
+        className="btn btn-success me-1"
         icon={<DownloadOutlined />}
         onClick={() => downloadExlsFiles()}
       >
         Export
-      </Button>
+      </button>
       </Space><br /><br />
       <Table
-        dataSource={allCategoryType}
-        // rowSelection={rowSelection}
-        pagination={false}
+       dataSource={allCategoryType}
+       pagination={{
+         total: allCategoryType.length,
+         showTotal: (total, range) =>
+           `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+         showSizeChanger: true,
+         onShowSizeChange: onShowSizeChange,
+         itemRender: itemRender,
+       }}
+       style={{ overflowX: "auto" }}
+       // columns={columns}
+       bordered
+       rowKey={(record) => record.id}
+       
         columns={[
           {
             title: "Sr No",
@@ -253,12 +295,7 @@ useEffect(() => {
           },
         ]}
       />
-      <Pagination
-        total={paginationCount.count}
-        showTotal={(total) => `Total ${allCategoryType.length} items`}
-        pageSize={paginationCount.page_size}
-        onChange={changePage}
-      />
+     
       <Modal
         title={editItemData ? "Edit Accounting Code" : "Add Accounting Code"}
         visible={isAddFormVisible} // Use "visible" instead of "open"
@@ -310,6 +347,13 @@ useEffect(() => {
         )}
       </Modal>
     </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </>
   );
 };
 

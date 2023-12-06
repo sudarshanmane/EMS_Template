@@ -30,6 +30,11 @@ import { SendOutlined } from "@ant-design/icons";
 import { URLS } from "../../Globals/URLS";
 import { Option } from "antd/es/mentions";
 import Addexpense from "../../_components/screens/Addexpense";
+import {
+  onShowSizeChange,
+  itemRender,
+} from "../../MainPage/paginationfunction";
+import Offcanvas from "../../Entryfile/offcanvance";
 
 const ExpensePanel = () => {
   const [allExpense, setAllExpense] = useState([]);
@@ -231,238 +236,306 @@ const ExpensePanel = () => {
       a.click();
     }
   }, [csvUrlSelector]);
+  const data = [
+    {
+      id: "1",
+      employee: "Tiger Nixon",
+      expense_name: "System Architect",
+      country: "Edinburgh",
+      description: "vikram",
+      total_amt: "61",
+      paid_by: "vikram",
+      expense_date : "54",
+      status: "active",
+
+    },
+  ];
 
   return (
-    <div>
-      <Space>
-        <Link to="/home/addexpense">
-          <Button type="primary">Add</Button>
-        </Link>
-        <Input
-          placeholder="Search..."
-          style={{ width: "100%" }}
-          value={searchTerm}
-          onChange={(e) => handleSearch(e.target.value)}
-          ref={inputSearchRef}
-        />
-        <Button type="primary" icon={<SearchOutlined />}>
-          Search
-        </Button>
-        <Button
-          type="primary"
-          icon={<DownloadOutlined />}
-          onClick={() => downloadExlsFiles()}
-        >
-          Export
-        </Button>
-      </Space>
-      <br />
-      <br />
-      <Table
-        dataSource={allExpense}
-        pagination={false} // Apply pagination configuration
-        columns={[
-          {
-            title: "Sr No",
-            dataIndex: "srno",
-            key: "srno",
-          },
-          {
-            title: "Employee",
-            dataIndex: "employee",
-            key: "username",
-          },
-          {
-            title: "Expense Name",
-            dataIndex: "expense_name",
-            key: "item_name",
-          },
-          {
-            title: "Description",
-            dataIndex: "description",
-            key: "description",
-          },
-          {
-            title: "Total Amount",
-            dataIndex: "total_amt",
-            key: "total_amt",
-          },
-          {
-            title: "Paid By",
-            dataIndex: "paid_by",
-            key: "paid_by",
-          },
-          {
-            title: "Expense Date",
-            dataIndex: "expense_date",
-            key: "expense_date",
-          },
-          {
-            title: "Attachment",
-            dataIndex: "attachment",
-            key: "attachment",
-            render: (attachment) => (
-              <div>
-                <Button
-                  type="primary"
-                  onClick={() => handleViewInvoice(attachment)}
-                >
-                  view invoice
-                </Button>
+    <>
+      <Offcanvas />
+      <div className="page-wrapper">
+        <div className="content container-fluid">
+          <div className="page-header">
+            <div className="row">
+              <div className="col">
+                <ul className="breadcrumb">
+                  <li className="breadcrumb-item">
+                    <Link to="/app/main/dashboard">Dashboard</Link>
+                  </li>
+                  <li className="breadcrumb-item active">Expense List</li>
+                </ul>
               </div>
-            ),
-          },
-          {
-            title: "Status ",
-            dataIndex: "status",
-            key: "status",
-          },
-          {
-            title: "Submit ",
-            dataIndex: "submit",
-            key: "submit",
-            render: (text, record) => (
-              <Space size="small">
-                <Button
-                  type="primary"
-                  icon={<SendOutlined />}
-                  //  onClick={() => handelsubmittrue(record)}
-
-                  onClick={() => showApproveModal(record)}
-                ></Button>
-              </Space>
-            ),
-          },
-          {
-            title: "Actions",
-            key: "actions",
-            render: (text, record) => (
-              <Space size="small">
-                <Button
-                  type="primary"
-                  icon={<EditOutlined />}
-                  onClick={() => handleEdit(record)}
-                />
-                <Button
-                  type="default"
-                  icon={<DeleteOutlined />}
-                  onClick={() => handleDelete(record)}
-                />
-                <Button
-                  type="success"
-                  icon={<EyeOutlined />}
-                  onClick={() => handleView(record)}
-                />
-              </Space>
-            ),
-          },
-        ]}
-      />
-      <Pagination
-        total={paginationCount.count}
-        showTotal={(total) => `Total ${allExpense.length} items`}
-        pageSize={paginationCount.page_size}
-        onChange={changePage}
-      />
-      <Modal
-        title={
-          editItemData ? "Edit Expense Itemization" : "Add Expense Itemization"
-        }
-        open={isAddFormVisible}
-        onCancel={() => setIsAddFormVisible(false)}
-        onOk={() => setIsAddFormVisible(false)}
-        footer={null}
-        width={600}
-      >
-        <Addexpense initialData={editItemData} url={url} />
-      </Modal>
-      <Modal
-        title="Confirm Delete"
-        open={isDeleteConfirmationVisible}
-        onOk={handleDeleteConfirmation}
-        onCancel={() => setIsDeleteConfirmationVisible(false)}
-      >
-        Are you sure you want to delete this item?
-      </Modal>
-      <Modal
-        title="Approve Item"
-        visible={approveModalVisible}
-        onCancel={() => setApproveModalVisible(false)}
-        // onOk={ handelsubmittrue(selectedRecord, selectedManagerId)}
-        width={500}
-        footer={null}
-      >
-        <Form layout="vertical">
-          <Row gutter={20}>
-            <Col span={12}>
-              <Form.Item
-                label="Select Manager"
-                name="manager" // Correct the 'name' attribute
-              >
-                <Select
-                  onChange={(value) => setSelectedManagerId(value)}
-                  style={{ width: "100%" }}
-                  options={managerList}
-                ></Select>
-              </Form.Item>
-              <Button
-                type="primary"
-                onClick={() =>
-                  handelsubmittrue(selectedRecord, selectedManagerId)
-                }
-              >
-                OK
-              </Button>
-            </Col>
-          </Row>
-        </Form>
-      </Modal>
-      <Modal
-        title="View Invoice"
-        visible={invoiceModalVisible}
-        onCancel={closeInvoiceModal}
-        footer={null}
-      >
-        {selectedInvoice && (
-          <img
-            src={selectedInvoice}
-            alt="Invoice"
-            style={{ maxWidth: "100%" }}
-          />
-        )}
-      </Modal>
-      <Modal
-        title={viewCompanyData ? "View Expense" : "Update Expense Details"}
-        open={viewCompanyData}
-        onCancel={() => {
-          setIsAddFormVisible(false);
-          setViewCompanyData(null);
-        }}
-        width={600}
-        footer={null}
-      >
-        {viewCompanyData ? (
-          <div>
-            <p>Employee: {viewCompanyData.employee}</p>
-            <p>Expense Name: {viewCompanyData.expense_name}</p>
-            <p>Description : {viewCompanyData.description}</p>
-            <p>Total Amount : {viewCompanyData.total_amt}</p>
-            <p>Paid By : {viewCompanyData.paid_by}</p>
-            <p>Expense Date : {viewCompanyData.expense_date}</p>
-            <p>Attachment : {viewCompanyData.attachment}</p>
-            <p>Status : {viewCompanyData.status}</p>
-            <p>Submit : {viewCompanyData.submit}</p>
+            </div>
           </div>
-        ) : (
-          <Addexpense
-            initialData={editItemData || null}
-            url={url}
-            setIsAddFormVisible={setIsAddFormVisible}
-            isAddForm={editItemData}
-          />
-        )}
-      </Modal>
-    </div>
+          <div className="row">
+            <div className="col-sm-12">
+              <div className="card mb-0">
+                <div className="card-header">
+                  <h4 className="card-title mb-0">Expense List</h4>
+                </div>
+                <div className="card-body">
+                  <div className="table-responsive">
+                    <Space>
+                      <Link to="/home/addexpense">
+                      <button type="button" className="btn btn-primary me-1">Add</button>
+                      </Link>
+                      <Input
+                        placeholder="Search..."
+                        style={{ width: "100%" }}
+                        value={searchTerm}
+                        onChange={(e) => handleSearch(e.target.value)}
+                        ref={inputSearchRef}
+                      />
+                      <button type="button" className="btn btn-secondary me-1" icon={<SearchOutlined />}>
+                        Search
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-success me-1"
+                        icon={<DownloadOutlined />}
+                        onClick={() => downloadExlsFiles()}
+                      >
+                        Export
+                      </button>
+                    </Space>
+                    <br />
+                    <br />
+                    <Table
+                    // dataSource={allExpense}
+                      dataSource={data}
+                      pagination={{
+                       
+                        // total: allExpense.length,
+                        total: data.length,
+                        showTotal: (total, range) =>
+                          `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+                        showSizeChanger: true,
+                        onShowSizeChange: onShowSizeChange,
+                        itemRender: itemRender,
+                      }}
+                      style={{ overflowX: "auto" }}
+                      // columns={columns}
+                      bordered
+                    
+                      
+                      rowKey={(record) => record.id}
+                      columns={[
+                        {
+                          title: "Sr No",
+                          dataIndex: "srno",
+                          key: "srno",
+                        },
+                        {
+                          title: "Employee",
+                          dataIndex: "employee",
+                          key: "username",
+                        },
+                        {
+                          title: "Expense Name",
+                          dataIndex: "expense_name",
+                          key: "item_name",
+                        },
+                        {
+                          title: "Description",
+                          dataIndex: "description",
+                          key: "description",
+                        },
+                        {
+                          title: "Total Amount",
+                          dataIndex: "total_amt",
+                          key: "total_amt",
+                        },
+                        {
+                          title: "Paid By",
+                          dataIndex: "paid_by",
+                          key: "paid_by",
+                        },
+                        {
+                          title: "Expense Date",
+                          dataIndex: "expense_date",
+                          key: "expense_date",
+                        },
+                        {
+                          title: "Attachment",
+                          dataIndex: "attachment",
+                          key: "attachment",
+                          render: (attachment) => (
+                            <div>
+                              <button
+                                type="button"
+                                className="btn btn-info me-1"
+                                onClick={() => handleViewInvoice(attachment)}
+                              >
+                                view invoice
+                              </button>
+                            </div>
+                          ),
+                        },
+                        {
+                          title: "Status ",
+                          dataIndex: "status",
+                          key: "status",
+                        },
+                        {
+                          title: "Submit ",
+                          dataIndex: "submit",
+                          key: "submit",
+                          render: (text, record) => (
+                            <Space size="small">
+                              <Button
+                                type="success"
+                                icon={<SendOutlined />}
+                                //  onClick={() => handelsubmittrue(record)}
+
+                                onClick={() => showApproveModal(record)}
+                              ></Button>
+                            </Space>
+                          ),
+                        },
+                        {
+                          title: "Actions",
+                          key: "actions",
+                          render: (text, record) => (
+                            <Space size="small">
+                              <Button
+                                type="warning"
+                                icon={<EditOutlined />}
+                                onClick={() => handleEdit(record)}
+                              />
+                              <Button
+                                type="danger"
+                                icon={<DeleteOutlined />}
+                                onClick={() => handleDelete(record)}
+                              />
+                              <Button
+                                type="success"
+                                icon={<EyeOutlined />}
+                                onClick={() => handleView(record)}
+                              />
+                            </Space>
+                          ),
+                        },
+                      ]}
+                    />
+                    
+                    <Modal
+                      title={
+                        editItemData
+                          ? "Edit Expense Itemization"
+                          : "Add Expense Itemization"
+                      }
+                      open={isAddFormVisible}
+                      onCancel={() => setIsAddFormVisible(false)}
+                      onOk={() => setIsAddFormVisible(false)}
+                      footer={null}
+                      width={600}
+                    >
+                      <Addexpense initialData={editItemData} url={url} />
+                    </Modal>
+                    <Modal
+                      title="Confirm Delete"
+                      open={isDeleteConfirmationVisible}
+                      onOk={handleDeleteConfirmation}
+                      onCancel={() => setIsDeleteConfirmationVisible(false)}
+                    >
+                      Are you sure you want to delete this item?
+                    </Modal>
+                    <Modal
+                      title="Approve Item"
+                      visible={approveModalVisible}
+                      onCancel={() => setApproveModalVisible(false)}
+                      // onOk={ handelsubmittrue(selectedRecord, selectedManagerId)}
+                      width={500}
+                      footer={null}
+                    >
+                      <Form layout="vertical">
+                        <Row gutter={20}>
+                          <Col span={12}>
+                            <Form.Item
+                              label="Select Manager"
+                              name="manager" // Correct the 'name' attribute
+                            >
+                              <Select
+                                onChange={(value) =>
+                                  setSelectedManagerId(value)
+                                }
+                                style={{ width: "100%" }}
+                                options={managerList}
+                              ></Select>
+                            </Form.Item>
+                            <Button
+                              type="primary"
+                              onClick={() =>
+                                handelsubmittrue(
+                                  selectedRecord,
+                                  selectedManagerId
+                                )
+                              }
+                            >
+                              OK
+                            </Button>
+                          </Col>
+                        </Row>
+                      </Form>
+                    </Modal>
+                    <Modal
+                      title="View Invoice"
+                      visible={invoiceModalVisible}
+                      onCancel={closeInvoiceModal}
+                      footer={null}
+                    >
+                      {selectedInvoice && (
+                        <img
+                          src={selectedInvoice}
+                          alt="Invoice"
+                          style={{ maxWidth: "100%" }}
+                        />
+                      )}
+                    </Modal>
+                    <Modal
+                      title={
+                        viewCompanyData
+                          ? "View Expense"
+                          : "Update Expense Details"
+                      }
+                      open={viewCompanyData}
+                      onCancel={() => {
+                        setIsAddFormVisible(false);
+                        setViewCompanyData(null);
+                      }}
+                      width={600}
+                      footer={null}
+                    >
+                      {viewCompanyData ? (
+                        <div>
+                          <p>Employee: {viewCompanyData.employee}</p>
+                          <p>Expense Name: {viewCompanyData.expense_name}</p>
+                          <p>Description : {viewCompanyData.description}</p>
+                          <p>Total Amount : {viewCompanyData.total_amt}</p>
+                          <p>Paid By : {viewCompanyData.paid_by}</p>
+                          <p>Expense Date : {viewCompanyData.expense_date}</p>
+                          <p>Attachment : {viewCompanyData.attachment}</p>
+                          <p>Status : {viewCompanyData.status}</p>
+                          <p>Submit : {viewCompanyData.submit}</p>
+                        </div>
+                      ) : (
+                        <Addexpense
+                          initialData={editItemData || null}
+                          url={url}
+                          setIsAddFormVisible={setIsAddFormVisible}
+                          isAddForm={editItemData}
+                        />
+                      )}
+                    </Modal>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 

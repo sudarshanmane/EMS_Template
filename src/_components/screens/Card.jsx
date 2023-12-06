@@ -65,208 +65,7 @@ function Card() {
   const onFinish = (values) => {
     dispatch(applyCardAction(values));
   };
-  // return (
-  //   <div className="add_user_form_container">
-  //     <div className="add_user_form custom-form">
-  //       <div className="expense_report_header">
-  //         <h2>Apply For Card </h2> <br />
-  //       </div>
-  //       <Form layout="vertical" name="complex-form" onFinish={onFinish}>
-  //         <Row gutter={[16, 24]}>
-  //           <Col className="gutter-row label-static" lg={6} xs={8}>
-  //             <Form.Item
-  //               name="fullname"
-  //               label="Full Name As Per ID Proof"
-  //               rules={[
-  //                 {
-  //                   required: true,
-  //                   message: "This Field Is required",
-  //                 },
-  //               ]}
-  //               style={{ marginLeft: "10px" }}
-  //             >
-  //               <Input size="large" />
-  //             </Form.Item>
-  //           </Col>
-  //           <Col className="gutter-row label-static" lg={6} xs={8}>
-  //             <Form.Item
-  //               name="email"
-  //               label="Email"
-  //               style={{ marginLeft: "10px" }}
-  //             >
-  //               <Input size="large" />
-  //             </Form.Item>
-  //           </Col>
-  //           <Col className="gutter-row label-static" lg={6} xs={8}>
-  //             <Form.Item
-  //               label="Phone Number"
-  //               name="mobile"
-  //               rules={[
-  //                 {
-  //                   pattern: /^\d{10}$/, // Regex pattern for 10 digits
-  //                   message: "Please enter a valid 10-digit number",
-  //                 },
-  //               ]}
-  //             >
-  //               <Input size="large" />
-  //             </Form.Item>
-  //           </Col>
 
-  //           <Col className="gutter-row label-static" lg={6} xs={8}>
-  //             <Form.Item label="Fathers Name" name="father">
-  //               <Input size="large" />
-  //             </Form.Item>
-  //           </Col>
-  //           <Col className="gutter-row label-static" lg={6} xs={8}>
-  //             <Form.Item label="Address" name="address">
-  //               <Input size="large" />
-  //             </Form.Item>
-  //           </Col>
-  //           <Col className="gutter-row label-static" lg={6} xs={8}>
-  //             <Form.Item label="State" name="state">
-  //               <Input size="large" />
-  //             </Form.Item>
-  //           </Col>
-  //           <Col className="gutter-row label-static" lg={6} xs={8}>
-  //             <Form.Item label="City" name="city">
-  //               <Input size="large" />
-  //             </Form.Item>
-  //           </Col>
-  //           <Col className="gutter-row label-static" lg={6} xs={8}>
-  //             <Form.Item label="Pincode" name="pincode">
-  //               <Input size="large" />
-  //             </Form.Item>
-  //           </Col>
-  //           <Col className="gutter-row label-static" lg={6} xs={24}>
-  //             <Form.Item
-  //               name="occup"
-  //               label="Occupation Type"
-  //               rules={[
-  //                 {
-  //                   required: true,
-  //                   message: "This Field Is required",
-  //                 },
-  //               ]}
-  //             >
-  //               <Select
-  //                 allowClear
-  //                 style={{
-  //                   width: "100%",
-  //                 }}
-  //                 placeholder="No Advance"
-  //                 options={[
-  //                   {
-  //                     value: 1,
-  //                     label: "Farmer",
-  //                   },
-  //                   {
-  //                     value: 2,
-  //                     label: "Service",
-  //                   },
-  //                 ]}
-  //               />
-  //             </Form.Item>
-  //           </Col>
-  //           <Col className="gutter-row label-static" lg={6} xs={24}>
-  //             <Form.Item
-  //               name="pan_no"
-  //               label="Pan No"
-  //               rules={[
-  //                 {
-  //                   required: true,
-  //                   message: "This Field Is required",
-  //                 },
-  //                 {
-  //                   pattern: /^[A-Z]{5}[0-9]{4}[A-Z]$/,
-  //                   message: "Please enter a valid PAN number",
-  //                 },
-  //               ]}
-  //             >
-  //               <Input size="large" />
-  //             </Form.Item>
-  //           </Col>
-  //           <Col className="gutter-row label-static" lg={6} xs={24}>
-  //             <Form.Item
-  //               name="aadhar_no"
-  //               label="Aadhar No"
-  //               rules={[
-  //                 {
-  //                   required: true,
-  //                   pattern: /^\d{12}$/, // Regex pattern for 10 digits
-  //                   message: "Please enter a valid 12-digit number",
-  //                 },
-  //               ]}
-  //             >
-  //               <Input size="large" />
-  //             </Form.Item>
-  //           </Col>
-  //           <Col className="gutter-row label-static" lg={6} xs={24}>
-  //             <Form.Item name="pan_card" label="Pan Card">
-  //               <Upload {...props}>
-  //                 <Button icon={<UploadOutlined />}>Select File</Button>
-  //               </Upload>
-  //               {/* <Button
-  //                 type="primary"
-  //                 onClick={handleUpload}
-  //                 disabled={fileList.length === 0}
-  //                 loading={uploading}
-  //                 style={{
-  //                   marginTop: 16,
-  //                 }}
-  //               >
-  //                 {uploading ? "Uploading" : "Start Upload"}
-  //               </Button> */}
-  //             </Form.Item>
-  //           </Col>
-  //           <Col className="gutter-row label-static" lg={6} xs={24}>
-  //             <Form.Item name="aadhar_card" label="Aadhar Card">
-  //               <Upload {...propss}>
-  //                 <Button icon={<UploadOutlined />}>Select File</Button>
-  //               </Upload>
-  //               {/* <Button
-  //                 type="primary"
-  //                 onClick={handleUpload}
-  //                 disabled={fileList.length === 0}
-  //                 loading={uploading}
-  //                 style={{
-  //                   marginTop: 16,
-  //                 }}
-  //               >
-  //                 {uploading ? "Uploading" : "Start Upload"}
-  //               </Button> */}
-  //             </Form.Item>
-  //           </Col>
-  //         </Row>
-  //         <Row>
-  //           <Col xs={3} style={{ display: "flex", justifyContent: "end" }}>
-  //             <Button
-  //               size="large"
-  //               htmlType="submit"
-  //               type="primary"
-  //               style={{
-  //                 textAlign: "end",
-  //                 marginTop: "15px",
-  //               }}
-  //             >
-  //               Submit
-  //             </Button>
-  //             <Button
-  //               size="large"
-  //               htmlType="reset"
-  //               type=""
-  //               style={{
-  //                 textAlign: "end",
-  //                 marginTop: "15px",
-  //               }}
-  //             >
-  //               Clear Entries
-  //             </Button>
-  //           </Col>
-  //         </Row>
-  //       </Form>
-  //     </div>
-  //   </div>
-  // );
   return (
     <div className="card">
       <div className="card-header">
@@ -285,7 +84,6 @@ function Card() {
                   placeholder="First Name"
                   required
                 />
-               
               </div>
               <div className="col-md-4 mb-3">
                 <label htmlFor="validationServer02">Last Name</label>
@@ -296,15 +94,12 @@ function Card() {
                   placeholder="Last Name"
                   required
                 />
-               
               </div>
-
-             
             </div>
           </div>
           <div className="form-row">
-          <div className="row">
-          <div className="col-md-3 mb-3">
+            <div className="row">
+              <div className="col-md-3 mb-3">
                 <label htmlFor="validationServer04">Email</label>
                 <input
                   type="text"
@@ -347,7 +142,7 @@ function Card() {
                   Please select an Occupation Type.
                 </div>
               </div>
-              </div>
+            </div>
           </div>
 
           <div className="form-row">
@@ -391,7 +186,7 @@ function Card() {
                   Please provide a valid state.
                 </div>
               </div>
-              
+
               <div className="col-md-3 mb-3">
                 <label htmlFor="validationServer05">Zip</label>
                 <input

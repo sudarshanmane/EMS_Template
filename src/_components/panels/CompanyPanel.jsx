@@ -21,7 +21,6 @@ import {
 } from "../../MainPage/paginationfunction";
 import Offcanvas from "../../Entryfile/offcanvance";
 
-
 const CompanyPanel = () => {
   const dispatch = useDispatch();
   const [viewCompanyData, setViewCompanyData] = useState(null);
@@ -75,9 +74,15 @@ const CompanyPanel = () => {
       setPaginationCount(pageObj);
     }
   }, [companyPanelSelector]);
-const data = [
-  { id: 1, company_name: "Tiger Nixon", state: "System Architect", country: "Edinburgh", postal_code: "61"},
-]
+  const data = [
+    {
+      id: 1,
+      company_name: "Tiger Nixon",
+      state: "System Architect",
+      country: "Edinburgh",
+      postal_code: "61",
+    },
+  ];
   const columns = [
     {
       title: "Sr No",
@@ -198,7 +203,6 @@ const data = [
           <div className="page-header">
             <div className="row">
               <div className="col">
-                <h3 className="page-title">Company Table</h3>
                 <ul className="breadcrumb">
                   <li className="breadcrumb-item">
                     <Link to="/app/main/dashboard">Dashboard</Link>
@@ -212,12 +216,9 @@ const data = [
           <div className="row">
             <div className="col-sm-12">
               <div className="card mb-0">
-              <div className="card-header">
-									<h4 className="card-title mb-0">Company List</h4>
-									{/* <p className="card-text">
-										This is the most basic example of the datatables with zero configuration. Use the <code>.datatable</code> class to initialize datatables.
-									</p> */}
-								</div>
+                <div className="card-header">
+                  <h4 className="card-title mb-0">Company List</h4>
+                </div>
                 <div className="card-body">
                   <div className="table-responsive">
                     <Table
@@ -235,11 +236,10 @@ const data = [
                       bordered
                       // dataSource={allCompanyList}
                       dataSource={data}
-
                       rowKey={(record) => record.id}
                       // onChange={this.handleTableChange}
                     />
-                    {/* <Modal
+                    <Modal
                       title={editItemData ? "Update Company Details" : "Add Company Details"}
                       open={isAddFormVisible}
                       onCancel={() => setIsAddFormVisible(false)}
@@ -284,7 +284,7 @@ const data = [
                           isAddForm={editItemData}
                         />
                       )}
-      </Modal> */}
+      </Modal>
                   </div>
                 </div>
               </div>

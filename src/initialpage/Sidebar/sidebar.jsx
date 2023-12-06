@@ -226,7 +226,7 @@ const Sidebar = () => {
                         Expense Itemization{" "}
                       </Link>
                     </li>
-                    <li>
+                    {/* <li>
                       <Link
                         className={
                           pathname.includes("expenseReports") ? "active" : ""
@@ -236,7 +236,7 @@ const Sidebar = () => {
                         {" "}
                         Expense Reports{" "}
                       </Link>
-                    </li>
+                    </li> */}
                     <li>
                       <Link
                         className={

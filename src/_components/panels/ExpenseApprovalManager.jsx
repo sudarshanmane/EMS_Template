@@ -19,6 +19,13 @@ import {
 } from "../../store/Action/Actions";
 import { URLS } from "../../Globals/URLS";
 import "./ExpenseApprovalManager.scss";
+import {
+  onShowSizeChange,
+  itemRender,
+} from "../../MainPage/paginationfunction";
+import Offcanvas from "../../Entryfile/offcanvance";
+import { Link } from "react-router-dom";
+
 
 function ExpenseApprovalManager() {
   const [allExpense, setAllExpense] = useState([]);
@@ -204,7 +211,30 @@ function ExpenseApprovalManager() {
   }, [csvUrlSelector]);
 
   return (
-    <div>
+    <>
+    <Offcanvas />
+    <div className="page-wrapper">
+        <div className="content container-fluid">
+          <div className="page-header">
+            <div className="row">
+              <div className="col">
+                <ul className="breadcrumb">
+                  <li className="breadcrumb-item">
+                    <Link to="/app/main/dashboard">Dashboard</Link>
+                  </li>
+                  <li className="breadcrumb-item active">Expense Approve Manager</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-sm-12">
+              <div className="card mb-0">
+                <div className="card-header">
+                  <h4 className="card-title mb-0">Expense Approve Manager</h4>
+                </div>
+                <div className="card-body">
+    <div className="table-responsive">
       <Space>
         <Input
           placeholder="Search..."
@@ -214,23 +244,37 @@ function ExpenseApprovalManager() {
           ref={inputSearchRef}
         />
 
-        <Button type="primary" icon={<SearchOutlined />} onClick={handleSearch}>
+        <button type="button" className="btn btn-secondary me-1" icon={<SearchOutlined />} onClick={handleSearch}>
           Search
-        </Button>
+        </button>
 
-        <Button
-          type="primary"
+        <button
+          type="button"
+          className="btn btn-success me-1"
           icon={<DownloadOutlined />}
           onClick={() => downloadExlsFiles()}
         >
           Export
-        </Button>
+        </button>
       </Space>
       <br />
       <br />
 
       <Table
-        dataSource={allExpense}
+       dataSource={allExpense}
+       pagination={{
+         total: allExpense.length,
+         showTotal: (total, range) =>
+           `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+         showSizeChanger: true,
+         onShowSizeChange: onShowSizeChange,
+         itemRender: itemRender,
+       }}
+       style={{ overflowX: "auto" }}
+       // columns={columns}
+       bordered
+       rowKey={(record) => record.id}
+       
         columns={[
           {
             title: "Sr No",
@@ -305,7 +349,7 @@ function ExpenseApprovalManager() {
                   Approve
                 </Button>
                 <Button
-                  type="default"
+                  type="danger"
                   icon={<CloseCircleOutlined />}
                   onClick={() => showRejectModal(record)}
                 >
@@ -322,14 +366,9 @@ function ExpenseApprovalManager() {
             ),
           },
         ]}
-        pagination={false} // Apply pagination configuration
+       
       />
-      <Pagination
-        total={paginationCount.count}
-        showTotal={(total) => `Total ${allExpense.length} items`}
-        pageSize={paginationCount.page_size}
-        onChange={changePage}
-      />
+      
 
       <Modal
         title="Reject Item"
@@ -372,6 +411,13 @@ function ExpenseApprovalManager() {
         )}
       </Modal>
     </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </>
   );
 }
 
