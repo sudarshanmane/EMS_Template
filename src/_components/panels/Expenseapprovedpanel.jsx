@@ -37,6 +37,8 @@ import {
 } from "../../MainPage/paginationfunction";
 import Offcanvas from "../../Entryfile/offcanvance";
 import { Link } from "react-router-dom";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Expenseapprovedpanel = () => {
   const [allExpense, setAllExpense] = useState([]);
@@ -67,6 +69,16 @@ const Expenseapprovedpanel = () => {
   const [selectedFinanceManagerid, setSelectedFinanceManagerid] =
     useState(null);
   // Ensure this state variable is correctly defined and used in your input field
+  const [focused, setFocused] = useState(false);
+  const [selectedDate1, setSelectedDate1] = useState(null);
+  const [selectedDate2, setSelectedDate2] = useState(null);
+
+  const handleDateChange1 = (date) => {
+    setSelectedDate1(date);
+  };
+  const handleDateChange2 = (date) => {
+    setSelectedDate2(date);
+  };
 
   const handleViewInvoice = (attachment) => {
     setSelectedInvoice(attachment);
@@ -289,9 +301,7 @@ const Expenseapprovedpanel = () => {
                   <li className="breadcrumb-item">
                     <Link to="/app/main/dashboard">Dashboard</Link>
                   </li>
-                  <li className="breadcrumb-item active">
-                    Expense Approval 
-                  </li>
+                  <li className="breadcrumb-item active">Expense Approval</li>
                 </ul>
               </div>
             </div>
@@ -304,7 +314,78 @@ const Expenseapprovedpanel = () => {
                 </div>
                 <div className="card-body">
                   <div className="table-responsive">
-                    <Input
+                     {/* Search Filter */}
+                     <div className="row filter-row">
+                      <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <div
+                          className={
+                            focused
+                              ? "input-block form-focus focused"
+                              : "input-block form-focus"
+                          }
+                        >
+                          <input
+                            type="text"
+                            className="form-control floating"
+                            onFocus={() => setFocused(true)}
+                            onBlur={() => setFocused(false)}
+                          />
+                          <label className="focus-label">Search</label>
+                        </div>
+                      </div>
+                      <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <div className="input-block form-focus select-focus">
+                          <div className="cal-icon">
+                            <DatePicker
+                              selected={selectedDate1}
+                              onChange={handleDateChange1}
+                              className="form-control floating"
+                              type="date"
+                              placeholderText="2023-07-14"
+                            />
+                            <label className="focus-label">From</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <div className="input-block form-focus select-focus">
+                          <div className="cal-icon">
+                            <DatePicker
+                              selected={selectedDate2}
+                              onChange={handleDateChange2}
+                              className="form-control floating"
+                              type="date"
+                              placeholderText="2023-07-14"
+                            />
+                            <label className="focus-label">To</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <Link
+                          to="#"
+                          className="btn btn-success btn-block w-100"
+                          // value={searchTerm}
+                          // onChange={(e) => handleSearch(e.target.value)}
+                          // ref={inputSearchRef}
+                        >
+                          {" "}
+                          Search{" "}
+                        </Link>
+                      </div>
+                      <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <Link
+                          to="#"
+                          onClick={() => downloadExlsFiles()}
+                          className="btn btn-warning btn-block w-100"
+                        >
+                          {" "}
+                          Export{" "}
+                        </Link>
+                      </div>
+                    </div>
+                    {/* Search Filter */}
+                    {/* <Input
                       style={{ width: "30%" }}
                       type="text"
                       className="form-control"
@@ -330,8 +411,8 @@ const Expenseapprovedpanel = () => {
                       onClick={() => downloadExlsFiles()}
                     >
                       Export
-                    </button>
-
+                    </button> */}
+                   
                     <Table
                       dataSource={allExpense}
                       pagination={{
@@ -356,36 +437,43 @@ const Expenseapprovedpanel = () => {
                           title: "Employee",
                           dataIndex: "employee",
                           key: "username",
+                          sorter: (a, b) => a.name.length - b.name.length,
                         },
                         {
                           title: "Expense Category",
                           dataIndex: "expense_name",
                           key: "item_name",
+                          sorter: (a, b) => a.name.length - b.name.length,
                         },
                         {
                           title: "Description",
                           dataIndex: "description",
                           key: "description",
+                          sorter: (a, b) => a.name.length - b.name.length,
                         },
                         {
                           title: "Total Amount",
                           dataIndex: "total_amt",
                           key: "total_amt",
+                          sorter: (a, b) => a.name.length - b.name.length,
                         },
                         {
                           title: "Paid By",
                           dataIndex: "paid_by",
                           key: "paid_by",
+                          sorter: (a, b) => a.name.length - b.name.length,
                         },
                         {
                           title: "Expense Date",
                           dataIndex: "expense_date",
                           key: "expense_date",
+                          sorter: (a, b) => a.name.length - b.name.length,
                         },
                         {
                           title: "Attachment",
                           dataIndex: "attachment",
                           key: "attachment",
+                          sorter: (a, b) => a.name.length - b.name.length,
                           render: (attachment) => (
                             <div>
                               <br></br>
@@ -400,9 +488,49 @@ const Expenseapprovedpanel = () => {
                         },
 
                         {
-                          title: "Status ",
+                          title: "Status",
                           dataIndex: "status",
-                          key: "status",
+                          render: (text) => (
+                            <div className="dropdown action-label text-center">
+                              <Link
+                                className="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                                to="#"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                              >
+                                <i
+                                  className={
+                                    text === "New"
+                                      ? "far fa-dot-circle text-purple"
+                                      : text === "Pending"
+                                      ? "far fa-dot-circle text-info"
+                                      : text === "Approved"
+                                      ? "far fa-dot-circle text-success"
+                                      : "far fa-dot-circle text-danger"
+                                  }
+                                />{" "}
+                                {text}
+                              </Link>
+                              <div className="dropdown-menu dropdown-menu-right">
+                                <Link className="dropdown-item" to="#">
+                                  <i className="far fa-dot-circle text-purple" />{" "}
+                                  New
+                                </Link>
+                                <Link className="dropdown-item" to="#">
+                                  <i className="far fa-dot-circle text-info" />{" "}
+                                  Pending
+                                </Link>
+                                <Link className="dropdown-item" to="#">
+                                  <i className="far fa-dot-circle text-success" />{" "}
+                                  Approved
+                                </Link>
+                                <Link className="dropdown-item" to="#">
+                                  <i className="far fa-dot-circle text-danger" />{" "}
+                                  Declined
+                                </Link>
+                              </div>
+                            </div>
+                          ),
                         },
 
                         {

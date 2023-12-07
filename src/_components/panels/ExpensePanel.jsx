@@ -35,6 +35,8 @@ import {
   itemRender,
 } from "../../MainPage/paginationfunction";
 import Offcanvas from "../../Entryfile/offcanvance";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const ExpensePanel = () => {
   const [allExpense, setAllExpense] = useState([]);
@@ -70,6 +72,16 @@ const ExpensePanel = () => {
     setSelectedInvoice(null);
   };
   const expenseselector = useSelector((state) => state.panelExpenseResult);
+  const [focused, setFocused] = useState(false);
+  const [selectedDate1, setSelectedDate1] = useState(null);
+  const [selectedDate2, setSelectedDate2] = useState(null);
+
+  const handleDateChange1 = (date) => {
+    setSelectedDate1(date);
+  };
+  const handleDateChange2 = (date) => {
+    setSelectedDate2(date);
+  };
 
   function getPageDetails(url) {
     dispatch(getexpensePanelListAction({ payload: {}, URL: url }));
@@ -245,9 +257,8 @@ const ExpensePanel = () => {
       description: "vikram",
       total_amt: "61",
       paid_by: "vikram",
-      expense_date : "54",
+      expense_date: "54",
       status: "active",
-
     },
   ];
 
@@ -266,6 +277,11 @@ const ExpensePanel = () => {
                   <li className="breadcrumb-item active">Expense List</li>
                 </ul>
               </div>
+              <div className="col-auto float-end ms-auto">
+                <Link to="/home/addexpense" className="btn add-btn">
+                  <i className="fa fa-plus" /> Add Expense
+                </Link>
+              </div>
             </div>
           </div>
           <div className="row">
@@ -276,36 +292,82 @@ const ExpensePanel = () => {
                 </div>
                 <div className="card-body">
                   <div className="table-responsive">
-                    <Space>
-                      <Link to="/home/addexpense">
-                      <button type="button" className="btn btn-primary me-1">Add</button>
-                      </Link>
-                      <Input
-                        placeholder="Search..."
-                        style={{ width: "100%" }}
-                        value={searchTerm}
-                        onChange={(e) => handleSearch(e.target.value)}
-                        ref={inputSearchRef}
-                      />
-                      <button type="button" className="btn btn-secondary me-1" icon={<SearchOutlined />}>
-                        Search
-                      </button>
-                      <button
-                        type="button"
-                        className="btn btn-success me-1"
-                        icon={<DownloadOutlined />}
-                        onClick={() => downloadExlsFiles()}
-                      >
-                        Export
-                      </button>
-                    </Space>
-                    <br />
-                    <br />
+                     {/* Search Filter */}
+                    <div className="row filter-row">
+                      <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <div
+                          className={
+                            focused
+                              ? "input-block form-focus focused"
+                              : "input-block form-focus"
+                          }
+                        >
+                          <input
+                            type="text"
+                            className="form-control floating"
+                            onFocus={() => setFocused(true)}
+                            onBlur={() => setFocused(false)}
+                          />
+                          <label className="focus-label">Search</label>
+                        </div>
+                      </div>
+                      <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <div className="input-block form-focus select-focus">
+                          <div className="cal-icon">
+                            <DatePicker
+                              selected={selectedDate1}
+                              onChange={handleDateChange1}
+                              className="form-control floating"
+                              type="date"
+                              placeholderText="2023-07-14"
+                            />
+                            <label className="focus-label">From</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <div className="input-block form-focus select-focus">
+                          <div className="cal-icon">
+                            <DatePicker
+                              selected={selectedDate2}
+                              onChange={handleDateChange2}
+                              className="form-control floating"
+                              type="date"
+                              placeholderText="2023-07-14"
+                            />
+                            <label className="focus-label">To</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <Link
+                          to="#"
+                          className="btn btn-success btn-block w-100"
+                          // value={searchTerm}
+                          // onChange={(e) => handleSearch(e.target.value)}
+                          // ref={inputSearchRef}
+                        >
+                          {" "}
+                          Search{" "}
+                        </Link>
+                      </div>
+                      <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <Link
+                          to="#"
+                          onClick={() => downloadExlsFiles()}
+                          className="btn btn-warning btn-block w-100"
+                        >
+                          {" "}
+                          Export{" "}
+                        </Link>
+                      </div>
+                    </div>
+                    {/* Search Filter */}
+                
                     <Table
-                    // dataSource={allExpense}
+                      // dataSource={allExpense}
                       dataSource={data}
                       pagination={{
-                       
                         // total: allExpense.length,
                         total: data.length,
                         showTotal: (total, range) =>
@@ -317,8 +379,6 @@ const ExpensePanel = () => {
                       style={{ overflowX: "auto" }}
                       // columns={columns}
                       bordered
-                    
-                      
                       rowKey={(record) => record.id}
                       columns={[
                         {
@@ -330,36 +390,43 @@ const ExpensePanel = () => {
                           title: "Employee",
                           dataIndex: "employee",
                           key: "username",
+                          sorter: (a, b) => a.name.length - b.name.length,
                         },
                         {
                           title: "Expense Name",
                           dataIndex: "expense_name",
                           key: "item_name",
+                          sorter: (a, b) => a.name.length - b.name.length,
                         },
                         {
                           title: "Description",
                           dataIndex: "description",
                           key: "description",
+                          sorter: (a, b) => a.name.length - b.name.length,
                         },
                         {
                           title: "Total Amount",
                           dataIndex: "total_amt",
                           key: "total_amt",
+                          sorter: (a, b) => a.name.length - b.name.length,
                         },
                         {
                           title: "Paid By",
                           dataIndex: "paid_by",
                           key: "paid_by",
+                          sorter: (a, b) => a.name.length - b.name.length,
                         },
                         {
                           title: "Expense Date",
                           dataIndex: "expense_date",
                           key: "expense_date",
+                          sorter: (a, b) => a.name.length - b.name.length,
                         },
                         {
                           title: "Attachment",
                           dataIndex: "attachment",
                           key: "attachment",
+                          sorter: (a, b) => a.name.length - b.name.length,
                           render: (attachment) => (
                             <div>
                               <button
@@ -373,9 +440,49 @@ const ExpensePanel = () => {
                           ),
                         },
                         {
-                          title: "Status ",
+                          title: "Status",
                           dataIndex: "status",
-                          key: "status",
+                          render: (text) => (
+                            <div className="dropdown action-label text-center">
+                              <Link
+                                className="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                                to="#"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                              >
+                                <i
+                                  className={
+                                    text === "New"
+                                      ? "far fa-dot-circle text-purple"
+                                      : text === "Pending"
+                                      ? "far fa-dot-circle text-info"
+                                      : text === "Approved"
+                                      ? "far fa-dot-circle text-success"
+                                      : "far fa-dot-circle text-danger"
+                                  }
+                                />{" "}
+                                {text}
+                              </Link>
+                              <div className="dropdown-menu dropdown-menu-right">
+                                <Link className="dropdown-item" to="#">
+                                  <i className="far fa-dot-circle text-purple" />{" "}
+                                  New
+                                </Link>
+                                <Link className="dropdown-item" to="#">
+                                  <i className="far fa-dot-circle text-info" />{" "}
+                                  Pending
+                                </Link>
+                                <Link className="dropdown-item" to="#">
+                                  <i className="far fa-dot-circle text-success" />{" "}
+                                  Approved
+                                </Link>
+                                <Link className="dropdown-item" to="#">
+                                  <i className="far fa-dot-circle text-danger" />{" "}
+                                  Declined
+                                </Link>
+                              </div>
+                            </div>
+                          ),
                         },
                         {
                           title: "Submit ",
@@ -418,7 +525,7 @@ const ExpensePanel = () => {
                         },
                       ]}
                     />
-                    
+
                     <Modal
                       title={
                         editItemData

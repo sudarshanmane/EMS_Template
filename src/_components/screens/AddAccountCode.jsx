@@ -6,14 +6,17 @@ import {
   Accountingcodesubmit,
   getaccountingcodePanelAction,
   updateAccountingcodepanelAction,
-} from "../../../../store/Actions/Actions";
-import { URLS } from "../../../../Globals/URLS";
+} from "../../store/Action/Actions";
+import { URLS } from "../../Globals/URLS";
+import { Helmet } from "react-helmet";
+import { Link } from "react-router-dom";
+import Offcanvas from "../../Entryfile/offcanvance";
 
-const AddAccountCode = ({ initialData,setIsAddFormVisible, isAddForm }) => {
+const AddAccountCode = ({ initialData, setIsAddFormVisible, isAddForm }) => {
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
-//add form functionality reset
+  //add form functionality reset
   useEffect(() => {
     form.resetFields();
     if (initialData) {
@@ -21,13 +24,12 @@ const AddAccountCode = ({ initialData,setIsAddFormVisible, isAddForm }) => {
     }
   }, [initialData]);
 
- useEffect(() => {
+  useEffect(() => {
     if (!isAddForm) {
       console.log("isAddFormisAddFormisAddForm", isAddForm);
       form.resetFields();
     }
   }, [isAddForm]);
-
 
   const formInitialData = useMemo(() => initialData, [initialData]);
   const [isFormVisible, setFormVisible] = useState(true);
@@ -44,8 +46,7 @@ const AddAccountCode = ({ initialData,setIsAddFormVisible, isAddForm }) => {
     } else {
       dispatch(Accountingcodesubmit(values));
     }
-      dispatch(getaccountingcodePanelAction({ payload: {}, URL: url }));
-    
+    dispatch(getaccountingcodePanelAction({ payload: {}, URL: url }));
   };
   const selector = useSelector((state) => state.accountiongcodesubmitresult);
   console.log(selector);
@@ -69,197 +70,83 @@ const AddAccountCode = ({ initialData,setIsAddFormVisible, isAddForm }) => {
   }, [updateaccountingcodeselector]);
 
   return (
-    <div>
+    <>
       <div className="add_user_form_container">
-      {
         <div className="add_user_form custom-form">
-          
-          <Form
-            layout="vertical"
-            name="complex-form"
-            onFinish={onFinish}
-            form={form}
-          >
-            <Row gutter={[16, 24]}>
-              <Col className="gutter-row" lg={6} xs={24}>
-                <Form.Item
-                  name="accounting_code"
-                  label="Accounting code"
-                  className="label-static"
-                >
-                  <Input size="large" />
-                </Form.Item>
-              </Col>
-              <Col className="gutter-row label-static" lg={6} xs={24}>
-                <Form.Item
-                  name="account_type"
-                  label="Account Type"
-                  rules={[
-                    {
-                      required: true,
-                      message: "This field is required!"
-                    },
-                  ]}
-                >
-                  <Select
-                    mode=""
-                    allowClear
-                    style={{
-                      width: "100%",
-                    }}
-                    placeholder="Please select"
-                    options={[
-                      {
-                        value: 1,
-                        label: "Global",
-                      },
-                      {
-                        value: 2,
-                        label: "Location",
-                      },
-                      {
-                        value: 3,
-                        label: "Group",
-                      },
-                      {
-                        value: 4,
-                        label: "User",
-                      },
-                      {
-                        value: 5,
-                        label: "Default Code",
-                      },
-                      {
-                        value: 6,
-                        label: "Use Tax",
-                      },
-                      {
-                        value: 7,
-                        label: "Freight",
-                      },
-                      {
-                        value: 8,
-                        label: "Custom 1-3",
-                      },
-                    ]}
-                  />
-                </Form.Item>
-              </Col>
-              <Col className="gutter-row" lg={6} xs={24}>
-                <Form.Item
-                  name="reference_id"
-                  label="Reference Id"
-                  className="label-static"
-                  rules={[
-                      {
-                        required:true,
-                        message: "This field is required!"
-                      },
-                    ]}
-                >
-                  <Input size="large" />
-                </Form.Item>
-              </Col>
-              <Col className="gutter-row" lg={6} xs={24}>
-                <Form.Item
-                  name="accounting_code_group"
-                  label="Accounting Code Group"
-                  className="label-static"
-                  rules={[
-                    {
-                      required: true,
-                      message: "This field is required!"
-                    },
-                  ]}
-                >
-                  <Input size="large" />
-                </Form.Item>
-              </Col>
-              <Col className="gutter-row" lg={6} xs={24}>
-                <Form.Item
-                  name="description"
-                  label="Description"
-                  className="label-static"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please enter a description",
-                    },
-                  ]}
-                >
-                  <Input size="large" />
-                </Form.Item>
-              </Col>
-              <Col className="gutter-row" lg={6} xs={24}>
-                <Form.Item
-                  name="default_for"
-                  label="Default For"
-                  className="label-static"
-                  rules={[
-                    {
-                      required: true,
-                      message: "This field is required!"
-                    },
-                  ]}
-                >
-                  <Input size="large" />
-                </Form.Item>
-              </Col>
-              <Col className="gutter-row" lg={6} xs={24}>
-                <Form.Item
-                  name="parent_account_codes"
-                  label="Parent Account Codes"
-                  className="label-static"
-                  rules={[
-                    {
-                      required: true,
-                      message: "This field is required!"
-                    },
-                  ]}
-                >
-                  <Input.TextArea
-                    rows={4}
-                    placeholder="Enter your description here"
-                  />
-                </Form.Item>
-              </Col>
-              <Col className="gutter-row label-static" lg={6} xs={24}>
-                <Form.Item name="enabled" label="Enabled">
-                  <Radio.Group defaultValue={"True"}>
-                    <Radio value={"True"}>Yes</Radio>
-                    <Radio value={"False"}>No</Radio>
-                  </Radio.Group>
-                </Form.Item>
-              </Col>
-            </Row>
-            <div style={{ textAlign: "end" }}>
-              <Button
-                size="large"
-                htmlType="submit"
-                type="primary"
-                style={{
-                  textAlign: "end",
-                }}
-              >
+          <form action="#" name="complex-form" onFinish={onFinish} form={form}>
+            <div className="input-block row">
+              <label className="col-lg-3 col-form-label">Accounting code</label>
+              <div className="col-lg-9">
+                <Input size="large" />
+              </div>
+            </div>
+            <div className="input-block row">
+              <label className="col-lg-3 col-form-label">Reference Id</label>
+              <div className="col-lg-9">
+                <Input size="large" />
+              </div>
+            </div>
+            <div className="input-block row">
+              <label className="col-lg-3 col-form-label">
+                Accounting Code Group
+              </label>
+              <div className="col-lg-9">
+                <Input size="large" />
+              </div>
+            </div>
+            <div className="input-block row">
+              <label className="col-lg-3 col-form-label">Description</label>
+              <div className="col-lg-9">
+                <Input size="large" />
+              </div>
+            </div>
+            <div className="input-block row">
+              <label className="col-lg-3 col-form-label">Default For</label>
+              <div className="col-lg-9">
+                <Input size="large" />
+              </div>
+            </div>
+            <div className="input-block row">
+              <label className="col-lg-3 col-form-label">
+                Parent Account Codes
+              </label>
+              <div className="col-lg-9">
+                <Input size="large" />
+              </div>
+            </div>
+
+            <div className="input-block row">
+              <label className="col-lg-3 col-form-label">Account Type</label>
+              <div className="col-lg-9">
+                <Select size="large" defaultValue="Option1">
+                  <Option value="Option1">Option 1</Option>
+                  <Option value="Option2">Option 2</Option>
+                </Select>
+              </div>
+            </div>
+
+            <div className="input-block row">
+              <label className="col-lg-3 col-form-label">Enabled</label>
+              <div className="col-lg-9">
+                <Radio.Group defaultValue={"True"}>
+                  <Radio value={"True"}>Yes</Radio>
+                  <Radio value={"False"}>No</Radio>
+                </Radio.Group>
+              </div>
+            </div>
+
+            <div className="text-end">
+              <Button type="primary" size="large" htmlType="submit">
                 Submit
               </Button>
-              <Button
-                size="large"
-                style={{
-                  textAlign: "end",
-                  marginTop: "15px",
-                }}
-                htmlType="reset"
-              >
+              <Button type="" size="large" htmlType="reset">
                 Clear Entries
               </Button>
             </div>
-          </Form>
+          </form>
         </div>
-      }
       </div>
-      
-    </div>
+    </>
   );
 };
 

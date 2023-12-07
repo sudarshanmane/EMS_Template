@@ -295,9 +295,68 @@ const Sidebar = () => {
                         className={
                           pathname.includes("card-approval") ? "active" : ""
                         }
-                        to="/home/cardapproval"
+                        to="/home/cardapprovedlist"
                       >
-                        Card Approval{" "}
+                        Approved Cards{" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("card-hold") ? "active" : ""
+                        }
+                        to="/home/cardholdlist"
+                      >
+                        Holded Cards{" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("card-rejected") ? "active" : ""
+                        }
+                        to="/home/cardrejectlist"
+                      >
+                        Rejected Cards{" "}
+                      </Link>
+                    </li>
+                  </ul>
+                ) : (
+                  ""
+                )}
+              </li>
+
+              <li className="submenu">
+                <Link
+                  to="#"
+                  className={isSideMenu == "accountingcode" ? "subdrop" : ""}
+                  onClick={() =>
+                    toggleSidebar(isSideMenu == "accountingcode" ? "" : "accountingcode")
+                  }
+                >
+                  <i className="la la-credit-card" />{" "}
+                  <span>Accounting Code</span> <span className="menu-arrow" />
+                </Link>
+                {isSideMenu == "accountingcode" ? (
+                  <ul>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("accountingcode") ? "active" : ""
+                        }
+                        to="/home/accountingcodepanel"
+                      >
+                       Account Code{" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("accountingcodegroups") ? "active" : ""
+                        }
+                        to="/home/accountingcodegrouppanel"
+                      >
+                        Account Code Group{" "}
                       </Link>
                     </li>
                   </ul>

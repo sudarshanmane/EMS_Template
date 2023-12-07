@@ -11,6 +11,7 @@ import ExpenseItemSetup from "../../_components/screens/ExpenseItemSetup";
 import AddExternalAccountCode from "../../_components/screens/AddExternalAccountCode";
 import ProfileForm from "../../_components/screens/ProfileForm";
 import ChangePasswordForm from "../../_components/screens/ChangePasswordForm";
+import CodeAccountGroup from "../../_components/screens/CodeAccountGroup";
 import CompanyPanel from "../../_components/panels/CompanyPanel";
 import ExpensePanel from "../../_components/panels/ExpensePanel";
 import CategoryTypePanel from "../../_components/panels/CategoryTypePanel";
@@ -20,9 +21,15 @@ import ExpenseApprovalManager from "../../_components/panels/ExpenseApprovalMana
 import ExpenseItemizationPanel from "../../_components/panels/ExpenseItemizationPanel";
 import ExpenseItemSetupPanel from "../../_components/panels/ExpenseItemSetupPanel";
 import ExternalAccountPanel from "../../_components/panels/ExternalAccountPanel";
+import AccountCodePanel from "../../_components/panels/AccountCodePanel";
+import CardApprovedlist from "../../_components/panels/CardApprovedlist";
+import CardHoldList from "../../_components/panels/CardholdList";
+import CardRejectList from "../../_components/panels/CardRejectList";
+import AccountingCodeGroupPanel from "../../_components/panels/AccountingCodeGroupPanel";
 import ClientProfile from "../../MainPage/Pages/Profile/clientprofile";
 import EmployeeProfile from "../../MainPage/Pages/Profile/employeeprofile";
 import ExpenseReport from "../../MainPage/HR/Reports/expensereport";
+
 
 const Navigates = () => {
   return (
@@ -52,6 +59,15 @@ const Navigates = () => {
           <Route path="client-profile" element={<ClientProfile></ClientProfile>}></Route>
           <Route path="employee-profile" element={<EmployeeProfile></EmployeeProfile>}></Route>
           <Route path="expense-reports" element={<ExpenseReport></ExpenseReport>}></Route>
+          <Route path="accountingcodepanel" element={<AccountCodePanel></AccountCodePanel>}></Route>
+          <Route path="accountingcodegrouppanel" element={<AccountingCodeGroupPanel></AccountingCodeGroupPanel>}></Route>
+          <Route path="codegroup" element={<CodeAccountGroup></CodeAccountGroup>}></Route>
+          <Route path="cardapprovedlist" element={<CardApprovedlist></CardApprovedlist>}></Route>
+          <Route path="cardholdlist" element={<CardHoldList></CardHoldList>}></Route>
+          <Route path="cardrejectlist" element={<CardRejectList></CardRejectList>}></Route>
+
+
+
         </Route>
 
         {/* <Route path="addusers" element={<Users></Users>}></Route> 

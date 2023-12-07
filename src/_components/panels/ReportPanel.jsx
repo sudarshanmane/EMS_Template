@@ -80,27 +80,32 @@ const ReportPanel = () => {
       title: "Expense Category",
       dataIndex: "expense_name",
       key: "expense_name",
+      sorter: (a, b) => a.name.length - b.name.length,
     },
     {
       title: "Amount",
       dataIndex: "expense_amt",
       key: "expense_amt",
+      sorter: (a, b) => a.name.length - b.name.length,
     },
     {
       title: "Report Date",
       dataIndex: "created_date",
       key: "created_date",
+      sorter: (a, b) => a.name.length - b.name.length,
     },
     {
       title: "Expense Date",
       dataIndex: "exp_date",
       key: "exp_date",
+      sorter: (a, b) => a.name.length - b.name.length,
     },
 
     {
       title: "Balance",
       dataIndex: "balance_com",
       key: "balance_com",
+      sorter: (a, b) => a.name.length - b.name.length,
     },
   ];
 

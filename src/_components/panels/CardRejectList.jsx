@@ -24,6 +24,7 @@ import {
   exportExpenseListAction,
   getManagerListAction,
   getexpensePanelListAction,
+  managercardRejectAction,
   managercardapprovelAction,
 } from "../../store/Action/Actions";
 import { useDispatch, useSelector } from "react-redux";
@@ -41,7 +42,7 @@ import Offcanvas from "../../Entryfile/offcanvance";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const CardApprovedlist = () => {
+const CardRejectList = () => {
   const [allExpense, setAllExpense] = useState([]);
 
   const [paginationCount, setPaginationCount] = useState({
@@ -54,16 +55,15 @@ const CardApprovedlist = () => {
   const [managerList, setManagerList] = useState([]);
   //  const [expensePanelUrl,setExpensePanelUrl  ] = useState(URLS.GET_EXPENSE_PANEL_URL)
   const [searchTerm, setSearchTerm] = useState("");
-  const [url, setUrl] = useState(URLS.MANAGER_CARD_APPROVED_LIST_URL);
+  const [url, setUrl] = useState(URLS.MANAGER_CARD_REJECT_LIST_URL);
   const dispatch = useDispatch();
   const [invoiceModalVisible, setInvoiceModalVisible] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState(null);
   const [viewCompanyData, setViewCompanyData] = useState(null);
   const [isAddFormVisible, setIsAddFormVisible] = useState(false);
   const [editItemData, setEditItemData] = useState(null);
-
-  const managerapprovedSelector = useSelector(
-    (state) => state.managerapprovelResult
+  const managerRejectSelector = useSelector(
+    (state) => state.managerrejectResult
   );
 
   const [focused, setFocused] = useState(false);
@@ -78,11 +78,11 @@ const CardApprovedlist = () => {
   };
 
   function getPageDetails(url) {
-    dispatch(managercardapprovelAction({ payload: {}, URL: url }));
+    dispatch(managercardRejectAction({ payload: {}, URL: url }));
   }
 
   function changePage(page, pageSize) {
-    let urlNew = URLS.MANAGER_CARD_APPROVED_LIST_URL + "?page=" + page;
+    let urlNew = URLS.MANAGER_CARD_REJECT_LIST_URL + "?page=" + page;
     setUrl(urlNew);
     getPageDetails(urlNew);
   }
@@ -90,15 +90,15 @@ const CardApprovedlist = () => {
     getPageDetails(url);
   }, []);
 
-  function fetchcardapprovelpanel(url) {
-    dispatch(managercardapprovelAction({ payload: {}, URL: url }));
+  function fetchcardRejectpanel(url) {
+    dispatch(managercardRejectAction({ payload: {}, URL: url }));
   }
 
   const inputSearchRef = useRef();
   function handleSearch() {
     let searchTerm = inputSearchRef.current.input.value;
     setSearchTerm(searchTerm);
-    let urlForSearch = URLS.MANAGER_CARD_APPROVED_LIST_URL;
+    let urlForSearch = URLS.MANAGER_CARD_REJECT_LIST_URL;
     const updatedUrl = searchTerm
       ? `${urlForSearch}?search=${searchTerm}`
       : url;
@@ -106,35 +106,108 @@ const CardApprovedlist = () => {
   }
 
   useEffect(() => {
-    fetchcardapprovelpanel(url);
+    fetchcardRejectpanel(url);
   }, []);
 
   useEffect(() => {
-    if (managerapprovedSelector) {
-      const allExpense = managerapprovedSelector.results.map(
+    if (managerRejectSelector) {
+      const allExpense = managerRejectSelector.results.map(
         (element, index) => ({
           srno: index + 1,
           id: element.id,
           employee: element.employee?.username,
+          // expense_name: element.expense_name.item_name,
           description: element.description,
           total_amt: element.total_amt,
+          // paid_by:element.paid_by,
           expense_date: element.expense_date,
+          // attachment:element.attachment,
+          // approved_amt:element.approved_amt,
           status: element.status,
+
+          // approved_by:element.approved_by
         })
       );
 
       setAllExpense(allExpense);
       let pageObj = { ...paginationCount };
-      pageObj.count = managerapprovedSelector.count;
-      pageObj.page_size = managerapprovedSelector.page_size;
+      pageObj.count = managerRejectSelector.count;
+      pageObj.page_size = managerRejectSelector.page_size;
       setPaginationCount(pageObj);
     }
-  }, [managerapprovedSelector]);
+  }, [managerRejectSelector]);
 
   const handleView = (record) => {
     setViewCompanyData(record);
     setIsAddFormVisible(false);
   };
+
+  //hendling submitbutton in expense column functionality
+
+  //FETCH MANAGER LIST ON MODELDROPDOWN
+
+  // const managerListSelector = useSelector(
+  //   (state) => state.getManagerListResult
+  // );
+
+  // useEffect(() => {
+  //   dispatch(getManagerListAction({}));
+  // }, []);
+
+  // useEffect(() => {
+  //   if (managerListSelector) {
+  //     console.log(managerListSelector);
+  //     const ManagerResult = managerListSelector.results.map((element) => {
+  //       return { label: element.username, value: element.id };
+  //     });
+  //     setManagerList(ManagerResult);
+  //   }
+  // }, [managerListSelector]);
+
+  // //update or edit functionality
+  // const updateExpensepanelResultSelector = useSelector(
+  //   (state) => state.updateexpenseResult
+  // );
+  // console.log(updateExpensepanelResultSelector);
+  // useEffect(() => {
+  //   if (updateExpensepanelResultSelector) {
+  //     setIsAddFormVisible(false);
+  //     getPageDetails(url);
+  //   }
+  // }, [updateExpensepanelResultSelector]);
+
+  // const showApproveModal = (record) => {
+  //   setSelectedRecord(record);
+  //   setApproveModalVisible(true);
+  // };
+
+  //  //export button functionality
+  // function downloadExlsFiles() {
+  //   dispatch(
+  //     exportExpenseListAction({
+  //       URL: URLS.GET_EXPENSE_PANEL_URL + "?export=csv",
+  //     })
+  //   );
+  // }
+
+  // const csvUrlSelector = useSelector(
+  //   (state) => state.exportexpenselistResult
+  // );
+
+  // useEffect(() => {
+  //   if (csvUrlSelector) {
+  //     let csvURL = URLS.BASE_URL_EXPORT + csvUrlSelector.csv_file_name;
+  //     console.log("csvURLcsvURL", csvURL);
+
+  //     let a = document.createElement("a");
+  //     a.setAttribute("href", csvURL);
+  //     a.setAttribute("download", "");
+  //     a.textContent = "Download CSV File";
+
+  //     document.body.appendChild(a);
+  //     a.click();
+  //   }
+  // }, [csvUrlSelector]);
 
   return (
     <>
@@ -148,7 +221,7 @@ const CardApprovedlist = () => {
                   <li className="breadcrumb-item">
                     <Link to="/app/main/dashboard">Dashboard</Link>
                   </li>
-                  <li className="breadcrumb-item active">Approved Cards</li>
+                  <li className="breadcrumb-item active">Rejected Cards</li>
                 </ul>
               </div>
             </div>
@@ -157,7 +230,7 @@ const CardApprovedlist = () => {
             <div className="col-sm-12">
               <div className="card mb-0">
                 <div className="card-header">
-                  <h4 className="card-title mb-0">Approved Cards</h4>
+                  <h4 className="card-title mb-0">Rejected Cards</h4>
                 </div>
                 <div className="card-body">
                   <div className="table-responsive">
@@ -231,26 +304,27 @@ const CardApprovedlist = () => {
                         </Link>
                       </div>
                     </div>
-                    {/* Search Filter */}
 
                     {/* <Input
-          placeholder="Search..."
-          style={{ width: "100%" }}
-          value={searchTerm}
-          onChange={(e) => handleSearch(e.target.value)}
-          ref={inputSearchRef}
-        />
-        <Button type="primary" icon={<SearchOutlined />}>
-          Search
-        </Button>
-        <Button
-          type="primary"
-          icon={<DownloadOutlined />}
-          // onClick={() => downloadExlsFiles()}
-        >
-          Export
-        </Button> */}
-
+        placeholder="Search..."
+        style={{ width: '100%' }}
+        value={searchTerm}
+        onChange={(e) => handleSearch(e.target.value)}
+        ref={inputSearchRef} 
+      />
+      <Button
+        type="primary"
+        icon={<SearchOutlined />}
+      >
+        Search
+      </Button>
+      <Button
+        type="primary"
+        icon={<DownloadOutlined />}
+        // onClick={() => downloadExlsFiles()}
+      >
+        Export
+      </Button> */}
                     <Table
                       dataSource={allExpense}
                       pagination={{
@@ -277,7 +351,11 @@ const CardApprovedlist = () => {
                           key: "username",
                           sorter: (a, b) => a.name.length - b.name.length,
                         },
-
+                        // {
+                        //   title: "Expense Name",
+                        //   dataIndex: "expense_name",
+                        //   key: "item_name",
+                        // },
                         {
                           title: "Description",
                           dataIndex: "description",
@@ -290,13 +368,18 @@ const CardApprovedlist = () => {
                           key: "total_amt",
                           sorter: (a, b) => a.name.length - b.name.length,
                         },
-
+                        // {
+                        //   title: "Paid By",
+                        //   dataIndex: "paid_by",
+                        //   key: "paid_by",
+                        // },
                         {
                           title: "Expense Date",
                           dataIndex: "expense_date",
                           key: "expense_date",
                           sorter: (a, b) => a.name.length - b.name.length,
                         },
+
                         {
                           title: "Status",
                           dataIndex: "status",
@@ -342,7 +425,6 @@ const CardApprovedlist = () => {
                             </div>
                           ),
                         },
-
                         {
                           title: "Actions",
                           key: "actions",
@@ -404,4 +486,4 @@ const CardApprovedlist = () => {
   );
 };
 
-export default CardApprovedlist;
+export default CardRejectList;

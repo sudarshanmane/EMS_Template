@@ -20,6 +20,8 @@ import {
   itemRender,
 } from "../../MainPage/paginationfunction";
 import Offcanvas from "../../Entryfile/offcanvance";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const CompanyPanel = () => {
   const dispatch = useDispatch();
@@ -37,7 +39,17 @@ const CompanyPanel = () => {
   });
   const url = URLS.GET_COMPANY_LIST_URL;
   const updateUrl = URLS.UPDATE_COMPANY_LIST_URL;
+  const [selectedDate1, setSelectedDate1] = useState(null);
+  const [selectedDate2, setSelectedDate2] = useState(null);
 
+  const handleDateChange1 = (date) => {
+    setSelectedDate1(date);
+  };
+  const handleDateChange2 = (date) => {
+    setSelectedDate2(date);
+  };
+
+  const [focused, setFocused] = useState(false);
   const companyPanelSelector = useSelector((state) => state.getcompanylist);
 
   function getPageDetails(url) {
@@ -114,7 +126,38 @@ const CompanyPanel = () => {
       title: "Postal Code",
       dataIndex: "postal_code",
       key: "postal_code",
+      sorter: (a, b) => a.office.length - b.office.length,
     },
+    // {
+    //   title: "Action",
+    //   render: () => (
+    //     <div className="dropdown dropdown-action text-end">
+    //       <Link
+    //         to="#"
+    //         className="action-icon dropdown-toggle"
+    //         data-bs-toggle="dropdown"
+    //         aria-expanded="false">
+    //         <i className="material-icons">more_vert</i>
+    //       </Link>
+    //       <div className="dropdown-menu dropdown-menu-right">
+    //         <Link
+    //           className="dropdown-item"
+    //           to="#"
+    //           data-bs-toggle="modal"
+    //           data-bs-target="#edit_leave">
+    //           <i className="fa fa-pencil m-r-5" /> Edit
+    //         </Link>
+    //         <Link
+    //           className="dropdown-item"
+    //           to="#"
+    //           data-bs-toggle="modal"
+    //           data-bs-target="#delete_approve">
+    //           <i className="fa fa-trash m-r-5" /> Delete
+    //         </Link>
+    //       </div>
+    //     </div>
+    //   ),
+    // },
     {
       title: "Actions",
       key: "actions",
@@ -221,6 +264,65 @@ const CompanyPanel = () => {
                 </div>
                 <div className="card-body">
                   <div className="table-responsive">
+                    {/* Search Filter */}
+                    <div className="row filter-row">
+                      <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <div
+                          className={
+                            focused
+                              ? "input-block form-focus focused"
+                              : "input-block form-focus"
+                          }
+                        >
+                          <input
+                            type="text"
+                            className="form-control floating"
+                            onFocus={() => setFocused(true)}
+                            onBlur={() => setFocused(false)}
+                          />
+                          <label className="focus-label">Employee Name</label>
+                        </div>
+                      </div>
+
+                      <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <div className="input-block form-focus select-focus">
+                          <div className="cal-icon">
+                            <DatePicker
+                              selected={selectedDate1}
+                              onChange={handleDateChange1}
+                              className="form-control floating"
+                              placeholderText="2023-07-14"
+                              type="date"
+                            />
+                            <label className="focus-label">From</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <div className="input-block form-focus select-focus">
+                          <div className="cal-icon">
+                            <DatePicker
+                              selected={selectedDate2}
+                              onChange={handleDateChange2}
+                              className="form-control floating"
+                              placeholderText="2023-07-14"
+                              type="date"
+                            />
+                            <label className="focus-label">To</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <Link
+                          to="#"
+                          className="btn btn-success btn-block w-100"
+                        >
+                          {" "}
+                          Search{" "}
+                        </Link>
+                      </div>
+                    </div>
+                    {/* /Search Filter */}
                     <Table
                       pagination={{
                         // total: allCompanyList.length,
@@ -240,7 +342,11 @@ const CompanyPanel = () => {
                       // onChange={this.handleTableChange}
                     />
                     <Modal
-                      title={editItemData ? "Update Company Details" : "Add Company Details"}
+                      title={
+                        editItemData
+                          ? "Update Company Details"
+                          : "Add Company Details"
+                      }
                       open={isAddFormVisible}
                       onCancel={() => setIsAddFormVisible(false)}
                       onOk={() => setIsAddFormVisible(false)}
@@ -260,7 +366,11 @@ const CompanyPanel = () => {
                       Are you sure you want to delete this item?
                     </Modal>
                     <Modal
-                      title={viewCompanyData ? "View Company" : "Update Company Details"}
+                      title={
+                        viewCompanyData
+                          ? "View Company"
+                          : "Update Company Details"
+                      }
                       open={viewCompanyData}
                       onCancel={() => {
                         setIsAddFormVisible(false);
@@ -284,7 +394,7 @@ const CompanyPanel = () => {
                           isAddForm={editItemData}
                         />
                       )}
-      </Modal>
+                    </Modal>
                   </div>
                 </div>
               </div>

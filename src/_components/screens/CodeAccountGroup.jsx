@@ -4,64 +4,80 @@ import { Button, Form, Input, Row, Col, Upload, Modal,Select } from "antd";
 // import { getUser } from "../../utils/sessionStorage";
 // import { useNavigate } from "react-router-dom";
 // import { URLS } from "../../globals/urls";
-// const { Option } = Select; 
+// const { Option } = Select;
+import { Helmet } from "react-helmet";
+import { Link } from "react-router-dom";
+import Offcanvas from "../../Entryfile/offcanvance"; 
 
 const CodeAccountGroup = () => {
   
    
   return (
-    <div>
-      
-      <div className="add_user_form_container">
-      <div className="add_user_form custom-form">
-        <div className="expense_report_header" >
-          <h2>Add Accounting Code Group</h2>
-        </div><br />
-        <Form layout="vertical" name="complex-form">
-          <Row gutter={[16, 24]}>
-          <Col className="gutter-row label-static" lg={6} xs={24}>
-              <Form.Item
-                name="Accounting_code_group "
-                label="Accounting Code Group Name"
-                
-              >
-                  <Input size="large" />
-              </Form.Item>
-            </Col>
-            </Row>
-          <div style={{ textAlign: "end" }}>
-            <Button
-              size="large"
-              htmlType="submit"
-              type="primary"
-              style={{
-                textAlign: "end",
-              }}
-            >
-              Add Accounting Code Group
-            </Button>
-
-            <Button
-            size="large"
-            htmlType="reset"
-            type=""
-            style={{
-              textAlign: "end",
-              marginTop: "15px",
-            }}
-            // onClick={selectedAction}
-          >
-            Clear Entries
-          </Button>
-            
+    <>
+      <div className="page-wrapper">
+        <Helmet>
+          <title>Horizontal Form - HRMS Admin Template</title>
+          <meta name="description" content="Login page" />
+        </Helmet>
+        <div className="content container-fluid">
+          {/* Page Header */}
+          <div className="page-header">
+            <div className="row">
+              <div className="col">
+                <h3 className="page-title">Add Accounting Code Group</h3>
+                <ul className="breadcrumb">
+                  <li className="breadcrumb-item">
+                    <Link to="/app/main/dashboard">Dashboard</Link>
+                  </li>
+                  <li className="breadcrumb-item active">Add Accounting Code Group</li>
+                </ul>
+              </div>
+            </div>
           </div>
-        </Form>
-      </div>
-    </div>
+          {/* /Page Header */}
 
-      
-    </div>
-  )
+          <div className="row">
+            <div className="col-md-12">
+              <div className="card">
+                <div className="card-header">
+                  <h4 className="card-title mb-0">Expense Form</h4>
+                </div>
+                <div className="card-body">
+                  
+                  <form action="#">
+                    <div className="row">
+                      <div className="col-xl-6">
+                      
+                        <div className="input-block row">
+                          <label
+                            className="col-lg-3 col-form-label"
+                            name="description"
+                          >
+                           Accounting Code Group Name
+                          </label>
+                          <div className="col-lg-9">
+                            <input type="text" className="form-control" />
+                          </div>
+                        </div>
+                       
+                      </div>
+                    </div>
+
+                    <div className="text-end">
+                      <button type="submit" className="btn btn-primary">
+                        Submit
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <Offcanvas />
+    </>
+  );
 }
 
 export default CodeAccountGroup
