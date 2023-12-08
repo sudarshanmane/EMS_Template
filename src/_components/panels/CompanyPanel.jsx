@@ -128,36 +128,7 @@ const CompanyPanel = () => {
       key: "postal_code",
       sorter: (a, b) => a.office.length - b.office.length,
     },
-    // {
-    //   title: "Action",
-    //   render: () => (
-    //     <div className="dropdown dropdown-action text-end">
-    //       <Link
-    //         to="#"
-    //         className="action-icon dropdown-toggle"
-    //         data-bs-toggle="dropdown"
-    //         aria-expanded="false">
-    //         <i className="material-icons">more_vert</i>
-    //       </Link>
-    //       <div className="dropdown-menu dropdown-menu-right">
-    //         <Link
-    //           className="dropdown-item"
-    //           to="#"
-    //           data-bs-toggle="modal"
-    //           data-bs-target="#edit_leave">
-    //           <i className="fa fa-pencil m-r-5" /> Edit
-    //         </Link>
-    //         <Link
-    //           className="dropdown-item"
-    //           to="#"
-    //           data-bs-toggle="modal"
-    //           data-bs-target="#delete_approve">
-    //           <i className="fa fa-trash m-r-5" /> Delete
-    //         </Link>
-    //       </div>
-    //     </div>
-    //   ),
-    // },
+   
     {
       title: "Actions",
       key: "actions",
@@ -280,7 +251,7 @@ const CompanyPanel = () => {
                             onFocus={() => setFocused(true)}
                             onBlur={() => setFocused(false)}
                           />
-                          <label className="focus-label">Employee Name</label>
+                          <label className="focus-label">Search</label>
                         </div>
                       </div>
 
@@ -319,6 +290,16 @@ const CompanyPanel = () => {
                         >
                           {" "}
                           Search{" "}
+                        </Link>
+                      </div>
+                      <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <Link
+                          to="#"
+                          onClick={() => downloadExlsFiles()}
+                          className="btn btn-warning btn-block w-100"
+                        >
+                          {" "}
+                          Export{" "}
                         </Link>
                       </div>
                     </div>

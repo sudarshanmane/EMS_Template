@@ -101,9 +101,9 @@ const Sidebar = () => {
                     <li>
                       <Link
                         className={
-                          pathname.includes("role-user") ? "active" : ""
+                          pathname.includes("userpanel") ? "active" : ""
                         }
-                        to="/home/add-user"
+                        to="/home/userpanel"
                       >
                         Add User
                       </Link>

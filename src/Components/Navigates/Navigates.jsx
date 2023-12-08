@@ -29,7 +29,8 @@ import AccountingCodeGroupPanel from "../../_components/panels/AccountingCodeGro
 import ClientProfile from "../../MainPage/Pages/Profile/clientprofile";
 import EmployeeProfile from "../../MainPage/Pages/Profile/employeeprofile";
 import ExpenseReport from "../../MainPage/HR/Reports/expensereport";
-
+import UserPanel from "../../_components/panels/UserPanel";
+import Users from "../../_components/screens/Users"
 
 const Navigates = () => {
   return (
@@ -65,6 +66,8 @@ const Navigates = () => {
           <Route path="cardapprovedlist" element={<CardApprovedlist></CardApprovedlist>}></Route>
           <Route path="cardholdlist" element={<CardHoldList></CardHoldList>}></Route>
           <Route path="cardrejectlist" element={<CardRejectList></CardRejectList>}></Route>
+          <Route path="userpanel" element={<UserPanel></UserPanel>}></Route>
+          <Route path="addusers" element={<Users></Users>}></Route>
 
 
 

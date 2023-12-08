@@ -23,10 +23,10 @@ import {
   setStoreFeildFalse,
   setUpdateRoleSuccessFalse,
   updateRoleAction,
-} from "../../../../store/Actions/Actions";
-import { URLS } from "../../../../Globals/URLS";
+} from "../../store/Action/Actions";
+import { URLS } from "../../Globals/URLS";
 import { useSelector } from "react-redux";
-import { APP_CONSTANTS } from "../../../../Globals/AppConstants";
+import { APP_CONSTANTS } from "../../Globals/AppConstants";
 import { DeleteOutlined } from "@ant-design/icons";
 
 const roleActions = APP_CONSTANTS.ROLE_ACTIONS;
