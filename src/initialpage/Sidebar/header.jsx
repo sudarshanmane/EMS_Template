@@ -30,9 +30,9 @@ const Header = (props) => {
   };
 
   let pathname = location.pathname;
-  const { loginvalue } = useSelector((state) => state.user);
-  const UserName = loginvalue?.email?.split("@")[0];
-  const ProfileName = UserName?.charAt(0).toUpperCase() + UserName?.slice(1);
+  // const { loginvalue } = useSelector((state) => state.user);
+  // const UserName = loginvalue?.email?.split("@")[0];
+  // const ProfileName = UserName?.charAt(0).toUpperCase() + UserName?.slice(1);
 
   return (
     <div className="header" style={{ right: "0px" }}>
@@ -228,14 +228,14 @@ const Header = (props) => {
               <img src={Avatar_21} alt="" />
               <span className="status online" />
             </span>
-            <span>{ProfileName ? ` ${ProfileName}` : "Admin"}</span>
+            {/* <span>{ProfileName ? ` ${ProfileName}` : "Admin"}</span> */}
           </Link>
           <div className="dropdown-menu dropdown-menu-end">
             <Link className="dropdown-item" to="/home/ProfileForm">
-            Update Profile
+              Update Profile
             </Link>
             <Link className="dropdown-item" to="/home/ChangePasswordForm">
-            Change Password
+              Change Password
             </Link>
             <Link className="dropdown-item" to="/login">
               Logout
@@ -259,7 +259,7 @@ const Header = (props) => {
             Update Profile
           </Link>
           <Link className="dropdown-item" to="/home/ChangePasswordForm">
-           Change Password
+            Change Password
           </Link>
           <Link className="dropdown-item" to="/login">
             Logout

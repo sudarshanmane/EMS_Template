@@ -199,6 +199,19 @@ export const RootReducer = (state = initialState, action) => {
         addexpenseresult: action.result,
       };
 
+    case API_CONSTANTS.ADD_REPORT:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.ADD_REPORT_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        addreportresult: action.result,
+      };
+
     case API_CONSTANTS.GET_ROLE:
       return {
         ...state,
@@ -262,7 +275,7 @@ export const RootReducer = (state = initialState, action) => {
         aboutus: action.result,
       };
 
-      case API_CONSTANTS.GET_ABOUTUS:
+    case API_CONSTANTS.GET_ABOUTUS:
       return {
         ...state,
         loding: true,
@@ -298,7 +311,7 @@ export const RootReducer = (state = initialState, action) => {
         contactus: action.result,
       };
 
-      case API_CONSTANTS.GET_CONTACTUS:
+    case API_CONSTANTS.GET_CONTACTUS:
       return {
         ...state,
         loding: true,
@@ -533,13 +546,13 @@ export const RootReducer = (state = initialState, action) => {
         loding: true,
       };
 
-      case API_CONSTANTS.EXPENSE_APPROVED_PPANEL_MANGER_SUCCESS:
-        return {
-          ...state,
-          loading: false,
-          expenseapprovedpanelResult: action.result, // Update with fetched data
-        };
-      
+    case API_CONSTANTS.EXPENSE_APPROVED_PPANEL_MANGER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        expenseapprovedpanelResult: action.result, // Update with fetched data
+      };
+
     case API_CONSTANTS.EXPORT_BUTTON_ACCOUNTINGCODE:
       return {
         ...state,
@@ -1029,91 +1042,90 @@ export const RootReducer = (state = initialState, action) => {
         loding: false,
         ownExpenseHoldListResult: action.result,
       };
-      case API_CONSTANTS.DELETE_CATEGORY_PANEL:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.DELETE_CATEGORY_PANEL_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          deletecategoryResult: action.result,
-        };
-        case API_CONSTANTS.DELETE_EXPENSEITEMIZAION_PANEL:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.DELETE_EXPENSEITEMIZAION_PANEL_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          deleteexpenseitemizationResult: action.result,
-        };
-        case API_CONSTANTS.DELETE_ACCOUNTINGCODE_PANEL:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.DELETE_ACCOUNTINGCODE_PANEL_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          deleteaccountingcodeResult: action.result,
-        };
-        case API_CONSTANTS.DELETE_EXPENSE_PANEL:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.DELETE_EXPENSE_PANEL_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          deleteexpensepanelResult: action.result,
-        };
-        case API_CONSTANTS.MANAGER_CARD_APPROVED_LIST:
-          return {
-            ...state,
-            loding: true,
-          };
-    
-        case API_CONSTANTS.MANAGER_CARD_APPROVED_LIST_SUCCESS:
-          return {
-            ...state,
-            loding: false,
-            managerapprovelResult: action.result,
-          };
-          case API_CONSTANTS.MANAGER_CARD_REJECT_LIST:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.MANAGER_CARD_REJECT_LIST_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          managerrejectResult: action.result,
-        };
-        case API_CONSTANTS.MANAGER_CARD_HOLD_LIST:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.MANAGER_CARD_HOLD_LIST_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          managerholdResult: action.result,
-        };
-    
+    case API_CONSTANTS.DELETE_CATEGORY_PANEL:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.DELETE_CATEGORY_PANEL_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        deletecategoryResult: action.result,
+      };
+    case API_CONSTANTS.DELETE_EXPENSEITEMIZAION_PANEL:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.DELETE_EXPENSEITEMIZAION_PANEL_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        deleteexpenseitemizationResult: action.result,
+      };
+    case API_CONSTANTS.DELETE_ACCOUNTINGCODE_PANEL:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.DELETE_ACCOUNTINGCODE_PANEL_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        deleteaccountingcodeResult: action.result,
+      };
+    case API_CONSTANTS.DELETE_EXPENSE_PANEL:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.DELETE_EXPENSE_PANEL_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        deleteexpensepanelResult: action.result,
+      };
+    case API_CONSTANTS.MANAGER_CARD_APPROVED_LIST:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.MANAGER_CARD_APPROVED_LIST_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        managerapprovelResult: action.result,
+      };
+    case API_CONSTANTS.MANAGER_CARD_REJECT_LIST:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.MANAGER_CARD_REJECT_LIST_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        managerrejectResult: action.result,
+      };
+    case API_CONSTANTS.MANAGER_CARD_HOLD_LIST:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.MANAGER_CARD_HOLD_LIST_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        managerholdResult: action.result,
+      };
 
     case API_CONSTANTS.OWN_EXPENSE_APPROVE_LIST:
       return {
@@ -1127,19 +1139,19 @@ export const RootReducer = (state = initialState, action) => {
         loding: false,
         ownExpenseApproveResult: action.result,
       };
-      case API_CONSTANTS.EXPORT_COMPANY_PANEL:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.EXPORT_COMPANY_PANEL_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          exportcompanyResult: action.result,
-        };
-  
+    case API_CONSTANTS.EXPORT_COMPANY_PANEL:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.EXPORT_COMPANY_PANEL_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        exportcompanyResult: action.result,
+      };
+
     default:
       return state;
   }

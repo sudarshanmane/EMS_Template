@@ -157,6 +157,23 @@ function addExpense(payload) {
   };
 }
 
+function addReport(payload) {
+  return {
+    type: API_CONSTANTS.ADD_REPORT,
+    payload,
+    URL: URLS.ADD_REPORT_URL,
+    contentType: contentType.json,
+  };
+}
+function getReportList(payload) {
+  return {
+    type: API_CONSTANTS.GET_REPORT_LIST,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
 function getExpenseTypePanelAction(payload) {
   return {
     type: API_CONSTANTS.GET_EXPENSE_TYPE_PANEL,
@@ -232,14 +249,7 @@ function updateCompanyList(payload) {
     contentType: contentType.json,
   };
 }
-function getReportList(payload) {
-  return {
-    type: API_CONSTANTS.GET_REPORT_LIST,
-    payload: payload.payload,
-    URL: payload.URL,
-    contentType: contentType.json,
-  };
-}
+
 // function getaccountingcodePanelAction(payload) {
 //   return {
 //     type: API_CONSTANTS.GET_ACCOUNTINGCODE_PANEL,
@@ -722,7 +732,7 @@ function ownExpenseRejectAction(payload) {
 function ownExpenseHoldAction(data) {
   return {
     type: API_CONSTANTS.OWN_EXPENSE_HOLD_LIST,
-    payload:data,
+    payload: data,
     URL: URLS.OWN_EXPENSE_HOLD_URL,
     contentType: contentType.json,
   };
@@ -814,6 +824,7 @@ export {
   getItemListonItemization,
   EXpenseItemizationsubmit,
   addExpense,
+  addReport,
   updateProfileuser,
   getExpenseTypePanelAction,
   getExternalAccountCodePanelAction,

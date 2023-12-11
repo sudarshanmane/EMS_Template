@@ -3,7 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import PrivateRoute from "../Screens/Login/PrivateRoute";
 import Roleadd from "../Screens/RoleAdd/Roleadd";
 import Adduser from "../../_components/modelbox/Adduser";
-import Reports from "../../_components/screens/Reports";
+// import Reports from "../../_components/screens/Reports";
 import Card from "../../_components/screens/Card";
 import Addexpense from "../../_components/screens/Addexpense";
 import Expenseitemization from "../../_components/screens/ExpenseItemization";
@@ -28,9 +28,10 @@ import CardRejectList from "../../_components/panels/CardRejectList";
 import AccountingCodeGroupPanel from "../../_components/panels/AccountingCodeGroupPanel";
 import ClientProfile from "../../MainPage/Pages/Profile/clientprofile";
 import EmployeeProfile from "../../MainPage/Pages/Profile/employeeprofile";
-import ExpenseReport from "../../MainPage/HR/Reports/expensereport";
+import ExpenseReportPanel from "../../_components/panels/ExpenseReportPanel";
 import UserPanel from "../../_components/panels/UserPanel";
 import Users from "../../_components/screens/Users"
+import AddReport from "../../_components/screens/AddReport";
 
 const Navigates = () => {
   return (
@@ -40,7 +41,7 @@ const Navigates = () => {
         <Route path="/home" element={<PrivateRoute></PrivateRoute>}>
           <Route path="role-add" element={<Roleadd></Roleadd>}></Route>
           <Route path="add-user" element={<Adduser></Adduser>}></Route>
-          <Route path="reports" element={<Reports></Reports>}></Route>
+          {/* <Route path="reports" element={<Reports></Reports>}></Route> */}
           <Route path="companyPanel" element={<CompanyPanel></CompanyPanel>}></Route>
           <Route path="applyforcard" element={<Card></Card>}></Route>
           <Route path="addexpense" element={<Addexpense></Addexpense>}></Route>
@@ -59,7 +60,7 @@ const Navigates = () => {
           <Route path="ChangePasswordForm" element={<ChangePasswordForm></ChangePasswordForm>}></Route>
           <Route path="client-profile" element={<ClientProfile></ClientProfile>}></Route>
           <Route path="employee-profile" element={<EmployeeProfile></EmployeeProfile>}></Route>
-          <Route path="expense-reports" element={<ExpenseReport></ExpenseReport>}></Route>
+          <Route path="Reports" element={<ExpenseReportPanel></ExpenseReportPanel>}></Route>
           <Route path="accountingcodepanel" element={<AccountCodePanel></AccountCodePanel>}></Route>
           <Route path="accountingcodegrouppanel" element={<AccountingCodeGroupPanel></AccountingCodeGroupPanel>}></Route>
           <Route path="codegroup" element={<CodeAccountGroup></CodeAccountGroup>}></Route>
@@ -68,6 +69,8 @@ const Navigates = () => {
           <Route path="cardrejectlist" element={<CardRejectList></CardRejectList>}></Route>
           <Route path="userpanel" element={<UserPanel></UserPanel>}></Route>
           <Route path="addusers" element={<Users></Users>}></Route>
+          <Route path="addreport" element={<AddReport></AddReport>}></Route>
+
 
 
 

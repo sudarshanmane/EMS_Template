@@ -226,17 +226,6 @@ const Sidebar = () => {
                         Expense Itemization{" "}
                       </Link>
                     </li>
-                    {/* <li>
-                      <Link
-                        className={
-                          pathname.includes("expenseReports") ? "active" : ""
-                        }
-                        to="/home/dashboard"
-                      >
-                        {" "}
-                        Expense Reports{" "}
-                      </Link>
-                    </li> */}
                     <li>
                       <Link
                         className={
@@ -331,7 +320,9 @@ const Sidebar = () => {
                   to="#"
                   className={isSideMenu == "accountingcode" ? "subdrop" : ""}
                   onClick={() =>
-                    toggleSidebar(isSideMenu == "accountingcode" ? "" : "accountingcode")
+                    toggleSidebar(
+                      isSideMenu == "accountingcode" ? "" : "accountingcode"
+                    )
                   }
                 >
                   <i className="la la-credit-card" />{" "}
@@ -346,13 +337,15 @@ const Sidebar = () => {
                         }
                         to="/home/accountingcodepanel"
                       >
-                       Account Code{" "}
+                        Account Code{" "}
                       </Link>
                     </li>
                     <li>
                       <Link
                         className={
-                          pathname.includes("accountingcodegroups") ? "active" : ""
+                          pathname.includes("accountingcodegroups")
+                            ? "active"
+                            : ""
                         }
                         to="/home/accountingcodegrouppanel"
                       >
@@ -382,75 +375,10 @@ const Sidebar = () => {
                         className={
                           pathname.includes("expense-") ? "active" : ""
                         }
-                        to="/home/expense-reports"
-                      >
-                        {" "}
-                        Expense Report{" "}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className={
-                          pathname.includes("invoice-") ? "active" : ""
-                        }
-                        to="/home/invoice-reports"
-                      >
-                        {" "}
-                        Invoice Report{" "}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className={
-                          pathname.includes("payments-") ? "active" : ""
-                        }
-                        to="/home/payments-reports"
-                      >
-                        {" "}
-                        Payments Report{" "}
-                      </Link>
-                    </li>
-
-                    <li>
-                      <Link
-                        className={pathname.includes("user-") ? "active" : ""}
-                        to="/home/user-reports"
-                      >
-                        {" "}
-                        User Report{" "}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className={
-                          pathname.includes("employee-") ? "active" : ""
-                        }
-                        to="/home/employee-reports"
-                      >
-                        {" "}
-                        Employee Report{" "}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className={
-                          pathname.includes("payslip-") ? "active" : ""
-                        }
-                        to="/home/payslip-reports"
-                      >
-                        {" "}
-                        Payslip Report{" "}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className={
-                          pathname.includes("reports-") ? "active" : ""
-                        }
                         to="/home/Reports"
                       >
                         {" "}
-                        See Reports{" "}
+                        Expense Report{" "}
                       </Link>
                     </li>
                   </ul>
@@ -458,7 +386,6 @@ const Sidebar = () => {
                   ""
                 )}
               </li>
-             
 
               {/* ============================================== */}
 
