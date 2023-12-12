@@ -30,12 +30,7 @@ import { Provider } from "react-redux";
 import userReducer from "./features/users";
 
 import Navigates from "../Components/Navigates/Navigates.jsx";
-
-const store = configureStore({
-  reducer: {
-    user: userReducer,
-  },
-});
+import store from "../store/storeConfiguration.js";
 
 const MainApp = () => {
   return (

@@ -1,86 +1,112 @@
-/* eslint-disable no-undef */
-
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { Layout, Button, Table } from "antd";
+// import ReportPanel from "../../../Panels/ReportPanel";
+import { Link, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { Table } from "antd";
+// import { Table } from "antd";
+import { Avatar_03, Avatar_04 } from "../../../src/Entryfile/imagepath";
 import "antd/dist/antd.min.css";
-import { itemRender, onShowSizeChange } from "../../paginationfunction";
-import Offcanvas from "../../../Entryfile/offcanvance";
-import { getReportList } from "../../../store/Action/Actions";
-import { URLS } from "../../../Globals/URLS";
+import {itemRender,onShowSizeChange} from "../../MainPage/paginationfunction"
+import Offcanvas from "../../../src/Entryfile/offcanvance";
 
-const ExpenseReport = () => {
-  const dispatch = useDispatch();
-  const [focused, setFocused] = useState(false);
+const { Content } = Layout;
 
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const [allReportList, setAllReportList] = useState([]);
-  const [selectedDate1, setSelectedDate1] = useState(null);
-  const [selectedDate2, setSelectedDate2] = useState(null);
+function Reports() {
+  const [fromDate, setFromDate] = useState(null);
+  const [toDate, setToDate] = useState(null);
 
-  const url = URLS.GET_REPORT_LIST_URL;
-
-  const handleDateChange1 = (date) => {
-    setSelectedDate1(date);
-  };
-  const handleDateChange2 = (date) => {
-    setSelectedDate2(date);
+  const handleFromDateChange = (date) => {
+    setFromDate(date);
   };
 
-  useEffect(() => {
-    getPageDetails(url);
-  }, []);
+  const handleToDateChange = (date) => {
+    setToDate(date);
+  };
+  const navigate = useNavigate();
 
-  function getPageDetails(url) {
-    dispatch(getReportList({ payload: {}, URL: url }));
-  }
-
-  function fetchReportData(url) {
-    dispatch(getReportList({ payload: {}, URL: url }));
-  }
-
-  useEffect(() => {
-    fetchReportData(url);
-  }, []);
-
-  const reportPanelSelector = useSelector((state) => state.getreportlist);
-
-  useEffect(() => {
-    if (reportPanelSelector) {
-      const reportList = [reportPanelSelector]?.map((element) => {
-        return {
-          description: element.description,
-          start_date: element.start_date,
-          end_date: element.end_date,
-        };
-      });
-
-      setAllReportList(reportList);
+  const handleSeeReport = () => {
+    if (fromDate === null || toDate === null) {
+      alert("please select the date");
+    } else {
+      navigate("/home/reportpanel");
     }
-  }, [reportPanelSelector]);
-
+  };
+  const data = [
+    {
+      id: 1,
+      item: "Dell Laptop",
+      purchasefrom: "Amazon",
+      purchasedate: "5 Jan 2019",
+      image: Avatar_03,
+      name: "John Doe",
+      amount: "1215",
+      paidby: "Cash",
+      status: "Active",
+    },
+    {
+      id: 2,
+      item: "Mac System",
+      purchasefrom: "Amazon",
+      purchasedate: "5 Jan 2019",
+      image: Avatar_04,
+      name: "Richard Miles",
+      amount: "1215",
+      paidby: "Cheque",
+      status: "Active",
+    },
+  ];
   const columns = [
     {
-      title: "Description",
-      dataIndex: "description",
+      title: "Employee",
+      dataIndex: "name",
+      render: (text, record) => (
+        <h2 className="table-avatar">
+          <Link to="/app/profile/employee-profile" className="avatar">
+            <img alt="" src={record.image} />
+          </Link>
+          <Link to="/app/profile/employee-profile">
+            {text} <span>{record.role}</span>
+          </Link>
+        </h2>
+      ),
+      sorter: (a, b) => a.name.length - b.name.length,
+    },
+    {
+      title: "Expense Category",
+      dataIndex: "item",
       render: (text) => <strong>{text}</strong>,
-      sorter: (a, b) => a.description.length - b.description.length,
+      sorter: (a, b) => a.item.length - b.item.length,
     },
     {
-      title: "Start Date",
-      dataIndex: "start_date",
-      sorter: (a, b) => a.start_date.length - b.start_date.length,
+      title: "Purchase From",
+      dataIndex: "purchasefrom",
+      sorter: (a, b) => a.purchasefrom.length - b.purchasefrom.length,
     },
     {
-      title: "End Date",
-      dataIndex: "end_date",
-      sorter: (a, b) => a.end_date.length - b.end_date.length,
+      title: "Expense Date",
+      dataIndex: "expensedate",
+      sorter: (a, b) => a.expensedate.length - b.expensedate.length,
+    },
+    {
+      title: "Report Date",
+      dataIndex: "reportdate",
+      sorter: (a, b) => a.reportdate.length - b.reportdate.length,
+    },
+   
+    {
+      title: "Amount",
+      dataIndex: "amount",
+      render: (text) => <span>$ {text}</span>,
+      sorter: (a, b) => a.amount.length - b.amount.length,
     },
 
+    {
+      title: "Paid By",
+      dataIndex: "paidby",
+      sorter: (a, b) => a.paidby.length - b.paidby.length,
+    },
     {
       title: "Status",
       dataIndex: "status",
@@ -89,8 +115,7 @@ const ExpenseReport = () => {
           <Link
             className="btn btn-white btn-sm btn-rounded dropdown-toggle"
             to="#"
-            aria-expanded="false"
-          >
+            aria-expanded="false">
             <i
               className={
                 text === "Pending"
@@ -119,8 +144,7 @@ const ExpenseReport = () => {
           <Link
             to="#"
             className="action-icon dropdown-toggle"
-            aria-expanded="false"
-          >
+            aria-expanded="false">
             <i className="material-icons">more_vert</i>
           </Link>
           <div className="dropdown-menu dropdown-menu-right">
@@ -128,16 +152,14 @@ const ExpenseReport = () => {
               className="dropdown-item"
               to="#"
               data-bs-toggle="modal"
-              data-bs-target="#edit_leave"
-            >
+              data-bs-target="#edit_leave">
               <i className="fa fa-pencil m-r-5" /> Edit
             </Link>
             <Link
               className="dropdown-item"
               to="#"
               data-bs-toggle="modal"
-              data-bs-target="#delete_approve"
-            >
+              data-bs-target="#delete_approve">
               <i className="fa fa-trash m-r-5" /> Delete
             </Link>
           </div>
@@ -145,13 +167,6 @@ const ExpenseReport = () => {
       ),
     },
   ];
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: (selectedKeys) => {
-      setSelectedRowKeys(selectedKeys);
-    },
-    checkStrictly: true,
-  };
   return (
     <>
       <div className="page-wrapper">
@@ -165,44 +180,35 @@ const ExpenseReport = () => {
           <div className="page-header">
             <div className="row">
               <div className="col-sm-12">
-                <h3 className="page-title">Expense Report</h3>
+                <h3 className="page-title">See Reports</h3>
                 <ul className="breadcrumb">
+                  <li className="breadcrumb-item">
+                    <Link to="/app/main/dashboard">Dashboard</Link>
+                  </li>
                   <li className="breadcrumb-item active">Expense Report</li>
                 </ul>
-              </div>
-              <div className="col-auto float-end ms-auto">
-                <Link to="/home/addreport" className="btn add-btn">
-                  <i className="fa fa-plus" /> Add Report
-                </Link>
               </div>
             </div>
           </div>
           {/* /Page Header */}
           {/* Search Filter */}
           <div className="row filter-row">
-            <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-              <div
-                className={
-                  focused
-                    ? "input-block form-focus focused"
-                    : "input-block form-focus"
-                }
-              >
-                <input
-                  type="text"
-                  className="form-control floating"
-                  onFocus={() => setFocused(true)}
-                  onBlur={() => setFocused(false)}
-                />
-                <label className="focus-label">Search</label>
+            <div className="col-sm-6 col-md-3">
+              <div className="input-block form-focus select-focus">
+                <select className="select floating">
+                  <option>Select buyer</option>
+                  <option>Loren Gatlin</option>
+                  <option>Tarah Shropshire</option>
+                </select>
+                <label className="focus-label">Purchased By</label>
               </div>
             </div>
             <div className="col-sm-6 col-md-3">
               <div className="input-block form-focus select-focus">
                 <div className="cal-icon">
                   <DatePicker
-                    selected={selectedDate1}
-                    onChange={handleDateChange1}
+                    selected={fromDate}
+                    onChange={handleFromDateChange}
                     className="form-control floating datetimepicker"
                     type="date"
                   />
@@ -214,8 +220,8 @@ const ExpenseReport = () => {
               <div className="input-block form-focus select-focus">
                 <div className="cal-icon">
                   <DatePicker
-                    selected={selectedDate2}
-                    onChange={handleDateChange2}
+                    selected={toDate}
+                    onChange={handleToDateChange}
                     className="form-control floating datetimepicker"
                     type="date"
                   />
@@ -224,7 +230,7 @@ const ExpenseReport = () => {
               </div>
             </div>
             <div className="col-sm-6 col-md-3">
-              <Link to="#" className="btn btn-success btn-block w-100">
+              <Link to="#" className="btn btn-success btn-block w-100"  onClick={handleSeeReport}>
                 {" "}
                 Search{" "}
               </Link>
@@ -237,7 +243,7 @@ const ExpenseReport = () => {
                 <Table
                   className="table-striped"
                   pagination={{
-                    total: allReportList.length,
+                    total: data.length,
                     showTotal: (total, range) =>
                       `Showing ${range[0]} to ${range[1]} of ${total} entries`,
                     showSizeChanger: true,
@@ -246,8 +252,10 @@ const ExpenseReport = () => {
                   }}
                   style={{ overflowX: "auto" }}
                   columns={columns}
-                  dataSource={allReportList}
+                  // bordered
+                  dataSource={data}
                   rowKey={(record) => record.id}
+                  // onChange={this.handleTableChange}
                 />
               </div>
             </div>
@@ -258,6 +266,7 @@ const ExpenseReport = () => {
       <Offcanvas />
     </>
   );
-};
 
-export default ExpenseReport;
+}
+
+export default Reports;

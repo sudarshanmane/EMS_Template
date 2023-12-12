@@ -15,6 +15,7 @@ import {
   getItemNameList,
   itemizationsubmit,
   AddExpesnesubmit,
+  AddReportsubmit,
   getRole,
   getManagerList,
   addRole,
@@ -89,7 +90,10 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.ADD_EXPENSE_TYPE_SETUP, addExpenseType);
   yield takeEvery(API_CONSTANTS.UPDATE_USER_PROFILE, Updateuserprofile);
   yield takeEvery(API_CONSTANTS.ADD_EXPENSE_ITEM_SETUP, addExpenseItem);
-  yield takeEvery(API_CONSTANTS.UPDATE_EXPENSE_ITEM_SETUP,UpdateExpenseItemSetup);
+  yield takeEvery(
+    API_CONSTANTS.UPDATE_EXPENSE_ITEM_SETUP,
+    UpdateExpenseItemSetup
+  );
   yield takeEvery(API_CONSTANTS.GET_ACCOUNTING_CODE, getAccountingCodeList);
   yield takeEvery(API_CONSTANTS.ADD_EXTERNAL_ACCOUNT_CODE, addExternalcodeType);
   yield takeEvery(API_CONSTANTS.ADD_USER, addUser);
@@ -101,9 +105,13 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.GET_ITEMNAME_LIST, getItemNameList);
   yield takeEvery(API_CONSTANTS.EXPENSE_ITEMIZATION, itemizationsubmit);
   yield takeEvery(API_CONSTANTS.ADD_EXPENSE, AddExpesnesubmit);
+  yield takeEvery(API_CONSTANTS.ADD_REPORT, AddReportsubmit);
   yield takeEvery(API_CONSTANTS.GET_MANAGER_LIST, getManagerList);
   yield takeEvery(API_CONSTANTS.GET_EXPENSE_TYPE_PANEL, getExpenseTypePanel);
-  yield takeEvery(API_CONSTANTS.GET_EXTERNAL_ACCOUNT_CODE_PANEL,getExternalAccountPanel);
+  yield takeEvery(
+    API_CONSTANTS.GET_EXTERNAL_ACCOUNT_CODE_PANEL,
+    getExternalAccountPanel
+  );
   yield takeEvery(API_CONSTANTS.UPDATE_ABOUTUS, AboutUs);
   yield takeEvery(API_CONSTANTS.UPDATE_CONTACTUS, ContactUs);
   yield takeEvery(API_CONSTANTS.GET_ABOUTUS, AboutUsPage);
@@ -113,18 +121,26 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.UPDATE_COMPANY_LIST, UpdateCompanyList);
   yield takeEvery(API_CONSTANTS.GET_REPORT_LIST, GetReportList);
   yield takeEvery(API_CONSTANTS.GET_USER_PANEL, getAddUserPanel);
-  yield takeEvery(API_CONSTANTS.GET_EXPENSE_ITEM_SETUP_PANEL,getExpenseItemSetupPanel);
+  yield takeEvery(
+    API_CONSTANTS.GET_EXPENSE_ITEM_SETUP_PANEL,
+    getExpenseItemSetupPanel
+  );
   yield takeEvery(API_CONSTANTS.GET_ITEMIZATION_PANEL, itemizationPanel);
   yield takeEvery(API_CONSTANTS.GET_ACCOUNTINGCODE_PANEL, accountingCodePanel);
   yield takeEvery(API_CONSTANTS.GET_CATEGORYLIST_PANEL, categoryPanelList);
   yield takeEvery(API_CONSTANTS.GET_EXPENSELIST_PANEL, expensePanelList);
   yield takeEvery(API_CONSTANTS.APPLY_CARD, applyCard);
   yield takeEvery(API_CONSTANTS.SEARCH_EXPENSE_TYPE, searchExpenseType);
-  yield takeEvery(API_CONSTANTS.SEARCH_EXTERNAL_ACCOUNT_CODE,searchExternalAccountCode);
+  yield takeEvery(
+    API_CONSTANTS.SEARCH_EXTERNAL_ACCOUNT_CODE,
+    searchExternalAccountCode
+  );
   yield takeEvery(API_CONSTANTS.UPDATE_EXPENSE_TYPE, updateExpenseType);
   yield takeEvery(API_CONSTANTS.UPDATE_USER, updateUser);
-  yield takeEvery(API_CONSTANTS.UPDATE_EXTERNAL_ACCOUNT_CODE, updateExternalAccountCode);
-
+  yield takeEvery(
+    API_CONSTANTS.UPDATE_EXTERNAL_ACCOUNT_CODE,
+    updateExternalAccountCode
+  );
   yield takeEvery(
     API_CONSTANTS.UPDATE_ACCOUNTINGCODE_PANEL,
     UpdateAccountcodePanel
@@ -135,12 +151,10 @@ export function* RootSaga() {
     UpdateExpenseItemization
   );
   yield takeEvery(API_CONSTANTS.UPDATE_EXPENSE_PANEL, UpdateExpenseList);
-
   yield takeEvery(
     API_CONSTANTS.EXPENSE_APROVED_MANAGER,
     approvedbuttonExpensemanager
   );
-
   yield takeEvery(
     API_CONSTANTS.EXPENSE_APROVED_MANAGER,
     approvedbuttonExpensemanager
@@ -155,18 +169,14 @@ export function* RootSaga() {
     API_CONSTANTS.EXPORT_BUTTON_ACCOUNTINGCODE,
     exportbuttonAccountingCode
   );
-
- 
   yield takeEvery(
     API_CONSTANTS.EXPORT_BUTTON_ACCOUNTINGCODE,
     exportbuttonAccountingCode
   );
-
   yield takeEvery(
     API_CONSTANTS.EXPENSETABLE_SUBMIT_API,
     TableExpenseSubmitTrue
   );
-
   yield takeEvery(API_CONSTANTS.EXPENSE_REJECT_MANGER, rejectExpensemanager);
   yield takeEvery(API_CONSTANTS.EXPENSE_HOLD_MANAGER, holdExpensemanager);
   yield takeEvery(
@@ -189,7 +199,6 @@ export function* RootSaga() {
     API_CONSTANTS.ACCOUNT_ADD_BY_FINANCE_MANAGER,
     accountAddByFinanceManager
   );
-
   yield takeEvery(
     API_CONSTANTS.GET_USER_PERMISSIONS_HEADERS_AND_LIST,
     getUserRolePermissions
@@ -244,9 +253,21 @@ export function* RootSaga() {
   );
   yield takeEvery(API_CONSTANTS.DELETE_ACCOUNTINGCODE_PANEL, commonDeleteRole);
   yield takeEvery(API_CONSTANTS.DELETE_EXPENSE_PANEL, commonDeleteRole);
-  yield takeEvery(API_CONSTANTS.MANAGER_CARD_APPROVED_LIST, commanmanagercardlidtfunction);
-  yield takeEvery(API_CONSTANTS.MANAGER_CARD_REJECT_LIST, commanmanagercardlidtfunction);
-  yield takeEvery(API_CONSTANTS.MANAGER_CARD_HOLD_LIST, commanmanagercardlidtfunction);
-  yield takeEvery(API_CONSTANTS.OWN_EXPENSE_APPROVE_LIST, ownExpenseApproveList);
-  yield takeEvery(API_CONSTANTS.EXPORT_COMPANY_PANEL,exportCompanypanel);
+  yield takeEvery(
+    API_CONSTANTS.MANAGER_CARD_APPROVED_LIST,
+    commanmanagercardlidtfunction
+  );
+  yield takeEvery(
+    API_CONSTANTS.MANAGER_CARD_REJECT_LIST,
+    commanmanagercardlidtfunction
+  );
+  yield takeEvery(
+    API_CONSTANTS.MANAGER_CARD_HOLD_LIST,
+    commanmanagercardlidtfunction
+  );
+  yield takeEvery(
+    API_CONSTANTS.OWN_EXPENSE_APPROVE_LIST,
+    ownExpenseApproveList
+  );
+  yield takeEvery(API_CONSTANTS.EXPORT_COMPANY_PANEL, exportCompanypanel);
 }
