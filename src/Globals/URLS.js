@@ -16,6 +16,7 @@ export const URLS = {
     ADD_EXPENSE_URL: "/expense/add_expense/",
     ADD_REPORT_URL: "/expense/expensereport/",
     GET_REPORT_LIST_URL:"/expense/expensereport/",
+    UPDATE_REPORT: "/expense/expensereport/",
     GET_ROLE_URL: "/roles/role/",
     GET_MANAGER_LIST_URL: "/users/get_users/",
     EXPENSE_TYPE_PANEL_URL: "/expense/expensetypelist/",

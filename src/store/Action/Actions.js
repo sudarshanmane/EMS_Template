@@ -174,6 +174,29 @@ function getReportList(payload) {
   };
 }
 
+function updateReportAction(payload) {
+  return {
+    type: API_CONSTANTS.UPDATE_REPORT,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
+function deleteReportAction(payload) {
+  return {
+    type: API_CONSTANTS.DELETE_REPORT,
+    URL: URLS.UPDATE_REPORT + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+function setDeleteReportFalse(payload) {
+  return {
+    type: API_CONSTANTS.SET_DELETE_REPORT_SUCCESS_FALSE,
+  };
+}
+
 function getExpenseTypePanelAction(payload) {
   return {
     type: API_CONSTANTS.GET_EXPENSE_TYPE_PANEL,
@@ -825,6 +848,9 @@ export {
   EXpenseItemizationsubmit,
   addExpense,
   addReport,
+  updateReportAction,
+  deleteReportAction,
+  setDeleteReportFalse,
   updateProfileuser,
   getExpenseTypePanelAction,
   getExternalAccountCodePanelAction,

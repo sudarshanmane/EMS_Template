@@ -134,6 +134,11 @@ const CompanyPanel = () => {
       key: "actions",
       render: (record) => (
         <Space size="small">
+           <Button
+            type="success"
+            icon={<EyeOutlined />}
+            onClick={() => handleView(record)}
+          />
           <Button
             type="primary"
             icon={<EditOutlined />}
@@ -144,15 +149,17 @@ const CompanyPanel = () => {
             icon={<DeleteOutlined />}
             onClick={() => handleDelete(record)}
           />
-          <Button
-            type="success"
-            icon={<EyeOutlined />}
-            onClick={() => handleView(record)}
-          />
+         
         </Space>
       ),
     },
   ];
+  
+  const handleView = (record) => {
+    setViewCompanyData(record);
+    setIsAddFormVisible(false);
+  };
+
   const handleEdit = (record) => {
     setEditItemData(record);
     setIsAddFormVisible(true);
@@ -172,10 +179,6 @@ const CompanyPanel = () => {
     );
   };
 
-  const handleView = (record) => {
-    setViewCompanyData(record);
-    setIsAddFormVisible(false);
-  };
   //export button functionality
   function downloadExlsFiles() {
     let exportUrl = URLS.GET_COMPANY_LIST_URL + "?export=csv";

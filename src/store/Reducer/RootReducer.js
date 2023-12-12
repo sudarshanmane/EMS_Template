@@ -212,6 +212,39 @@ export const RootReducer = (state = initialState, action) => {
         addreportresult: action.result,
       };
 
+      case API_CONSTANTS.UPDATE_REPORT:
+        return {
+          ...state,
+          loding: true,
+        };
+  
+      case API_CONSTANTS.UPDATE_REPORT_SUCCESS:
+        return {
+          ...state,
+          loding: false,
+          updateReportResult: action.result,
+        };
+
+        case API_CONSTANTS.DELETE_REPORT:
+          return {
+            ...state,
+            loding: true,
+          };
+    
+        case API_CONSTANTS.DELETE_REPORT_SUCCESS:
+          return {
+            ...state,
+            loding: false,
+            deleteReportSuccess: action.result,
+          };
+    
+        case API_CONSTANTS.SET_DELETE_REPORT_SUCCESS_FALSE:
+          return {
+            ...state,
+            loding: false,
+            deleteReportSuccess: false,
+          };
+
     case API_CONSTANTS.GET_ROLE:
       return {
         ...state,

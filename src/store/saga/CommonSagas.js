@@ -339,7 +339,6 @@ function* AddExpesnesubmit(action) {
 function* AddReportsubmit(action) {
   try {
     let result = yield call(Method.postData, action);
-    console.log("API call result:", result);
     if (result.status === 201 || result.status === 200) {
       yield put({
         type: `${action.type}_SUCCESS`,
@@ -352,6 +351,40 @@ function* AddReportsubmit(action) {
   } catch (error) {
     console.error("Saga error:", error);
     yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* updateReport(action) {
+  try {
+    let result = yield call(Method.putData, action);
+    if (result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* deleteReport(action) {
+  try {
+    let result = yield call(Method.deleteData, action);
+    if (result.status === 204) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: "Deleted Successfully",
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "Something went wrong!");
   }
 }
 
@@ -1528,6 +1561,8 @@ export {
   getExpenseItemSetupPanel,
   GetCompanyList,
   GetReportList,
+  updateReport,
+  deleteReport,
   getAddUserPanel,
   applyCard,
   searchExpenseType,
