@@ -178,7 +178,7 @@ function updateReportAction(payload) {
   return {
     type: API_CONSTANTS.UPDATE_REPORT,
     payload: payload.payload,
-    URL: payload.URL,
+    URL: URLS.UPDATE_REPORT + payload.id + "/",
     contentType: contentType.json,
   };
 }

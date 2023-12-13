@@ -32,6 +32,10 @@ import ExpenseReportPanel from "../../_components/panels/ExpenseReportPanel";
 import UserPanel from "../../_components/panels/UserPanel";
 import Users from "../../_components/screens/Users"
 import AddReport from "../../_components/screens/AddReport";
+import CompanyPolicies from "../../_components/screens/CompanyPolicies";
+import Mileage from "../../_components/screens/Mileage";
+import Expenses from "../../_components/screens/Expenses";
+import Category from "../../_components/screens/Category";
 
 const Navigates = () => {
   return (
@@ -70,6 +74,10 @@ const Navigates = () => {
           <Route path="userpanel" element={<UserPanel></UserPanel>}></Route>
           <Route path="addusers" element={<Users></Users>}></Route>
           <Route path="addreport" element={<AddReport></AddReport>}></Route>
+          <Route path="companyPolicies" element={<CompanyPolicies></CompanyPolicies>}></Route>
+          <Route path="mileage" element={<Mileage></Mileage>}></Route>
+          <Route path="expenses" element={<Expenses></Expenses>}></Route>
+          <Route path="category" element={<Category></Category>}></Route>
 
 
 

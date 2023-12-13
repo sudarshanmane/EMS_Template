@@ -325,7 +325,7 @@ const Sidebar = () => {
                     )
                   }
                 >
-                  <i className="la la-credit-card" />{" "}
+                  <i className="la la-book" />{" "}
                   <span>Accounting Code</span> <span className="menu-arrow" />
                 </Link>
                 {isSideMenu == "accountingcode" ? (
@@ -365,7 +365,7 @@ const Sidebar = () => {
                     toggleSidebar(isSideMenu == "reports" ? "" : "reports")
                   }
                 >
-                  <i className="la la-pie-chart" /> <span> Reports </span>{" "}
+                  <i className="la la-file-text" /> <span> Reports </span>{" "}
                   <span className="menu-arrow" />
                 </Link>
                 {isSideMenu == "reports" ? (
@@ -391,6 +391,68 @@ const Sidebar = () => {
 
               <li className="menu-title">
                 <span>Extras</span>
+              </li>
+              <li className="submenu">
+                <Link
+                  to="#"
+                  className={isSideMenu == "settings" ? "subdrop" : ""}
+                  onClick={() =>
+                    toggleSidebar(isSideMenu == "settings" ? "" : "settings")
+                  }
+                >
+                  <i className="la la-gear" /> <span> Settings </span>{" "}
+                  <span className="menu-arrow" />
+                </Link>
+                {isSideMenu == "settings" ? (
+                  <ul>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("companyPolicies-") ? "active" : ""
+                        }
+                        to="/home/companyPolicies"
+                      >
+                        {" "}
+                        Company Policies {" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("mileage-") ? "active" : ""
+                        }
+                        to="/home/mileage"
+                      >
+                        {" "}
+                        Mileage {" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("expenses-") ? "active" : ""
+                        }
+                        to="/home/expenses"
+                      >
+                        {" "}
+                        Expenses{" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("category-") ? "active" : ""
+                        }
+                        to="/home/category"
+                      >
+                        {" "}
+                        Category {" "}
+                      </Link>
+                    </li>
+                  </ul>
+                ) : (
+                  ""
+                )}
               </li>
               <li className="submenu">
                 <Link

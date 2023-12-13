@@ -9,7 +9,11 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Table, Space, Button, Modal } from "antd";
 import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import "antd/dist/antd.min.css";
-import { getReportList, deleteReportAction, updateReportAction } from "../../store/Action/Actions";
+import {
+  getReportList,
+  deleteReportAction,
+  updateReportAction,
+} from "../../store/Action/Actions";
 import { URLS } from "../../Globals/URLS";
 import Offcanvas from "../../Entryfile/offcanvance";
 import {
@@ -21,8 +25,6 @@ import AddReport from "../screens/AddReport";
 const ExpenseReport = () => {
   const dispatch = useDispatch();
   const [focused, setFocused] = useState(false);
-
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [allReportList, setAllReportList] = useState([]);
   const [selectedDate1, setSelectedDate1] = useState(new Date());
   const [selectedDate2, setSelectedDate2] = useState(new Date());
@@ -55,16 +57,16 @@ const ExpenseReport = () => {
     setDeleteReportData(record);
     setIsDeleteConfirmationVisible(true);
   };
-  
+
   const handleDeleteConfirmation = () => {
-      const deletedReportId = deleteReportData.id;
-      dispatch(deleteReportAction({ id: deletedReportId }));
-      setIsDeleteConfirmationVisible(false);
-      setAllReportList((prevItems) =>
-        prevItems.filter((item) => item.id !== deletedReportId)
-      );   
+    const deletedReportId = deleteReportData.id;
+    dispatch(deleteReportAction({ id: deletedReportId }));
+    setIsDeleteConfirmationVisible(false);
+    setAllReportList((prevItems) =>
+      prevItems.filter((item) => item.id !== deletedReportId)
+    );
   };
-  
+
   function getPageDetails(url) {
     dispatch(getReportList({ payload: {}, URL: url }));
   }
@@ -85,9 +87,9 @@ const ExpenseReport = () => {
 
   useEffect(() => {
     if (reportPanelSelector) {
-      const allReportList = reportPanelSelector.map((element,index) => {
+      const allReportList = reportPanelSelector.map((element) => {
         return {
-          id: index+1,
+          id: element.id,
           description: element.description,
           start_date: element.start_date,
           end_date: element.end_date,
@@ -96,6 +98,17 @@ const ExpenseReport = () => {
       setAllReportList(allReportList);
     }
   }, [reportPanelSelector]);
+
+  const updatereportPanelSelector = useSelector(
+    (state) => state.updateReportResult
+  );
+
+  useEffect(() => {
+    if (updatereportPanelSelector) {
+      dispatch(getReportList({ payload: {}, URL: url }));
+    }
+    setIsAddFormVisible(false);
+  }, [updatereportPanelSelector]);
 
   const columns = [
     {
@@ -181,13 +194,7 @@ const ExpenseReport = () => {
       ),
     },
   ];
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: (selectedKeys) => {
-      setSelectedRowKeys(selectedKeys);
-    },
-    checkStrictly: true,
-  };
+
   return (
     <>
       <div className="page-wrapper">
@@ -344,6 +351,7 @@ const ExpenseReport = () => {
           </div>
         </div>
         {/* /Page Content */}
+        
       </div>
       <Offcanvas />
     </>
