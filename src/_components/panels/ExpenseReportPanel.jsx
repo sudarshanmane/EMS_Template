@@ -84,6 +84,7 @@ const ExpenseReport = () => {
       const allReportList = reportPanelSelector.map((element) => {
         return {
           id: element.id,
+          report_number: element.report_number,
           description: element.description,
           start_date: element.start_date,
           end_date: element.end_date,
@@ -116,15 +117,20 @@ const ExpenseReport = () => {
   }, [updatereportPanelSelector]);
 
   const columns = [
+    // {
+    //   title: "Sr No",
+    //   dataIndex: "id",
+    //   key: "id",
+    // },
     {
-      title: "Sr No",
-      dataIndex: "id",
-      key: "id",
+      title: "Report No",
+      dataIndex: "report_number",
     },
     {
       title: "Description",
       dataIndex: "description",
-      render: (text) => <strong>{text}</strong>,
+      render: (text) => <span> {text}</span>,
+      // render: (text) => <strong>{text}</strong>,
       sorter: (a, b) => a.description.length - b.description.length,
     },
     {
@@ -152,6 +158,7 @@ const ExpenseReport = () => {
           <Link
             className="btn btn-white btn-sm btn-rounded dropdown-toggle"
             to="#"
+            data-bs-toggle="dropdown"
             aria-expanded="false"
           >
             <i
@@ -344,7 +351,7 @@ const ExpenseReport = () => {
                 >
                   {viewReportData ? (
                     <div>
-                      <p>Sr.No: {viewReportData.id}</p>
+                      <p>Report No: {viewReportData.report_number}</p>
                       <p>Description: {viewReportData.description}</p>
                       <p>Start Date: {viewReportData.start_date}</p>
                       <p>End Date: {viewReportData.end_date}</p>

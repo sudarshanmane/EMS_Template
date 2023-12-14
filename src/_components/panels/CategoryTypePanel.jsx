@@ -178,7 +178,8 @@ const CategoryTypePanel = () => {
     {
       title: "Sr No",
       dataIndex: "id",
-      render: (text) => <strong>{text}</strong>,
+      render: (text) => <span>{text}</span>,
+      // render: (text) => <strong>{text}</strong>,
       sorter: (a, b) => a.item.length - b.item.length,
     },
     {
@@ -186,11 +187,11 @@ const CategoryTypePanel = () => {
       dataIndex: "category_name",
       sorter: (a, b) => a.purchasefrom.length - b.purchasefrom.length,
     },
-    {
-      title: "Override Policy",
-      dataIndex: "override_general_policy",
-      sorter: (a, b) => a.purchasedate.length - b.purchasedate.length,
-    },
+    // {
+    //   title: "Override Policy",
+    //   dataIndex: "override_general_policy",
+    //   sorter: (a, b) => a.purchasedate.length - b.purchasedate.length,
+    // },
 
     {
       title: "Expense Amount",
