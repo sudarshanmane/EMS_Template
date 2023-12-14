@@ -47,6 +47,7 @@ import {
   // updateExternalAccountCode,
   UpdateAccountcodePanel,
   UpdateCategoryPanel,
+  DeleteCategory,
   // UpdateExpenseIemaiztaion,
   UpdateExpenseItemization,
   UpdateExpenseList,
@@ -101,7 +102,7 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.ADD_USER, addUser);
   yield takeEvery(API_CONSTANTS.GET_ROLE, getRole);
   yield takeEvery(API_CONSTANTS.ADD_ROLE, addRole);
-  yield takeEvery(API_CONSTANTS.ADD_CATEGORY, getAddCategoryList);
+
   yield takeEvery(API_CONSTANTS.ACCOUNTING_CODE_SUBMIT, accountingCodeSubmit);
   yield takeEvery(API_CONSTANTS.GET_EXPENSE_TYPE_LIST, getParentTypelist);
   yield takeEvery(API_CONSTANTS.GET_ITEMNAME_LIST, getItemNameList);
@@ -131,7 +132,10 @@ export function* RootSaga() {
   );
   yield takeEvery(API_CONSTANTS.GET_ITEMIZATION_PANEL, itemizationPanel);
   yield takeEvery(API_CONSTANTS.GET_ACCOUNTINGCODE_PANEL, accountingCodePanel);
+  yield takeEvery(API_CONSTANTS.ADD_CATEGORY, getAddCategoryList);
   yield takeEvery(API_CONSTANTS.GET_CATEGORYLIST_PANEL, categoryPanelList);
+  yield takeEvery(API_CONSTANTS.UPDATE_CATEGORY_PANEL, UpdateCategoryPanel);
+  yield takeEvery(API_CONSTANTS.DELETE_CATEGORY_PANEL, DeleteCategory);
   yield takeEvery(API_CONSTANTS.GET_EXPENSELIST_PANEL, expensePanelList);
   yield takeEvery(API_CONSTANTS.APPLY_CARD, applyCard);
   yield takeEvery(API_CONSTANTS.SEARCH_EXPENSE_TYPE, searchExpenseType);
@@ -149,7 +153,7 @@ export function* RootSaga() {
     API_CONSTANTS.UPDATE_ACCOUNTINGCODE_PANEL,
     UpdateAccountcodePanel
   );
-  yield takeEvery(API_CONSTANTS.UPDATE_CATEGORY_PANEL, UpdateCategoryPanel);
+ 
   yield takeEvery(
     API_CONSTANTS.UPDATE_EXPENSEITEMIZATION_PANEL,
     UpdateExpenseItemization
@@ -250,7 +254,6 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.OWN_EXPENSE_DRAFT_LIST, ownExpenseDraftList);
   yield takeEvery(API_CONSTANTS.OWN_EXPENSE_HOLD_LIST, ownExpenseHoldList);
   yield takeEvery(API_CONSTANTS.OWN_EXPENSE_REJECT_LIST, ownExpenseRejectList);
-  yield takeEvery(API_CONSTANTS.DELETE_CATEGORY_PANEL, commonDeleteRole);
   yield takeEvery(
     API_CONSTANTS.DELETE_EXPENSEITEMIZAION_PANEL,
     commonDeleteRole
