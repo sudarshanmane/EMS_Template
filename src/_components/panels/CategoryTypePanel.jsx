@@ -30,7 +30,11 @@ const CategoryTypePanel = () => {
   const [focused, setFocused] = useState(false);
   const [selectedDate1, setSelectedDate1] = useState(null);
   const [selectedDate2, setSelectedDate2] = useState(null);
+  const [allCategoryList, setAllCategoryList] = useState([]);
+  const [isAddFormVisible, setIsAddFormVisible] = useState(false);
+  const [isEditFormVisible, setIsEditFormVisible] = useState(false);
   const [editFormData, setEditFormData] = useState(null);
+  const [viewCategoryData, setViewCategoryData] = useState(null);
   const [deleteCategoryData, setDeleteCategoryData] = useState(null);
   const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] =
     useState(false);
@@ -153,6 +157,12 @@ const CategoryTypePanel = () => {
   };
   const handleDateChange2 = (date) => {
     setSelectedDate2(date);
+  };
+  const handleDateChange3 = (date) => {
+    setSelectedDate3(date);
+  };
+  const handleDateChange4 = (date) => {
+    setSelectedDate4(date);
   };
 
   useEffect(() => {
