@@ -30,6 +30,8 @@ import {
   GetCompanyList,
   UpdateCompanyList,
   GetReportList,
+  updateReport,
+  deleteReport,
   getAddUserPanel,
   getExpenseItemSetupPanel,
   itemizationPanel,
@@ -106,6 +108,8 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.EXPENSE_ITEMIZATION, itemizationsubmit);
   yield takeEvery(API_CONSTANTS.ADD_EXPENSE, AddExpesnesubmit);
   yield takeEvery(API_CONSTANTS.ADD_REPORT, AddReportsubmit);
+  yield takeEvery(API_CONSTANTS.UPDATE_REPORT, updateReport);
+  yield takeEvery(API_CONSTANTS.DELETE_REPORT, deleteReport);
   yield takeEvery(API_CONSTANTS.GET_MANAGER_LIST, getManagerList);
   yield takeEvery(API_CONSTANTS.GET_EXPENSE_TYPE_PANEL, getExpenseTypePanel);
   yield takeEvery(

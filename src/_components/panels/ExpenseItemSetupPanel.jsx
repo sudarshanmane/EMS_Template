@@ -215,6 +215,9 @@ function ExpenseItemSetupPanel() {
                 >
                   <i className="fa fa-plus" /> Add Item Setup
                 </Link>
+                <Link to="/home/ExpenseItemSetup" className="btn add-btn">
+                  <i className="fa fa-plus" /> Add Item Setup
+                </Link>
               </div>
             </div>
           </div>
