@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
-import { Avatar_04, Avatar_03, PlaceHolder } from "../../Entryfile/imagepath";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Table } from "antd";
@@ -20,8 +19,9 @@ import {
   getCategoryPanelAction,
   addCategoryAction,
   deleteCategorypanelAction,
+  updateCategorypanle,
 } from "../../store/Action/Actions";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 const CategoryTypePanel = () => {
   const [url, setUrl] = useState(URLS.GET_CATEGORY_PANEL_URL);
@@ -30,12 +30,7 @@ const CategoryTypePanel = () => {
   const [focused, setFocused] = useState(false);
   const [selectedDate1, setSelectedDate1] = useState(null);
   const [selectedDate2, setSelectedDate2] = useState(null);
-  const [selectedDate3, setSelectedDate3] = useState(null);
-  const [selectedDate4, setSelectedDate4] = useState(null);
-  const [allCategoryList, setAllCategoryList] = useState([]);
-  const [isAddFormVisible, setIsAddFormVisible] = useState(false);
-  const [viewCategoryData, setViewCategoryData] = useState(null);
-  const [editCategoryData, setEditCategoryData] = useState(null);
+  const [editFormData, setEditFormData] = useState(null);
   const [deleteCategoryData, setDeleteCategoryData] = useState(null);
   const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] =
     useState(false);
@@ -46,15 +41,33 @@ const CategoryTypePanel = () => {
     formState: { errors },
   } = useForm({});
 
+  const { handleSubmit: handleDelete } = useForm({});
+
   const {
-    register: DeleteRegister,
-    handleSubmit: handleDelete,
-    control,
-    reset,
+    register: updateregister,
+    handleSubmit: handleUpdate,
+    setValue,
   } = useForm({});
 
   const onSubmit = (values) => {
     dispatch(addCategoryAction(values));
+  };
+
+  const onEdit = (record) => {
+    setIsEditFormVisible(true);
+    setEditFormData(record);
+    setValue("category_name", record.category_name);
+    setValue("override_general_policy", record.override_general_policy);
+    setValue("expense_amount_limit", record.expense_amount_limit);
+    setValue("receipt_require_limit", record.receipt_require_limit);
+    setValue("auto_approve_limit", record.auto_approve_limit);
+    setValue("accounting_code", record.accounting_code);
+  };
+
+  const onUpdate = (values) => {
+    console.log("values", values);
+    dispatch(updateCategorypanle({ id: editFormData.id, payload: values }));
+    setIsEditFormVisible(false);
   };
 
   function getPageDetails(url) {
@@ -101,7 +114,20 @@ const CategoryTypePanel = () => {
     setIsAddFormVisible(false);
   }, [addCategorylSelector]);
 
-  const deleteCategorylSelector = useSelector((state) => state.deletecategoryResult);
+  const updateCategorylSelector = useSelector(
+    (state) => state.updatecategortyResult
+  );
+
+  useEffect(() => {
+    if (updateCategorylSelector) {
+      dispatch(getCategoryPanelAction({ payload: {}, URL: url }));
+    }
+    setIsAddFormVisible(false);
+  }, [updateCategorylSelector]);
+
+  const deleteCategorylSelector = useSelector(
+    (state) => state.deletecategoryResult
+  );
 
   useEffect(() => {
     if (deleteCategorylSelector) {
@@ -127,12 +153,6 @@ const CategoryTypePanel = () => {
   };
   const handleDateChange2 = (date) => {
     setSelectedDate2(date);
-  };
-  const handleDateChange3 = (date) => {
-    setSelectedDate3(date);
-  };
-  const handleDateChange4 = (date) => {
-    setSelectedDate4(date);
   };
 
   useEffect(() => {
@@ -236,6 +256,7 @@ const CategoryTypePanel = () => {
               to="#"
               data-bs-toggle="modal"
               data-bs-target="#edit_expense"
+              onClick={() => onEdit(record)}
             >
               <i className="fa fa-pencil m-r-5" /> Edit
             </Link>
@@ -377,10 +398,8 @@ const CategoryTypePanel = () => {
                   }}
                   style={{ overflowX: "auto" }}
                   columns={columns}
-                  // bordered
                   dataSource={allCategoryType}
                   rowKey={(record) => record.id}
-                  // onChange={this.handleTableChange}
                 />
               </div>
             </div>
@@ -486,7 +505,10 @@ const CategoryTypePanel = () => {
                   </div>
 
                   <div className="submit-section">
-                    <button className="btn btn-primary submit-btn">
+                    <button
+                      className="btn btn-primary submit-btn"
+                      data-bs-dismiss="modal"
+                    >
                       Submit
                     </button>
                   </div>
@@ -508,7 +530,7 @@ const CategoryTypePanel = () => {
           >
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">Edit Expense</h5>
+                <h5 className="modal-title">Update Expense Category</h5>
                 <button
                   type="button"
                   className="close"
@@ -519,106 +541,92 @@ const CategoryTypePanel = () => {
                 </button>
               </div>
               <div className="modal-body">
-                <form>
+                <form onSubmit={handleUpdate(onUpdate)}>
                   <div className="row">
                     <div className="col-md-6">
                       <div className="input-block">
-                        <label>Item Name</label>
+                        <label>Category Name</label>
                         <input
                           className="form-control"
-                          defaultValue="Dell Laptop"
                           type="text"
+                          {...updateregister("category_name")}
                         />
                       </div>
                     </div>
                     <div className="col-md-6">
                       <div className="input-block">
-                        <label>Purchase From</label>
+                        <label>Accounting Code</label>
                         <input
                           className="form-control"
-                          defaultValue="Amazon"
                           type="text"
+                          {...updateregister("accounting_code")}
                         />
                       </div>
                     </div>
                   </div>
+
                   <div className="row">
                     <div className="col-md-6">
                       <div className="input-block">
-                        <label>Purchase Date</label>
-                        <div className="cal-icon">
-                          <DatePicker
-                            selected={selectedDate4}
-                            onChange={handleDateChange4}
-                            className="form-control floating datetimepicker"
-                            type="date"
-                          />
-                        </div>{" "}
-                      </div>
-                    </div>
-                    <div className="col-md-6">
-                      <div className="input-block">
-                        <label>Purchased By </label>
-                        <select className="select">
-                          <option>Daniel Porter</option>
-                          <option>Roger Dixon</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-6">
-                      <div className="input-block">
-                        <label>Amount</label>
+                        <label>Expense amount limit</label>
                         <input
                           placeholder="$50"
                           className="form-control"
-                          defaultValue="$10000"
-                          type="text"
+                          type="number"
+                          {...updateregister("expense_amount_limit")}
                         />
                       </div>
                     </div>
-                    <div className="col-md-6">
-                      <div className="input-block">
-                        <label>Paid By</label>
-                        <select className="select">
-                          <option>Cash</option>
-                          <option>Cheque</option>
-                        </select>
-                      </div>
-                    </div>
                   </div>
+
                   <div className="row">
                     <div className="col-md-6">
                       <div className="input-block">
-                        <label>Status</label>
-                        <select className="select">
-                          <option>Pending</option>
-                          <option>Approved</option>
-                        </select>
+                        <label>Receipt require limit</label>
+                        <input
+                          placeholder="$50"
+                          className="form-control"
+                          type="number"
+                          {...updateregister("receipt_require_limit")}
+                        />
                       </div>
                     </div>
+                  </div>
+
+                  <div className="row">
                     <div className="col-md-6">
                       <div className="input-block">
-                        <label>Attachments</label>
-                        <input className="form-control" type="file" />
+                        <label>Auto approve limit</label>
+                        <input
+                          placeholder="$50"
+                          className="form-control"
+                          type="number"
+                          {...updateregister("auto_approve_limit")}
+                        />
                       </div>
                     </div>
                   </div>
-                  <div className="attach-files">
-                    <ul>
-                      <li>
-                        <img src={PlaceHolder} alt="" />
-                        <Link to="#" className="fa fa-close file-remove" />
-                      </li>
-                      <li>
-                        <img src={PlaceHolder} alt="" />
-                        <Link to="#" className="fa fa-close file-remove" />
-                      </li>
-                    </ul>
+                  <div className="col-md-10">
+                    <div className="checkbox">
+                      <label>
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value="True"
+                          {...updateregister("override_general_policy")}
+                        />{" "}
+                        Override general policy
+                      </label>
+                    </div>
                   </div>
+
                   <div className="submit-section">
-                    <button className="btn btn-primary submit-btn">Save</button>
+                    <button
+                      className="btn btn-primary submit-btn"
+                      data-bs-dismiss="modal"
+                    >
+                      Update
+                    </button>
                   </div>
                 </form>
               </div>
@@ -626,7 +634,7 @@ const CategoryTypePanel = () => {
           </div>
         </div>
         {/* /Edit Expense Modal */}
-        {/* Delete Expense Modal */}
+        {/* Delete Category Modal */}
         <div
           className="modal custom-modal fade"
           id="delete_expense"
@@ -636,7 +644,7 @@ const CategoryTypePanel = () => {
             <div className="modal-content">
               <div className="modal-body">
                 <div className="form-header">
-                  <h3>Delete Expense</h3>
+                  <h3>Delete Category</h3>
                   <p>Are you sure want to delete?</p>
                 </div>
                 <div className="modal-btn delete-action">
@@ -646,6 +654,7 @@ const CategoryTypePanel = () => {
                         to=""
                         className="btn btn-primary continue-btn"
                         onClick={handleDelete(onDelete)}
+                        data-bs-dismiss="modal"
                       >
                         Delete
                       </Link>

@@ -16,7 +16,7 @@ import {
   itemRender,
 } from "../../MainPage/paginationfunction";
 import AddReport from "../screens/AddReport";
-import AddReportForm from "../screens/AddReportForm";
+
 
 const ExpenseReport = () => {
   const dispatch = useDispatch();
@@ -43,12 +43,10 @@ const ExpenseReport = () => {
     setViewReportData(record);
     setIsAddFormVisible(false);
   };
-
   const handleEdit = (record) => {
     setEditReportData(record);
     setIsAddFormVisible(true);
   };
-
   const handleDelete = (record) => {
     setDeleteReportData(record);
     setIsDeleteConfirmationVisible(true);
@@ -94,6 +92,17 @@ const ExpenseReport = () => {
       setAllReportList(allReportList);
     }
   }, [reportPanelSelector]);
+
+  const addreportPanelSelector = useSelector(
+    (state) => state.addreportresult
+  );
+
+  useEffect(() => {
+    if (addreportPanelSelector) {
+      dispatch(getReportList({ payload: {}, URL: url }));
+    }
+    setIsAddFormVisible(false);
+  }, [addreportPanelSelector]);
 
   const updatereportPanelSelector = useSelector(
     (state) => state.updateReportResult
@@ -210,7 +219,14 @@ const ExpenseReport = () => {
                 </ul>
               </div>
               <div className="col-auto float-end ms-auto">
-                <Link to="/home/addreport" className="btn add-btn">
+                 <Link
+                  to="#"
+                  className="btn add-btn"
+                  onClick={() => {
+                    setEditReportData(null);
+                    setIsAddFormVisible(true);
+                  }}
+                >
                   <i className="fa fa-plus" /> Add Report
                 </Link>
               </div>
@@ -300,7 +316,7 @@ const ExpenseReport = () => {
                   footer={null}
                   className="popup-width"
                 >
-                  <AddReportForm
+                  <AddReport
                     initialData={editReportData || null}
                     setIsAddFormVisible={setIsAddFormVisible}
                     url={url}
