@@ -36,15 +36,6 @@ function updateExpenseItemSetup(payload) {
   };
 }
 
-function addCategoryAction(payload) {
-  return {
-    type: API_CONSTANTS.ADD_CATEGORY,
-    payload,
-    URL: URLS.ADD_CATEGORY_URL,
-    contentType: contentType.json,
-  };
-}
-
 function addExpenseTypeSetup(payload) {
   return {
     type: API_CONSTANTS.ADD_EXPENSE_TYPE_SETUP,
@@ -317,6 +308,15 @@ function getaccountingcodePanelAction(payload) {
   };
 }
 
+function addCategoryAction(payload) {
+  return {
+    type: API_CONSTANTS.ADD_CATEGORY,
+    payload,
+    URL: URLS.ADD_CATEGORY_URL,
+    contentType: contentType.json,
+  };
+}
+
 function getCategoryPanelAction(payload) {
   return {
     type: API_CONSTANTS.GET_CATEGORYLIST_PANEL,
@@ -325,6 +325,24 @@ function getCategoryPanelAction(payload) {
     contentType: contentType.json,
   };
 }
+
+function updateCategorypanle(payload) {
+  return {
+    type: API_CONSTANTS.UPDATE_CATEGORY_PANEL,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
+function deleteCategorypanelAction(payload) {
+  return {
+    type: API_CONSTANTS.DELETE_CATEGORY_PANEL,
+    URL: URLS.DELETE_CATEGORY_PANEL_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
 function getexpensePanelListAction(payload) {
   return {
     type: API_CONSTANTS.GET_EXPENSELIST_PANEL,
@@ -385,14 +403,7 @@ function updateUserAction(payload) {
     contentType: contentType.json,
   };
 }
-function updateCategorypanle(payload) {
-  return {
-    type: API_CONSTANTS.UPDATE_CATEGORY_PANEL,
-    payload: payload.payload,
-    URL: payload.URL,
-    contentType: contentType.json,
-  };
-}
+
 function updateExternalAccountCodeAction(payload) {
   return {
     type: API_CONSTANTS.UPDATE_EXTERNAL_ACCOUNT_CODE,
@@ -760,13 +771,7 @@ function ownExpenseHoldAction(data) {
     contentType: contentType.json,
   };
 }
-function deleteCategorypanelAction(payload) {
-  return {
-    type: API_CONSTANTS.DELETE_CATEGORY_PANEL,
-    URL: URLS.ADD_CATEGORY_URL + payload.id + "/",
-    contentType: contentType.json,
-  };
-}
+
 function deleteExpenseitemizationAction(payload) {
   return {
     type: API_CONSTANTS.DELETE_EXPENSEITEMIZAION_PANEL,

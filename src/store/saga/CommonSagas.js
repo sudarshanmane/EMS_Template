@@ -81,23 +81,7 @@ function* getCommonAllFetchGenerator(action) {
   }
 }
 
-function* getAddCategoryList(action) {
-  try {
-    let result = yield call(Method.postData, action);
 
-    if (result.status === 201) {
-      yield put({
-        type: `${action.type}_SUCCESS`,
-        status: "ok",
-        result: result.data,
-      });
-    } else {
-      yield call(failSaga, "Server Down!");
-    }
-  } catch (error) {
-    yield call(errorSaga, "The credentials you entered are incorrect!");
-  }
-}
 
 function* addExpenseItem(action) {
   try {
@@ -889,7 +873,42 @@ function* UpdateCategoryPanel(action) {
   }
 }
 
-// function* updateExternalAccountCode(action) {
+
+function* DeleteCategory(action) {
+  try {
+    let result = yield call(Method.deleteData, action);
+    if (result.status === 204) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: "Deleted Successfully",
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "Something went wrong!");
+  }
+}
+
+
+function* getAddCategoryList(action) {
+  try {
+    let result = yield call(Method.postData, action);
+
+    if (result.status === 201) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
 
 function* categoryPanelList(action) {
   try {
@@ -1573,6 +1592,7 @@ export {
   updateExternalAccountCode,
   UpdateAccountcodePanel,
   UpdateCategoryPanel,
+  DeleteCategory,
   // UpdateExpenseIemaiztaion,
   UpdateExpenseItemization,
   UpdateExpenseList,

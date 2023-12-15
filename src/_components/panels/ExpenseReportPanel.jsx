@@ -1,5 +1,4 @@
 /* eslint-disable no-undef */
-
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
@@ -9,11 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Table, Space, Button, Modal } from "antd";
 import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import "antd/dist/antd.min.css";
-import {
-  getReportList,
-  deleteReportAction,
-  updateReportAction,
-} from "../../store/Action/Actions";
+import { getReportList, deleteReportAction } from "../../store/Action/Actions";
 import { URLS } from "../../Globals/URLS";
 import Offcanvas from "../../Entryfile/offcanvance";
 import {
@@ -21,6 +16,7 @@ import {
   itemRender,
 } from "../../MainPage/paginationfunction";
 import AddReport from "../screens/AddReport";
+import AddReportForm from "../screens/AddReportForm";
 
 const ExpenseReport = () => {
   const dispatch = useDispatch();
@@ -301,10 +297,10 @@ const ExpenseReport = () => {
                   open={isAddFormVisible}
                   onCancel={() => setIsAddFormVisible(false)}
                   onOk={() => setIsAddFormVisible(false)}
-                  width={1000}
                   footer={null}
+                  className="popup-width"
                 >
-                  <AddReport
+                  <AddReportForm
                     initialData={editReportData || null}
                     setIsAddFormVisible={setIsAddFormVisible}
                     url={url}
@@ -350,9 +346,10 @@ const ExpenseReport = () => {
             </div>
           </div>
         </div>
-        {/* /Page Content */}
-        
       </div>
+
+      {/* /Page Content */}
+
       <Offcanvas />
     </>
   );
