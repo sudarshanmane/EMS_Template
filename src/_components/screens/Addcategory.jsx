@@ -121,7 +121,7 @@ const Addcategory = ({  initialData, setIsAddFormVisible, isAddForm }) => {
             </div>
             <div className="input-block row">
               <label className="col-lg-3 col-form-label">
-                Inventory Asset Receiving Unit 
+                Inventory Asset Receiving Unit
               </label>
               <div className="col-lg-9">
                 <Select size="large" defaultValue="Option1">
