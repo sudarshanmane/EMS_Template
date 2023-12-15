@@ -33,7 +33,7 @@ const Users = () => {
       name: "Bernardo Galaviz",
       image: Avatar_01,
       email: "bernardogalaviz@example.com",
-      company: "Global Technologies",
+      company: "",
       created_date: "5 Jan 2019",
       role: "Client",
     },
