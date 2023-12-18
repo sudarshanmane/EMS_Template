@@ -12,6 +12,174 @@ const initialState = {
 
 export const RootReducer = (state = initialState, action) => {
   switch (action.type) {
+
+
+    case API_CONSTANTS.ADD_REPORT:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.ADD_REPORT_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        addreportresult: action.result,
+      };
+
+      case API_CONSTANTS.GET_REPORT_LIST:
+        return {
+          ...state,
+          loding: true,
+        };
+  
+      case API_CONSTANTS.GET_REPORT_LIST_SUCCESS:
+        return {
+          ...state,
+          loding: false,
+          getreportlist: action.result,
+        };
+
+    case API_CONSTANTS.UPDATE_REPORT:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.UPDATE_REPORT_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        updateReportResult: action.result,
+      };
+
+    case API_CONSTANTS.DELETE_REPORT:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.DELETE_REPORT_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        deleteReportSuccess: action.result,
+      };
+
+    case API_CONSTANTS.SET_DELETE_REPORT_SUCCESS_FALSE:
+      return {
+        ...state,
+        loding: false,
+        deleteReportSuccess: false,
+      };
+
+    case API_CONSTANTS.ADD_CATEGORY:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.ADD_CATEGORY_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        categoryresult: action.result,
+      };
+
+    case API_CONSTANTS.GET_CATEGORYLIST_PANEL:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_CATEGORYLIST_PANEL_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        panelCategoryResult: action.result,
+      };
+
+    case API_CONSTANTS.UPDATE_CATEGORY_PANEL:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.UPDATE_CATEGORY_PANEL_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        updatecategortyResult: action.result,
+      };
+
+    case API_CONSTANTS.DELETE_CATEGORY_PANEL:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.DELETE_CATEGORY_PANEL_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        deletecategoryResult: action.result,
+      };
+
+      case API_CONSTANTS.ADD_COMPANY_POLICY:
+        return {
+          ...state,
+          loding: true,
+        };
+  
+      case API_CONSTANTS.ADD_COMPANY_POLICY_SUCCESS:
+        return {
+          ...state,
+          loding: false,
+          addCompanyPolicyresult: action.result,
+        };
+
+  
+        case API_CONSTANTS.GET_COMPANY_POLICY:
+          return {
+            ...state,
+            loding: true,
+          };
+    
+        case API_CONSTANTS.GET_COMPANY_POLICY_SUCCESS:
+          return {
+            ...state,
+            loding: false,
+            getcompanypolicy: action.result,
+          };
+
+          case API_CONSTANTS.UPDATE_COMPANY_POLICY:
+            return {
+              ...state,
+              loding: true,
+            };
+            
+      case API_CONSTANTS.UPDATE_COMPANY_POLICY_SUCCESS:
+        return {
+          ...state,
+          loding: false,
+          updateCompanyPolicyResult: action.result,
+        };
+  
+      case API_CONSTANTS.DELETE_COMPANY_POLICY:
+        return {
+          ...state,
+          loding: true,
+        };
+  
+      case API_CONSTANTS.DELETE_COMPANY_POLICY_SUCCESS:
+        return {
+          ...state,
+          loding: false,
+          deleteCompanyPolicySuccess: action.result,
+        };
+  
+
+      // ====================================================================
     case API_CONSTANTS.USER_LOGIN:
       return {
         ...state,
@@ -187,51 +355,7 @@ export const RootReducer = (state = initialState, action) => {
         addexpenseresult: action.result,
       };
 
-    case API_CONSTANTS.ADD_REPORT:
-      return {
-        ...state,
-        loding: true,
-      };
-
-    case API_CONSTANTS.ADD_REPORT_SUCCESS:
-      return {
-        ...state,
-        loding: false,
-        addreportresult: action.result,
-      };
-
-    case API_CONSTANTS.UPDATE_REPORT:
-      return {
-        ...state,
-        loding: true,
-      };
-
-    case API_CONSTANTS.UPDATE_REPORT_SUCCESS:
-      return {
-        ...state,
-        loding: false,
-        updateReportResult: action.result,
-      };
-
-    case API_CONSTANTS.DELETE_REPORT:
-      return {
-        ...state,
-        loding: true,
-      };
-
-    case API_CONSTANTS.DELETE_REPORT_SUCCESS:
-      return {
-        ...state,
-        loding: false,
-        deleteReportSuccess: action.result,
-      };
-
-    case API_CONSTANTS.SET_DELETE_REPORT_SUCCESS_FALSE:
-      return {
-        ...state,
-        loding: false,
-        deleteReportSuccess: false,
-      };
+   
 
     case API_CONSTANTS.GET_ROLE:
       return {
@@ -382,18 +506,6 @@ export const RootReducer = (state = initialState, action) => {
         updatecompanylist: action.result,
       };
 
-    case API_CONSTANTS.GET_REPORT_LIST:
-      return {
-        ...state,
-        loding: true,
-      };
-
-    case API_CONSTANTS.GET_REPORT_LIST_SUCCESS:
-      return {
-        ...state,
-        loding: false,
-        getreportlist: action.result,
-      };
 
     case API_CONSTANTS.GET_USER_PANEL:
       return {
@@ -445,57 +557,7 @@ export const RootReducer = (state = initialState, action) => {
         panelaccountingcodeResult: action.result,
       };
 
-    case API_CONSTANTS.ADD_CATEGORY:
-      return {
-        ...state,
-        loding: true,
-      };
-
-    case API_CONSTANTS.ADD_CATEGORY_SUCESS:
-      return {
-        ...state,
-        loding: false,
-        categoryresult: action.result,
-      };
-    case API_CONSTANTS.GET_CATEGORYLIST_PANEL:
-      return {
-        ...state,
-        loding: true,
-      };
-
-    case API_CONSTANTS.GET_CATEGORYLIST_PANEL_SUCCESS:
-      return {
-        ...state,
-        loding: false,
-        panelCategoryResult: action.result,
-      };
-
-    case API_CONSTANTS.UPDATE_CATEGORY_PANEL:
-      return {
-        ...state,
-        loding: true,
-      };
-
-    case API_CONSTANTS.UPDATE_CATEGORY_PANEL_SUCCESS:
-      return {
-        ...state,
-        loding: false,
-        updatecategortyResult: action.result,
-      };
-
-    case API_CONSTANTS.DELETE_CATEGORY_PANEL:
-      return {
-        ...state,
-        loding: true,
-      };
-
-    case API_CONSTANTS.DELETE_CATEGORY_PANEL_SUCCESS:
-      return {
-        ...state,
-        loding: false,
-        deletecategoryResult: action.result,
-      };
-
+  
     case API_CONSTANTS.GET_EXPENSELIST_PANEL:
       return {
         ...state,

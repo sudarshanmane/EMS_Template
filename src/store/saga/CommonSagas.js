@@ -10,6 +10,225 @@ function* errorSaga(mes) {
   message.error(mes);
 }
 
+function* GetReportList(action) {
+  try {
+    let result = yield call(Method.getData, action);
+    if (
+      result.status === 202 ||
+      result.status === 201 ||
+      result.status === 200
+    ) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* AddReportsubmit(action) {
+  try {
+    let result = yield call(Method.postData, action);
+    if (result.status === 201 || result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    console.error("Saga error:", error);
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* updateReport(action) {
+  try {
+    let result = yield call(Method.putData, action);
+    if (result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* deleteReport(action) {
+  try {
+    let result = yield call(Method.deleteData, action);
+    if (result.status === 204) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: "Deleted Successfully",
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "Something went wrong!");
+  }
+}
+
+function* categoryPanelList(action) {
+  try {
+    console.log("actionaction", action);
+    let result = yield call(Method.getData, action);
+    if (result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* getAddCategoryList(action) {
+  try {
+    let result = yield call(Method.postData, action);
+
+    if (result.status === 201) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* UpdateCategoryPanel(action) {
+  try {
+    console.log("actionaction", action);
+    let result = yield call(Method.putData, action);
+    if (result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+
+function* DeleteCategory(action) {
+  try {
+    let result = yield call(Method.deleteData, action);
+    if (result.status === 204) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: "Deleted Successfully",
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "Something went wrong!");
+  }
+}
+
+function* GetCompanyPolicy(action) {
+  try {
+    let result = yield call(Method.getData, action);
+    if (
+      result.status === 202 ||
+      result.status === 201 ||
+      result.status === 200
+    ) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* AddCompanyPolicy(action) {
+  try {
+    let result = yield call(Method.postData, action);
+    if (result.status === 201 || result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    console.error("Saga error:", error);
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* updateCompanyPolicy(action) {
+  try {
+    let result = yield call(Method.putData, action);
+    if (result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* deleteCompanyPolicy(action) {
+  try {
+    let result = yield call(Method.deleteData, action);
+    if (result.status === 204) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: "Deleted Successfully",
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "Something went wrong!");
+  }
+}
+
+// =====================================================================================
 function* UserLoginGenerator(action) {
   try {
     let result = yield call(Method.postData, action);
@@ -320,57 +539,7 @@ function* AddExpesnesubmit(action) {
   }
 }
 
-function* AddReportsubmit(action) {
-  try {
-    let result = yield call(Method.postData, action);
-    if (result.status === 201 || result.status === 200) {
-      yield put({
-        type: `${action.type}_SUCCESS`,
-        status: "ok",
-        result: result.data,
-      });
-    } else {
-      yield call(failSaga, "Server Down!");
-    }
-  } catch (error) {
-    console.error("Saga error:", error);
-    yield call(errorSaga, "The credentials you entered are incorrect!");
-  }
-}
 
-function* updateReport(action) {
-  try {
-    let result = yield call(Method.putData, action);
-    if (result.status === 200) {
-      yield put({
-        type: `${action.type}_SUCCESS`,
-        status: "ok",
-        result: result.data,
-      });
-    } else {
-      yield call(failSaga, "Server Down!");
-    }
-  } catch (error) {
-    yield call(errorSaga, "The credentials you entered are incorrect!");
-  }
-}
-
-function* deleteReport(action) {
-  try {
-    let result = yield call(Method.deleteData, action);
-    if (result.status === 204) {
-      yield put({
-        type: `${action.type}_SUCCESS`,
-        status: "ok",
-        result: "Deleted Successfully",
-      });
-    } else {
-      yield call(failSaga, "Server Down!");
-    }
-  } catch (error) {
-    yield call(errorSaga, "Something went wrong!");
-  }
-}
 
 function* getManagerList(action) {
   try {
@@ -685,26 +854,7 @@ function* UpdateCompanyList(action) {
   }
 }
 
-function* GetReportList(action) {
-  try {
-    let result = yield call(Method.getData, action);
-    if (
-      result.status === 202 ||
-      result.status === 201 ||
-      result.status === 200
-    ) {
-      yield put({
-        type: `${action.type}_SUCCESS`,
-        status: "ok",
-        result: result.data,
-      });
-    } else {
-      yield call(failSaga, "Server Down!");
-    }
-  } catch (error) {
-    yield call(errorSaga, "The credentials you entered are incorrect!");
-  }
-}
+
 
 function* applyCard(action) {
   try {
@@ -855,78 +1005,7 @@ function* updateUser(action) {
     yield call(errorSaga, "The credentials you entered are incorrect!");
   }
 }
-function* UpdateCategoryPanel(action) {
-  try {
-    console.log("actionaction", action);
-    let result = yield call(Method.putData, action);
-    if (result.status === 200) {
-      yield put({
-        type: `${action.type}_SUCCESS`,
-        status: "ok",
-        result: result.data,
-      });
-    } else {
-      yield call(failSaga, "Server Down!");
-    }
-  } catch (error) {
-    yield call(errorSaga, "The credentials you entered are incorrect!");
-  }
-}
 
-
-function* DeleteCategory(action) {
-  try {
-    let result = yield call(Method.deleteData, action);
-    if (result.status === 204) {
-      yield put({
-        type: `${action.type}_SUCCESS`,
-        status: "ok",
-        result: "Deleted Successfully",
-      });
-    } else {
-      yield call(failSaga, "Server Down!");
-    }
-  } catch (error) {
-    yield call(errorSaga, "Something went wrong!");
-  }
-}
-
-
-function* getAddCategoryList(action) {
-  try {
-    let result = yield call(Method.postData, action);
-
-    if (result.status === 201) {
-      yield put({
-        type: `${action.type}_SUCCESS`,
-        status: "ok",
-        result: result.data,
-      });
-    } else {
-      yield call(failSaga, "Server Down!");
-    }
-  } catch (error) {
-    yield call(errorSaga, "The credentials you entered are incorrect!");
-  }
-}
-
-function* categoryPanelList(action) {
-  try {
-    console.log("actionaction", action);
-    let result = yield call(Method.getData, action);
-    if (result.status === 200) {
-      yield put({
-        type: `${action.type}_SUCCESS`,
-        status: "ok",
-        result: result.data,
-      });
-    } else {
-      yield call(failSaga, "Server Down!");
-    }
-  } catch (error) {
-    yield call(errorSaga, "The credentials you entered are incorrect!");
-  }
-}
 
 function* approvedExpensemanager(action) {
   try {
@@ -1546,12 +1625,28 @@ function* exportCompanypanel(action) {
 }
 
 export {
+  GetReportList,
+  AddReportsubmit,
+  updateReport,
+  deleteReport,
+
+  getAddCategoryList,
+  categoryPanelList,
+  UpdateCategoryPanel,
+  DeleteCategory,
+
+  GetCompanyPolicy,
+  AddCompanyPolicy,
+  updateCompanyPolicy,
+  deleteCompanyPolicy,
+
+  // =========================================
   approvedExpensemanager,
   UserLoginGenerator,
   UserRegisterGenerator,
   addExpenseItem,
   addExpenseType,
-  getAddCategoryList,
+ 
   addExternalcodeType,
   addUser,
   getManagerList,
@@ -1565,7 +1660,7 @@ export {
   getAccountingCodeList,
   itemizationsubmit,
   AddExpesnesubmit,
-  AddReportsubmit,
+
   getExpenseTypePanel,
   getExternalAccountPanel,
   AboutUs,
@@ -1575,13 +1670,11 @@ export {
   ChangePassword,
   itemizationPanel,
   accountingCodePanel,
-  categoryPanelList,
+
   expensePanelList,
   getExpenseItemSetupPanel,
   GetCompanyList,
-  GetReportList,
-  updateReport,
-  deleteReport,
+ 
   getAddUserPanel,
   applyCard,
   searchExpenseType,
@@ -1591,8 +1684,7 @@ export {
   updateUser,
   updateExternalAccountCode,
   UpdateAccountcodePanel,
-  UpdateCategoryPanel,
-  DeleteCategory,
+ 
   // UpdateExpenseIemaiztaion,
   UpdateExpenseItemization,
   UpdateExpenseList,

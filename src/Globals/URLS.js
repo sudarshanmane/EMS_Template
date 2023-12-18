@@ -1,5 +1,22 @@
 export const URLS = {
     BASE_URL_EXPORT: "http://127.0.0.1:8000",
+    ADD_REPORT_URL: "/expense/expensereport/",
+    GET_REPORT_LIST_URL:"/expense/expensereport/",
+    UPDATE_REPORT: "/expense/expensereport/",
+
+    ADD_CATEGORY_URL: "/expense/expensecategory/",
+    GET_CATEGORY_PANEL_URL: "/expense/expensecategory/",
+    UPDATE_CATEGORY_PANEL_URL: "/expense/expensecategory/",
+    DELETE_CATEGORY_PANEL_URL: "/expense/expensecategory/",
+
+    ADD_COMPANY_POLICY_URL: "/expense/company_policies/",
+    GET_COMPANY_POLICY_URL: "/expense/company_policies/",
+    UPDATE_COMPANY_POLICY_URL: "/expense/company_policies/",
+    DELETE_COMPANY_POLICY_URL: "/expense/company_policies/",
+
+
+
+    // ========================================================================================
     USER_LOGIN_URL: "/users/admin-login/",
     USER_REGISTER_URL: "/authentication/register/",
     GET_AGENCY_LIST_URL: "/document/agency-list/",
@@ -13,9 +30,7 @@ export const URLS = {
     ITEMIZATION_SUBMIT_URL: "/expense/expenseitemization/",
     GET_EXPENSE_PANEL_URL: "/expense/expense-list/",
     ADD_EXPENSE_URL: "/expense/add_expense/",
-    ADD_REPORT_URL: "/expense/expensereport/",
-    GET_REPORT_LIST_URL:"/expense/expensereport/",
-    UPDATE_REPORT: "/expense/expensereport/",
+   
     GET_ROLE_URL: "/roles/role/",
     GET_MANAGER_LIST_URL: "/users/get_users/",
     EXPENSE_TYPE_PANEL_URL: "/expense/expensetypelist/",
@@ -29,10 +44,7 @@ export const URLS = {
     GET_EXPENSE_ITEM_SETUP_PANEL_URL: "/expense/expense-item-setup-list/",
     GET_ITEMIZATION_PANEL_URL: "/expense/expense-itemization-list/",
     GET_ACCOUNTINGCODE_PANEL_URL: "/expense/accounting-code-list/",
-    ADD_CATEGORY_URL: "/expense/expensecategory/",
-    GET_CATEGORY_PANEL_URL: "/expense/expensecategory/",
-    UPDATE_CATEGORY_PANEL_URL: "/expense/expensecategory/",
-    DELETE_CATEGORY_PANEL_URL: "/expense/expensecategory/",
+   
     APPLY_CARD_URL: "/card/apply_card/",
     UPDATE_ACCOUNTING_CODE_URL: "/expense/accountingcode/",
     UPDATE_EXPENSEITEMIZATION_PANEL_URL: "/expense/expenseitemization/",
