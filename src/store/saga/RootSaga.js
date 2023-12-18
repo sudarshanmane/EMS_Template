@@ -2,6 +2,22 @@ import { takeEvery } from "redux-saga/effects";
 import { API_CONSTANTS } from "../../Globals/APIConstants";
 
 import {
+  AddReportsubmit,
+  GetReportList,
+  updateReport,
+  deleteReport,
+
+  getAddCategoryList,
+  categoryPanelList,
+  UpdateCategoryPanel,
+  DeleteCategory,
+
+  updateCompanyPolicy,
+  deleteCompanyPolicy,
+  GetCompanyPolicy,
+  AddCompanyPolicy,
+
+  // =======================================
   UserLoginGenerator,
   UserRegisterGenerator,
   Updateuserprofile,
@@ -9,13 +25,13 @@ import {
   addExpenseType,
   addExternalcodeType,
   addUser,
-  getAddCategoryList,
+
   accountingCodeSubmit,
   getParentTypelist,
   getItemNameList,
   itemizationsubmit,
   AddExpesnesubmit,
-  AddReportsubmit,
+ 
   getRole,
   getManagerList,
   addRole,
@@ -29,14 +45,12 @@ import {
   ChangePassword,
   GetCompanyList,
   UpdateCompanyList,
-  GetReportList,
-  updateReport,
-  deleteReport,
+
   getAddUserPanel,
   getExpenseItemSetupPanel,
   itemizationPanel,
   accountingCodePanel,
-  categoryPanelList,
+
   expensePanelList,
   applyCard,
   searchExpenseType,
@@ -46,8 +60,7 @@ import {
   updateUser,
   // updateExternalAccountCode,
   UpdateAccountcodePanel,
-  UpdateCategoryPanel,
-  DeleteCategory,
+ 
   // UpdateExpenseIemaiztaion,
   UpdateExpenseItemization,
   UpdateExpenseList,
@@ -85,9 +98,27 @@ import {
   commanmanagercardlidtfunction,
   ownExpenseApproveList,
   exportCompanypanel,
+ 
 } from "./CommonSagas";
 
 export function* RootSaga() {
+
+  yield takeEvery(API_CONSTANTS.ADD_REPORT, AddReportsubmit);
+  yield takeEvery(API_CONSTANTS.GET_REPORT_LIST, GetReportList);
+  yield takeEvery(API_CONSTANTS.UPDATE_REPORT, updateReport);
+  yield takeEvery(API_CONSTANTS.DELETE_REPORT, deleteReport);
+
+  yield takeEvery(API_CONSTANTS.ADD_CATEGORY, getAddCategoryList);
+  yield takeEvery(API_CONSTANTS.GET_CATEGORYLIST_PANEL, categoryPanelList);
+  yield takeEvery(API_CONSTANTS.UPDATE_CATEGORY_PANEL, UpdateCategoryPanel);
+  yield takeEvery(API_CONSTANTS.DELETE_CATEGORY_PANEL, DeleteCategory);
+
+  yield takeEvery(API_CONSTANTS.ADD_COMPANY_POLICY, AddCompanyPolicy);
+  yield takeEvery(API_CONSTANTS.GET_COMPANY_POLICY, GetCompanyPolicy);
+  yield takeEvery(API_CONSTANTS.UPDATE_COMPANY_POLICY, updateCompanyPolicy);
+  yield takeEvery(API_CONSTANTS.DELETE_COMPANY_POLICY, deleteCompanyPolicy);
+
+  // ============================================================
   yield takeEvery(API_CONSTANTS.USER_LOGIN, UserLoginGenerator);
   yield takeEvery(API_CONSTANTS.USER_REGISTER, UserRegisterGenerator);
   yield takeEvery(API_CONSTANTS.ADD_EXPENSE_TYPE_SETUP, addExpenseType);
@@ -108,9 +139,7 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.GET_ITEMNAME_LIST, getItemNameList);
   yield takeEvery(API_CONSTANTS.EXPENSE_ITEMIZATION, itemizationsubmit);
   yield takeEvery(API_CONSTANTS.ADD_EXPENSE, AddExpesnesubmit);
-  yield takeEvery(API_CONSTANTS.ADD_REPORT, AddReportsubmit);
-  yield takeEvery(API_CONSTANTS.UPDATE_REPORT, updateReport);
-  yield takeEvery(API_CONSTANTS.DELETE_REPORT, deleteReport);
+  
   yield takeEvery(API_CONSTANTS.GET_MANAGER_LIST, getManagerList);
   yield takeEvery(API_CONSTANTS.GET_EXPENSE_TYPE_PANEL, getExpenseTypePanel);
   yield takeEvery(
@@ -124,7 +153,6 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.UPDATE_PASSWORD, ChangePassword);
   yield takeEvery(API_CONSTANTS.GET_COMPANY_LIST, GetCompanyList);
   yield takeEvery(API_CONSTANTS.UPDATE_COMPANY_LIST, UpdateCompanyList);
-  yield takeEvery(API_CONSTANTS.GET_REPORT_LIST, GetReportList);
   yield takeEvery(API_CONSTANTS.GET_USER_PANEL, getAddUserPanel);
   yield takeEvery(
     API_CONSTANTS.GET_EXPENSE_ITEM_SETUP_PANEL,
@@ -132,10 +160,7 @@ export function* RootSaga() {
   );
   yield takeEvery(API_CONSTANTS.GET_ITEMIZATION_PANEL, itemizationPanel);
   yield takeEvery(API_CONSTANTS.GET_ACCOUNTINGCODE_PANEL, accountingCodePanel);
-  yield takeEvery(API_CONSTANTS.ADD_CATEGORY, getAddCategoryList);
-  yield takeEvery(API_CONSTANTS.GET_CATEGORYLIST_PANEL, categoryPanelList);
-  yield takeEvery(API_CONSTANTS.UPDATE_CATEGORY_PANEL, UpdateCategoryPanel);
-  yield takeEvery(API_CONSTANTS.DELETE_CATEGORY_PANEL, DeleteCategory);
+ 
   yield takeEvery(API_CONSTANTS.GET_EXPENSELIST_PANEL, expensePanelList);
   yield takeEvery(API_CONSTANTS.APPLY_CARD, applyCard);
   yield takeEvery(API_CONSTANTS.SEARCH_EXPENSE_TYPE, searchExpenseType);
