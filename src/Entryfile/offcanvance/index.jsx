@@ -10,7 +10,8 @@ import {
   Two_col,
   Veritical,
 } from "../imagepath";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import {Link} from "react-router-dom"
+
 
 const Offcanvas = () => {
   const [input1Checked, setInput1Checked] = useState(true);

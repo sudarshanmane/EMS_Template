@@ -30,9 +30,9 @@ const Header = (props) => {
   };
 
   let pathname = location.pathname;
-  const { loginvalue } = useSelector((state) => state.user);
-  const UserName = loginvalue?.email?.split("@")[0];
-  const ProfileName = UserName?.charAt(0).toUpperCase() + UserName?.slice(1);
+  // const { loginvalue } = useSelector((state) => state.user);
+  // const UserName = loginvalue?.email?.split("@")[0];
+  // const ProfileName = UserName?.charAt(0).toUpperCase() + UserName?.slice(1);
 
   return (
     <div className="header" style={{ right: "0px" }}>
@@ -63,7 +63,7 @@ const Header = (props) => {
       </Link>
       {/* Header Title */}
       <div className="page-title-box">
-        <h3>Metamind System Pvt Ltd</h3>
+        <h3>Metamind Systems Pvt. Ltd.</h3>
       </div>
       {/* /Header Title */}
       <Link
@@ -228,14 +228,14 @@ const Header = (props) => {
               <img src={Avatar_21} alt="" />
               <span className="status online" />
             </span>
-            <span>{ProfileName ? ` ${ProfileName}` : "Admin"}</span>
+            {/* <span>{ProfileName ? ` ${ProfileName}` : "Admin"}</span> */}
           </Link>
           <div className="dropdown-menu dropdown-menu-end">
-            <Link className="dropdown-item" to="/app/profile/employee-profile">
-              My Profile
+            <Link className="dropdown-item" to="/home/ProfileForm">
+              Update Profile
             </Link>
-            <Link className="dropdown-item" to="/settings/companysetting">
-              Settings
+            <Link className="dropdown-item" to="/home/ChangePasswordForm">
+              Change Password
             </Link>
             <Link className="dropdown-item" to="/login">
               Logout
@@ -255,11 +255,11 @@ const Header = (props) => {
           <i className="fa fa-ellipsis-v" />
         </Link>
         <div className="dropdown-menu dropdown-menu-end dropdown-menu-right">
-          <Link className="dropdown-item" to="/app/profile/employee-profile">
-            My Profile
+          <Link className="dropdown-item" to="/home/ProfileForm">
+            Update Profile
           </Link>
-          <Link className="dropdown-item" to="/settings/companysetting">
-            Settings
+          <Link className="dropdown-item" to="/home/ChangePasswordForm">
+            Change Password
           </Link>
           <Link className="dropdown-item" to="/login">
             Logout

@@ -1,9 +1,25 @@
 export const URLS = {
     BASE_URL_EXPORT: "http://127.0.0.1:8000",
+    ADD_REPORT_URL: "/expense/expensereport/",
+    GET_REPORT_LIST_URL:"/expense/expensereport/",
+    UPDATE_REPORT: "/expense/expensereport/",
+
+    ADD_CATEGORY_URL: "/expense/expensecategory/",
+    GET_CATEGORY_PANEL_URL: "/expense/expensecategory/",
+    UPDATE_CATEGORY_PANEL_URL: "/expense/expensecategory/",
+    DELETE_CATEGORY_PANEL_URL: "/expense/expensecategory/",
+
+    ADD_COMPANY_POLICY_URL: "/expense/company_policies/",
+    GET_COMPANY_POLICY_URL: "/expense/company_policies/",
+    UPDATE_COMPANY_POLICY_URL: "/expense/company_policies/",
+    DELETE_COMPANY_POLICY_URL: "/expense/company_policies/",
+
+
+
+    // ========================================================================================
     USER_LOGIN_URL: "/users/admin-login/",
     USER_REGISTER_URL: "/authentication/register/",
     GET_AGENCY_LIST_URL: "/document/agency-list/",
-    ADD_CATEGORY_URL: "/expense/category/",
     EXPENSE_ITEM_SETUP_URL: "/expense/expenseitemsetup/",
     UPDATE_EXPENSE_ITEM_SETUP_URL: "/expense/expenseitemsetup/",
     GET_ACCOUNTING_CODE_URL: "/expense/accountingcode/",
@@ -12,7 +28,9 @@ export const URLS = {
     EXTERNAL_ACCOUNT_CODE_URL: "/expense/externalaccountcode/",
     ADD_USER_URL: "/users/create_user/",
     ITEMIZATION_SUBMIT_URL: "/expense/expenseitemization/",
+    GET_EXPENSE_PANEL_URL: "/expense/expense-list/",
     ADD_EXPENSE_URL: "/expense/add_expense/",
+   
     GET_ROLE_URL: "/roles/role/",
     GET_MANAGER_LIST_URL: "/users/get_users/",
     EXPENSE_TYPE_PANEL_URL: "/expense/expensetypelist/",
@@ -23,15 +41,12 @@ export const URLS = {
     GET_COMPANY_LIST_URL: "/users/company-list/",
     DELETE_COMPANY_LIST_URL : "/authentication/delete_company/",
     UPDATE_COMPANY_LIST_URL: "/authentication/update_company/",
-    GET_REPORT_LIST_URL:"/expense/reports/?fromdate=2023-11-01T00:00:00Z&todate=2023-11-06T23:59:59Z",
     GET_EXPENSE_ITEM_SETUP_PANEL_URL: "/expense/expense-item-setup-list/",
     GET_ITEMIZATION_PANEL_URL: "/expense/expense-itemization-list/",
     GET_ACCOUNTINGCODE_PANEL_URL: "/expense/accounting-code-list/",
-    GET_CATEGORY_PANEL_URL: "/expense/category-list/",
-    GET_EXPENSE_PANEL_URL: "/expense/expense-list/",
+   
     APPLY_CARD_URL: "/card/apply_card/",
     UPDATE_ACCOUNTING_CODE_URL: "/expense/accountingcode/",
-    UPDATE_CATEGORY_PANEL_URL: "/expense/category/",
     UPDATE_EXPENSEITEMIZATION_PANEL_URL: "/expense/expenseitemization/",
     UPDATE_EXPENSE_PANEL_URL: "/expense/edit_expense/",
     EXPENSETABLE_SUBMIT_TRUE_URL: "/expense/submit_expense/",

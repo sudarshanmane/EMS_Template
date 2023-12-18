@@ -2,6 +2,117 @@ import { API_CONSTANTS } from "../../Globals/APIConstants";
 import { contentType } from "../../Globals/ContentType";
 import { URLS } from "../../Globals/URLS";
 
+function addReport(payload) {
+  return {
+    type: API_CONSTANTS.ADD_REPORT,
+    payload,
+    URL: URLS.ADD_REPORT_URL,
+    contentType: contentType.json,
+  };
+}
+function getReportList(payload) {
+  return {
+    type: API_CONSTANTS.GET_REPORT_LIST,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
+function updateReportAction(payload) {
+  return {
+    type: API_CONSTANTS.UPDATE_REPORT,
+    payload: payload.payload,
+    URL: URLS.UPDATE_REPORT + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+function deleteReportAction(payload) {
+  return {
+    type: API_CONSTANTS.DELETE_REPORT,
+    URL: URLS.UPDATE_REPORT + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+function setDeleteReportFalse(payload) {
+  return {
+    type: API_CONSTANTS.SET_DELETE_REPORT_SUCCESS_FALSE,
+  };
+}
+
+function addCategoryAction(payload) {
+  return {
+    type: API_CONSTANTS.ADD_CATEGORY,
+    payload,
+    URL: URLS.ADD_CATEGORY_URL,
+    contentType: contentType.json,
+  };
+}
+
+function getCategoryPanelAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_CATEGORYLIST_PANEL,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
+function updateCategorypanle(payload) {
+  return {
+    type: API_CONSTANTS.UPDATE_CATEGORY_PANEL,
+    payload: payload.payload,
+    URL: URLS.UPDATE_CATEGORY_PANEL_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+function deleteCategorypanelAction(payload) {
+  return {
+    type: API_CONSTANTS.DELETE_CATEGORY_PANEL,
+    URL: URLS.DELETE_CATEGORY_PANEL_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+function addCompanyPolicy(payload) {
+  return {
+    type: API_CONSTANTS.ADD_COMPANY_POLICY,
+    payload,
+    URL: URLS.ADD_COMPANY_POLICY_URL,
+    contentType: contentType.json,
+  };
+}
+function getCompanyPolicy(payload) {
+  return {
+    type: API_CONSTANTS.GET_COMPANY_POLICY,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
+function updateCompanyPolicy(payload) {
+  return {
+    type: API_CONSTANTS.UPDATE_COMPANY_POLICY,
+    payload: payload.payload,
+    URL: URLS.UPDATE_COMPANY_POLICY_URL+ payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+function deleteCompanyPolicy(payload) {
+  return {
+    type: API_CONSTANTS.DELETE_COMPANY_POLICY,
+    URL: URLS.DELETE_COMPANY_POLICY_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+// ================================================================================
+
 function userLogin(payload) {
   return {
     type: API_CONSTANTS.USER_LOGIN,
@@ -32,15 +143,6 @@ function updateExpenseItemSetup(payload) {
     type: API_CONSTANTS.UPDATE_EXPENSE_ITEM_SETUP,
     payload: payload.payload,
     URL: payload.URL,
-    contentType: contentType.json,
-  };
-}
-
-function addCategoryAction(payload) {
-  return {
-    type: API_CONSTANTS.ADD_CATEGORY,
-    payload,
-    URL: URLS.ADD_CATEGORY_URL,
     contentType: contentType.json,
   };
 }
@@ -157,6 +259,8 @@ function addExpense(payload) {
   };
 }
 
+
+
 function getExpenseTypePanelAction(payload) {
   return {
     type: API_CONSTANTS.GET_EXPENSE_TYPE_PANEL,
@@ -232,14 +336,7 @@ function updateCompanyList(payload) {
     contentType: contentType.json,
   };
 }
-function getReportList(payload) {
-  return {
-    type: API_CONSTANTS.GET_REPORT_LIST,
-    payload: payload.payload,
-    URL: payload.URL,
-    contentType: contentType.json,
-  };
-}
+
 // function getaccountingcodePanelAction(payload) {
 //   return {
 //     type: API_CONSTANTS.GET_ACCOUNTINGCODE_PANEL,
@@ -284,14 +381,8 @@ function getaccountingcodePanelAction(payload) {
   };
 }
 
-function getCategoryPanelAction(payload) {
-  return {
-    type: API_CONSTANTS.GET_CATEGORYLIST_PANEL,
-    payload: payload.payload,
-    URL: payload.URL,
-    contentType: contentType.json,
-  };
-}
+
+
 function getexpensePanelListAction(payload) {
   return {
     type: API_CONSTANTS.GET_EXPENSELIST_PANEL,
@@ -352,14 +443,7 @@ function updateUserAction(payload) {
     contentType: contentType.json,
   };
 }
-function updateCategorypanle(payload) {
-  return {
-    type: API_CONSTANTS.UPDATE_CATEGORY_PANEL,
-    payload: payload.payload,
-    URL: payload.URL,
-    contentType: contentType.json,
-  };
-}
+
 function updateExternalAccountCodeAction(payload) {
   return {
     type: API_CONSTANTS.UPDATE_EXTERNAL_ACCOUNT_CODE,
@@ -722,18 +806,12 @@ function ownExpenseRejectAction(payload) {
 function ownExpenseHoldAction(data) {
   return {
     type: API_CONSTANTS.OWN_EXPENSE_HOLD_LIST,
-    payload:data,
+    payload: data,
     URL: URLS.OWN_EXPENSE_HOLD_URL,
     contentType: contentType.json,
   };
 }
-function deleteCategorypanelAction(payload) {
-  return {
-    type: API_CONSTANTS.DELETE_CATEGORY_PANEL,
-    URL: URLS.ADD_CATEGORY_URL + payload.id + "/",
-    contentType: contentType.json,
-  };
-}
+
 function deleteExpenseitemizationAction(payload) {
   return {
     type: API_CONSTANTS.DELETE_EXPENSEITEMIZAION_PANEL,
@@ -798,12 +876,29 @@ function exportCompanyPanelAction(payload) {
 }
 
 export {
+  addReport,
+  updateReportAction,
+  deleteReportAction,
+  setDeleteReportFalse,
+
+  addCategoryAction,
+  getCategoryPanelAction,
+  updateCategorypanle,
+  deleteCategorypanelAction,
+
+
+  addCompanyPolicy,
+  getCompanyPolicy,
+  updateCompanyPolicy,
+  deleteCompanyPolicy,
+
+// ===========================================================
   userLogin,
   userRegister,
   addExpenseItemSetup,
   getAccountingCodeAction,
   addExpenseTypeSetup,
-  addCategoryAction,
+ 
   addExternalAccountCodeAction,
   addUserAction,
   getRoleAction,
@@ -814,6 +909,7 @@ export {
   getItemListonItemization,
   EXpenseItemizationsubmit,
   addExpense,
+ 
   updateProfileuser,
   getExpenseTypePanelAction,
   getExternalAccountCodePanelAction,
@@ -828,7 +924,7 @@ export {
   addUserPanelAction,
   getPanelItemization,
   getaccountingcodePanelAction,
-  getCategoryPanelAction,
+
   getexpensePanelListAction,
   applyCardAction,
   searchExpenseTypeAction,
@@ -838,7 +934,7 @@ export {
   updateUserAction,
   updateExternalAccountCodeAction,
   updateAccountingcodepanelAction,
-  updateCategorypanle,
+ 
   updateexpenseitemizationpanel,
   updateexpensepanel,
   expensetableTrueSubmit,
@@ -883,7 +979,7 @@ export {
   ownExpenseDraftAction,
   ownExpenseRejectAction,
   ownExpenseHoldAction,
-  deleteCategorypanelAction,
+ 
   deleteExpenseitemizationAction,
   deleteAccountingcodeAction,
   deleteExpensepanelAction,

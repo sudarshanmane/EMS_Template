@@ -13,7 +13,7 @@ import {
   Avatar_16,
   Avatar_19,
 } from "../../../Entryfile/imagepath";
-import Offcanvas from "../../../Entryfile/offcanvance";
+import Offcanvas from "../../../../src/Entryfile/offcanvance"
 
 const ClientProfile = () => {
   return (

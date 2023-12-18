@@ -1,26 +1,35 @@
 /* eslint-disable no-undef */
-
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { Table } from "antd";
+import { Table, Space, Button, Modal } from "antd";
+import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import "antd/dist/antd.min.css";
-import { itemRender, onShowSizeChange } from "../../paginationfunction";
-import Offcanvas from "../../../Entryfile/offcanvance";
-import { getReportList } from "../../../store/Action/Actions";
-import { URLS } from "../../../Globals/URLS";
+import { getReportList, deleteReportAction } from "../../store/Action/Actions";
+import { URLS } from "../../Globals/URLS";
+import Offcanvas from "../../Entryfile/offcanvance";
+import {
+  onShowSizeChange,
+  itemRender,
+} from "../../MainPage/paginationfunction";
+import AddReport from "../screens/AddReport";
+
 
 const ExpenseReport = () => {
   const dispatch = useDispatch();
   const [focused, setFocused] = useState(false);
-
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [allReportList, setAllReportList] = useState([]);
-  const [selectedDate1, setSelectedDate1] = useState(null);
-  const [selectedDate2, setSelectedDate2] = useState(null);
+  const [selectedDate1, setSelectedDate1] = useState(new Date());
+  const [selectedDate2, setSelectedDate2] = useState(new Date());
+  const [viewReportData, setViewReportData] = useState(null);
+  const [isAddFormVisible, setIsAddFormVisible] = useState(false);
+  const [editReportData, setEditReportData] = useState(null);
+  const [deleteReportData, setDeleteReportData] = useState(null);
+  const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] =
+    useState(false);
 
   const url = URLS.GET_REPORT_LIST_URL;
 
@@ -30,14 +39,35 @@ const ExpenseReport = () => {
   const handleDateChange2 = (date) => {
     setSelectedDate2(date);
   };
+  const handleView = (record) => {
+    setViewReportData(record);
+    setIsAddFormVisible(false);
+  };
+  const handleEdit = (record) => {
+    setEditReportData(record);
+    setIsAddFormVisible(true);
+  };
+  const handleDelete = (record) => {
+    setDeleteReportData(record);
+    setIsDeleteConfirmationVisible(true);
+  };
 
-  useEffect(() => {
-    getPageDetails(url);
-  }, []);
+  const handleDeleteConfirmation = () => {
+    const deletedReportId = deleteReportData.id;
+    dispatch(deleteReportAction({ id: deletedReportId }));
+    setIsDeleteConfirmationVisible(false);
+    setAllReportList((prevItems) =>
+      prevItems.filter((item) => item.id !== deletedReportId)
+    );
+  };
 
   function getPageDetails(url) {
     dispatch(getReportList({ payload: {}, URL: url }));
   }
+
+  useEffect(() => {
+    getPageDetails(url);
+  }, []);
 
   function fetchReportData(url) {
     dispatch(getReportList({ payload: {}, URL: url }));
@@ -51,33 +81,72 @@ const ExpenseReport = () => {
 
   useEffect(() => {
     if (reportPanelSelector) {
-      const reportList = [reportPanelSelector]?.map((element) => {
+      const allReportList = reportPanelSelector.map((element) => {
         return {
+          id: element.id,
+          report_number: element.report_number,
           description: element.description,
           start_date: element.start_date,
           end_date: element.end_date,
         };
       });
-
-      setAllReportList(reportList);
+      setAllReportList(allReportList);
     }
   }, [reportPanelSelector]);
 
+  const addreportPanelSelector = useSelector(
+    (state) => state.addreportresult
+  );
+
+  useEffect(() => {
+    if (addreportPanelSelector) {
+      dispatch(getReportList({ payload: {}, URL: url }));
+    }
+    setIsAddFormVisible(false);
+  }, [addreportPanelSelector]);
+
+  const updatereportPanelSelector = useSelector(
+    (state) => state.updateReportResult
+  );
+
+  useEffect(() => {
+    if (updatereportPanelSelector) {
+      dispatch(getReportList({ payload: {}, URL: url }));
+    }
+    setIsAddFormVisible(false);
+  }, [updatereportPanelSelector]);
+
   const columns = [
+    // {
+    //   title: "Sr No",
+    //   dataIndex: "id",
+    //   key: "id",
+    // },
+    {
+      title: "Report No",
+      dataIndex: "report_number",
+    },
     {
       title: "Description",
       dataIndex: "description",
-      render: (text) => <strong>{text}</strong>,
+      render: (text) => <span> {text}</span>,
+      // render: (text) => <strong>{text}</strong>,
       sorter: (a, b) => a.description.length - b.description.length,
     },
     {
       title: "Start Date",
       dataIndex: "start_date",
+      render: (text) => (
+        <span>{text ? new Date(text).toLocaleDateString() : ""}</span>
+      ),
       sorter: (a, b) => a.start_date.length - b.start_date.length,
     },
     {
       title: "End Date",
       dataIndex: "end_date",
+      render: (text) => (
+        <span>{text ? new Date(text).toLocaleDateString() : ""}</span>
+      ),
       sorter: (a, b) => a.end_date.length - b.end_date.length,
     },
 
@@ -89,6 +158,7 @@ const ExpenseReport = () => {
           <Link
             className="btn btn-white btn-sm btn-rounded dropdown-toggle"
             to="#"
+            data-bs-toggle="dropdown"
             aria-expanded="false"
           >
             <i
@@ -113,45 +183,30 @@ const ExpenseReport = () => {
       sorter: (a, b) => a.status.length - b.status.length,
     },
     {
-      title: "Action",
-      render: () => (
-        <div className="dropdown dropdown-action text-end">
-          <Link
-            to="#"
-            className="action-icon dropdown-toggle"
-            aria-expanded="false"
-          >
-            <i className="material-icons">more_vert</i>
-          </Link>
-          <div className="dropdown-menu dropdown-menu-right">
-            <Link
-              className="dropdown-item"
-              to="#"
-              data-bs-toggle="modal"
-              data-bs-target="#edit_leave"
-            >
-              <i className="fa fa-pencil m-r-5" /> Edit
-            </Link>
-            <Link
-              className="dropdown-item"
-              to="#"
-              data-bs-toggle="modal"
-              data-bs-target="#delete_approve"
-            >
-              <i className="fa fa-trash m-r-5" /> Delete
-            </Link>
-          </div>
-        </div>
+      title: "Actions",
+      key: "actions",
+      render: (record) => (
+        <Space size="small">
+          <Button
+            type="success"
+            icon={<EyeOutlined />}
+            onClick={() => handleView(record)}
+          />
+          <Button
+            type="primary"
+            icon={<EditOutlined />}
+            onClick={() => handleEdit(record)}
+          />
+          <Button
+            type="default"
+            icon={<DeleteOutlined />}
+            onClick={() => handleDelete(record)}
+          />
+        </Space>
       ),
     },
   ];
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: (selectedKeys) => {
-      setSelectedRowKeys(selectedKeys);
-    },
-    checkStrictly: true,
-  };
+
   return (
     <>
       <div className="page-wrapper">
@@ -171,7 +226,14 @@ const ExpenseReport = () => {
                 </ul>
               </div>
               <div className="col-auto float-end ms-auto">
-                <Link to="/home/addreport" className="btn add-btn">
+                 <Link
+                  to="#"
+                  className="btn add-btn"
+                  onClick={() => {
+                    setEditReportData(null);
+                    setIsAddFormVisible(true);
+                  }}
+                >
                   <i className="fa fa-plus" /> Add Report
                 </Link>
               </div>
@@ -237,7 +299,7 @@ const ExpenseReport = () => {
                 <Table
                   className="table-striped"
                   pagination={{
-                    total: allReportList.length,
+                    total: allReportList ? allReportList.length : 0,
                     showTotal: (total, range) =>
                       `Showing ${range[0]} to ${range[1]} of ${total} entries`,
                     showSizeChanger: true,
@@ -249,12 +311,68 @@ const ExpenseReport = () => {
                   dataSource={allReportList}
                   rowKey={(record) => record.id}
                 />
+                <Modal
+                  title={
+                    editReportData
+                      ? "Update Report Details"
+                      : "Add Report Details"
+                  }
+                  open={isAddFormVisible}
+                  onCancel={() => setIsAddFormVisible(false)}
+                  onOk={() => setIsAddFormVisible(false)}
+                  footer={null}
+                  className="popup-width"
+                >
+                  <AddReport
+                    initialData={editReportData || null}
+                    setIsAddFormVisible={setIsAddFormVisible}
+                    url={url}
+                    isAddForm={editReportData}
+                  />
+                </Modal>
+                <Modal
+                  title="Confirm Delete"
+                  open={isDeleteConfirmationVisible}
+                  onOk={handleDeleteConfirmation}
+                  onCancel={() => setIsDeleteConfirmationVisible(false)}
+                >
+                  Are you sure you want to delete this item?
+                </Modal>
+                <Modal
+                  title={
+                    viewReportData ? "View Report" : "Update Report Details"
+                  }
+                  open={viewReportData}
+                  onCancel={() => {
+                    setIsAddFormVisible(false);
+                    setViewReportData(null);
+                  }}
+                  footer={null}
+                >
+                  {viewReportData ? (
+                    <div>
+                      <p>Report No: {viewReportData.report_number}</p>
+                      <p>Description: {viewReportData.description}</p>
+                      <p>Start Date: {viewReportData.start_date}</p>
+                      <p>End Date: {viewReportData.end_date}</p>
+                    </div>
+                  ) : (
+                    <AddReport
+                      initialData={editReportData || null}
+                      url={url}
+                      setIsAddFormVisible={setIsAddFormVisible}
+                      isAddForm={editReportData}
+                    />
+                  )}
+                </Modal>
               </div>
             </div>
           </div>
         </div>
-        {/* /Page Content */}
       </div>
+
+      {/* /Page Content */}
+
       <Offcanvas />
     </>
   );

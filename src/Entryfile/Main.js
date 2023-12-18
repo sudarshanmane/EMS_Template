@@ -30,27 +30,12 @@ import { Provider } from "react-redux";
 import userReducer from "./features/users";
 
 import Navigates from "../Components/Navigates/Navigates.jsx";
-
-const store = configureStore({
-  reducer: {
-    user: userReducer,
-  },
-});
+import store from "../store/storeConfiguration.js";
 
 const MainApp = () => {
   return (
     <Provider store={store}>
       <Navigates></Navigates>
-      {/* <Router>
-        <Routes>
-          <Route path="/" element={<Navigate to="/app" />} />
-          <Route path="/app" element={<App />} />
-          <Route path="/login" element={<Loginpage />} />
-          <Route path="/forgotpassword" element={<ForgotPassword />} />
-          <Route path="/register" element={<Registrationpage />} />
-          <Route path="/sidebar" element={<Sidebar />} />
-        </Routes>
-      </Router> */}
     </Provider>
   );
 };

@@ -12,6 +12,174 @@ const initialState = {
 
 export const RootReducer = (state = initialState, action) => {
   switch (action.type) {
+
+
+    case API_CONSTANTS.ADD_REPORT:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.ADD_REPORT_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        addreportresult: action.result,
+      };
+
+      case API_CONSTANTS.GET_REPORT_LIST:
+        return {
+          ...state,
+          loding: true,
+        };
+  
+      case API_CONSTANTS.GET_REPORT_LIST_SUCCESS:
+        return {
+          ...state,
+          loding: false,
+          getreportlist: action.result,
+        };
+
+    case API_CONSTANTS.UPDATE_REPORT:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.UPDATE_REPORT_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        updateReportResult: action.result,
+      };
+
+    case API_CONSTANTS.DELETE_REPORT:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.DELETE_REPORT_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        deleteReportSuccess: action.result,
+      };
+
+    case API_CONSTANTS.SET_DELETE_REPORT_SUCCESS_FALSE:
+      return {
+        ...state,
+        loding: false,
+        deleteReportSuccess: false,
+      };
+
+    case API_CONSTANTS.ADD_CATEGORY:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.ADD_CATEGORY_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        categoryresult: action.result,
+      };
+
+    case API_CONSTANTS.GET_CATEGORYLIST_PANEL:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_CATEGORYLIST_PANEL_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        panelCategoryResult: action.result,
+      };
+
+    case API_CONSTANTS.UPDATE_CATEGORY_PANEL:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.UPDATE_CATEGORY_PANEL_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        updatecategortyResult: action.result,
+      };
+
+    case API_CONSTANTS.DELETE_CATEGORY_PANEL:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.DELETE_CATEGORY_PANEL_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        deletecategoryResult: action.result,
+      };
+
+      case API_CONSTANTS.ADD_COMPANY_POLICY:
+        return {
+          ...state,
+          loding: true,
+        };
+  
+      case API_CONSTANTS.ADD_COMPANY_POLICY_SUCCESS:
+        return {
+          ...state,
+          loding: false,
+          addCompanyPolicyresult: action.result,
+        };
+
+  
+        case API_CONSTANTS.GET_COMPANY_POLICY:
+          return {
+            ...state,
+            loding: true,
+          };
+    
+        case API_CONSTANTS.GET_COMPANY_POLICY_SUCCESS:
+          return {
+            ...state,
+            loding: false,
+            getcompanypolicy: action.result,
+          };
+
+          case API_CONSTANTS.UPDATE_COMPANY_POLICY:
+            return {
+              ...state,
+              loding: true,
+            };
+            
+      case API_CONSTANTS.UPDATE_COMPANY_POLICY_SUCCESS:
+        return {
+          ...state,
+          loding: false,
+          updateCompanyPolicyResult: action.result,
+        };
+  
+      case API_CONSTANTS.DELETE_COMPANY_POLICY:
+        return {
+          ...state,
+          loding: true,
+        };
+  
+      case API_CONSTANTS.DELETE_COMPANY_POLICY_SUCCESS:
+        return {
+          ...state,
+          loding: false,
+          deleteCompanyPolicySuccess: action.result,
+        };
+  
+
+      // ====================================================================
     case API_CONSTANTS.USER_LOGIN:
       return {
         ...state,
@@ -60,18 +228,6 @@ export const RootReducer = (state = initialState, action) => {
         ...state,
         loding: false,
         updateExpenseItemSetupResult: action.result,
-      };
-    case API_CONSTANTS.ADD_CATEGORY:
-      return {
-        ...state,
-        loding: true,
-      };
-
-    case API_CONSTANTS.ADD_CATEGORY_SUCESS:
-      return {
-        ...state,
-        loding: false,
-        categoryresult: action.result,
       };
 
     case API_CONSTANTS.GET_ACCOUNTING_CODE:
@@ -199,6 +355,8 @@ export const RootReducer = (state = initialState, action) => {
         addexpenseresult: action.result,
       };
 
+   
+
     case API_CONSTANTS.GET_ROLE:
       return {
         ...state,
@@ -262,7 +420,7 @@ export const RootReducer = (state = initialState, action) => {
         aboutus: action.result,
       };
 
-      case API_CONSTANTS.GET_ABOUTUS:
+    case API_CONSTANTS.GET_ABOUTUS:
       return {
         ...state,
         loding: true,
@@ -298,7 +456,7 @@ export const RootReducer = (state = initialState, action) => {
         contactus: action.result,
       };
 
-      case API_CONSTANTS.GET_CONTACTUS:
+    case API_CONSTANTS.GET_CONTACTUS:
       return {
         ...state,
         loding: true,
@@ -348,18 +506,6 @@ export const RootReducer = (state = initialState, action) => {
         updatecompanylist: action.result,
       };
 
-    case API_CONSTANTS.GET_REPORT_LIST:
-      return {
-        ...state,
-        loding: true,
-      };
-
-    case API_CONSTANTS.GET_REPORT_LIST_SUCCESS:
-      return {
-        ...state,
-        loding: false,
-        getreportlist: action.result,
-      };
 
     case API_CONSTANTS.GET_USER_PANEL:
       return {
@@ -410,18 +556,8 @@ export const RootReducer = (state = initialState, action) => {
         loding: false,
         panelaccountingcodeResult: action.result,
       };
-    case API_CONSTANTS.GET_CATEGORYLIST_PANEL:
-      return {
-        ...state,
-        loding: true,
-      };
 
-    case API_CONSTANTS.GET_CATEGORYLIST_PANEL_SUCCESS:
-      return {
-        ...state,
-        loding: false,
-        panelCategoryResult: action.result,
-      };
+  
     case API_CONSTANTS.GET_EXPENSELIST_PANEL:
       return {
         ...state,
@@ -484,18 +620,7 @@ export const RootReducer = (state = initialState, action) => {
         loding: false,
         updateAccountingResult: action.result,
       };
-    case API_CONSTANTS.UPDATE_CATEGORY_PANEL:
-      return {
-        ...state,
-        loding: true,
-      };
 
-    case API_CONSTANTS.UPDATE_CATEGORY_PANEL_SUCCESS:
-      return {
-        ...state,
-        loding: false,
-        updatecategortyResult: action.result,
-      };
     case API_CONSTANTS.UPDATE_EXPENSEITEMIZATION_PANEL:
       return {
         ...state,
@@ -533,13 +658,13 @@ export const RootReducer = (state = initialState, action) => {
         loding: true,
       };
 
-      case API_CONSTANTS.EXPENSE_APPROVED_PPANEL_MANGER_SUCCESS:
-        return {
-          ...state,
-          loading: false,
-          expenseapprovedpanelResult: action.result, // Update with fetched data
-        };
-      
+    case API_CONSTANTS.EXPENSE_APPROVED_PPANEL_MANGER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        expenseapprovedpanelResult: action.result, // Update with fetched data
+      };
+
     case API_CONSTANTS.EXPORT_BUTTON_ACCOUNTINGCODE:
       return {
         ...state,
@@ -1029,91 +1154,79 @@ export const RootReducer = (state = initialState, action) => {
         loding: false,
         ownExpenseHoldListResult: action.result,
       };
-      case API_CONSTANTS.DELETE_CATEGORY_PANEL:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.DELETE_CATEGORY_PANEL_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          deletecategoryResult: action.result,
-        };
-        case API_CONSTANTS.DELETE_EXPENSEITEMIZAION_PANEL:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.DELETE_EXPENSEITEMIZAION_PANEL_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          deleteexpenseitemizationResult: action.result,
-        };
-        case API_CONSTANTS.DELETE_ACCOUNTINGCODE_PANEL:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.DELETE_ACCOUNTINGCODE_PANEL_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          deleteaccountingcodeResult: action.result,
-        };
-        case API_CONSTANTS.DELETE_EXPENSE_PANEL:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.DELETE_EXPENSE_PANEL_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          deleteexpensepanelResult: action.result,
-        };
-        case API_CONSTANTS.MANAGER_CARD_APPROVED_LIST:
-          return {
-            ...state,
-            loding: true,
-          };
-    
-        case API_CONSTANTS.MANAGER_CARD_APPROVED_LIST_SUCCESS:
-          return {
-            ...state,
-            loding: false,
-            managerapprovelResult: action.result,
-          };
-          case API_CONSTANTS.MANAGER_CARD_REJECT_LIST:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.MANAGER_CARD_REJECT_LIST_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          managerrejectResult: action.result,
-        };
-        case API_CONSTANTS.MANAGER_CARD_HOLD_LIST:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.MANAGER_CARD_HOLD_LIST_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          managerholdResult: action.result,
-        };
-    
+
+    case API_CONSTANTS.DELETE_EXPENSEITEMIZAION_PANEL:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.DELETE_EXPENSEITEMIZAION_PANEL_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        deleteexpenseitemizationResult: action.result,
+      };
+    case API_CONSTANTS.DELETE_ACCOUNTINGCODE_PANEL:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.DELETE_ACCOUNTINGCODE_PANEL_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        deleteaccountingcodeResult: action.result,
+      };
+    case API_CONSTANTS.DELETE_EXPENSE_PANEL:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.DELETE_EXPENSE_PANEL_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        deleteexpensepanelResult: action.result,
+      };
+    case API_CONSTANTS.MANAGER_CARD_APPROVED_LIST:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.MANAGER_CARD_APPROVED_LIST_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        managerapprovelResult: action.result,
+      };
+    case API_CONSTANTS.MANAGER_CARD_REJECT_LIST:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.MANAGER_CARD_REJECT_LIST_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        managerrejectResult: action.result,
+      };
+    case API_CONSTANTS.MANAGER_CARD_HOLD_LIST:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.MANAGER_CARD_HOLD_LIST_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        managerholdResult: action.result,
+      };
 
     case API_CONSTANTS.OWN_EXPENSE_APPROVE_LIST:
       return {
@@ -1127,19 +1240,19 @@ export const RootReducer = (state = initialState, action) => {
         loding: false,
         ownExpenseApproveResult: action.result,
       };
-      case API_CONSTANTS.EXPORT_COMPANY_PANEL:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.EXPORT_COMPANY_PANEL_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          exportcompanyResult: action.result,
-        };
-  
+    case API_CONSTANTS.EXPORT_COMPANY_PANEL:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.EXPORT_COMPANY_PANEL_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        exportcompanyResult: action.result,
+      };
+
     default:
       return state;
   }

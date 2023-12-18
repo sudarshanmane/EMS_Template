@@ -6,11 +6,12 @@ import DefaultLayout from "../../DefaultLayout";
 
 const PrivateRoute = () => {
   const auth = getUser();
-  return auth ? (
-    <DefaultLayout></DefaultLayout>
-  ) : (
-    <Navigate to={"/app/login"}></Navigate>
-  );
+  return <DefaultLayout></DefaultLayout>;
+  //  auth ? (
+
+  // ) : (
+  //   <Navigate to={"/"}></Navigate>
+  // );
 };
 
 export default PrivateRoute;
