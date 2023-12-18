@@ -330,7 +330,7 @@ function updateCategorypanle(payload) {
   return {
     type: API_CONSTANTS.UPDATE_CATEGORY_PANEL,
     payload: payload.payload,
-    URL: payload.URL,
+    URL: URLS.UPDATE_CATEGORY_PANEL_URL + payload.id + "/",
     contentType: contentType.json,
   };
 }

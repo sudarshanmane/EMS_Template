@@ -1,239 +1,142 @@
-import React from "react";
-import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
+import { Link } from "react-router-dom";
 
-export default function CompanyPolicies() {
-  const dispatch = useDispatch();
+import "react-datepicker/dist/react-datepicker.css";
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({});
+import "antd/dist/antd.min.css";
 
-  const onSubmit = (values) => {
-    dispatch(addCategoryAction(values));
-  };
+import "antd/dist/antd.min.css";
+import Offcanvas from "../../Entryfile/offcanvance";
 
+const CompanyPolicies = () => {
   return (
-
-<div className={`main-wrapper`}>
-  <div className="page-wrapper">
-    <div className="content container-fluid">
-
-
-      
-
-      
-          <div className="welcome-box">
-            <div className="welcome-det">
-              <h1>Company Policies</h1>
-              <h3>Zylkar Global.'s Travel Policy</h3>
-              <h5>
-                Your company's travel policies will be displayed on the dashboard
-                for all your employees to view.
-              </h5>
-              <h3>General Policies</h3>
-              <p>
-                General policies will apply to all expense categories by default. To
-                change settings for an individual category, use the 'Override general
-                policies' option while creating/editing a category.
-              </p>
+    <>
+      <div className="page-wrapper">
+        <Helmet>
+          <title>Expenses - HRMS Admin Template</title>
+          <meta name="description" content="Login page" />
+        </Helmet>
+        {/* Page Content */}
+        <div className="content container-fluid">
+          {/* Page Header */}
+          <div className="page-header">
+            <div className="row align-items-center">
+              <div className="col">
+                <h3 className="page-title">Company Policies</h3>
+                <ul className="breadcrumb">
+                  <li className="breadcrumb-item">
+                    <Link to="/app/main/dashboard">General Policies</Link>
+                  </li>
+                  <li className="breadcrumb-item active">
+                    General Policies will be apply ro all expense category by
+                    default.
+                  </li>
+                </ul>
+              </div>
             </div>
-            <button
-              type="button"
-              className="close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+          </div>
+          {/* /Page Header */}
+          {/* Add Expense Modal */}
+
+          <div className="modal-body">
+            <form>
+              <div className="col-md-10">
+                <div className="checkbox">
+                  <label>
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value="True"
+                    />{" "}
+                    Expense Amount Limit
+                  </label>
+                </div>
+                <div className="form-group">
+                  <label>USD Amount</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    placeholder="Enter USD amount"
+                    // value={usdAmount}
+                    // onChange={(e) => setUsdAmount(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <br></br>
+              <br></br>
+
+              <div className="col-md-10">
+                <div className="checkbox">
+                  <label>
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value="True"
+                    />{" "}
+                    Receipt Required limit
+                  </label>
+                </div>
+                <div className="form-group">
+                  <label>USD Amount</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    placeholder="Enter USD amount"
+                    // value={usdAmount}
+                    // onChange={(e) => setUsdAmount(e.target.value)}
+                  />
+                </div>
+              </div>
+              <br></br>
+              <br></br>
+              <div className="col-md-10">
+                <div className="checkbox">
+                  <label>
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value="True"
+                    />{" "}
+                    Make Description Mandatory
+                  </label>
+                </div>
+              </div>
+              <br></br>
+              <br></br>
+              <div className="col-md-10">
+                <div className="checkbox">
+                  <label>
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value="True"
+                    />{" "}
+                    Allow Uncategorized Expenses To Be The Part Of Expense
+                    Report
+                  </label>
+                </div>
+              </div>
+
+              <div className="submit-section">
+                <button
+                  className="btn btn-primary submit-btn"
+                  data-bs-dismiss="modal"
+                >
+                  Save
+                </button>
+              </div>
+            </form>
           </div>
 
-
-
-
-    <div className="row">
-
-
-    
-
-
-      <div className="col-lg-4 col-md-4">
-        <div className="dash-sidebar">
-
-      <section>
-
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="row">
-              <div className="col-sm-1">
-                <div className="input-block">
-                  <div
-                    style={{
-                      display: "flex",
-                      border: "1px solid #ccc",
-                      height: "40px",
-                    }}
-                  >
-                    <div
-                      style={{
-                        borderRight: "1px solid #ccc",
-                        padding: "5px",
-                        minWidth: "30px",
-                      }}
-                    >
-                      USD
-                    </div>
-                    <input
-                      placeholder="500"
-                      className="form-control"
-                      type="number"
-                      style={{
-                        flex: "1",
-                        padding: "5px",
-                        height: "40px",
-                        width: "100%",
-
-                        border: "1px 1px 1px 1px", // Remove border
-                        backgroundColor: "transparent",
-                      }}
-                      {...register("receipt_require_limit")}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="row">
-              <div className="col-sm-1">
-                <div className="input-block">
-                  <div
-                    style={{
-                      display: "flex",
-                      border: "1px solid #ccc",
-                      height: "40px",
-                    }}
-                  >
-                    <div
-                      style={{
-                        borderRight: "1px solid #ccc",
-                        padding: "5px",
-                        minWidth: "30px",
-                      }}
-                    >
-                      USD
-                    </div>
-                    <input
-                      placeholder="500"
-                      className="form-control"
-                      type="number"
-                      style={{
-                        flex: "1",
-                        padding: "5px",
-                        height: "40px",
-                        width: "100%",
-
-                        border: "1px 1px 1px 1px", // Remove border
-                        backgroundColor: "transparent",
-                      }}
-                      {...register("receipt_require_limit")}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-            </form>
-        </section>
-
-
-    </div>
-  </div>
-
-          
-
-      <div className="col-lg-4 col-md-4">
-        <div className="dash-sidebar">
-
-          <section>
-            <div className="col-md-10">
-              <div className="checkbox">
-                <label>
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value="True"
-                    {...register("override_general_policy")}
-                  />{" "}
-                  Expense amount limit
-                </label>
-              </div>
-            </div>
-
-            <div className="col-md-10">
-              <div className="checkbox">
-                <label>
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value="True"
-                    {...register("override_general_policy")}
-                  />{" "}
-                  Receipt require limit?
-                </label>
-              </div>
-            </div>
-
-            <div className="col-md-10">
-              <div className="checkbox">
-                <label>
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value="True"
-                    {...register("override_general_policy")}
-                  />{" "}
-                  Make description mandatory
-                </label>
-              </div>
-            </div>
-
-            <div className="col-md-10">
-              <div className="checkbox">
-                <label>
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value="True"
-                    {...register("override_general_policy")}
-                  />{" "}
-                  Allow uncategorized expense to be part of expene reports?
-                </label>
-              </div>
-            </div>
-
-         
-        </section>
-
+          {/* /Add Expense Modal */}
         </div>
+        {/* /Page Content */}
       </div>
-
-      </div>
-         
-            <div className="submit-section">
-              <button className="btn btn-primary submit-btn">Save</button>
-            </div>
-      
-
-
-            
-
-
-      
-      </div>
-      </div>
-     </div>
-
-
-
-);
+      <Offcanvas />
+    </>
+  );
 };
 
-
+export default CompanyPolicies;

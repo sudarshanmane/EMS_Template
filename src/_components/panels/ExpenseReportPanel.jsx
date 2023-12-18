@@ -16,7 +16,7 @@ import {
   itemRender,
 } from "../../MainPage/paginationfunction";
 import AddReport from "../screens/AddReport";
-import AddReportForm from "../screens/AddReportForm";
+
 
 const ExpenseReport = () => {
   const dispatch = useDispatch();
@@ -43,12 +43,10 @@ const ExpenseReport = () => {
     setViewReportData(record);
     setIsAddFormVisible(false);
   };
-
   const handleEdit = (record) => {
     setEditReportData(record);
     setIsAddFormVisible(true);
   };
-
   const handleDelete = (record) => {
     setDeleteReportData(record);
     setIsDeleteConfirmationVisible(true);
@@ -86,6 +84,7 @@ const ExpenseReport = () => {
       const allReportList = reportPanelSelector.map((element) => {
         return {
           id: element.id,
+          report_number: element.report_number,
           description: element.description,
           start_date: element.start_date,
           end_date: element.end_date,
@@ -94,6 +93,17 @@ const ExpenseReport = () => {
       setAllReportList(allReportList);
     }
   }, [reportPanelSelector]);
+
+  const addreportPanelSelector = useSelector(
+    (state) => state.addreportresult
+  );
+
+  useEffect(() => {
+    if (addreportPanelSelector) {
+      dispatch(getReportList({ payload: {}, URL: url }));
+    }
+    setIsAddFormVisible(false);
+  }, [addreportPanelSelector]);
 
   const updatereportPanelSelector = useSelector(
     (state) => state.updateReportResult
@@ -107,15 +117,20 @@ const ExpenseReport = () => {
   }, [updatereportPanelSelector]);
 
   const columns = [
+    // {
+    //   title: "Sr No",
+    //   dataIndex: "id",
+    //   key: "id",
+    // },
     {
-      title: "Sr No",
-      dataIndex: "id",
-      key: "id",
+      title: "Report No",
+      dataIndex: "report_number",
     },
     {
       title: "Description",
       dataIndex: "description",
-      render: (text) => <strong>{text}</strong>,
+      render: (text) => <span> {text}</span>,
+      // render: (text) => <strong>{text}</strong>,
       sorter: (a, b) => a.description.length - b.description.length,
     },
     {
@@ -143,6 +158,7 @@ const ExpenseReport = () => {
           <Link
             className="btn btn-white btn-sm btn-rounded dropdown-toggle"
             to="#"
+            data-bs-toggle="dropdown"
             aria-expanded="false"
           >
             <i
@@ -210,7 +226,14 @@ const ExpenseReport = () => {
                 </ul>
               </div>
               <div className="col-auto float-end ms-auto">
-                <Link to="/home/addreport" className="btn add-btn">
+                 <Link
+                  to="#"
+                  className="btn add-btn"
+                  onClick={() => {
+                    setEditReportData(null);
+                    setIsAddFormVisible(true);
+                  }}
+                >
                   <i className="fa fa-plus" /> Add Report
                 </Link>
               </div>
@@ -300,7 +323,7 @@ const ExpenseReport = () => {
                   footer={null}
                   className="popup-width"
                 >
-                  <AddReportForm
+                  <AddReport
                     initialData={editReportData || null}
                     setIsAddFormVisible={setIsAddFormVisible}
                     url={url}
@@ -328,7 +351,7 @@ const ExpenseReport = () => {
                 >
                   {viewReportData ? (
                     <div>
-                      <p>Sr.No: {viewReportData.id}</p>
+                      <p>Report No: {viewReportData.report_number}</p>
                       <p>Description: {viewReportData.description}</p>
                       <p>Start Date: {viewReportData.start_date}</p>
                       <p>End Date: {viewReportData.end_date}</p>
