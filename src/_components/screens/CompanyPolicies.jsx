@@ -16,33 +16,52 @@ export default function CompanyPolicies() {
   };
 
   return (
-    <div className="page-wrapper">
-       <div className="content container-fluid">
-      <div className="modal-content">
-        <div className="modal-header">
-          <h1 className="modal-title">Company Policies</h1>
-          
-          <h3>Zylkar Global.'s Travel Policy</h3>
-          <h5>
-            Your company's travel policies will be displayed on the dashboard
-            for all your employees to view.
-          </h5>
-          <h3>Genral Policies</h3>
-          <p>
-            General policies will apply to all expene categories by default. To
-            change settings for an individual category. use the 'Override genral
-            policies' option while creating/editing a category.
-          </p>
-          <button
-            type="button"
-            className="close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          >
-         
-          </button>
-        </div>
-        <div className="modal-body">
+
+<div className={`main-wrapper`}>
+  <div className="page-wrapper">
+    <div className="content container-fluid">
+
+
+      
+
+      
+          <div className="welcome-box">
+            <div className="welcome-det">
+              <h1>Company Policies</h1>
+              <h3>Zylkar Global.'s Travel Policy</h3>
+              <h5>
+                Your company's travel policies will be displayed on the dashboard
+                for all your employees to view.
+              </h5>
+              <h3>General Policies</h3>
+              <p>
+                General policies will apply to all expense categories by default. To
+                change settings for an individual category, use the 'Override general
+                policies' option while creating/editing a category.
+              </p>
+            </div>
+            <button
+              type="button"
+              className="close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+
+
+
+    <div className="row">
+
+
+    
+
+
+      <div className="col-lg-4 col-md-4">
+        <div className="dash-sidebar">
+
+      <section>
+
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
               <div className="col-sm-1">
@@ -121,7 +140,19 @@ export default function CompanyPolicies() {
                 </div>
               </div>
             </div>
+            </form>
+        </section>
 
+
+    </div>
+  </div>
+
+          
+
+      <div className="col-lg-4 col-md-4">
+        <div className="dash-sidebar">
+
+          <section>
             <div className="col-md-10">
               <div className="checkbox">
                 <label>
@@ -135,6 +166,7 @@ export default function CompanyPolicies() {
                 </label>
               </div>
             </div>
+
             <div className="col-md-10">
               <div className="checkbox">
                 <label>
@@ -148,6 +180,7 @@ export default function CompanyPolicies() {
                 </label>
               </div>
             </div>
+
             <div className="col-md-10">
               <div className="checkbox">
                 <label>
@@ -161,6 +194,7 @@ export default function CompanyPolicies() {
                 </label>
               </div>
             </div>
+
             <div className="col-md-10">
               <div className="checkbox">
                 <label>
@@ -175,13 +209,31 @@ export default function CompanyPolicies() {
               </div>
             </div>
 
+         
+        </section>
+
+        </div>
+      </div>
+
+      </div>
+         
             <div className="submit-section">
               <button className="btn btn-primary submit-btn">Save</button>
             </div>
-          </form>
-        </div>
+      
+
+
+            
+
+
+      
       </div>
       </div>
-    </div>
-  );
-}
+     </div>
+
+
+
+);
+};
+
+
