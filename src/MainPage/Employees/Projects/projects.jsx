@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import Editproject from "../../../_components/modelbox/Editproject";
 import Offcanvas from "../../../Entryfile/offcanvance";
 
-import "../../index.css";
+import "../../";
 import {
   Avatar_16,
   Avatar_02,
