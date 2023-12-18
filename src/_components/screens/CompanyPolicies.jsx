@@ -176,7 +176,7 @@ const CompanyPolicies = () => {
                           class="form-check-input"
                           type="checkbox"
                           value="True"
-                          {...register("override_general_policy")}
+                          // {...register("override_general_policy")}
                         />{" "}
                         Expense Amount Limit Receipt Required limit
                       </label>
@@ -186,7 +186,7 @@ const CompanyPolicies = () => {
                             <span className="input-group-text">$USD</span>
                           </div>
                           <input className="form-control" type="number" 
-                           {...register("expense_amount_limit")}
+                           {...register("expense_amt_limit")}
                            />
                         </div>
                       </div>
@@ -201,7 +201,7 @@ const CompanyPolicies = () => {
                           class="form-check-input"
                           type="checkbox"
                           value="True"
-                          {...register("override_general_policy")}
+                          // {...register("override_general_policy")}
                         />{" "}
                         Receipt Required limit
                       </label>
@@ -211,7 +211,7 @@ const CompanyPolicies = () => {
                             <span className="input-group-text">$USD</span>
                           </div>
                           <input className="form-control" type="number"
-                           {...register("expense_amount_limit")}
+                           {...register("receipt_require_lmt")}
                             />
                         </div>
                       </div>
@@ -226,7 +226,7 @@ const CompanyPolicies = () => {
                             class="form-check-input"
                             type="checkbox"
                             value="True"
-                            {...register("override_general_policy")}
+                            {...register("make_description_mandotary")}
                           />{" "}
                           Make Description Mandatory
                         </label>
@@ -241,7 +241,7 @@ const CompanyPolicies = () => {
                             class="form-check-input"
                             type="checkbox"
                             value="True"
-                            {...register("override_general_policy")}
+                            {...register("allow_uncategorized_expe_to_be_part_of_expense_report")}
                           />{" "}
                           Allow Uncategorized Expenses To Be The Part Of Expense
                           Report

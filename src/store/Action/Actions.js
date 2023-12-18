@@ -111,6 +111,39 @@ function deleteCompanyPolicy(payload) {
   };
 }
 
+function addMileage(payload) {
+  return {
+    type: API_CONSTANTS.ADD_MILEAGE,
+    payload,
+    URL: URLS.ADD_MILEAGE_URL,
+    contentType: contentType.json,
+  };
+}
+function getMileage(payload) {
+  return {
+    type: API_CONSTANTS.GET_MILEAGE,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
+function updateMileage(payload) {
+  return {
+    type: API_CONSTANTS.UPDATE_MILEAGE,
+    payload: payload.payload,
+    URL: URLS.UPDATE_MILEAGE_URL+ payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+function deleteMileage(payload) {
+  return {
+    type: API_CONSTANTS.DELETE_MILEAGE,
+    URL: URLS.DELETE_MILEAGE_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
 // ================================================================================
 
 function userLogin(payload) {
@@ -891,6 +924,11 @@ export {
   getCompanyPolicy,
   updateCompanyPolicy,
   deleteCompanyPolicy,
+
+  addMileage,
+  getMileage,
+  updateMileage,
+  deleteMileage,
 
 // ===========================================================
   userLogin,

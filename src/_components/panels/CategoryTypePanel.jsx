@@ -54,7 +54,7 @@ const CategoryTypePanel = () => {
   } = useForm({});
 
   const onSubmit = (values) => {
-    dispatch(addCategoryAction(values));
+    dispatch(addMileage(values));
   };
 
   const onEdit = (record) => {
@@ -69,7 +69,6 @@ const CategoryTypePanel = () => {
   };
 
   const onUpdate = (values) => {
-    console.log("values", values);
     dispatch(updateCategorypanle({ id: editFormData.id, payload: values }));
     setIsEditFormVisible(false);
   };

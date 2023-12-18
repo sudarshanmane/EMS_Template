@@ -2,20 +2,25 @@ import { takeEvery } from "redux-saga/effects";
 import { API_CONSTANTS } from "../../Globals/APIConstants";
 
 import {
-  AddReportsubmit,
-  GetReportList,
+  addReportsubmit,
+  getReportList,
   updateReport,
   deleteReport,
 
   getAddCategoryList,
   categoryPanelList,
-  UpdateCategoryPanel,
-  DeleteCategory,
+  updateCategoryPanel,
+  deleteCategory,
 
   updateCompanyPolicy,
   deleteCompanyPolicy,
-  GetCompanyPolicy,
-  AddCompanyPolicy,
+  getCompanyPolicy,
+  addCompanyPolicy,
+
+  getMileage,
+  addMileage,
+  updateMileage,
+  deleteMileage,
 
   // =======================================
   UserLoginGenerator,
@@ -103,20 +108,26 @@ import {
 
 export function* RootSaga() {
 
-  yield takeEvery(API_CONSTANTS.ADD_REPORT, AddReportsubmit);
-  yield takeEvery(API_CONSTANTS.GET_REPORT_LIST, GetReportList);
+  yield takeEvery(API_CONSTANTS.ADD_REPORT, addReportsubmit);
+  yield takeEvery(API_CONSTANTS.GET_REPORT_LIST, getReportList);
   yield takeEvery(API_CONSTANTS.UPDATE_REPORT, updateReport);
   yield takeEvery(API_CONSTANTS.DELETE_REPORT, deleteReport);
 
   yield takeEvery(API_CONSTANTS.ADD_CATEGORY, getAddCategoryList);
   yield takeEvery(API_CONSTANTS.GET_CATEGORYLIST_PANEL, categoryPanelList);
-  yield takeEvery(API_CONSTANTS.UPDATE_CATEGORY_PANEL, UpdateCategoryPanel);
-  yield takeEvery(API_CONSTANTS.DELETE_CATEGORY_PANEL, DeleteCategory);
+  yield takeEvery(API_CONSTANTS.UPDATE_CATEGORY_PANEL, updateCategoryPanel);
+  yield takeEvery(API_CONSTANTS.DELETE_CATEGORY_PANEL, deleteCategory);
 
-  yield takeEvery(API_CONSTANTS.ADD_COMPANY_POLICY, AddCompanyPolicy);
-  yield takeEvery(API_CONSTANTS.GET_COMPANY_POLICY, GetCompanyPolicy);
+  yield takeEvery(API_CONSTANTS.ADD_COMPANY_POLICY, addCompanyPolicy);
+  yield takeEvery(API_CONSTANTS.GET_COMPANY_POLICY, getCompanyPolicy);
   yield takeEvery(API_CONSTANTS.UPDATE_COMPANY_POLICY, updateCompanyPolicy);
   yield takeEvery(API_CONSTANTS.DELETE_COMPANY_POLICY, deleteCompanyPolicy);
+
+
+  yield takeEvery(API_CONSTANTS.ADD_MILEAGE, addMileage);
+  yield takeEvery(API_CONSTANTS.GET_MILEAGE, getMileage);
+  yield takeEvery(API_CONSTANTS.UPDATE_MILEAGE, updateMileage);
+  yield takeEvery(API_CONSTANTS.DELETE_MILEAGE, deleteMileage);
 
   // ============================================================
   yield takeEvery(API_CONSTANTS.USER_LOGIN, UserLoginGenerator);

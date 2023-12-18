@@ -14,6 +14,12 @@ export const URLS = {
     UPDATE_COMPANY_POLICY_URL: "/expense/company_policies/",
     DELETE_COMPANY_POLICY_URL: "/expense/company_policies/",
 
+    ADD_MILEAGE_URL: "/expense/expensemileage/",
+    GET_MILEAGE_URL: "/expense/expensemileage/",
+    UPDATE_MILEAGE_URL: "/expense/expensemileage/",
+    DELETE_MILEAGE_URL: "/expense/expensemileage/",
+
+
 
 
     // ========================================================================================

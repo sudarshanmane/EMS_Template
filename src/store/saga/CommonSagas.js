@@ -10,7 +10,7 @@ function* errorSaga(mes) {
   message.error(mes);
 }
 
-function* GetReportList(action) {
+function* getReportList(action) {
   try {
     let result = yield call(Method.getData, action);
     if (
@@ -31,7 +31,7 @@ function* GetReportList(action) {
   }
 }
 
-function* AddReportsubmit(action) {
+function* addReportsubmit(action) {
   try {
     let result = yield call(Method.postData, action);
     if (result.status === 201 || result.status === 200) {
@@ -119,7 +119,7 @@ function* getAddCategoryList(action) {
   }
 }
 
-function* UpdateCategoryPanel(action) {
+function* updateCategoryPanel(action) {
   try {
     console.log("actionaction", action);
     let result = yield call(Method.putData, action);
@@ -138,7 +138,7 @@ function* UpdateCategoryPanel(action) {
 }
 
 
-function* DeleteCategory(action) {
+function* deleteCategory(action) {
   try {
     let result = yield call(Method.deleteData, action);
     if (result.status === 204) {
@@ -155,7 +155,7 @@ function* DeleteCategory(action) {
   }
 }
 
-function* GetCompanyPolicy(action) {
+function* getCompanyPolicy(action) {
   try {
     let result = yield call(Method.getData, action);
     if (
@@ -176,7 +176,7 @@ function* GetCompanyPolicy(action) {
   }
 }
 
-function* AddCompanyPolicy(action) {
+function* addCompanyPolicy(action) {
   try {
     let result = yield call(Method.postData, action);
     if (result.status === 201 || result.status === 200) {
@@ -228,6 +228,78 @@ function* deleteCompanyPolicy(action) {
   }
 }
 
+function* getMileage(action) {
+  try {
+    let result = yield call(Method.getData, action);
+    if (
+      result.status === 202 ||
+      result.status === 201 ||
+      result.status === 200
+    ) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* addMileage(action) {
+  try {
+    let result = yield call(Method.postData, action);
+    if (result.status === 201 || result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    console.error("Saga error:", error);
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* updateMileage(action) {
+  try {
+    let result = yield call(Method.putData, action);
+    if (result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* deleteMileage(action) {
+  try {
+    let result = yield call(Method.deleteData, action);
+    if (result.status === 204) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: "Deleted Successfully",
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "Something went wrong!");
+  }
+}
 // =====================================================================================
 function* UserLoginGenerator(action) {
   try {
@@ -1625,20 +1697,25 @@ function* exportCompanypanel(action) {
 }
 
 export {
-  GetReportList,
-  AddReportsubmit,
+  getReportList,
+  addReportsubmit,
   updateReport,
   deleteReport,
 
   getAddCategoryList,
   categoryPanelList,
-  UpdateCategoryPanel,
-  DeleteCategory,
+  updateCategoryPanel,
+  deleteCategory,
 
-  GetCompanyPolicy,
-  AddCompanyPolicy,
+  getCompanyPolicy,
+  addCompanyPolicy,
   updateCompanyPolicy,
   deleteCompanyPolicy,
+
+  getMileage,
+  addMileage,
+  updateMileage,
+  deleteMileage,
 
   // =========================================
   approvedExpensemanager,

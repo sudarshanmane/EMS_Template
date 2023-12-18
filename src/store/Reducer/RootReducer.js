@@ -179,6 +179,58 @@ export const RootReducer = (state = initialState, action) => {
         };
   
 
+        case API_CONSTANTS.ADD_MILEAGE:
+          return {
+            ...state,
+            loding: true,
+          };
+    
+        case API_CONSTANTS.ADD_MILEAGE_SUCCESS:
+          return {
+            ...state,
+            loding: false,
+            addMileageresult: action.result,
+          };
+  
+    
+          case API_CONSTANTS.GET_MILEAGE:
+            return {
+              ...state,
+              loding: true,
+            };
+      
+          case API_CONSTANTS.GET_MILEAGE_SUCCESS:
+            return {
+              ...state,
+              loding: false,
+              getMileageSuccess: action.result,
+            };
+  
+            case API_CONSTANTS.UPDATE_MILEAGE:
+              return {
+                ...state,
+                loding: true,
+              };
+              
+        case API_CONSTANTS.UPDATE_MILEAGE_SUCCESS:
+          return {
+            ...state,
+            loding: false,
+            updateMileageResult: action.result,
+          };
+    
+        case API_CONSTANTS.DELETE_MILEAGE:
+          return {
+            ...state,
+            loding: true,
+          };
+    
+        case API_CONSTANTS.DELETE_MILEAGE_SUCCESS:
+          return {
+            ...state,
+            loding: false,
+            deleteMileageSuccess: action.result,
+          };
       // ====================================================================
     case API_CONSTANTS.USER_LOGIN:
       return {
