@@ -13,6 +13,7 @@ import {
   deleteMileage,
   getMileage,
   updateMileage,
+  fetchCategory,
 } from "../../store/Action/Actions";
 import { Controller, useForm } from "react-hook-form";
 import DatePicker from "react-datepicker";
@@ -25,6 +26,7 @@ const Mileage = () => {
   const [defaultCategories, setDefaultCategories] = useState([]);
   const [focused, setFocused] = useState(false);
   const [allMileage, setAllMileage] = useState([]);
+  const [allCategory, setAllCategory] = useState([]);
   const [isAddFormVisible, setIsAddFormVisible] = useState(false);
   const [isEditFormVisible, setIsEditFormVisible] = useState(false);
   const [editMileageData, setEditMileageData] = useState(null);
@@ -33,15 +35,16 @@ const Mileage = () => {
     useState(false);
 
   const url = URLS.GET_MILEAGE_URL;
+  const fetchurl = URLS.FETCH_CATEGORY_URL;
   const DefaultUnit_drop = [
     { value: "Km", label: "Km" },
     { value: "Mile", label: "Mile" },
   ];
 
-  const DefaultCategory_drop = [
-    { value: "3", label: "Lunch" },
-    { value: "28", label: "dinner" },
-  ];
+  // const DefaultCategory_drop = [
+  //   { value: "3", label: "Lunch" },
+  //   { value: "28", label: "dinner" },
+  // ];
 
   const formatDate = (date) => {
     return format(date, "yyyy-MM-dd");
@@ -103,6 +106,22 @@ const Mileage = () => {
     fetchMileageData(url);
   }, []);
 
+  function fetchPageDetails(fetchurl) {
+    dispatch(fetchCategory({ payload: {}, URL: fetchurl }));
+  }
+
+  useEffect(() => {
+    fetchPageDetails(fetchurl);
+  }, []);
+
+  function fetchCategoryData(fetchurl) {
+    dispatch(fetchCategory({ payload: {}, URL: fetchurl }));
+  }
+
+  useEffect(() => {
+    fetchCategoryData(fetchurl);
+  }, []);
+
   const mileageSelector = useSelector((state) => state.getMileageSuccess);
 
   useEffect(() => {
@@ -120,11 +139,13 @@ const Mileage = () => {
     }
   }, [mileageSelector]);
 
+  const categorySelector = useSelector((state) => state.fetchCategorySuccess);
+
   const addMileageSelector = useSelector((state) => state.addMileageresult);
 
   useEffect(() => {
     if (addMileageSelector) {
-      dispatch(getReportList({ payload: {}, URL: url }));
+      dispatch(getMileage({ payload: {}, URL: url }));
     }
     setIsAddFormVisible(false);
   }, [addMileageSelector]);
@@ -342,9 +363,9 @@ const Mileage = () => {
                           {...register("default_category")}
                         >
                           <option value="">Select </option>
-                          {DefaultCategory_drop?.map((data) => {
+                          {categorySelector?.map((data) => {
                             return (
-                              <option value={data.value}>{data.label}</option>
+                              <option value={data.id}>{data.category_name}</option>
                             );
                           })}
                         </select>
@@ -381,7 +402,7 @@ const Mileage = () => {
                             onChange={(date) => {
                               const formattedDate = formatDate(date);
                               field.onChange(formattedDate);
-                              setValue("date", formattedDate); 
+                              setValue("date", formattedDate);
                             }}
                             dateFormat="yyyy-MM-dd"
                           />
@@ -457,12 +478,12 @@ const Mileage = () => {
                         </label>
                         <select
                           className="select"
-                          {...updateregister("default_category")}
+                          {...register("default_category")}
                         >
                           <option value="">Select </option>
-                          {DefaultCategory_drop?.map((data) => {
+                          {categorySelector?.map((data) => {
                             return (
-                              <option value={data.value}>{data.label}</option>
+                              <option value={data.id}>{data.category_name}</option>
                             );
                           })}
                         </select>
@@ -499,7 +520,7 @@ const Mileage = () => {
                             onChange={(date) => {
                               const formattedDate = formatDate(date);
                               field.onChange(formattedDate);
-                              setValue("date", formattedDate); 
+                              setValue("date", formattedDate);
                             }}
                             dateFormat="yyyy-MM-dd"
                           />

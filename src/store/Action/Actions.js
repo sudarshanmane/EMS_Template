@@ -128,6 +128,15 @@ function getMileage(payload) {
   };
 }
 
+function fetchCategory(payload) {
+  return {
+    type: API_CONSTANTS.FETCH_CATEGORY,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
 function updateMileage(payload) {
   return {
     type: API_CONSTANTS.UPDATE_MILEAGE,
@@ -961,6 +970,7 @@ export {
 
   addMileage,
   getMileage,
+  fetchCategory,
   updateMileage,
   deleteMileage,
 

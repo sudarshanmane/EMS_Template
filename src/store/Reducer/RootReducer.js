@@ -206,6 +206,19 @@ export const RootReducer = (state = initialState, action) => {
               getMileageSuccess: action.result,
             };
   
+            case API_CONSTANTS.FETCH_CATEGORY:
+            return {
+              ...state,
+              loding: true,
+            };
+      
+          case API_CONSTANTS.FETCH_CATEGORY_SUCCESS:
+            return {
+              ...state,
+              loding: false,
+              fetchCategorySuccess: action.result,
+            };
+
             case API_CONSTANTS.UPDATE_MILEAGE:
               return {
                 ...state,
