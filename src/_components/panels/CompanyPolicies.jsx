@@ -24,13 +24,11 @@ const CompanyPolicies = () => {
   const [allCompanyPolicies, setAllCompanyPolicies] = useState([]);
   const [selectedDate1, setSelectedDate1] = useState(null);
   const [selectedDate2, setSelectedDate2] = useState(null);
-  const [defaultCategories, setDefaultCategories] = useState([]);
   const [focused, setFocused] = useState(false);
-  const [allMileage, setAllMileage] = useState([]);
   const [isAddFormVisible, setIsAddFormVisible] = useState(false);
   const [isEditFormVisible, setIsEditFormVisible] = useState(false);
-  const [editMileageData, setEditMileageData] = useState(null);
-  const [deleteMileageData, setDeleteMileageData] = useState(null);
+  const [editCompanyData, setEditCompanyData] = useState(null);
+  const [deleteCompanyData, setDeleteCompanyData] = useState(null);
   const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] =
     useState(false);
 
@@ -58,20 +56,18 @@ const CompanyPolicies = () => {
   const { handleSubmit: handleDelete } = useForm({});
 
   const onSubmit = (values) => {
-    dispatch(addMileage(values));
+    dispatch(addCompanyPolicy(values));
   };
 
   const onEdit = (record) => {
     setIsEditFormVisible(true);
-    setEditMileageData(record);
-    setValue("default_unit", record.default_unit);
-    setValue("date", record.date);
-    setValue("rate", record.rate);
-    setValue("default_category", record.default_category);
+    setEditCompanyData(record);
+    setValue("expense_amt_limit", record.expense_amt_limit);
+    setValue("receipt_require_lmt", record.receipt_require_lmt);
   };
 
   const onUpdate = (values) => {
-    dispatch(updateMileage({ id: editMileageData.id, payload: values }));
+    dispatch(updateCompanyPolicy({ id: editCompanyData.id, payload: values }));
     setIsEditFormVisible(false);
   };
 
@@ -106,46 +102,46 @@ const CompanyPolicies = () => {
     }
   }, [companyselector]);
 
-  const addMileageSelector = useSelector((state) => state.addMileageresult);
+  const addCompanySelector = useSelector((state) => state.addCompanyPolicyresult);
 
   useEffect(() => {
-    if (addMileageSelector) {
-      dispatch(getReportList({ payload: {}, URL: url }));
+    if (addCompanySelector) {
+      dispatch(getCompanyPolicy({ payload: {}, URL: url }));
     }
     setIsAddFormVisible(false);
-  }, [addMileageSelector]);
+  }, [addCompanySelector]);
 
-  const updatemilageSelector = useSelector(
-    (state) => state.updateMileageResult
+  const updatecompanySelector = useSelector(
+    (state) => state.updateCompanyPolicyResult
   );
 
   useEffect(() => {
-    if (updatemilageSelector) {
-      dispatch(getMileage({ payload: {}, URL: url }));
+    if (updatecompanySelector) {
+      dispatch(getCompanyPolicy({ payload: {}, URL: url }));
     }
     setIsAddFormVisible(false);
-  }, [updatemilageSelector]);
+  }, [updatecompanySelector]);
 
-  const deleteMileageSelector = useSelector(
-    (state) => state.deleteMileageSuccess
+  const deleteCompanySelector = useSelector(
+    (state) => state.deleteCompanyPolicySuccess
   );
 
   useEffect(() => {
-    if (deleteMileageSelector) {
-      dispatch(getMileage({ payload: {}, URL: url }));
+    if (deleteCompanySelector) {
+      dispatch(getCompanyPolicy({ payload: {}, URL: url }));
     }
-  }, [deleteMileageSelector]);
+  }, [deleteCompanySelector]);
 
-  const DeleteMileage = (record) => {
-    setDeleteMileageData(record);
+  const DeleteCompany = (record) => {
+    setDeleteCompanyData(record);
   };
 
   const onDelete = () => {
-    const deletedMileageId = deleteMileageData.id;
-    dispatch(deleteMileage({ id: deletedMileageId }));
+    const deletedCompanyId = deleteCompanyData.id;
+    dispatch(deleteCompanyPolicy({ id: deletedCompanyId }));
     setIsDeleteConfirmationVisible(false);
-    setAllMileage((prevItems) =>
-      prevItems.filter((item) => item.id !== deletedMileageId)
+    setAllCompanyPolicies((prevItems) =>
+      prevItems.filter((item) => item.id !== deletedCompanyId)
     );
   };
   const columns = [
@@ -157,17 +153,11 @@ const CompanyPolicies = () => {
     {
       title: "Expense Amount Limit ",
       dataIndex: "expense_amt_limit",
-      render: (text) => (
-        <span>{text ? new Date(text).toLocaleDateString() : ""}</span>
-      ),
       sorter: (a, b) => a.start_date.length - b.start_date.length,
     },
     {
       title: "Require limit",
       dataIndex: "receipt_require_lmt",
-      render: (text) => (
-        <span>{text ? new Date(text).toLocaleDateString() : ""}</span>
-      ),
       sorter: (a, b) => a.end_date.length - b.end_date.length,
     },
     {
@@ -187,7 +177,7 @@ const CompanyPolicies = () => {
               className="dropdown-item"
               to="#"
               data-bs-toggle="modal"
-              data-bs-target="#edit_mileage"
+              data-bs-target="#edit_company"
               onClick={() => onEdit(record)}
             >
               <i className="fa fa-pencil m-r-5" /> Edit
@@ -196,9 +186,9 @@ const CompanyPolicies = () => {
               className="dropdown-item"
               to="#"
               data-bs-toggle="modal"
-              data-bs-target="#delete_mileage"
+              data-bs-target="#delete_company"
               onClick={() => {
-                DeleteMileage(record);
+                DeleteCompany(record);
               }}
             >
               <i className="fa fa-trash m-r-5" /> Delete
@@ -230,7 +220,7 @@ const CompanyPolicies = () => {
                   to="#"
                   className="btn add-btn"
                   data-bs-toggle="modal"
-                  data-bs-target="#add_mileage"
+                  data-bs-target="#add_company"
                 >
                   <i className="fa fa-plus" /> Add Policy
                 </Link>
@@ -263,7 +253,7 @@ const CompanyPolicies = () => {
           </div>
         </div>
         {/* Add Expense Modal */}
-        <div id="add_mileage" className="modal custom-modal fade" role="dialog">
+        <div id="add_company" className="modal custom-modal fade" role="dialog">
           <div
             className="modal-dialog modal-dialog-centered modal-lg"
             role="document"
@@ -377,7 +367,7 @@ const CompanyPolicies = () => {
         {/* /Add Expense Modal */}
         {/* Edit Expense Modal */}
         <div
-          id="edit_mileage"
+          id="edit_company"
           className="modal custom-modal fade"
           role="dialog"
         >
@@ -398,14 +388,14 @@ const CompanyPolicies = () => {
                 </button>
               </div>
               <div className="modal-body">
-              <form onSubmit={handleSubmit(onSubmit)}>
+              <form onSubmit={handleUpdate(onUpdate)}>
                     <div className="input-block mb-0 row">
                       <label>
                         <input
                           class="form-check-input"
                           type="checkbox"
                           value="True"
-                          // {...register("override_general_policy")}
+                          // {...updateregister("override_general_policy")}
                         />{" "}
                         Expense Amount Limit Receipt Required limit
                       </label>
@@ -415,7 +405,7 @@ const CompanyPolicies = () => {
                             <span className="input-group-text">$USD</span>
                           </div>
                           <input className="form-control" type="number" 
-                           {...register("expense_amt_limit")}
+                           {...updateregister("expense_amt_limit")}
                            />
                         </div>
                       </div>
@@ -430,7 +420,7 @@ const CompanyPolicies = () => {
                           class="form-check-input"
                           type="checkbox"
                           value="True"
-                          // {...register("override_general_policy")}
+                          // {...updateregister("override_general_policy")}
                         />{" "}
                         Receipt Required limit
                       </label>
@@ -440,7 +430,7 @@ const CompanyPolicies = () => {
                             <span className="input-group-text">$USD</span>
                           </div>
                           <input className="form-control" type="number"
-                           {...register("receipt_require_lmt")}
+                           {...updateregister("receipt_require_lmt")}
                             />
                         </div>
                       </div>
@@ -455,7 +445,7 @@ const CompanyPolicies = () => {
                             class="form-check-input"
                             type="checkbox"
                             value="True"
-                            {...register("make_description_mandotary")}
+                            {...updateregister("make_description_mandotary")}
                           />{" "}
                           Make Description Mandatory
                         </label>
@@ -470,7 +460,7 @@ const CompanyPolicies = () => {
                             class="form-check-input"
                             type="checkbox"
                             value="True"
-                            {...register("allow_uncategorized_expe_to_be_part_of_expense_report")}
+                            {...updateregister("allow_uncategorized_expe_to_be_part_of_expense_report")}
                           />{" "}
                           Allow Uncategorized Expenses To Be The Part Of Expense
                           Report
@@ -495,7 +485,7 @@ const CompanyPolicies = () => {
         {/* Delete Category Modal */}
         <div
           className="modal custom-modal fade"
-          id="delete_mileage"
+          id="delete_company"
           role="dialog"
         >
           <div className="modal-dialog modal-dialog-centered">

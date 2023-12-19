@@ -1,5 +1,6 @@
 import { Form, Input, Table } from "antd";
 import React, { useEffect, useState } from "react";
+import { format } from "date-fns";
 import {
   onShowSizeChange,
   itemRender,
@@ -13,7 +14,7 @@ import {
   getMileage,
   updateMileage,
 } from "../../store/Action/Actions";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -42,6 +43,10 @@ const Mileage = () => {
     { value: "28", label: "dinner" },
   ];
 
+  const formatDate = (date) => {
+    return format(date, "yyyy-MM-dd");
+  };
+
   const handleDateChange1 = (date) => {
     setSelectedDate1(date);
   };
@@ -52,6 +57,7 @@ const Mileage = () => {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm({});
 
@@ -108,7 +114,7 @@ const Mileage = () => {
           rate: element.rate,
           default_category: element.default_category,
           default_unit: element.default_unit,
-        };        
+        };
       });
       setAllMileage(allMileage);
     }
@@ -165,17 +171,11 @@ const Mileage = () => {
     {
       title: "Start Date",
       dataIndex: "date",
-      render: (text) => (
-        <span>{text ? new Date(text).toLocaleDateString() : ""}</span>
-      ),
       sorter: (a, b) => a.start_date.length - b.start_date.length,
     },
     {
       title: "Mileage Rate",
       dataIndex: "rate",
-      render: (text) => (
-        <span>{text}</span>
-      ),
       sorter: (a, b) => a.end_date.length - b.end_date.length,
     },
     {
@@ -313,38 +313,43 @@ const Mileage = () => {
               </div>
               <div className="modal-body">
                 <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="row">
-                  <div className="col-sm-10">
-                    <div className="input-block">
-                      <label className="col-form-label">Default Unit</label>
-                      <select className="select" {...register("default_unit")}>
-                        <option value="">Select </option>
-                        {DefaultUnit_drop?.map((data) => {
-                          return (
-                            <option value={data.value}>{data.label}</option>
-                          );
-                        })}
-                      </select>
+                  <div className="row">
+                    <div className="col-sm-10">
+                      <div className="input-block">
+                        <label className="col-form-label">Default Unit</label>
+                        <select
+                          className="select"
+                          {...register("default_unit")}
+                        >
+                          <option value="">Select </option>
+                          {DefaultUnit_drop?.map((data) => {
+                            return (
+                              <option value={data.value}>{data.label}</option>
+                            );
+                          })}
+                        </select>
+                      </div>
                     </div>
-                  </div>
                   </div>
                   <div className="row">
-                  <div className="col-sm-10">
-                    <div className="input-block">
-                      <label className="col-form-label">Default Category</label>
-                      <select
-                        className="select"
-                        {...register("default_category")}
-                      >
-                        <option value="">Select </option>
-                        {DefaultCategory_drop?.map((data) => {
-                          return (
-                            <option value={data.value}>{data.label}</option>
-                          );
-                        })}
-                      </select>
+                    <div className="col-sm-10">
+                      <div className="input-block">
+                        <label className="col-form-label">
+                          Default Category
+                        </label>
+                        <select
+                          className="select"
+                          {...register("default_category")}
+                        >
+                          <option value="">Select </option>
+                          {DefaultCategory_drop?.map((data) => {
+                            return (
+                              <option value={data.value}>{data.label}</option>
+                            );
+                          })}
+                        </select>
+                      </div>
                     </div>
-                  </div>
                   </div>
 
                   <div className="row">
@@ -360,21 +365,30 @@ const Mileage = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="row">
-                    <div className="col-md-6">
-                      <div className="input-block ">
-                        <label className="">Start Date</label>
-                        <Form.Item
-                          name="date"
-                          rules={[
-                            {
-                              required: true,
-                              message: "Please select the start date!",
-                            },
-                          ]}
-                        >
-                          <Input type="date" {...register("date")} />
-                        </Form.Item>
+                  <div className="input-block row">
+                    <label className="col-form-label col-md-3" id="date">
+                      Start Date
+                    </label>
+                    <div className="col-md-9">
+                      <Controller
+                        control={control}
+                        name="date"
+                        render={({ field }) => (
+                          <DatePicker
+                            selected={
+                              field.value ? new Date(field.value) : null
+                            }
+                            onChange={(date) => {
+                              const formattedDate = formatDate(date);
+                              field.onChange(formattedDate);
+                              setValue("date", formattedDate); 
+                            }}
+                            dateFormat="yyyy-MM-dd"
+                          />
+                        )}
+                      />
+                      <div className="text-danger">
+                        {errors.start_date?.message}
                       </div>
                     </div>
                   </div>
@@ -418,41 +432,40 @@ const Mileage = () => {
               <div className="modal-body">
                 <form onSubmit={handleUpdate(onUpdate)}>
                   <div className="row">
-                    <label className="col-form-label col-md-2">
-                      Default Unit
-                    </label>
-                    <div className="col-md-10">
-                      <div className="radio">
-                        <label>
-                          <input
-                            type="radio"
-                            name="radio"
-                            {...updateregister("default_unit")}
-                          />{" "}
-                          KM
-                        </label>
-                      </div>
-                      <div className="radio">
-                        <label>
-                          <input
-                            type="radio"
-                            name="radio"
-                            {...updateregister("default_unit")}
-                          />
-                          Mile
-                        </label>
+                    <div className="col-sm-10">
+                      <div className="input-block">
+                        <label className="col-form-label">Default Unit</label>
+                        <select
+                          className="select"
+                          {...updateregister("default_unit")}
+                        >
+                          <option value="">Select </option>
+                          {DefaultUnit_drop?.map((data) => {
+                            return (
+                              <option value={data.value}>{data.label}</option>
+                            );
+                          })}
+                        </select>
                       </div>
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-md-6">
+                    <div className="col-sm-10">
                       <div className="input-block">
-                        <label>Default Category</label>
-                        <input
-                          className="form-control"
-                          type="number"
+                        <label className="col-form-label">
+                          Default Category
+                        </label>
+                        <select
+                          className="select"
                           {...updateregister("default_category")}
-                        />
+                        >
+                          <option value="">Select </option>
+                          {DefaultCategory_drop?.map((data) => {
+                            return (
+                              <option value={data.value}>{data.label}</option>
+                            );
+                          })}
+                        </select>
                       </div>
                     </div>
                   </div>
@@ -470,22 +483,30 @@ const Mileage = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="row">
-                    <div className="col-md-6">
-                      <div className="input-block ">
-                        <label className="">Start Date</label>
-
-                        <Form.Item
-                          name="date"
-                          rules={[
-                            {
-                              required: true,
-                              message: "Please select the start date!",
-                            },
-                          ]}
-                        >
-                          <Input type="date" {...updateregister("date")} />
-                        </Form.Item>
+                  <div className="input-block row">
+                    <label className="col-form-label col-md-3" id="date">
+                      Start Date
+                    </label>
+                    <div className="col-md-9">
+                      <Controller
+                        control={control}
+                        name="date"
+                        render={({ field }) => (
+                          <DatePicker
+                            selected={
+                              field.value ? new Date(field.value) : null
+                            }
+                            onChange={(date) => {
+                              const formattedDate = formatDate(date);
+                              field.onChange(formattedDate);
+                              setValue("date", formattedDate); 
+                            }}
+                            dateFormat="yyyy-MM-dd"
+                          />
+                        )}
+                      />
+                      <div className="text-danger">
+                        {errors.start_date?.message}
                       </div>
                     </div>
                   </div>
