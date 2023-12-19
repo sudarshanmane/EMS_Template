@@ -36,15 +36,11 @@ const Mileage = () => {
 
   const url = URLS.GET_MILEAGE_URL;
   const fetchurl = URLS.FETCH_CATEGORY_URL;
+
   const DefaultUnit_drop = [
     { value: "Km", label: "Km" },
     { value: "Mile", label: "Mile" },
   ];
-
-  // const DefaultCategory_drop = [
-  //   { value: "3", label: "Lunch" },
-  //   { value: "28", label: "dinner" },
-  // ];
 
   const formatDate = (date) => {
     return format(date, "yyyy-MM-dd");
@@ -358,6 +354,7 @@ const Mileage = () => {
                         <label className="col-form-label">
                           Default Category
                         </label>
+
                         <select
                           className="select"
                           {...register("default_category")}
@@ -365,7 +362,9 @@ const Mileage = () => {
                           <option value="">Select </option>
                           {categorySelector?.map((data) => {
                             return (
-                              <option value={data.id}>{data.category_name}</option>
+                              <option value={data.id}>
+                                {data.category_name}
+                              </option>
                             );
                           })}
                         </select>
@@ -478,12 +477,14 @@ const Mileage = () => {
                         </label>
                         <select
                           className="select"
-                          {...register("default_category")}
+                          {...updateregister("default_category")}
                         >
                           <option value="">Select </option>
                           {categorySelector?.map((data) => {
                             return (
-                              <option value={data.id}>{data.category_name}</option>
+                              <option value={data.id}>
+                                {data.category_name}
+                              </option>
                             );
                           })}
                         </select>
