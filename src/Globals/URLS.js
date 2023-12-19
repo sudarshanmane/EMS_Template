@@ -19,6 +19,10 @@ export const URLS = {
     UPDATE_MILEAGE_URL: "/expense/expensemileage/",
     DELETE_MILEAGE_URL: "/expense/expensemileage/",
 
+    APPLY_CARD_URL: "/card/card/",
+    GET_CARD_URL: "/card/card/",
+    UPDATE_CARD_URL: "/card/update_card/",
+    DELETE_CARD_URL: "/card/update_card/",
 
 
 
@@ -51,7 +55,6 @@ export const URLS = {
     GET_ITEMIZATION_PANEL_URL: "/expense/expense-itemization-list/",
     GET_ACCOUNTINGCODE_PANEL_URL: "/expense/accounting-code-list/",
    
-    APPLY_CARD_URL: "/card/apply_card/",
     UPDATE_ACCOUNTING_CODE_URL: "/expense/accountingcode/",
     UPDATE_EXPENSEITEMIZATION_PANEL_URL: "/expense/expenseitemization/",
     UPDATE_EXPENSE_PANEL_URL: "/expense/edit_expense/",

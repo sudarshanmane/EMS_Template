@@ -285,6 +285,11 @@ const Addexpense = ({ initialData }) => {
                                   Select PDF or image file.
                                 </small>
                               </div>
+                              <div className="text-end mt-3">
+                      <button type="submit" className="btn btn-primary">
+                        Submit
+                      </button>
+                    </div>
                             </div>
                           </div>
                         </div>
@@ -447,6 +452,11 @@ const Addexpense = ({ initialData }) => {
                                 </label>
                               </div>
                             </div>
+                            <div className="text-end mt-3">
+                      <button type="submit" className="btn btn-primary">
+                        Submit
+                      </button>
+                    </div>
                           </div>
                         </div>
                         <div className="row"></div>
@@ -500,14 +510,11 @@ const Addexpense = ({ initialData }) => {
                           </tr>
                         </tbody>
                       </table>
-                      
-                    </div>
-
-                    {/* {/ Submit Button /} */}
-                    <div className="text-end mt-3">
+                      <div className="text-end mt-3">
                       <button type="submit" className="btn btn-primary">
                         Submit
                       </button>
+                    </div>
                     </div>
                   </form>
                 </div>

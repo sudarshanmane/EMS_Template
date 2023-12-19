@@ -300,6 +300,79 @@ function* deleteMileage(action) {
     yield call(errorSaga, "Something went wrong!");
   }
 }
+
+function* getCard(action) {
+  try {
+    let result = yield call(Method.getData, action);
+    if (
+      result.status === 202 ||
+      result.status === 201 ||
+      result.status === 200
+    ) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* applyCard(action) {
+  try {
+    let result = yield call(Method.postData, action);
+    if (result.status === 201 || result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    console.error("Saga error:", error);
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* updateCard(action) {
+  try {
+    let result = yield call(Method.putData, action);
+    if (result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* deleteCard(action) {
+  try {
+    let result = yield call(Method.deleteData, action);
+    if (result.status === 204) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: "Deleted Successfully",
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "Something went wrong!");
+  }
+}
 // =====================================================================================
 function* UserLoginGenerator(action) {
   try {
@@ -928,26 +1001,7 @@ function* UpdateCompanyList(action) {
 
 
 
-function* applyCard(action) {
-  try {
-    let result = yield call(Method.postData, action);
-    if (
-      result.status === 202 ||
-      result.status === 201 ||
-      result.status === 200
-    ) {
-      yield put({
-        type: `${action.type}_SUCCESS`,
-        status: "ok",
-        result: result.data,
-      });
-    } else {
-      yield call(failSaga, "Server Down!");
-    }
-  } catch (error) {
-    yield call(errorSaga, "The credentials you entered are incorrect!");
-  }
-}
+
 
 function* searchExpenseType(action) {
   try {
@@ -1717,6 +1771,10 @@ export {
   updateMileage,
   deleteMileage,
 
+  applyCard,
+  getCard,
+  updateCard,
+  deleteCard,
   // =========================================
   approvedExpensemanager,
   UserLoginGenerator,
@@ -1753,7 +1811,7 @@ export {
   GetCompanyList,
  
   getAddUserPanel,
-  applyCard,
+  
   searchExpenseType,
   searchExternalAccountCode,
   UpdateExpenseItemSetup,

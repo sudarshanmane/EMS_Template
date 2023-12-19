@@ -231,6 +231,59 @@ export const RootReducer = (state = initialState, action) => {
             loding: false,
             deleteMileageSuccess: action.result,
           };
+
+          case API_CONSTANTS.APPLY_CARD:
+          return {
+            ...state,
+            loding: true,
+          };
+    
+        case API_CONSTANTS.APPLY_CARD_SUCCESS:
+          return {
+            ...state,
+            loding: false,
+            applyCardresult: action.result,
+          };
+  
+    
+          case API_CONSTANTS.GET_CARD:
+            return {
+              ...state,
+              loding: true,
+            };
+      
+          case API_CONSTANTS.GET_CARD_SUCCESS:
+            return {
+              ...state,
+              loding: false,
+              getCardSuccess: action.result,
+            };
+  
+            case API_CONSTANTS.UPDATE_CARD:
+              return {
+                ...state,
+                loding: true,
+              };
+              
+        case API_CONSTANTS.UPDATE_CARD_SUCCESS:
+          return {
+            ...state,
+            loding: false,
+            updateCardResult: action.result,
+          };
+    
+        case API_CONSTANTS.DELETE_CARD:
+          return {
+            ...state,
+            loding: true,
+          };
+    
+        case API_CONSTANTS.DELETE_CARD_SUCCESS:
+          return {
+            ...state,
+            loding: false,
+            deleteCardSuccess: action.result,
+          };
       // ====================================================================
     case API_CONSTANTS.USER_LOGIN:
       return {

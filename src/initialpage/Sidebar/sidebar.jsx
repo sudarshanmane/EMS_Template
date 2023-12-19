@@ -171,18 +171,6 @@ const Sidebar = () => {
                     <li>
                       <Link
                         className={
-                          pathname.includes("add-expenseCategory")
-                            ? "active"
-                            : ""
-                        }
-                        to="/home/expensecategorypanel"
-                      >
-                        Add Expense Category{" "}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className={
                           pathname.includes("expenseType") ? "active" : ""
                         }
                         to="/home/expensetypepanel"
@@ -442,12 +430,13 @@ const Sidebar = () => {
                     <li>
                       <Link
                         className={
-                          pathname.includes("category-") ? "active" : ""
+                          pathname.includes("add-expenseCategory")
+                            ? "active"
+                            : ""
                         }
-                        to="/home/category"
+                        to="/home/expensecategorypanel"
                       >
-                        {" "}
-                        Category {" "}
+                      Category{" "}
                       </Link>
                     </li>
                   </ul>

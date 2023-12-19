@@ -22,6 +22,10 @@ import {
   updateMileage,
   deleteMileage,
 
+  applyCard,
+  getCard,
+  updateCard,
+  deleteCard,
   // =======================================
   UserLoginGenerator,
   UserRegisterGenerator,
@@ -57,7 +61,7 @@ import {
   accountingCodePanel,
 
   expensePanelList,
-  applyCard,
+  
   searchExpenseType,
   searchExternalAccountCode,
   UpdateExpenseItemSetup,
@@ -103,6 +107,7 @@ import {
   commanmanagercardlidtfunction,
   ownExpenseApproveList,
   exportCompanypanel,
+  
  
 } from "./CommonSagas";
 
@@ -128,6 +133,11 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.GET_MILEAGE, getMileage);
   yield takeEvery(API_CONSTANTS.UPDATE_MILEAGE, updateMileage);
   yield takeEvery(API_CONSTANTS.DELETE_MILEAGE, deleteMileage);
+
+  yield takeEvery(API_CONSTANTS.APPLY_CARD, applyCard);
+  yield takeEvery(API_CONSTANTS.GET_CARD, getCard);
+  yield takeEvery(API_CONSTANTS.UPDATE_CARD, updateCard);
+  yield takeEvery(API_CONSTANTS.DELETE_CARD, deleteCard);
 
   // ============================================================
   yield takeEvery(API_CONSTANTS.USER_LOGIN, UserLoginGenerator);

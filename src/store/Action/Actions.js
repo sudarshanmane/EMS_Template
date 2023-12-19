@@ -144,6 +144,40 @@ function deleteMileage(payload) {
     contentType: contentType.json,
   };
 }
+
+function applyCard(payload) {
+  return {
+    type: API_CONSTANTS.APPLY_CARD,
+    payload,
+    URL: URLS.APPLY_CARD_URL,
+    contentType: contentType.json,
+  };
+}
+function getCard(payload) {
+  return {
+    type: API_CONSTANTS.GET_CARD,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
+function updateCard(payload) {
+  return {
+    type: API_CONSTANTS.UPDATE_CARD,
+    payload: payload.payload,
+    URL: URLS.UPDATE_CARD_URL+ payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+function deleteCard(payload) {
+  return {
+    type: API_CONSTANTS.DELETE_CARD,
+    URL: URLS.DELETE_CARD_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
 // ================================================================================
 
 function userLogin(payload) {
@@ -930,6 +964,10 @@ export {
   updateMileage,
   deleteMileage,
 
+  applyCard,
+  getCard,
+  updateCard,
+  deleteCard,
 // ===========================================================
   userLogin,
   userRegister,

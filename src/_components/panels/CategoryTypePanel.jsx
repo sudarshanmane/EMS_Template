@@ -299,12 +299,12 @@ const CategoryTypePanel = () => {
           <div className="page-header">
             <div className="row align-items-center">
               <div className="col">
-                <h3 className="page-title">Expense Category</h3>
+                <h3 className="page-title">Category</h3>
                 <ul className="breadcrumb">
                   <li className="breadcrumb-item">
                     <Link to="/app/main/dashboard">Dashboard</Link>
                   </li>
-                  <li className="breadcrumb-item active">Expense Category</li>
+                  <li className="breadcrumb-item active">Category</li>
                 </ul>
               </div>
               <div className="col-auto float-end ms-auto">
@@ -314,7 +314,7 @@ const CategoryTypePanel = () => {
                   data-bs-toggle="modal"
                   data-bs-target="#add_expense"
                 >
-                  <i className="fa fa-plus" /> Add Expense Category
+                  <i className="fa fa-plus" /> Add Category
                 </Link>
               </div>
             </div>
@@ -336,7 +336,7 @@ const CategoryTypePanel = () => {
                   onFocus={() => setFocused(true)}
                   onBlur={() => setFocused(false)}
                 />
-                <label className="focus-label">Item Name</label>
+                <label className="focus-label">Category Name</label>
               </div>
             </div>
             <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">

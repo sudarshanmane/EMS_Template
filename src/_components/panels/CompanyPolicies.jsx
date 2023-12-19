@@ -8,17 +8,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { URLS } from "../../Globals/URLS";
 import { Link } from "react-router-dom";
 import {
-  addMileage,
-  deleteMileage,
-  getMileage,
-  updateMileage,
+  addCompanyPolicy,
+  deleteCompanyPolicy,
+  getCompanyPolicy,
+  updateCompanyPolicy,
 } from "../../store/Action/Actions";
 import { useForm } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const Mileage = () => {
+const CompanyPolicies = () => {
+    const [url, setUrl] = useState(URLS.GET_COMPANY_POLICY_URL);
+
   const dispatch = useDispatch();
+  const [allCompanyPolicies, setAllCompanyPolicies] = useState([]);
   const [selectedDate1, setSelectedDate1] = useState(null);
   const [selectedDate2, setSelectedDate2] = useState(null);
   const [defaultCategories, setDefaultCategories] = useState([]);
@@ -31,16 +34,7 @@ const Mileage = () => {
   const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] =
     useState(false);
 
-  const url = URLS.GET_MILEAGE_URL;
-  const DefaultUnit_drop = [
-    { value: "Km", label: "Km" },
-    { value: "Mile", label: "Mile" },
-  ];
-
-  const DefaultCategory_drop = [
-    { value: "3", label: "Lunch" },
-    { value: "28", label: "dinner" },
-  ];
+ 
 
   const handleDateChange1 = (date) => {
     setSelectedDate1(date);
@@ -82,37 +76,35 @@ const Mileage = () => {
   };
 
   function getPageDetails(url) {
-    dispatch(getMileage({ payload: {}, URL: url }));
+    dispatch(getCompanyPolicy({ payload: {}, URL: url }));
   }
 
   useEffect(() => {
     getPageDetails(url);
   }, []);
 
-  function fetchMileageData(url) {
-    dispatch(getMileage({ payload: {}, URL: url }));
+  function fetchCompanyData(url) {
+    dispatch(getCompanyPolicy({ payload: {}, URL: url }));
   }
 
   useEffect(() => {
-    fetchMileageData(url);
+    fetchCompanyData(url);
   }, []);
 
-  const mileageSelector = useSelector((state) => state.getMileageSuccess);
+  const companyselector = useSelector((state) => state.getcompanypolicy);
 
   useEffect(() => {
-    if (mileageSelector) {
-      const allMileage = mileageSelector.map((element) => {
+    if (companyselector) {
+      const allCompanyPolicies = companyselector.map((element) => {
         return {
-          id: element.id,
-          date: element.date,
-          rate: element.rate,
-          default_category: element.default_category,
-          default_unit: element.default_unit,
-        };        
+                 id: element.id,
+                 expense_amt_limit: element.expense_amt_limit,
+                 receipt_require_lmt: element.receipt_require_lmt,
+        };
       });
-      setAllMileage(allMileage);
+      setAllCompanyPolicies(allCompanyPolicies);
     }
-  }, [mileageSelector]);
+  }, [companyselector]);
 
   const addMileageSelector = useSelector((state) => state.addMileageresult);
 
@@ -163,18 +155,18 @@ const Mileage = () => {
       key: "id",
     },
     {
-      title: "Start Date",
-      dataIndex: "date",
+      title: "Expense Amount Limit ",
+      dataIndex: "expense_amt_limit",
       render: (text) => (
         <span>{text ? new Date(text).toLocaleDateString() : ""}</span>
       ),
       sorter: (a, b) => a.start_date.length - b.start_date.length,
     },
     {
-      title: "Mileage Rate",
-      dataIndex: "rate",
+      title: "Require limit",
+      dataIndex: "receipt_require_lmt",
       render: (text) => (
-        <span>{text}</span>
+        <span>{text ? new Date(text).toLocaleDateString() : ""}</span>
       ),
       sorter: (a, b) => a.end_date.length - b.end_date.length,
     },
@@ -223,14 +215,14 @@ const Mileage = () => {
         <div className="content container-fluid">
           {/* Page Header */}
           <div className="page-header">
-            <div className="row align-items-center">
+            <div className="row">
               <div className="col">
-                <h3 className="page-title">Mileage</h3>
+                <h3 className="page-title">Company Policies</h3>
                 <ul className="breadcrumb">
                   <li className="breadcrumb-item">
                     <Link to="/app/main/dashboard">Dashboard</Link>
                   </li>
-                  <li className="breadcrumb-item active">Mileage Report</li>
+                  <li className="breadcrumb-item active">General Policies </li>
                 </ul>
               </div>
               <div className="col-auto float-end ms-auto">
@@ -240,36 +232,13 @@ const Mileage = () => {
                   data-bs-toggle="modal"
                   data-bs-target="#add_mileage"
                 >
-                  <i className="fa fa-plus" /> Add Mileage
+                  <i className="fa fa-plus" /> Add Policy
                 </Link>
               </div>
             </div>
           </div>
           {/* /Page Header */}
-          {/* Search Filter */}
-          <div className="row filter-row">
-            <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-              <div className="input-block form-focus select-focus">
-                <div className="cal-icon">
-                  <DatePicker
-                    selected={selectedDate1}
-                    onChange={handleDateChange1}
-                    className="form-control floating datetimepicker"
-                    type="date"
-                  />
-                </div>
-                <label className="focus-label">Date</label>
-              </div>
-            </div>
-
-            <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-              <Link to="#" className="btn btn-success btn-block w-100">
-                {" "}
-                Search{" "}
-              </Link>
-            </div>
-          </div>
-          {/* /Search Filter */}
+        
 
           <div className="row">
             <div className="col-lg-12">
@@ -277,7 +246,7 @@ const Mileage = () => {
                 <Table
                   className="table-striped"
                   pagination={{
-                    total: allMileage.length,
+                    total: allCompanyPolicies.length,
                     showTotal: (total, range) =>
                       `Showing ${range[0]} to ${range[1]} of ${total} entries`,
                     showSizeChanger: true,
@@ -286,7 +255,7 @@ const Mileage = () => {
                   }}
                   style={{ overflowX: "auto" }}
                   columns={columns}
-                  dataSource={allMileage}
+                  dataSource={allCompanyPolicies}
                   rowKey={(record) => record.id}
                 />
               </div>
@@ -301,7 +270,7 @@ const Mileage = () => {
           >
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">Add Mileage</h5>
+                <h5 className="modal-title">Add Policy</h5>
                 <button
                   type="button"
                   className="close"
@@ -312,82 +281,95 @@ const Mileage = () => {
                 </button>
               </div>
               <div className="modal-body">
-                <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="row">
-                  <div className="col-sm-10">
-                    <div className="input-block">
-                      <label className="col-form-label">Default Unit</label>
-                      <select className="select" {...register("default_unit")}>
-                        <option value="">Select </option>
-                        {DefaultUnit_drop?.map((data) => {
-                          return (
-                            <option value={data.value}>{data.label}</option>
-                          );
-                        })}
-                      </select>
-                    </div>
-                  </div>
-                  </div>
-                  <div className="row">
-                  <div className="col-sm-10">
-                    <div className="input-block">
-                      <label className="col-form-label">Default Category</label>
-                      <select
-                        className="select"
-                        {...register("default_category")}
-                      >
-                        <option value="">Select </option>
-                        {DefaultCategory_drop?.map((data) => {
-                          return (
-                            <option value={data.value}>{data.label}</option>
-                          );
-                        })}
-                      </select>
-                    </div>
-                  </div>
-                  </div>
-
-                  <div className="row">
-                    <div className="col-md-6">
-                      <div className="input-block">
-                        <label>Mileage Rate</label>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                    <div className="input-block mb-0 row">
+                      <label>
                         <input
-                          placeholder="$50"
-                          className="form-control"
-                          type="number"
-                          {...register("rate")}
-                        />
+                          class="form-check-input"
+                          type="checkbox"
+                          value="True"
+                          // {...register("override_general_policy")}
+                        />{" "}
+                        Expense Amount Limit Receipt Required limit
+                      </label>
+                      <div className="col-md-4">
+                        <div className="input-group">
+                          <div className="input-group-prepend">
+                            <span className="input-group-text">$USD</span>
+                          </div>
+                          <input className="form-control" type="number" 
+                           {...register("expense_amt_limit")}
+                           />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-6">
-                      <div className="input-block ">
-                        <label className="">Start Date</label>
-                        <Form.Item
-                          name="date"
-                          rules={[
-                            {
-                              required: true,
-                              message: "Please select the start date!",
-                            },
-                          ]}
-                        >
-                          <Input type="date" {...register("date")} />
-                        </Form.Item>
-                      </div>
-                    </div>
-                  </div>
 
-                  <div className="submit-section">
-                    <button
-                      className="btn btn-primary submit-btn"
-                      data-bs-dismiss="modal"
-                    >
-                      Submit
-                    </button>
-                  </div>
-                </form>
+                    <br></br>
+                    <br></br>
+
+                    <div className="input-block mb-0 row">
+                      <label>
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value="True"
+                          // {...register("override_general_policy")}
+                        />{" "}
+                        Receipt Required limit
+                      </label>
+                      <div className="col-md-4">
+                        <div className="input-group">
+                          <div className="input-group-prepend">
+                            <span className="input-group-text">$USD</span>
+                          </div>
+                          <input className="form-control" type="number"
+                           {...register("receipt_require_lmt")}
+                            />
+                        </div>
+                      </div>
+                    </div>
+
+                    <br></br>
+                    <br></br>
+                    <div className="col-md-10">
+                      <div className="checkbox">
+                        <label>
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value="True"
+                            {...register("make_description_mandotary")}
+                          />{" "}
+                          Make Description Mandatory
+                        </label>
+                      </div>
+                    </div>
+                    <br></br>
+                    <br></br>
+                    <div className="col-md-10">
+                      <div className="checkbox">
+                        <label>
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value="True"
+                            {...register("allow_uncategorized_expe_to_be_part_of_expense_report")}
+                          />{" "}
+                          Allow Uncategorized Expenses To Be The Part Of Expense
+                          Report
+                        </label>
+                      </div>
+                    </div>
+
+                    <div className="submit-section">
+                      <button
+                        className="btn btn-primary submit-btn"
+                        data-bs-dismiss="modal"
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </form>
               </div>
             </div>
           </div>
@@ -405,7 +387,7 @@ const Mileage = () => {
           >
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">Update Mileage</h5>
+                <h5 className="modal-title">Update Policy</h5>
                 <button
                   type="button"
                   className="close"
@@ -416,89 +398,95 @@ const Mileage = () => {
                 </button>
               </div>
               <div className="modal-body">
-                <form onSubmit={handleUpdate(onUpdate)}>
-                  <div className="row">
-                    <label className="col-form-label col-md-2">
-                      Default Unit
-                    </label>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                    <div className="input-block mb-0 row">
+                      <label>
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value="True"
+                          // {...register("override_general_policy")}
+                        />{" "}
+                        Expense Amount Limit Receipt Required limit
+                      </label>
+                      <div className="col-md-4">
+                        <div className="input-group">
+                          <div className="input-group-prepend">
+                            <span className="input-group-text">$USD</span>
+                          </div>
+                          <input className="form-control" type="number" 
+                           {...register("expense_amt_limit")}
+                           />
+                        </div>
+                      </div>
+                    </div>
+
+                    <br></br>
+                    <br></br>
+
+                    <div className="input-block mb-0 row">
+                      <label>
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value="True"
+                          // {...register("override_general_policy")}
+                        />{" "}
+                        Receipt Required limit
+                      </label>
+                      <div className="col-md-4">
+                        <div className="input-group">
+                          <div className="input-group-prepend">
+                            <span className="input-group-text">$USD</span>
+                          </div>
+                          <input className="form-control" type="number"
+                           {...register("receipt_require_lmt")}
+                            />
+                        </div>
+                      </div>
+                    </div>
+
+                    <br></br>
+                    <br></br>
                     <div className="col-md-10">
-                      <div className="radio">
+                      <div className="checkbox">
                         <label>
                           <input
-                            type="radio"
-                            name="radio"
-                            {...updateregister("default_unit")}
+                            class="form-check-input"
+                            type="checkbox"
+                            value="True"
+                            {...register("make_description_mandotary")}
                           />{" "}
-                          KM
+                          Make Description Mandatory
                         </label>
                       </div>
-                      <div className="radio">
+                    </div>
+                    <br></br>
+                    <br></br>
+                    <div className="col-md-10">
+                      <div className="checkbox">
                         <label>
                           <input
-                            type="radio"
-                            name="radio"
-                            {...updateregister("default_unit")}
-                          />
-                          Mile
+                            class="form-check-input"
+                            type="checkbox"
+                            value="True"
+                            {...register("allow_uncategorized_expe_to_be_part_of_expense_report")}
+                          />{" "}
+                          Allow Uncategorized Expenses To Be The Part Of Expense
+                          Report
                         </label>
                       </div>
                     </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-6">
-                      <div className="input-block">
-                        <label>Default Category</label>
-                        <input
-                          className="form-control"
-                          type="number"
-                          {...updateregister("default_category")}
-                        />
-                      </div>
-                    </div>
-                  </div>
 
-                  <div className="row">
-                    <div className="col-md-6">
-                      <div className="input-block">
-                        <label>Mileage Rate</label>
-                        <input
-                          placeholder="$50"
-                          className="form-control"
-                          type="number"
-                          {...updateregister("rate")}
-                        />
-                      </div>
+                    <div className="submit-section">
+                      <button
+                        className="btn btn-primary submit-btn"
+                        data-bs-dismiss="modal"
+                      >
+                        Update
+                      </button>
                     </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-6">
-                      <div className="input-block ">
-                        <label className="">Start Date</label>
-
-                        <Form.Item
-                          name="date"
-                          rules={[
-                            {
-                              required: true,
-                              message: "Please select the start date!",
-                            },
-                          ]}
-                        >
-                          <Input type="date" {...updateregister("date")} />
-                        </Form.Item>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="submit-section">
-                    <button
-                      className="btn btn-primary submit-btn"
-                      data-bs-dismiss="modal"
-                    >
-                      Update
-                    </button>
-                  </div>
-                </form>
+                  </form>
               </div>
             </div>
           </div>
@@ -549,4 +537,4 @@ const Mileage = () => {
   );
 };
 
-export default Mileage;
+export default CompanyPolicies;
