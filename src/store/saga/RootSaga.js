@@ -18,6 +18,7 @@ import {
   addCompanyPolicy,
 
   getMileage,
+  fetchCategory,
   addMileage,
   updateMileage,
   deleteMileage,
@@ -131,6 +132,7 @@ export function* RootSaga() {
 
   yield takeEvery(API_CONSTANTS.ADD_MILEAGE, addMileage);
   yield takeEvery(API_CONSTANTS.GET_MILEAGE, getMileage);
+  yield takeEvery(API_CONSTANTS.FETCH_CATEGORY, fetchCategory);
   yield takeEvery(API_CONSTANTS.UPDATE_MILEAGE, updateMileage);
   yield takeEvery(API_CONSTANTS.DELETE_MILEAGE, deleteMileage);
 

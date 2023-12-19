@@ -16,6 +16,7 @@ export const URLS = {
 
     ADD_MILEAGE_URL: "/expense/expensemileage/",
     GET_MILEAGE_URL: "/expense/expensemileage/",
+    FETCH_CATEGORY_URL: "/expense/get_categories/",
     UPDATE_MILEAGE_URL: "/expense/expensemileage/",
     DELETE_MILEAGE_URL: "/expense/expensemileage/",
 
