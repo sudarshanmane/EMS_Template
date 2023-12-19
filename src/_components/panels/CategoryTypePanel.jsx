@@ -54,7 +54,7 @@ const CategoryTypePanel = () => {
   } = useForm({});
 
   const onSubmit = (values) => {
-    dispatch(addMileage(values));
+    dispatch(addCategoryAction(values));
   };
 
   const onEdit = (record) => {
