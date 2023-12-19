@@ -76,7 +76,6 @@ function deleteCategorypanelAction(payload) {
     contentType: contentType.json,
   };
 }
-
 function addCompanyPolicy(payload) {
   return {
     type: API_CONSTANTS.ADD_COMPANY_POLICY,
@@ -85,6 +84,7 @@ function addCompanyPolicy(payload) {
     contentType: contentType.json,
   };
 }
+
 function getCompanyPolicy(payload) {
   return {
     type: API_CONSTANTS.GET_COMPANY_POLICY,
