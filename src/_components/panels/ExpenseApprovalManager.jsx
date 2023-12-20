@@ -238,8 +238,26 @@ function ExpenseApprovalManager() {
                   </li>
                 </ul>
               </div>
+
+              <div className="col-auto float-end ms-auto">
+                    <Link
+                      to="/home/ReimbursmentRecord"
+                      className="btn add-btn"
+                      // data-bs-toggle="modal"
+                      // data-bs-target="#add_leave"
+                      onClick={() => {
+                        setEditItemData(null);
+                        setIsAddFormVisible(true);
+                      }}
+                    >
+                      <i className="fa fa-plus" /> Add Expense Approvel
+                    </Link>
+                  </div>  
             </div>
           </div>
+
+          
+
           <div className="row">
             <div className="col-sm-12">
               <div className="card mb-0">
@@ -317,6 +335,9 @@ function ExpenseApprovalManager() {
                           Export{" "}
                         </Link>
                       </div>
+
+               
+
                     </div>
                     {/* Search Filter */}
                       {/* <Input

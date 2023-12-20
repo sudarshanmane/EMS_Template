@@ -36,6 +36,17 @@ import AddReport from "../../_components/screens/AddReport";
 import CompanyPolicies from "../../_components/panels/CompanyPolicies";
 import Mileage from "../../_components/screens/Mileage";
 import Expenses from "../../_components/screens/Expenses";
+import ReimbursmentRecord from "../../_components/screens/ReimbursmentRecord";
+import TravelRequestPannel from "../../_components/panels/TravelRequestPannel";
+import Travels from "../../_components/screens/Travels";
+import VendorPannel from "../../_components/panels/VendorPannel";
+import Vendors from "../../_components/screens/Vendors";
+
+
+
+
+
+
 const Navigates = () => {
   return (
     <BrowserRouter>
@@ -76,9 +87,11 @@ const Navigates = () => {
           <Route path="companyPolicies" element={<CompanyPolicies></CompanyPolicies>}></Route>
           <Route path="mileage" element={<Mileage></Mileage>}></Route>
           <Route path="expenses" element={<Expenses></Expenses>}></Route>
-        
-
-
+          <Route path="ReimbursmentRecord" element={<ReimbursmentRecord></ReimbursmentRecord>}></Route>
+          <Route path="TravelRequestPannel" element={<TravelRequestPannel></TravelRequestPannel>}></Route>
+          <Route path ="Travels" element={<Travels></Travels>}></Route>
+          <Route path="VendorPannel" element={<VendorPannel></VendorPannel>}></Route>
+          <Route path ="Vendors" element={<Vendors></Vendors>}></Route>
 
 
         </Route>

@@ -82,6 +82,8 @@ const Sidebar = () => {
                   <i className="la la-user" /> <span>User Management</span>{" "}
                   <span className="menu-arrow" />
                 </Link>
+
+                
                 {isSideMenu == "user" ? (
                   <ul
                     style={{
@@ -375,6 +377,37 @@ const Sidebar = () => {
                   ""
                 )}
               </li>
+
+
+              <li className="submenu">
+                <Link
+                  to="/home/TravelRequestPannel"
+                  className={isSideMenu == "TravelRequestPannel" ? "subdrop" : ""}
+                  onClick={() =>
+                    toggleSidebar(isSideMenu == "TravelRequestPannel" ? "" : "TravelRequestPannel")
+                  }
+                >
+                  <i className="la la-file-text" /> <span> Travels Request </span>{" "}
+                  {/* <span className="menu-arrow" /> */}
+                </Link>
+               
+              </li>
+
+
+
+              <li className="submenu">
+                <Link
+                  to="/home/VendorPannel"
+                  className={isSideMenu == "VendorPannel" ? "subdrop" : ""}
+                  onClick={() =>
+                    toggleSidebar(isSideMenu == "VendorPannel" ? "" : "VendorPannel")
+                  }
+                >
+                  <i className="la la-file-text" /> <span> Vendors </span>{" "}
+                  {/* <span className="menu-arrow" /> */}
+                </Link>
+               
+              </li>  
 
               {/* ============================================== */}
 
@@ -874,7 +907,7 @@ const Sidebar = () => {
                 className="nav-link"
                 id="v-pills-performance-tab"
                 title="Performance"
-                data-bs-toggle="pill"
+                data-bs-toggle="pill" 
                 to="#v-pills-performance"
                 role="tab"
                 aria-controls="v-pills-performance"
