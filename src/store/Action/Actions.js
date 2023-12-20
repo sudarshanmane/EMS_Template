@@ -98,7 +98,7 @@ function updateCompanyPolicy(payload) {
   return {
     type: API_CONSTANTS.UPDATE_COMPANY_POLICY,
     payload: payload.payload,
-    URL: URLS.UPDATE_COMPANY_POLICY_URL+ payload.id + "/",
+    URL: URLS.UPDATE_COMPANY_POLICY_URL + payload.id + "/",
     contentType: contentType.json,
   };
 }
@@ -141,7 +141,7 @@ function updateMileage(payload) {
   return {
     type: API_CONSTANTS.UPDATE_MILEAGE,
     payload: payload.payload,
-    URL: URLS.UPDATE_MILEAGE_URL+ payload.id + "/",
+    URL: URLS.UPDATE_MILEAGE_URL + payload.id + "/",
     contentType: contentType.json,
   };
 }
@@ -159,7 +159,7 @@ function applyCard(payload) {
     type: API_CONSTANTS.APPLY_CARD,
     payload,
     URL: URLS.APPLY_CARD_URL,
-    contentType: contentType.json,
+    contentType: contentType.form,
   };
 }
 function getCard(payload) {
@@ -175,15 +175,15 @@ function updateCard(payload) {
   return {
     type: API_CONSTANTS.UPDATE_CARD,
     payload: payload.payload,
-    URL: URLS.UPDATE_CARD_URL+ payload.id + "/",
+    URL: URLS.UPDATE_CARD_URL + payload.id + "/",
     contentType: contentType.json,
   };
 }
 
-function deleteCard(payload) {
+function rejectCard(payload) {
   return {
-    type: API_CONSTANTS.DELETE_CARD,
-    URL: URLS.DELETE_CARD_URL + payload.id + "/",
+    type: API_CONSTANTS.REJECT_CARD,
+    URL: URLS.REJECT_CARD_URL + payload.id + "/",
     contentType: contentType.json,
   };
 }
@@ -335,8 +335,6 @@ function addExpense(payload) {
   };
 }
 
-
-
 function getExpenseTypePanelAction(payload) {
   return {
     type: API_CONSTANTS.GET_EXPENSE_TYPE_PANEL,
@@ -456,8 +454,6 @@ function getaccountingcodePanelAction(payload) {
     contentType: contentType.json,
   };
 }
-
-
 
 function getexpensePanelListAction(payload) {
   return {
@@ -956,35 +952,29 @@ export {
   updateReportAction,
   deleteReportAction,
   setDeleteReportFalse,
-
   addCategoryAction,
   getCategoryPanelAction,
   updateCategorypanle,
   deleteCategorypanelAction,
-
-
   addCompanyPolicy,
   getCompanyPolicy,
   updateCompanyPolicy,
   deleteCompanyPolicy,
-
   addMileage,
   getMileage,
   fetchCategory,
   updateMileage,
   deleteMileage,
-
   applyCard,
   getCard,
   updateCard,
-  deleteCard,
-// ===========================================================
+  rejectCard,
+  // ===========================================================
   userLogin,
   userRegister,
   addExpenseItemSetup,
   getAccountingCodeAction,
   addExpenseTypeSetup,
- 
   addExternalAccountCodeAction,
   addUserAction,
   getRoleAction,
@@ -995,7 +985,6 @@ export {
   getItemListonItemization,
   EXpenseItemizationsubmit,
   addExpense,
- 
   updateProfileuser,
   getExpenseTypePanelAction,
   getExternalAccountCodePanelAction,
@@ -1010,7 +999,6 @@ export {
   addUserPanelAction,
   getPanelItemization,
   getaccountingcodePanelAction,
-
   getexpensePanelListAction,
   applyCardAction,
   searchExpenseTypeAction,
@@ -1020,7 +1008,6 @@ export {
   updateUserAction,
   updateExternalAccountCodeAction,
   updateAccountingcodepanelAction,
- 
   updateexpenseitemizationpanel,
   updateexpensepanel,
   expensetableTrueSubmit,
@@ -1065,7 +1052,6 @@ export {
   ownExpenseDraftAction,
   ownExpenseRejectAction,
   ownExpenseHoldAction,
- 
   deleteExpenseitemizationAction,
   deleteAccountingcodeAction,
   deleteExpensepanelAction,

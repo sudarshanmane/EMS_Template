@@ -186,7 +186,7 @@ const Sidebar = () => {
                         to="/home/expenseapproval"
                       >
                         Expense Approval
-                      </Link>
+                      </Link>r
                     </li>
                     <li>
                       <Link
@@ -272,12 +272,12 @@ const Sidebar = () => {
                         className={
                           pathname.includes("card-approval") ? "active" : ""
                         }
-                        to="/home/cardapprovedlist"
+                        to="/home/cardapproval"
                       >
-                        Approved Cards{" "}
+                        Card Approvals{" "}
                       </Link>
                     </li>
-                    <li>
+                    {/* <li>
                       <Link
                         className={
                           pathname.includes("card-hold") ? "active" : ""
@@ -296,7 +296,7 @@ const Sidebar = () => {
                       >
                         Rejected Cards{" "}
                       </Link>
-                    </li>
+                    </li> */}
                   </ul>
                 ) : (
                   ""

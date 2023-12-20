@@ -154,28 +154,41 @@ const ExpenseReport = () => {
       title: "Status",
       dataIndex: "status",
       render: (text) => (
-        <div className="dropdown action-label">
+        <div className="dropdown action-label text-center">
           <Link
             className="btn btn-white btn-sm btn-rounded dropdown-toggle"
             to="#"
             data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
+            aria-expanded="false">
             <i
               className={
-                text === "Pending"
-                  ? "far fa-dot-circle text-danger"
-                  : "far fa-dot-circle text-success"
+                text === "New"
+                  ? "far fa-dot-circle text-purple"
+                  : text === "Pending"
+                  ? "far fa-dot-circle text-info"
+                  : text === "Approved"
+                  ? "far fa-dot-circle text-success"
+                  : "far fa-dot-circle text-danger"
               }
             />{" "}
             {text}
           </Link>
-          <div className="dropdown-menu">
+          <div className="dropdown-menu dropdown-menu-right">
             <Link className="dropdown-item" to="#">
+              <i className="far fa-dot-circle text-purple" /> New
+            </Link>
+            <Link className="dropdown-item" to="#">
+              <i className="far fa-dot-circle text-info" /> Pending
+            </Link>
+            <Link
+              className="dropdown-item"
+              to="#"
+              data-bs-toggle="modal"
+              data-bs-target="#approve_leave">
               <i className="far fa-dot-circle text-success" /> Approved
             </Link>
             <Link className="dropdown-item" to="#">
-              <i className="far fa-dot-circle text-danger" /> Pending
+              <i className="far fa-dot-circle text-danger" /> Declined
             </Link>
           </div>
         </div>
@@ -219,10 +232,12 @@ const ExpenseReport = () => {
           {/* Page Header */}
           <div className="page-header">
             <div className="row">
-              <div className="col-sm-12">
-                <h3 className="page-title">Expense Report</h3>
+            <div className="col">
                 <ul className="breadcrumb">
-                  <li className="breadcrumb-item active">Expense Report</li>
+                  <li className="breadcrumb-item">
+                    <Link to="/app/main/dashboard">Dashboard</Link>
+                  </li>
+                  <li className="breadcrumb-item active"> Reports </li>
                 </ul>
               </div>
               <div className="col-auto float-end ms-auto">
@@ -295,6 +310,11 @@ const ExpenseReport = () => {
           {/* /Search Filter */}
           <div className="row">
             <div className="col-md-12">
+            <div className="card mb-0">
+                <div className="card-header">
+                  <h4 className="card-title mb-0">Expense Reports</h4>
+                </div>
+                <div className="card-body">
               <div className="table-responsive">
                 <Table
                   className="table-striped"
@@ -367,6 +387,8 @@ const ExpenseReport = () => {
                 </Modal>
               </div>
             </div>
+          </div>
+          </div>
           </div>
         </div>
       </div>

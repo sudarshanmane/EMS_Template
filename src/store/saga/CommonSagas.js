@@ -379,20 +379,28 @@ function* updateCard(action) {
   }
 }
 
-function* deleteCard(action) {
+function* rejectCard(action) {
   try {
-    let result = yield call(Method.deleteData, action);
-    if (result.status === 204) {
+    let result = yield call(Method.putData, action);
+    if (result.status === 200) {
       yield put({
         type: `${action.type}_SUCCESS`,
         status: "ok",
-        result: "Deleted Successfully",
+        result: result.data,
       });
     } else {
       yield call(failSaga, "Server Down!");
     }
   } catch (error) {
-    yield call(errorSaga, "Something went wrong!");
+    if (error.response && error.response.data.detail === "Invalid page.") {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: [],
+      });
+    } else {
+      yield call(errorSaga, "Something went wrong!");
+    }
   }
 }
 // =====================================================================================
@@ -1797,7 +1805,7 @@ export {
   applyCard,
   getCard,
   updateCard,
-  deleteCard,
+  rejectCard,
   // =========================================
   approvedExpensemanager,
   UserLoginGenerator,
