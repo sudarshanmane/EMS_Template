@@ -22,20 +22,25 @@ const CardApproval = () => {
   const [focused, setFocused] = useState(false);
   const [selectedDate1, setSelectedDate1] = useState(null);
   const [selectedDate2, setSelectedDate2] = useState(null);
+  const [isRejectFormVisible, setIsRejectFormVisible] = useState(false);
+  const [rejectCardData, setRejectCardData] = useState(null);
 
   
   const {
     register,
-    handleReject,
+    handleSubmit: handleReject,
+    setValue,
     formState: { errors },
   } = useForm({});
 
   const onSubmit = (values) => {
-    dispatch(rejectCard(values));
+    dispatch(rejectCard({ id: rejectCardData.id, payload: values }));
+
   };
 
   const onReject = (record) => {
-    setIsEditFormVisible(true);
+    setIsRejectFormVisible(true);
+    setRejectCardData(record);
     setValue("remark", record.remark);
   };
 
@@ -84,7 +89,7 @@ const CardApproval = () => {
     if (rejectCardSelector) {
       dispatch(rejectCard({ payload: {}, URL: url }));
     }
-    setIsAddFormVisible(false);
+    setIsRejectFormVisible(false);
   }, [rejectCardSelector]);
 
   const columns = [
@@ -243,7 +248,7 @@ const CardApproval = () => {
         {/* Add Expense Modal */}
         <div id="reject-card" className="modal custom-modal fade" role="dialog">
           <div
-            className="modal-dialog modal-dialog-centered modal-lg"
+            className="modal-dialog modal-dialog-centered modal-md"
             role="document"
           >
             <div className="modal-content">
@@ -261,7 +266,7 @@ const CardApproval = () => {
               <div className="modal-body">
                 <form onSubmit={handleReject(onSubmit)}>
                   <div className="row">
-                    <div className="col-md-6">
+                    <div className="col-md-16">
                       <div className="input-block">
                         <label>Remark</label>
                         <input
