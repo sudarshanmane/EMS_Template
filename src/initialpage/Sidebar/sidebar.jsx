@@ -168,76 +168,6 @@ const Sidebar = () => {
                         Add Expense{" "}
                       </Link>
                     </li>
-                    <li>
-                      <Link
-                        className={
-                          pathname.includes("expenseType") ? "active" : ""
-                        }
-                        to="/home/expensetypepanel"
-                      >
-                        Expense Type{" "}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className={
-                          pathname.includes("expenseApproval") ? "active" : ""
-                        }
-                        to="/home/expenseapproval"
-                      >
-                        Expense Approval
-                      </Link>r
-                    </li>
-                    <li>
-                      <Link
-                        className={
-                          pathname.includes("expenseApproval-manager")
-                            ? "active"
-                            : ""
-                        }
-                        to="/home/expenseapprovalbyfinancemanager"
-                      >
-                        {" "}
-                        Expense Approval Manager{" "}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className={
-                          pathname.includes("expenseItemization")
-                            ? "active"
-                            : ""
-                        }
-                        to="/home/expenseitemizationpanel"
-                      >
-                        {" "}
-                        Expense Itemization{" "}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className={
-                          pathname.includes("expenseItem-setup") ? "active" : ""
-                        }
-                        to="/home/expenseitemsetuppanel"
-                      >
-                        {" "}
-                        ExpenseItem Setup{" "}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className={
-                          pathname.includes("externalAccount-code")
-                            ? "active"
-                            : ""
-                        }
-                        to="/home/externalaccountcodepanel"
-                      >
-                        {" "}
-                        External Accound Code{" "}
-                      </Link>
-                    </li>
                   </ul>
                 ) : (
                   ""
@@ -277,74 +207,12 @@ const Sidebar = () => {
                         Card Approvals{" "}
                       </Link>
                     </li>
-                    {/* <li>
-                      <Link
-                        className={
-                          pathname.includes("card-hold") ? "active" : ""
-                        }
-                        to="/home/cardholdlist"
-                      >
-                        Holded Cards{" "}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className={
-                          pathname.includes("card-rejected") ? "active" : ""
-                        }
-                        to="/home/cardrejectlist"
-                      >
-                        Rejected Cards{" "}
-                      </Link>
-                    </li> */}
                   </ul>
                 ) : (
                   ""
                 )}
               </li>
 
-              <li className="submenu">
-                <Link
-                  to="#"
-                  className={isSideMenu == "accountingcode" ? "subdrop" : ""}
-                  onClick={() =>
-                    toggleSidebar(
-                      isSideMenu == "accountingcode" ? "" : "accountingcode"
-                    )
-                  }
-                >
-                  <i className="la la-book" />{" "}
-                  <span>Accounting Code</span> <span className="menu-arrow" />
-                </Link>
-                {isSideMenu == "accountingcode" ? (
-                  <ul>
-                    <li>
-                      <Link
-                        className={
-                          pathname.includes("accountingcode") ? "active" : ""
-                        }
-                        to="/home/accountingcodepanel"
-                      >
-                        Account Code{" "}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className={
-                          pathname.includes("accountingcodegroups")
-                            ? "active"
-                            : ""
-                        }
-                        to="/home/accountingcodegrouppanel"
-                      >
-                        Account Code Group{" "}
-                      </Link>
-                    </li>
-                  </ul>
-                ) : (
-                  ""
-                )}
-              </li>
               <li className="submenu">
                 <Link
                   to="#"
@@ -369,7 +237,6 @@ const Sidebar = () => {
                         Expense Report{" "}
                       </Link>
                     </li>
-                    
                   </ul>
                 ) : (
                   ""
@@ -402,7 +269,7 @@ const Sidebar = () => {
                         to="/home/companyPolicies"
                       >
                         {" "}
-                        Company Policies {" "}
+                        Company Policies{" "}
                       </Link>
                     </li>
                     <li>
@@ -413,7 +280,7 @@ const Sidebar = () => {
                         to="/home/mileage"
                       >
                         {" "}
-                        Mileage {" "}
+                        Mileage{" "}
                       </Link>
                     </li>
                     <li>
@@ -436,7 +303,7 @@ const Sidebar = () => {
                         }
                         to="/home/expensecategorypanel"
                       >
-                      Category{" "}
+                        Category{" "}
                       </Link>
                     </li>
                   </ul>
@@ -482,46 +349,6 @@ const Sidebar = () => {
                   ""
                 )}
               </li>
-              {/* <Link
-                  to="#"
-                  className={isSideMenu == "profile" ? "subdrop" : ""}
-                  onClick={() =>
-                    toggleSidebar(isSideMenu == "profile" ? "" : "profile")
-                  }
-                >
-                  <i className="la la-user" /> <span>Profile</span>{" "}
-                  <span className="menu-arrow" />
-                </Link>
-                {isSideMenu == "profile" ? (
-                  <ul
-                    style={{
-                      display: isSideMenu == "profile" ? "block" : "none",
-                    }}
-                  >
-                    <li>
-                      <Link
-                        className={
-                          pathname.includes("main/user") ? "active" : ""
-                        }
-                        to="/home/ProfileForm"
-                      >
-                        Update Profile
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className={
-                          pathname.includes("main/employee-") ? "active" : ""
-                        }
-                        to="/home/ChangePasswordForm"
-                      >
-                        Change Password
-                      </Link>
-                    </li>
-                  </ul>
-                ) : (
-                  ""
-                )} */}
 
               <li>
                 <Link to="#">

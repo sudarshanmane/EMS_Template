@@ -362,7 +362,7 @@ function* applyCard(action) {
   }
 }
 
-function* updateCard(action) {
+function* approveCard(action) {
   try {
     let result = yield call(Method.putData, action);
     if (result.status === 200) {
@@ -1804,7 +1804,7 @@ export {
 
   applyCard,
   getCard,
-  updateCard,
+  approveCard,
   rejectCard,
   // =========================================
   approvedExpensemanager,

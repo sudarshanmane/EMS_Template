@@ -10,7 +10,7 @@ import {
 } from "../../MainPage/paginationfunction";
 import Offcanvas from "../../Entryfile/offcanvance";
 import "react-datepicker/dist/react-datepicker.css";
-import { rejectCard } from "../../store/Action/Actions";
+import { rejectCard, approveCard } from "../../store/Action/Actions";
 import { useForm } from "react-hook-form";
 
 
@@ -23,22 +23,38 @@ const CardApproval = () => {
   const [selectedDate1, setSelectedDate1] = useState(null);
   const [selectedDate2, setSelectedDate2] = useState(null);
   const [isRejectFormVisible, setIsRejectFormVisible] = useState(false);
+  const [isApproveFormVisible, setIsApproveFormVisible] = useState(false);
   const [rejectCardData, setRejectCardData] = useState(null);
+  const [approveCardData, setApproveCardData] = useState(null);
+
 
   
   const {
-    register,
+    register : rejectregister,
     handleSubmit: handleReject,
     setValue,
     formState: { errors },
   } = useForm({});
 
-  const onSubmit = (values) => {
-    dispatch(rejectCard({ id: rejectCardData.id, payload: values }));
+  const {
+    register: approveregister,
+    handleSubmit: handleApprove,
+  } = useForm({});
 
+  const onApprove = () => {
+    dispatch(approveCard({ id: approveCardData.id }));
   };
 
-  const onReject = (record) => {
+  const Approve = (record) => {
+    setIsApproveFormVisible(true);
+    setApproveCardData(record);
+  };
+
+  const onReject = (values) => {
+    dispatch(rejectCard({ id: rejectCardData.id, payload: values }));
+  };
+
+  const Reject = (record) => {
     setIsRejectFormVisible(true);
     setRejectCardData(record);
     setValue("remark", record.remark);
@@ -83,6 +99,14 @@ const CardApproval = () => {
       setAllCards(allCards);
     }
   }, [cardSelector]);
+
+  const approveCardSelector = useSelector((state) => state.approveCardSuccess);
+  useEffect(() => {
+    if (approveCardSelector) {
+      dispatch(approveCard({ payload: {}, URL: url }));
+    }
+    setIsApproveFormVisible(false);
+  }, [approveCardSelector]);
 
   const rejectCardSelector = useSelector((state) => state.rejectCardSuccess);
   useEffect(() => {
@@ -145,7 +169,7 @@ const CardApproval = () => {
               to="#"
               data-bs-toggle="modal"
               data-bs-target="#approve-card"
-              onClick={() => onEdit(record)}
+              onClick={() => Approve(record)}
             >
               <i className="fa fa-check m-r-5" /> Approve
             </Link>
@@ -155,7 +179,7 @@ const CardApproval = () => {
               data-bs-toggle="modal"
               data-bs-target="#reject-card"
               onClick={() => {
-               onReject(record);
+               Reject(record);
               }}
             >
               <i className="fa fa-times m-r-5" /> Reject
@@ -245,7 +269,54 @@ const CardApproval = () => {
             </div>
           </div>
         </div>
-        {/* Add Expense Modal */}
+         {/* Approve Modal */}
+         <div id="approve-card" className="modal custom-modal fade" role="dialog">
+          <div
+            className="modal-dialog modal-dialog-centered modal-md"
+            role="document"
+          >
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Remark</h5>
+                <button
+                  type="button"
+                  className="close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <form onSubmit={handleApprove(onApprove)}>
+                  <div className="row">
+                    <div className="col-md-16">
+                      <div className="input-block">
+                        <label>Remark</label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          {...approveregister("remark")}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="submit-section">
+                    <button
+                      className="btn btn-primary submit-btn"
+                      data-bs-dismiss="modal"
+                    >
+                    Approve
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* /Approve Modal */}
+        {/* Reject Modal */}
         <div id="reject-card" className="modal custom-modal fade" role="dialog">
           <div
             className="modal-dialog modal-dialog-centered modal-md"
@@ -264,7 +335,7 @@ const CardApproval = () => {
                 </button>
               </div>
               <div className="modal-body">
-                <form onSubmit={handleReject(onSubmit)}>
+                <form onSubmit={handleReject(onReject)}>
                   <div className="row">
                     <div className="col-md-16">
                       <div className="input-block">
@@ -272,7 +343,7 @@ const CardApproval = () => {
                         <input
                           className="form-control"
                           type="text"
-                          {...register("remark")}
+                          {...rejectregister("remark")}
                         />
                       </div>
                     </div>
@@ -291,7 +362,7 @@ const CardApproval = () => {
             </div>
           </div>
         </div>
-        {/* /Add Expense Modal */}
+        {/* /Reject Modal */}
       </div>
     </>
   );

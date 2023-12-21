@@ -22,8 +22,8 @@ export const URLS = {
 
     APPLY_CARD_URL: "/card/card/",
     GET_CARD_URL: "/card/get_cards/",
-    UPDATE_CARD_URL: "/card/update_card/",
     REJECT_CARD_URL: "/card/reject_card/",
+    APPROVE_CARD_URL: "/card/reject_card/",
 
 
 

@@ -21,7 +21,7 @@ import {
   deleteMileage,
   applyCard,
   getCard,
-  updateCard,
+  approveCard,
   rejectCard,
   // =======================================
   UserLoginGenerator,
@@ -125,7 +125,7 @@ export function* RootSaga() {
 
   yield takeEvery(API_CONSTANTS.APPLY_CARD, applyCard);
   yield takeEvery(API_CONSTANTS.GET_CARD, getCard);
-  yield takeEvery(API_CONSTANTS.UPDATE_CARD, updateCard);
+  yield takeEvery(API_CONSTANTS.APPROVE_CARD, approveCard);
   yield takeEvery(API_CONSTANTS.REJECT_CARD, rejectCard);
 
   // ============================================================

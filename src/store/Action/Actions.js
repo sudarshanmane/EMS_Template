@@ -171,11 +171,11 @@ function getCard(payload) {
   };
 }
 
-function updateCard(payload) {
+function approveCard(payload) {
   return {
-    type: API_CONSTANTS.UPDATE_CARD,
+    type: API_CONSTANTS.APPROVE_CARD,
     payload: payload.payload,
-    URL: URLS.UPDATE_CARD_URL + payload.id + "/",
+    URL: URLS.APPROVE_CARD_URL + payload.id + "/",
     contentType: contentType.json,
   };
 }
@@ -183,6 +183,7 @@ function updateCard(payload) {
 function rejectCard(payload) {
   return {
     type: API_CONSTANTS.REJECT_CARD,
+    payload: payload.payload,
     URL: URLS.REJECT_CARD_URL + payload.id + "/",
     contentType: contentType.json,
   };
@@ -967,7 +968,7 @@ export {
   deleteMileage,
   applyCard,
   getCard,
-  updateCard,
+  approveCard,
   rejectCard,
   // ===========================================================
   userLogin,
