@@ -1,18 +1,45 @@
 /* eslint-disable no-undef */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
-// import Offcanvas from "../../../../Entryfile/offcanvance";
+import { createTravel } from "../../store/Action/Actions";
+import { URLS } from "../../Globals/URLS";
+import { useDispatch, useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
+
 
 const Travels = () => {
+  const [url, setUrl] = useState(URLS.CREATE_TRAVEL_URL);  
+
+  const dispatch = useDispatch();
+  const [isAddFormVisible, setIsAddFormVisible] = useState(false);
+  const [submittedValues, setSubmittedValues] = useState(null);
+  
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({});
+
+  const onSubmit = (values) => {
+    dispatch(createTravel(values));
+    alert("Submitted Successfully");
+  };
+
+
+  const createTravelSelector = useSelector(
+    (state) => state.createTravelSuccess
+  );
+
   useEffect(() => {
-    if ($(".select").length > 0) {
-      $(".select").select2({
-        minimumResultsForSearch: -1,
-        width: "100%",
-      });
+    if (createTravelSelector && submittedValues) {
+      dispatch(createTravel(submittedValues)); 
+      setSubmittedValues(null);
+      setIsAddFormVisible(false);
     }
-  });
+  }, [createTravelSelector, submittedValues]);
+ 
+
   return (
     <>
       <div className="page-wrapper">
@@ -31,7 +58,7 @@ const Travels = () => {
                   <h4 className="card-title mb-0">Travel Request</h4>
                 </div>
                 <div className="card-body">
-                  <form action="#">
+                  <form  onSubmit={handleSubmit(onSubmit)}>
                     <div className="row">
                       <div className="col-xl-12">
                        
@@ -40,7 +67,8 @@ const Travels = () => {
                             <h4>Employee Name</h4>
                           </label>
                           <div className="col-lg-9">
-                            <input type="text" className="form-control" />
+                            <input type="text" className="form-control"
+                            {...register("title")} />
                           </div>
                         </div>
                         <div className="input-block row">
@@ -48,7 +76,8 @@ const Travels = () => {
                             <h4>Title</h4>
                           </label>
                           <div className="col-lg-9">
-                            <input type="text" className="form-control" />
+                            <input type="text" className="form-control" 
+                            {...register("title")}/>
                           </div>
                         </div>
 
@@ -62,7 +91,8 @@ const Travels = () => {
                                 <textarea
                                   className="form-control"
                                   aria-label="With textarea"
-                                ></textarea>
+                                  {...register("travel_purpose")}
+                                  ></textarea>
                               </div>
                             </div>
                           </div>
@@ -75,7 +105,8 @@ const Travels = () => {
                              <h4> From Date</h4>
                             </label>
                             <div className="col-lg-9">
-                              <input type="date" className="form-control" />
+                              <input type="date" className="form-control" 
+                              {...register("from_date")}/>
                             </div>
                             </div>
                             
@@ -86,7 +117,8 @@ const Travels = () => {
                               <h4>To Date</h4>
                             </label>
                             <div className="col-sm-9">
-                              <input type="date" className="form-control" />
+                              <input type="date" className="form-control" 
+                              {...register("to_date")}/>
                             </div>
                             </div>
                             
@@ -102,7 +134,8 @@ const Travels = () => {
                             <h4>Estimated Budget</h4>
                           </label>
                           <div className="col-lg-9">
-                            <input type="number" className="form-control" />
+                            <input type="number" className="form-control"
+                            {...register("estimated_budget")} />
                           </div>
                         </div>
                       </div>

@@ -365,6 +365,20 @@ export const RootReducer = (state = initialState, action) => {
               createTravelSuccess: action.result,
             };
 
+            
+          case API_CONSTANTS.GATE_TRAVEL:
+            return {
+              ...state,
+              loding: true,
+            };
+      
+          case API_CONSTANTS.GATE_TRAVEL_SUCCESS:
+            return {
+              ...state,
+              loding: false,
+              getTravelSuccess: action.result,
+            };
+
 
       // ====================================================================
     case API_CONSTANTS.USER_LOGIN:

@@ -33,7 +33,7 @@ export const URLS = {
 
 
     CREATE_TRAVEL_URL: "/expense/request_travel/",
-    
+    GET_TRAVEL_URL:  "/expense/request_travel/",
 
 
 

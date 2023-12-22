@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Table, Input, Button, Space } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
@@ -11,15 +11,22 @@ import {
 import Offcanvas from "../../Entryfile/offcanvance";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { getTravel } from "../../store/Action/Actions";
+import { useDispatch, useSelector } from "react-redux";
+import { URLS } from "../../Globals/URLS";
+
 
 const TravelRequestPannel = () => {
+  const dispatch = useDispatch();
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [allAccountingGroupCode, setAllAccountingGroupCode] = useState([]);
   const [nameFilter, setNameFilter] = useState("");
-
+  const [url, setUrl]= useState(URLS.GET_TRAVEL_URL);
   const [focused, setFocused] = useState(false);
   const [selectedDate1, setSelectedDate1] = useState(null);
   const [selectedDate2, setSelectedDate2] = useState(null);
+  const [allTravel, setAllTravel] = useState([]);
+
 
   const handleDateChange1 = (date) => {
     setSelectedDate1(date);
@@ -35,73 +42,75 @@ const TravelRequestPannel = () => {
   const handleDelete = (record) => {
     console.log("Delete clicked for record:", record);
   };
+
+
+  function getPageDetails(url) {
+    dispatch(getTravel({ payload: {}, URL: url }));
+  }
+
+  useEffect(() => {
+    getPageDetails(url);
+  }, []);
+
+  function fetchPageDetials(url) {
+    dispatch(getTravel({ payload: {}, URL: url }));
+  }
+
+  useEffect(() => {
+    fetchPageDetials(url);
+  }, []);
+
+  const getTravelSelector = useSelector((state) => state.getTravelSuccess);
+
+  useEffect(() => {
+    if (getTravelSelector) {
+      const allTravel = getTravelSelector.map((element) => {
+        return {
+          // id: element.id,
+          title: element.title,
+          travel_purpose: element.travel_purpose,
+          from_date: element.from_date,
+          to_date: element.to_date,
+          estimated_budget: element.estimated_budget,
+        };
+      });
+      setAllTravel(allTravel);
+    }
+  }, [getTravelSelector]);
+
   const columns = [
     {
-      title: "Sr No",
-      dataIndex: "id",
-      key: "id",
-    },
-    {
-      title: "Name",
+      title: "Employee Name",
       dataIndex: "",
       key: "",
-      sorter: (a, b) => a.name.length - b.name.length,
-      filterDropdown: ({
-        setSelectedKeys,
-        selectedKeys,
-        confirm,
-        clearFilters,
-      }) => (
-        <div style={{ padding: 15 }}>
-          <Input
-            size="large"
-            placeholder="Search Name"
-            value={selectedKeys[0]}
-            onChange={(e) =>
-              setSelectedKeys(e.target.value ? [e.target.value] : [])
-            }
-            onPressEnter={() => {
-              confirm();
-              setNameFilter(selectedKeys[0]);
-            }}
-            style={{ width: 188, marginBottom: 8, display: "block" }}
-          />
-          <button
-            type="button"
-            onClick={() => {
-              confirm();
-              setNameFilter(selectedKeys[0]);
-            }}
-            icon={<SearchOutlined />}
-            size="small"
-            style={{ width: 90, marginRight: 8 }}
-          >
-            Search
-          </button>
-          <button
-            onClick={() => {
-              clearFilters();
-              setNameFilter("");
-            }}
-            size="small"
-            style={{ width: 90 }}
-          >
-            Reset
-          </button>
-        </div>
-      ),
-      filterIcon: (filtered) => (
-        <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
-      ),
-      onFilter: (value, record) =>
-        record.name.toLowerCase().includes(value.toLowerCase()),
     },
     {
-      title: "Accounting Code",
-      dataIndex: "accounting_code",
-      key: "accounting_code",
-      sorter: (a, b) => a.name.length - b.name.length,
+      title: "Title",
+      dataIndex: "title",
+      key: "",
     },
+    {
+      title: "Travel Purpose",
+      dataIndex: "travel_purpose",
+      key: "",
+    },
+    {
+      title: "From_Date",
+      dataIndex: "from_date",
+      key: "",
+    },
+    {
+      title: "To_Date",
+      dataIndex: "to_date",
+      key: "",
+    },
+    {
+      title: "Estimated_Budget",
+      dataIndex: "estimated_budget",
+      key: "",
+    },
+    
+   
     {
       title: "Actions",
       key: "actions",
@@ -143,8 +152,9 @@ const TravelRequestPannel = () => {
                     <Link to="/app/main/dashboard">Dashboard</Link>
                   </li>
                   <li className="breadcrumb-item active">
-                    Accounting Group Code
+                   Trvel Request
                   </li>
+
                 </ul>
                 <div className="col-auto float-end ms-auto">
                   <Link to="/home/Travels">
@@ -161,7 +171,7 @@ const TravelRequestPannel = () => {
             <div className="col-sm-12">
               <div className="card mb-0">
                 <div className="card-header">
-                  <h4 className="card-title mb-0">Accounting Group Code</h4>
+                  <h4 className="card-title mb-0">Travel Request</h4>
                 </div>
                 <div className="card-body">
                   <div className="table-responsive">
@@ -235,14 +245,16 @@ const TravelRequestPannel = () => {
                         </Link>
                       </div>
                     </div>
+
+
                     {/* Search Filter */}
                     <Table
-                      dataSource={allAccountingGroupCode}
+                      dataSource={allTravel}
                       columns={columns}
                       rowSelection={rowSelection}
                       pagination={{
                         // total: allExpense.length,
-                        total: allAccountingGroupCode.length,
+                        total: allTravel.length,
                         showTotal: (total, range) =>
                           `Showing ${range[0]} to ${range[1]} of ${total} entries`,
                         showSizeChanger: true,

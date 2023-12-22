@@ -170,6 +170,16 @@ const Sidebar = () => {
                         Add Expense{" "}
                       </Link>
                     </li>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("expenseapprovemanager") ? "active" : ""
+                        }
+                        to="/home/expenseapprovalbyfinancemanager"
+                      >
+                        Approve Manager{" "}
+                      </Link>
+                    </li>
                   </ul>
                 ) : (
                   ""

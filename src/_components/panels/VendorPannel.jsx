@@ -240,8 +240,10 @@ const VendorPannel = () => {
           <div className="row">
             <div className="col-lg-12">
               <div className="table-responsive">
+
                 <Table
                   className="table-striped"
+
                   pagination={{
                     total: allVendor.length,
                     showTotal: (total, range) =>
@@ -255,6 +257,7 @@ const VendorPannel = () => {
                   dataSource={allVendor}
                   rowKey={(record) => record.id}
                 />
+                
               </div>
             </div>
           </div>

@@ -226,6 +226,26 @@ function updateVendor(payload) {
   };
 }
 
+
+function createTravel(payload) {
+  return {
+    type: API_CONSTANTS.CREATE_VENDOR,
+    payload,
+    URL: URLS.CREATE_TRAVEL_URL,
+    contentType: contentType.json,
+  };
+}
+
+
+function getTravel(payload) {
+  return {
+    type: API_CONSTANTS.GATE_TRAVEL,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
 // ================================================================================
 
 function userLogin(payload) {
@@ -1012,6 +1032,9 @@ export {
   getVendor,
   deleteVendor,
   updateVendor,
+
+  createTravel,
+  getTravel,
 
   // ===========================================================
   userLogin,

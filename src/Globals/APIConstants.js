@@ -58,6 +58,9 @@ export const API_CONSTANTS = {
 
   CREATE_TRAVEL: "CREATE_TRAVEL",
   CREATE_TRAVEL_SUCCESS: "CREATE_TRAVEL_SUCCESS",
+  GATE_TRAVEL: "GATE_TRAVEL",
+  GATE_TRAVEL_SUCCESS: "GATE_TRAVEL_SUCCESS",
+
 
   // ===========================================================================
   USER_LOGIN: "USER_LOGIN",

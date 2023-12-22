@@ -27,6 +27,10 @@ import {
   getVendor,
   deleteVendor,
   updateVendor,
+
+  createTravel,
+  getTravel,
+ 
   // =======================================
   UserLoginGenerator,
   UserRegisterGenerator,
@@ -103,7 +107,7 @@ import {
   commanmanagercardlidtfunction,
   ownExpenseApproveList,
   exportCompanypanel,
-  createTravel,
+
   
  
 } from "./CommonSagas";
@@ -143,6 +147,9 @@ export function* RootSaga() {
 
 
   yield takeEvery(API_CONSTANTS.CREATE_TRAVEL, createTravel);
+  yield takeEvery(API_CONSTANTS.GATE_TRAVEL, getTravel);
+ 
+
 
 
 
