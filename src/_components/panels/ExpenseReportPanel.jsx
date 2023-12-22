@@ -5,18 +5,22 @@ import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { Table, Space, Button, Modal } from "antd";
-import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
+import { Table } from "antd";
+import { format } from "date-fns";
 import "antd/dist/antd.min.css";
-import { getReportList, deleteReportAction } from "../../store/Action/Actions";
+import {
+  getReportList,
+  deleteReportAction,
+  addReport,
+  updateReportAction,
+} from "../../store/Action/Actions";
 import { URLS } from "../../Globals/URLS";
 import Offcanvas from "../../Entryfile/offcanvance";
 import {
   onShowSizeChange,
   itemRender,
 } from "../../MainPage/paginationfunction";
-import AddReport from "../screens/AddReport";
-
+import { Controller, useForm } from "react-hook-form";
 
 const ExpenseReport = () => {
   const dispatch = useDispatch();
@@ -28,6 +32,8 @@ const ExpenseReport = () => {
   const [isAddFormVisible, setIsAddFormVisible] = useState(false);
   const [editReportData, setEditReportData] = useState(null);
   const [deleteReportData, setDeleteReportData] = useState(null);
+  const [isEditFormVisible, setIsEditFormVisible] = useState(false);
+  const [editFormData, setEditFormData] = useState(null);
   const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] =
     useState(false);
 
@@ -43,16 +49,40 @@ const ExpenseReport = () => {
     setViewReportData(record);
     setIsAddFormVisible(false);
   };
-  const handleEdit = (record) => {
-    setEditReportData(record);
-    setIsAddFormVisible(true);
-  };
-  const handleDelete = (record) => {
-    setDeleteReportData(record);
-    setIsDeleteConfirmationVisible(true);
+
+  const formatDate = (date) => {
+    return format(date, "yyyy-MM-dd");
   };
 
-  const handleDeleteConfirmation = () => {
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({});
+
+  const { register: updateregister, handleSubmit: handleUpdate,  setValue,} = useForm({});
+
+  const { handleSubmit: handleDelete } = useForm({});
+
+  const onSubmit = (values) => {
+    dispatch(addReport(values));
+  };
+
+  const onEdit = (record) => {
+    setIsEditFormVisible(true);
+    setEditFormData(record);
+    setValue("description", record.description);
+    setValue("start_date", record.start_date);
+    setValue("end_date", record.end_date);
+  };
+
+  const onUpdate = (values) => {
+    dispatch(updateReportAction({ id: editFormData.id, payload: values }));
+    setIsEditFormVisible(false);
+  };
+
+  const onDelete = () => {
     const deletedReportId = deleteReportData.id;
     dispatch(deleteReportAction({ id: deletedReportId }));
     setIsDeleteConfirmationVisible(false);
@@ -94,9 +124,7 @@ const ExpenseReport = () => {
     }
   }, [reportPanelSelector]);
 
-  const addreportPanelSelector = useSelector(
-    (state) => state.addreportresult
-  );
+  const addreportPanelSelector = useSelector((state) => state.addreportresult);
 
   useEffect(() => {
     if (addreportPanelSelector) {
@@ -115,6 +143,20 @@ const ExpenseReport = () => {
     }
     setIsAddFormVisible(false);
   }, [updatereportPanelSelector]);
+
+  const deleteReportlSelector = useSelector(
+    (state) => state.deleteReportSuccess
+  );
+
+  useEffect(() => {
+    if (deleteReportlSelector) {
+      dispatch(getReportList({ payload: {}, URL: url }));
+    }
+  }, [deleteReportlSelector]);
+
+  const deleteReport = (record) => {
+    setDeleteReportData(record);
+  };
 
   const columns = [
     // {
@@ -154,7 +196,7 @@ const ExpenseReport = () => {
       title: "Status",
       dataIndex: "status",
       render: (text) => (
-        <div className="dropdown action-label">
+        <div className="dropdown action-label text-center">
           <Link
             className="btn btn-white btn-sm btn-rounded dropdown-toggle"
             to="#"
@@ -163,19 +205,34 @@ const ExpenseReport = () => {
           >
             <i
               className={
-                text === "Pending"
-                  ? "far fa-dot-circle text-danger"
-                  : "far fa-dot-circle text-success"
+                text === "New"
+                  ? "far fa-dot-circle text-purple"
+                  : text === "Pending"
+                  ? "far fa-dot-circle text-info"
+                  : text === "Approved"
+                  ? "far fa-dot-circle text-success"
+                  : "far fa-dot-circle text-danger"
               }
             />{" "}
             {text}
           </Link>
-          <div className="dropdown-menu">
+          <div className="dropdown-menu dropdown-menu-right">
             <Link className="dropdown-item" to="#">
+              <i className="far fa-dot-circle text-purple" /> New
+            </Link>
+            <Link className="dropdown-item" to="#">
+              <i className="far fa-dot-circle text-info" /> Pending
+            </Link>
+            <Link
+              className="dropdown-item"
+              to="#"
+              data-bs-toggle="modal"
+              data-bs-target="#approve_leave"
+            >
               <i className="far fa-dot-circle text-success" /> Approved
             </Link>
             <Link className="dropdown-item" to="#">
-              <i className="far fa-dot-circle text-danger" /> Pending
+              <i className="far fa-dot-circle text-danger" /> Declined
             </Link>
           </div>
         </div>
@@ -183,26 +240,40 @@ const ExpenseReport = () => {
       sorter: (a, b) => a.status.length - b.status.length,
     },
     {
-      title: "Actions",
-      key: "actions",
+      title: "Action",
       render: (record) => (
-        <Space size="small">
-          <Button
-            type="success"
-            icon={<EyeOutlined />}
-            onClick={() => handleView(record)}
-          />
-          <Button
-            type="primary"
-            icon={<EditOutlined />}
-            onClick={() => handleEdit(record)}
-          />
-          <Button
-            type="default"
-            icon={<DeleteOutlined />}
-            onClick={() => handleDelete(record)}
-          />
-        </Space>
+        <div className="dropdown dropdown-action text-end">
+          <Link
+            to="#"
+            className="action-icon dropdown-toggle"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i className="material-icons">more_vert</i>
+          </Link>
+          <div className="dropdown-menu dropdown-menu-right">
+            <Link
+              className="dropdown-item"
+              to="#"
+              data-bs-toggle="modal"
+              data-bs-target="#edit_report"
+              onClick={() => onEdit(record)}
+            >
+              <i className="fa fa-pencil m-r-5" /> Edit
+            </Link>
+            <Link
+              className="dropdown-item"
+              to="#"
+              data-bs-toggle="modal"
+              data-bs-target="#delete_report"
+              onClick={() => {
+                deleteReport(record);
+              }}
+            >
+              <i className="fa fa-trash m-r-5" /> Delete
+            </Link>
+          </div>
+        </div>
       ),
     },
   ];
@@ -219,20 +290,20 @@ const ExpenseReport = () => {
           {/* Page Header */}
           <div className="page-header">
             <div className="row">
-              <div className="col-sm-12">
-                <h3 className="page-title">Expense Report</h3>
+              <div className="col">
                 <ul className="breadcrumb">
-                  <li className="breadcrumb-item active">Expense Report</li>
+                  <li className="breadcrumb-item">
+                    <Link to="/app/main/dashboard">Dashboard</Link>
+                  </li>
+                  <li className="breadcrumb-item active"> Reports </li>
                 </ul>
               </div>
               <div className="col-auto float-end ms-auto">
-                 <Link
+                <Link
                   to="#"
                   className="btn add-btn"
-                  onClick={() => {
-                    setEditReportData(null);
-                    setIsAddFormVisible(true);
-                  }}
+                  data-bs-toggle="modal"
+                  data-bs-target="#add_report"
                 >
                   <i className="fa fa-plus" /> Add Report
                 </Link>
@@ -295,80 +366,284 @@ const ExpenseReport = () => {
           {/* /Search Filter */}
           <div className="row">
             <div className="col-md-12">
-              <div className="table-responsive">
-                <Table
-                  className="table-striped"
-                  pagination={{
-                    total: allReportList ? allReportList.length : 0,
-                    showTotal: (total, range) =>
-                      `Showing ${range[0]} to ${range[1]} of ${total} entries`,
-                    showSizeChanger: true,
-                    onShowSizeChange: onShowSizeChange,
-                    itemRender: itemRender,
-                  }}
-                  style={{ overflowX: "auto" }}
-                  columns={columns}
-                  dataSource={allReportList}
-                  rowKey={(record) => record.id}
-                />
-                <Modal
-                  title={
-                    editReportData
-                      ? "Update Report Details"
-                      : "Add Report Details"
-                  }
-                  open={isAddFormVisible}
-                  onCancel={() => setIsAddFormVisible(false)}
-                  onOk={() => setIsAddFormVisible(false)}
-                  footer={null}
-                  className="popup-width"
-                >
-                  <AddReport
-                    initialData={editReportData || null}
-                    setIsAddFormVisible={setIsAddFormVisible}
-                    url={url}
-                    isAddForm={editReportData}
-                  />
-                </Modal>
-                <Modal
-                  title="Confirm Delete"
-                  open={isDeleteConfirmationVisible}
-                  onOk={handleDeleteConfirmation}
-                  onCancel={() => setIsDeleteConfirmationVisible(false)}
-                >
-                  Are you sure you want to delete this item?
-                </Modal>
-                <Modal
-                  title={
-                    viewReportData ? "View Report" : "Update Report Details"
-                  }
-                  open={viewReportData}
-                  onCancel={() => {
-                    setIsAddFormVisible(false);
-                    setViewReportData(null);
-                  }}
-                  footer={null}
-                >
-                  {viewReportData ? (
-                    <div>
-                      <p>Report No: {viewReportData.report_number}</p>
-                      <p>Description: {viewReportData.description}</p>
-                      <p>Start Date: {viewReportData.start_date}</p>
-                      <p>End Date: {viewReportData.end_date}</p>
-                    </div>
-                  ) : (
-                    <AddReport
-                      initialData={editReportData || null}
-                      url={url}
-                      setIsAddFormVisible={setIsAddFormVisible}
-                      isAddForm={editReportData}
+              <div className="card mb-0">
+                <div className="card-header">
+                  <h4 className="card-title mb-0">Expense Reports</h4>
+                </div>
+                <div className="card-body">
+                  <div className="table-responsive">
+                    <Table
+                      className="table-striped"
+                      pagination={{
+                        total: allReportList ? allReportList.length : 0,
+                        showTotal: (total, range) =>
+                          `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+                        showSizeChanger: true,
+                        onShowSizeChange: onShowSizeChange,
+                        itemRender: itemRender,
+                      }}
+                      style={{ overflowX: "auto" }}
+                      columns={columns}
+                      dataSource={allReportList}
+                      rowKey={(record) => record.id}
                     />
-                  )}
-                </Modal>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        {/* Add Expense Modal */}
+        <div id="add_report" className="modal custom-modal fade" role="dialog">
+          <div
+            className="modal-dialog modal-dialog-centered modal-md"
+            role="document"
+          >
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Add Expense Report</h5>
+                <button
+                  type="button"
+                  className="close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <div className="input-block">
+                    <div className="col-md-12">
+                      <div className="input-block">
+                        <label>Description</label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          {...register("description")}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="input-block">
+                    <label className="col-form-label" id="start_date">
+                      Start Date <span className="text-danger">*</span>
+                    </label>
+                    <div className="">
+                      <Controller
+                        control={control}
+                        name="start_date"
+                        render={({ field }) => (
+                          <DatePicker
+                            selected={
+                              field.value ? new Date(field.value) : null
+                            }
+                            onChange={(date) => {
+                              const formattedDate = formatDate(date);
+                              field.onChange(formattedDate);
+                              setValue("start_date", formattedDate);
+                            }}
+                            dateFormat="yyyy-MM-dd"
+                            className="form-control"
+                          />
+                        )}
+                      />
+                      <div className="text-danger">
+                        {errors.start_date?.message}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="input-block">
+                    <label className="col-form-label" id="end_date">
+                      End Date <span className="text-danger">*</span>
+                    </label>
+                    <div className="">
+                      <Controller
+                        control={control}
+                        name="end_date"
+                        render={({ field }) => (
+                          <DatePicker
+                            selected={
+                              field.value ? new Date(field.value) : null
+                            }
+                            onChange={(date) => {
+                              const formattedDate = formatDate(date);
+                              field.onChange(formattedDate);
+                              setValue("end_date", formattedDate);
+                            }}
+                            dateFormat="yyyy-MM-dd"
+                            className="form-control"
+                          />
+                        )}
+                      />
+                      <div className="text-danger">
+                        {errors.end_date?.message}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="submit-section">
+                    <button
+                      className="btn btn-primary submit-btn"
+                      data-bs-dismiss="modal"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* /Add Expense Modal */}
+
+        {/* Edit Expense Modal */}
+        <div id="edit_report" className="modal custom-modal fade" role="dialog">
+          <div
+            className="modal-dialog modal-dialog-centered modal-md"
+            role="document"
+          >
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Update Expense Report</h5>
+                <button
+                  type="button"
+                  className="close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <form onSubmit={handleUpdate(onUpdate)}>
+                  <div className="input-block">
+                    <div className="col-md-12">
+                      <div className="input-block">
+                        <label>Description</label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          {...updateregister("description")}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="input-block ">
+                    <label className="col-form-label " id="start_date">
+                      Start Date <span className="text-danger">*</span>
+                    </label>
+                    <div className="">
+                      <Controller
+                        control={control}
+                        name="start_date"
+                        render={({ field }) => (
+                          <DatePicker
+                            selected={
+                              field.value ? new Date(field.value) : null
+                            }
+                            onChange={(date) => {
+                              const formattedDate = formatDate(date);
+                              field.onChange(formattedDate);
+                              setValue("start_date", formattedDate);
+                            }}
+                            dateFormat="yyyy-MM-dd"
+                            className="form-control"
+                          />
+                        )}
+                      />
+                      <div className="text-danger">
+                        {errors.start_date?.message}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="input-block ">
+                    <label className="col-form-label " id="end_date">
+                      End Date <span className="text-danger">*</span>
+                    </label>
+                    <div className="">
+                      <Controller
+                        control={control}
+                        name="end_date"
+                        render={({ field }) => (
+                          <DatePicker
+                            selected={
+                              field.value ? new Date(field.value) : null
+                            }
+                            onChange={(date) => {
+                              const formattedDate = formatDate(date);
+                              field.onChange(formattedDate);
+                              setValue("end_date", formattedDate);
+                            }}
+                            dateFormat="yyyy-MM-dd"
+                            className="form-control"
+                          />
+                        )}
+                      />
+                      <div className="text-danger">
+                        {errors.end_date?.message}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="submit-section">
+                    <button
+                      className="btn btn-primary submit-btn"
+                      data-bs-dismiss="modal"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* /Edit Expense Modal */}
+        {/* Delete Category Modal */}
+        <div
+          className="modal custom-modal fade"
+          id="delete_report"
+          role="dialog"
+        >
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-body">
+                <div className="form-header">
+                  <h3>Delete Report</h3>
+                  <p>Are you sure want to delete?</p>
+                </div>
+                <div className="modal-btn delete-action">
+                  <div className="row">
+                    <div className="col-6">
+                      <Link
+                        to=""
+                        className="btn btn-primary continue-btn"
+                        onClick={handleDelete(onDelete)}
+                        data-bs-dismiss="modal"
+                      >
+                        Delete
+                      </Link>
+                    </div>
+                    <div className="col-6">
+                      <Link
+                        to=""
+                        data-bs-dismiss="modal"
+                        className="btn btn-primary cancel-btn"
+                      >
+                        Cancel
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* Delete Expense Modal */}
       </div>
 
       {/* /Page Content */}

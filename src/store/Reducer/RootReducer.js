@@ -272,30 +272,30 @@ export const RootReducer = (state = initialState, action) => {
               getCardSuccess: action.result,
             };
   
-            case API_CONSTANTS.UPDATE_CARD:
+            case API_CONSTANTS.APPROVE_CARD:
               return {
                 ...state,
                 loding: true,
               };
               
-        case API_CONSTANTS.UPDATE_CARD_SUCCESS:
+        case API_CONSTANTS.APPROVE_CARD_SUCCESS:
           return {
             ...state,
             loding: false,
-            updateCardResult: action.result,
+            approveCardSuccess: action.result,
           };
     
-        case API_CONSTANTS.DELETE_CARD:
+        case API_CONSTANTS.REJECT_CARD:
           return {
             ...state,
             loding: true,
           };
     
-        case API_CONSTANTS.DELETE_CARD_SUCCESS:
+        case API_CONSTANTS.REJECT_CARD_SUCCESS:
           return {
             ...state,
             loding: false,
-            deleteCardSuccess: action.result,
+            rejectCardSuccess: action.result,
           };
 
 

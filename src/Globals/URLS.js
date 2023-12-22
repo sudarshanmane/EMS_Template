@@ -21,9 +21,9 @@ export const URLS = {
     DELETE_MILEAGE_URL: "/expense/expensemileage/",
 
     APPLY_CARD_URL: "/card/card/",
-    GET_CARD_URL: "/card/card/",
-    UPDATE_CARD_URL: "/card/update_card/",
-    DELETE_CARD_URL: "/card/update_card/",
+    GET_CARD_URL: "/card/get_cards/",
+    REJECT_CARD_URL: "/card/reject_card/",
+    APPROVE_CARD_URL: "/card/reject_card/",
 
 
     CREATE_VENDOR_URL : "/expense/register_vendor/",

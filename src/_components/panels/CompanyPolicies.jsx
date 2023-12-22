@@ -1,4 +1,4 @@
-import { Form, Input, Table } from "antd";
+import { Table } from "antd";
 import React, { useEffect, useState } from "react";
 import {
   onShowSizeChange,
@@ -14,7 +14,6 @@ import {
   updateCompanyPolicy,
 } from "../../store/Action/Actions";
 import { useForm } from "react-hook-form";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const CompanyPolicies = () => {
@@ -22,8 +21,6 @@ const CompanyPolicies = () => {
 
   const dispatch = useDispatch();
   const [allCompanyPolicies, setAllCompanyPolicies] = useState([]);
-  const [selectedDate1, setSelectedDate1] = useState(null);
-  const [selectedDate2, setSelectedDate2] = useState(null);
   const [focused, setFocused] = useState(false);
   const [isAddFormVisible, setIsAddFormVisible] = useState(false);
   const [isEditFormVisible, setIsEditFormVisible] = useState(false);
@@ -32,14 +29,6 @@ const CompanyPolicies = () => {
   const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] =
     useState(false);
 
- 
-
-  const handleDateChange1 = (date) => {
-    setSelectedDate1(date);
-  };
-  const handleDateChange2 = (date) => {
-    setSelectedDate2(date);
-  };
 
   const {
     register,
@@ -214,7 +203,6 @@ const CompanyPolicies = () => {
           <div className="page-header">
             <div className="row">
               <div className="col">
-                <h3 className="page-title">Company Policies</h3>
                 <ul className="breadcrumb">
                   <li className="breadcrumb-item">
                     <Link to="/app/main/dashboard">Dashboard</Link>
@@ -235,10 +223,13 @@ const CompanyPolicies = () => {
             </div>
           </div>
           {/* /Page Header */}
-        
-
           <div className="row">
             <div className="col-lg-12">
+            <div className="card mb-0">
+                <div className="card-header">
+                  <h4 className="card-title mb-0">Company Policies</h4>
+                </div>
+                <div className="card-body">
               <div className="table-responsive">
                 <Table
                   className="table-striped"
@@ -259,10 +250,12 @@ const CompanyPolicies = () => {
             </div>
           </div>
         </div>
+        </div>
+        </div>
         {/* Add Expense Modal */}
         <div id="add_company" className="modal custom-modal fade" role="dialog">
           <div
-            className="modal-dialog modal-dialog-centered modal-lg"
+            className="modal-dialog modal-dialog-centered modal-md"
             role="document"
           >
             <div className="modal-content">
@@ -279,7 +272,7 @@ const CompanyPolicies = () => {
               </div>
               <div className="modal-body">
               <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="input-block mb-0 row">
+                    <div className="input-block">
                       <label>
                         <input
                           class="form-check-input"
@@ -287,9 +280,10 @@ const CompanyPolicies = () => {
                           value="True"
                           // {...register("override_general_policy")}
                         />{" "}
-                        Expense Amount Limit Receipt Required limit
+                        Expense Amount Limit 
                       </label>
-                      <div className="col-md-4">
+                     
+                      <div className="col-md-12">
                         <div className="input-group">
                           <div className="input-group-prepend">
                             <span className="input-group-text">$USD</span>
@@ -303,8 +297,10 @@ const CompanyPolicies = () => {
 
                     <br></br>
                     <br></br>
+                    <br></br>
+                    <br></br>
 
-                    <div className="input-block mb-0 row">
+                    <div className="input-block">
                       <label>
                         <input
                           class="form-check-input"
@@ -314,7 +310,8 @@ const CompanyPolicies = () => {
                         />{" "}
                         Receipt Required limit
                       </label>
-                      <div className="col-md-4">
+                    
+                      <div className="col-md-12">
                         <div className="input-group">
                           <div className="input-group-prepend">
                             <span className="input-group-text">$USD</span>
@@ -325,10 +322,13 @@ const CompanyPolicies = () => {
                         </div>
                       </div>
                     </div>
-
                     <br></br>
                     <br></br>
-                    <div className="col-md-10">
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                   
+                    <div className="col-lg-10">
                       <div className="checkbox">
                         <label>
                           <input
@@ -379,7 +379,7 @@ const CompanyPolicies = () => {
           role="dialog"
         >
           <div
-            className="modal-dialog modal-dialog-centered modal-lg"
+            className="modal-dialog modal-dialog-centered modal-md"
             role="document"
           >
             <div className="modal-content">
@@ -396,7 +396,7 @@ const CompanyPolicies = () => {
               </div>
               <div className="modal-body">
               <form onSubmit={handleUpdate(onUpdate)}>
-                    <div className="input-block mb-0 row">
+                    <div className="input-block">
                       <label>
                         <input
                           class="form-check-input"
@@ -406,7 +406,7 @@ const CompanyPolicies = () => {
                         />{" "}
                         Expense Amount Limit Receipt Required limit
                       </label>
-                      <div className="col-md-4">
+                      <div className="col-md-12">
                         <div className="input-group">
                           <div className="input-group-prepend">
                             <span className="input-group-text">$USD</span>
@@ -420,8 +420,11 @@ const CompanyPolicies = () => {
 
                     <br></br>
                     <br></br>
+                    <br></br>
+                    <br></br>
 
-                    <div className="input-block mb-0 row">
+
+                    <div className="input-block">
                       <label>
                         <input
                           class="form-check-input"
@@ -431,7 +434,7 @@ const CompanyPolicies = () => {
                         />{" "}
                         Receipt Required limit
                       </label>
-                      <div className="col-md-4">
+                      <div className="col-md-12">
                         <div className="input-group">
                           <div className="input-group-prepend">
                             <span className="input-group-text">$USD</span>
@@ -442,7 +445,9 @@ const CompanyPolicies = () => {
                         </div>
                       </div>
                     </div>
-
+                    <br></br>
+                    <br></br>
+                    <br></br>
                     <br></br>
                     <br></br>
                     <div className="col-md-10">
@@ -499,7 +504,7 @@ const CompanyPolicies = () => {
             <div className="modal-content">
               <div className="modal-body">
                 <div className="form-header">
-                  <h3>Delete Category</h3>
+                  <h3>Delete Policy</h3>
                   <p>Are you sure want to delete?</p>
                 </div>
                 <div className="modal-btn delete-action">

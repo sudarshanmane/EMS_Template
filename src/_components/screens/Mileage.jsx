@@ -243,7 +243,6 @@ const Mileage = () => {
           <div className="page-header">
             <div className="row align-items-center">
               <div className="col">
-                <h3 className="page-title">Mileage</h3>
                 <ul className="breadcrumb">
                   <li className="breadcrumb-item">
                     <Link to="/app/main/dashboard">Dashboard</Link>
@@ -291,22 +290,29 @@ const Mileage = () => {
 
           <div className="row">
             <div className="col-lg-12">
-              <div className="table-responsive">
-                <Table
-                  className="table-striped"
-                  pagination={{
-                    total: allMileage.length,
-                    showTotal: (total, range) =>
-                      `Showing ${range[0]} to ${range[1]} of ${total} entries`,
-                    showSizeChanger: true,
-                    onShowSizeChange: onShowSizeChange,
-                    itemRender: itemRender,
-                  }}
-                  style={{ overflowX: "auto" }}
-                  columns={columns}
-                  dataSource={allMileage}
-                  rowKey={(record) => record.id}
-                />
+              <div className="card mb-0">
+                <div className="card-header">
+                  <h4 className="card-title mb-0">Company Policies</h4>
+                </div>
+                <div className="card-body">
+                  <div className="table-responsive">
+                    <Table
+                      className="table-striped"
+                      pagination={{
+                        total: allMileage.length,
+                        showTotal: (total, range) =>
+                          `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+                        showSizeChanger: true,
+                        onShowSizeChange: onShowSizeChange,
+                        itemRender: itemRender,
+                      }}
+                      style={{ overflowX: "auto" }}
+                      columns={columns}
+                      dataSource={allMileage}
+                      rowKey={(record) => record.id}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -314,7 +320,7 @@ const Mileage = () => {
         {/* Add Expense Modal */}
         <div id="add_mileage" className="modal custom-modal fade" role="dialog">
           <div
-            className="modal-dialog modal-dialog-centered modal-lg"
+            className="modal-dialog modal-dialog-centered modal-md"
             role="document"
           >
             <div className="modal-content">
@@ -331,12 +337,12 @@ const Mileage = () => {
               </div>
               <div className="modal-body">
                 <form onSubmit={handleSubmit(onSubmit)}>
-                  <div className="row">
-                    <div className="col-sm-10">
+                  <div className="input-block">
+                    <div className="col-sm-12">
                       <div className="input-block">
-                        <label className="col-form-label">Default Unit</label>
+                        <label>Default Unit</label>
                         <select
-                          className="select"
+                          className="form-control"
                           {...register("default_unit")}
                         >
                           <option value="">Select </option>
@@ -348,16 +354,14 @@ const Mileage = () => {
                         </select>
                       </div>
                     </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-sm-10">
+                    <div className="col-sm-12">
                       <div className="input-block">
                         <label className="col-form-label">
                           Default Category
                         </label>
 
                         <select
-                          className="select"
+                          className="form-control"
                           {...register("default_category")}
                         >
                           <option value="">Select </option>
@@ -373,8 +377,8 @@ const Mileage = () => {
                     </div>
                   </div>
 
-                  <div className="row">
-                    <div className="col-md-6">
+                  <div className="input-block">
+                    <div className="col-md-12">
                       <div className="input-block">
                         <label>Mileage Rate</label>
                         <input
@@ -385,31 +389,33 @@ const Mileage = () => {
                         />
                       </div>
                     </div>
-                  </div>
-                  <div className="input-block row">
-                    <label className="col-form-label col-md-3" id="date">
-                      Start Date
-                    </label>
-                    <div className="col-md-9">
-                      <Controller
-                        control={control}
-                        name="date"
-                        render={({ field }) => (
-                          <DatePicker
-                            selected={
-                              field.value ? new Date(field.value) : null
-                            }
-                            onChange={(date) => {
-                              const formattedDate = formatDate(date);
-                              field.onChange(formattedDate);
-                              setValue("date", formattedDate);
-                            }}
-                            dateFormat="yyyy-MM-dd"
-                          />
-                        )}
-                      />
-                      <div className="text-danger">
-                        {errors.start_date?.message}
+
+                    <div className="input-block">
+                      <label className="col-form-label" id="date">
+                        Start Date
+                      </label>
+                      <div className="">
+                        <Controller
+                          control={control}
+                          name="date"
+                          render={({ field }) => (
+                            <DatePicker
+                              selected={
+                                field.value ? new Date(field.value) : null
+                              }
+                              onChange={(date) => {
+                                const formattedDate = formatDate(date);
+                                field.onChange(formattedDate);
+                                setValue("date", formattedDate);
+                              }}
+                              dateFormat="yyyy-MM-dd"
+                              className="form-control"
+                            />
+                          )}
+                        />
+                        <div className="text-danger">
+                          {errors.start_date?.message}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -435,7 +441,7 @@ const Mileage = () => {
           role="dialog"
         >
           <div
-            className="modal-dialog modal-dialog-centered modal-lg"
+            className="modal-dialog modal-dialog-centered modal-md"
             role="document"
           >
             <div className="modal-content">
@@ -452,12 +458,12 @@ const Mileage = () => {
               </div>
               <div className="modal-body">
                 <form onSubmit={handleUpdate(onUpdate)}>
-                  <div className="row">
-                    <div className="col-sm-10">
+                  <div className="input-block">
+                    <div className="col-sm-12">
                       <div className="input-block">
-                        <label className="col-form-label">Default Unit</label>
+                        <label>Default Unit</label>
                         <select
-                          className="select"
+                          className="form-control"
                           {...updateregister("default_unit")}
                         >
                           <option value="">Select </option>
@@ -469,15 +475,13 @@ const Mileage = () => {
                         </select>
                       </div>
                     </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-sm-10">
+                    <div className="col-sm-12">
                       <div className="input-block">
                         <label className="col-form-label">
                           Default Category
                         </label>
                         <select
-                          className="select"
+                          className="form-control"
                           {...updateregister("default_category")}
                         >
                           <option value="">Select </option>
@@ -493,8 +497,8 @@ const Mileage = () => {
                     </div>
                   </div>
 
-                  <div className="row">
-                    <div className="col-md-6">
+                  <div className="input-block">
+                    <div className="col-md-12">
                       <div className="input-block">
                         <label>Mileage Rate</label>
                         <input
@@ -505,31 +509,33 @@ const Mileage = () => {
                         />
                       </div>
                     </div>
-                  </div>
-                  <div className="input-block row">
-                    <label className="col-form-label col-md-3" id="date">
-                      Start Date
-                    </label>
-                    <div className="col-md-9">
-                      <Controller
-                        control={control}
-                        name="date"
-                        render={({ field }) => (
-                          <DatePicker
-                            selected={
-                              field.value ? new Date(field.value) : null
-                            }
-                            onChange={(date) => {
-                              const formattedDate = formatDate(date);
-                              field.onChange(formattedDate);
-                              setValue("date", formattedDate);
-                            }}
-                            dateFormat="yyyy-MM-dd"
-                          />
-                        )}
-                      />
-                      <div className="text-danger">
-                        {errors.start_date?.message}
+
+                    <div className="input-block">
+                      <label className="col-form-label col-lg-6" id="date">
+                        Start Date
+                      </label>
+                      <div className="">
+                        <Controller
+                          control={control}
+                          name="date"
+                          render={({ field }) => (
+                            <DatePicker
+                              selected={
+                                field.value ? new Date(field.value) : null
+                              }
+                              onChange={(date) => {
+                                const formattedDate = formatDate(date);
+                                field.onChange(formattedDate);
+                                setValue("date", formattedDate);
+                              }}
+                              dateFormat="yyyy-MM-dd"
+                              className="form-control"
+                            />
+                          )}
+                        />
+                        <div className="text-danger">
+                          {errors.start_date?.message}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -558,7 +564,7 @@ const Mileage = () => {
             <div className="modal-content">
               <div className="modal-body">
                 <div className="form-header">
-                  <h3>Delete Category</h3>
+                  <h3>Delete Mileage</h3>
                   <p>Are you sure want to delete?</p>
                 </div>
                 <div className="modal-btn delete-action">
