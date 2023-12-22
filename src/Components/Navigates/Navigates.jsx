@@ -11,7 +11,6 @@ import CardApproval from "../../_components/panels/CardApproval";
 import ClientProfile from "../../MainPage/Pages/Profile/clientprofile";
 import EmployeeProfile from "../../MainPage/Pages/Profile/employeeprofile";
 import ExpenseReportPanel from "../../_components/panels/ExpenseReportPanel";
-import AddReport from "../../_components/screens/AddReport";
 import CompanyPolicies from "../../_components/panels/CompanyPolicies";
 import Mileage from "../../_components/screens/Mileage";
 import Expenses from "../../_components/screens/Expenses";
@@ -31,7 +30,6 @@ const Navigates = () => {
           <Route path="employee-profile" element={<EmployeeProfile></EmployeeProfile>}></Route>
           <Route path="Reports" element={<ExpenseReportPanel></ExpenseReportPanel>}></Route>
           <Route path="cardapproval" element={<CardApproval></CardApproval>}></Route>
-          <Route path="addreport" element={<AddReport></AddReport>}></Route>
           <Route path="companyPolicies" element={<CompanyPolicies></CompanyPolicies>}></Route>
           <Route path="mileage" element={<Mileage></Mileage>}></Route>
           <Route path="expenses" element={<Expenses></Expenses>}></Route>

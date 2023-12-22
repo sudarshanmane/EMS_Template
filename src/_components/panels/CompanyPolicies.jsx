@@ -265,7 +265,7 @@ const CompanyPolicies = () => {
               </div>
               <div className="modal-body">
               <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="input-block mb-0 row">
+                    <div className="input-block">
                       <label>
                         <input
                           class="form-check-input"
@@ -276,7 +276,7 @@ const CompanyPolicies = () => {
                         Expense Amount Limit 
                       </label>
                      
-                      <div className="col-md-8">
+                      <div className="col-md-12">
                         <div className="input-group">
                           <div className="input-group-prepend">
                             <span className="input-group-text">$USD</span>
@@ -293,7 +293,7 @@ const CompanyPolicies = () => {
                     <br></br>
                     <br></br>
 
-                    <div className="input-block mb-0 row">
+                    <div className="input-block">
                       <label>
                         <input
                           class="form-check-input"
@@ -304,7 +304,7 @@ const CompanyPolicies = () => {
                         Receipt Required limit
                       </label>
                     
-                      <div className="col-md-8">
+                      <div className="col-md-12">
                         <div className="input-group">
                           <div className="input-group-prepend">
                             <span className="input-group-text">$USD</span>
@@ -321,7 +321,7 @@ const CompanyPolicies = () => {
                     <br></br>
                     <br></br>
                    
-                    <div className="col-md-10">
+                    <div className="col-lg-10">
                       <div className="checkbox">
                         <label>
                           <input
@@ -389,7 +389,7 @@ const CompanyPolicies = () => {
               </div>
               <div className="modal-body">
               <form onSubmit={handleUpdate(onUpdate)}>
-                    <div className="input-block mb-0 row">
+                    <div className="input-block">
                       <label>
                         <input
                           class="form-check-input"
@@ -399,7 +399,7 @@ const CompanyPolicies = () => {
                         />{" "}
                         Expense Amount Limit Receipt Required limit
                       </label>
-                      <div className="col-md-8">
+                      <div className="col-md-12">
                         <div className="input-group">
                           <div className="input-group-prepend">
                             <span className="input-group-text">$USD</span>
@@ -417,7 +417,7 @@ const CompanyPolicies = () => {
                     <br></br>
 
 
-                    <div className="input-block mb-0 row">
+                    <div className="input-block">
                       <label>
                         <input
                           class="form-check-input"
@@ -427,7 +427,7 @@ const CompanyPolicies = () => {
                         />{" "}
                         Receipt Required limit
                       </label>
-                      <div className="col-md-8">
+                      <div className="col-md-12">
                         <div className="input-group">
                           <div className="input-group-prepend">
                             <span className="input-group-text">$USD</span>
