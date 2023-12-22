@@ -187,6 +187,44 @@ function deleteCard(payload) {
     contentType: contentType.json,
   };
 }
+
+
+function createVendor(payload) {
+  return {
+    type: API_CONSTANTS.CREATE_VENDOR,
+    payload,
+    URL: URLS.CREATE_VENDOR_URL,
+    contentType: contentType.json,
+  };
+}
+
+function getVendor(payload) {
+  return {
+    type: API_CONSTANTS.GET_VENDOR,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
+
+function deleteVendor(payload) {
+  return {
+    type: API_CONSTANTS.DELETE_VENDOR,
+    URL: URLS.DELETE_VENDOR_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+function updateVendor(payload) {
+  return {
+    type: API_CONSTANTS.UPDATE_VENDOR,
+    payload: payload.payload,
+    URL: URLS.UPDATE_VENDOR_URL+ payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
 // ================================================================================
 
 function userLogin(payload) {
@@ -978,6 +1016,11 @@ export {
   getCard,
   updateCard,
   deleteCard,
+
+  createVendor,
+  getVendor,
+  deleteVendor,
+  updateVendor,
 // ===========================================================
   userLogin,
   userRegister,

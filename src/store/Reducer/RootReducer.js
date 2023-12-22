@@ -297,6 +297,75 @@ export const RootReducer = (state = initialState, action) => {
             loding: false,
             deleteCardSuccess: action.result,
           };
+
+
+          case API_CONSTANTS.CREATE_VENDOR:
+            return {
+              ...state,
+              loding: true,
+            };
+      
+          case API_CONSTANTS.CREATE_VENDOR_SUCCESS:
+            return {
+              ...state,
+              loding: false,
+              createVendorSuccess: action.result,
+            };
+
+          case API_CONSTANTS.GET_VENDOR:
+            return {
+              ...state,
+              loding: true,
+            };
+      
+          case API_CONSTANTS.GET_VENDOR_SUCCESS:
+            return {
+              ...state,
+              loding: false,
+              getVendorSuccess: action.result,
+            };
+
+
+            case API_CONSTANTS.DELETE_VENDOR:
+          return {
+            ...state,
+            loding: true,
+          };
+    
+        case API_CONSTANTS.DELETE_VENDOR_SUCCESS:
+          return {
+            ...state,
+            loding: false,
+            deleteVendorSuccess: action.result,
+          };
+           
+          case API_CONSTANTS.UPDATE_VENDOR:
+            return {
+              ...state,
+              loding: true,
+            };
+                
+          case API_CONSTANTS.UPDATE_VENDOR_SUCCESS:
+            return {
+              ...state,
+              loding: false,
+              updateVendorResult: action.result,
+            };
+
+            case API_CONSTANTS.CREATE_TRAVEL:
+            return {
+              ...state,
+              loding: true,
+            };
+      
+          case API_CONSTANTS.CREATE_TRAVEL_SUCCESS:
+            return {
+              ...state,
+              loding: false,
+              createTravelSuccess: action.result,
+            };
+
+
       // ====================================================================
     case API_CONSTANTS.USER_LOGIN:
       return {

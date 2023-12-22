@@ -26,6 +26,17 @@ export const URLS = {
     DELETE_CARD_URL: "/card/update_card/",
 
 
+    CREATE_VENDOR_URL : "/expense/register_vendor/",
+    GET_VENDOR_URL: "/expense/register_vendor/",
+    DELETE_VENDOR_URL : "/expense/vendor_payment/",
+    UPDATE_VENDOR_URL :  "/expense/vendor_payment/",
+
+
+    CREATE_TRAVEL_URL: "/expense/request_travel/",
+    
+
+
+
 
     // ========================================================================================
     USER_LOGIN_URL: "/users/admin-login/",

@@ -27,6 +27,11 @@ import {
   getCard,
   updateCard,
   deleteCard,
+
+  createVendor,
+  getVendor,
+  deleteVendor,
+  updateVendor,
   // =======================================
   UserLoginGenerator,
   UserRegisterGenerator,
@@ -108,6 +113,7 @@ import {
   commanmanagercardlidtfunction,
   ownExpenseApproveList,
   exportCompanypanel,
+  createTravel,
   
  
 } from "./CommonSagas";
@@ -140,6 +146,17 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.GET_CARD, getCard);
   yield takeEvery(API_CONSTANTS.UPDATE_CARD, updateCard);
   yield takeEvery(API_CONSTANTS.DELETE_CARD, deleteCard);
+
+
+  yield takeEvery(API_CONSTANTS.CREATE_VENDOR, createVendor);
+  yield takeEvery(API_CONSTANTS.GET_VENDOR, getVendor);
+  yield takeEvery(API_CONSTANTS.DELETE_VENDOR, deleteVendor);
+  yield takeEvery(API_CONSTANTS.UPDATE_VENDOR, updateVendor);
+
+
+  yield takeEvery(API_CONSTANTS.CREATE_TRAVEL, createTravel);
+
+
 
   // ============================================================
   yield takeEvery(API_CONSTANTS.USER_LOGIN, UserLoginGenerator);

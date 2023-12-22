@@ -102,6 +102,8 @@ const CompanyPolicies = () => {
     }
   }, [companyselector]);
 
+
+
   const addCompanySelector = useSelector((state) => state.addCompanyPolicyresult);
 
   useEffect(() => {
@@ -111,6 +113,8 @@ const CompanyPolicies = () => {
     setIsAddFormVisible(false);
   }, [addCompanySelector]);
 
+
+// *********************
   const updatecompanySelector = useSelector(
     (state) => state.updateCompanyPolicyResult
   );
@@ -121,6 +125,9 @@ const CompanyPolicies = () => {
     }
     setIsAddFormVisible(false);
   }, [updatecompanySelector]);
+
+// **********************
+
 
   const deleteCompanySelector = useSelector(
     (state) => state.deleteCompanyPolicySuccess

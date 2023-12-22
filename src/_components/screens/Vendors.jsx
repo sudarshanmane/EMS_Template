@@ -1,18 +1,42 @@
 /* eslint-disable no-undef */
-import React, { useEffect } from "react";
+import React, { useEffect, useState,} from "react";
 import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
-
+import { useForm } from "react-hook-form";
+import { URLS } from "../../Globals/URLS";
+import { useDispatch, useSelector } from "react-redux";
+import { createVendor } from "../../store/Action/Actions";
 
 const Vendors = () => {
+  const [url, setUrl] = useState(URLS.GET_VENDOR_URL);  
+
+  const dispatch = useDispatch();
+  const [isAddFormVisible, setIsAddFormVisible] = useState(false);
+  const [submittedValues, setSubmittedValues] = useState(null);
+ 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({});
+
+  const onSubmit = (values) => {
+    dispatch(createVendor(values));
+    alert("Submitted Successfully");
+  };
+
+  const createVendorSelector = useSelector(
+    (state) => state.createVendorSuccess
+  );
+
   useEffect(() => {
-    if ($(".select").length > 0) {
-      $(".select").select2({
-        minimumResultsForSearch: -1,
-        width: "100%",
-      });
+    if (createVendorSelector && submittedValues) {
+      dispatch(createVendor(submittedValues)); 
+      setSubmittedValues(null);
+      setIsAddFormVisible(false);
     }
-  });
+  }, [createVendorSelector, submittedValues]);
+ 
+
   return (
     <>
       <div className="page-wrapper">
@@ -23,17 +47,7 @@ const Vendors = () => {
         <div className="content container-fluid">
           {/* Page Header */}
           <div className="page-header">
-            <div className="row">
-              {/* <div className="col">
-                <h3 className="page-title">Horizontal Form</h3>
-                <ul className="breadcrumb">
-                  <li className="breadcrumb-item">
-                    <Link to="/app/main/dashboard">Dashboard</Link>
-                  </li>
-                  <li className="breadcrumb-item active">Horizontal Form</li>
-                </ul>
-              </div> */}
-            </div>
+            <div className="row"></div>
           </div>
           {/* /Page Header */}
           <div className="row">
@@ -43,21 +57,29 @@ const Vendors = () => {
                   <h4 className="card-title mb-0">Vendor Form</h4>
                 </div>
                 <div className="card-body">
-                  <form action="#">
+                  <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="input-block row">
                       <label className="col-lg-3 col-form-label">
-                       <h4> Company Name</h4>
+                        <h4> Company Name</h4>
                       </label>
                       <div className="col-lg-9">
-                        <input type="text" className="form-control" />
+                        <input
+                          type="text"
+                          className="form-control"
+                          {...register("company_name")}
+                        />
                       </div>
                     </div>
                     <div className="input-block row">
                       <label className="col-lg-3 col-form-label">
-                     <h4>Telephone</h4>
+                        <h4>Telephone</h4>
                       </label>
                       <div className="col-lg-9">
-                        <input type="tel" className="form-control" />
+                        <input
+                          type="tel"
+                          className="form-control"
+                          {...register("telephone")}
+                        />
                       </div>
                     </div>
                     <div className="input-block row">
@@ -65,7 +87,11 @@ const Vendors = () => {
                         <h4>Email Address</h4>
                       </label>
                       <div className="col-lg-9">
-                        <input type="email" className="form-control" />
+                        <input
+                          type="email"
+                          className="form-control"
+                          {...register("mail_id")}
+                        />
                       </div>
                     </div>
                     <div className="input-block row">
@@ -73,7 +99,11 @@ const Vendors = () => {
                         <h4>Website</h4>
                       </label>
                       <div className="col-lg-9">
-                        <input type="text" className="form-control" />
+                        <input
+                          type="text"
+                          className="form-control"
+                          {...register("website")}
+                        />
                       </div>
                     </div>
                     <div className="input-block row">
@@ -81,10 +111,14 @@ const Vendors = () => {
                         <h4>FAX</h4>
                       </label>
                       <div className="col-lg-9">
-                        <input type="text" className="form-control" />
+                        <input
+                          type="text"
+                          className="form-control"
+                          {...register("fax")}
+                        />
                       </div>
                     </div>
-                   
+
                     <div className="text-end">
                       <button type="submit" className="btn btn-primary">
                         Submit
@@ -94,13 +128,9 @@ const Vendors = () => {
                 </div>
               </div>
             </div>
-           
           </div>
-          
-         
         </div>
       </div>
- 
     </>
   );
 };

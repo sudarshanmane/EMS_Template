@@ -46,6 +46,10 @@ function ExpenseApprovalManager() {
   const [managerList, setManagerList] = useState([]);
   const [invoiceModalVisible, setInvoiceModalVisible] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState(null);
+  const [editItemData, setEditItemData] = useState(null);
+  const [isAddFormVisible, setIsAddFormVisible] = useState(false);
+
+
 
   const [focused, setFocused] = useState(false);
   const [selectedDate1, setSelectedDate1] = useState(null);
