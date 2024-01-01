@@ -8,12 +8,19 @@ export const URLS = {
     GET_CATEGORY_PANEL_URL: "/expense/expensecategory/",
     UPDATE_CATEGORY_PANEL_URL: "/expense/expensecategory/",
     DELETE_CATEGORY_PANEL_URL: "/expense/expensecategory/",
+    
+// ******************
 
-    ADD_COMPANY_POLICY_URL: "/expense/company_policies/",
-    GET_COMPANY_POLICY_URL: "/expense/company_policies/",
-    UPDATE_COMPANY_POLICY_URL: "/expense/company_policies/",
-    DELETE_COMPANY_POLICY_URL: "/expense/company_policies/",
+    CREATE_CATEGORY_ITEM_URL: "/expense/expensecategoryitem/",
 
+// *********************
+
+    ADD_EXPENSE_POLICY_URL: "/expense/expensepolicy/",
+    GET_EXPENSE_POLICY_URL: "/expense/expensepolicy/",
+    UPDATE_EXPENSE_POLICY_URL: "/expense/expensepolicy/",
+    DELETE_EXPENSE_POLICY_URL: "/expense/expensepolicy/",
+
+     
     ADD_MILEAGE_URL: "/expense/expensemileage/",
     GET_MILEAGE_URL: "/expense/expensemileage/",
     FETCH_CATEGORY_URL: "/expense/get_categories/",
@@ -26,6 +33,17 @@ export const URLS = {
     APPROVE_CARD_URL: "/card/reject_card/",
 
 
+    CREATE_VENDOR_URL : "/expense/register_vendor/",
+    GET_VENDOR_URL: "/expense/register_vendor/",
+    DELETE_VENDOR_URL : "/expense/vendor_payment/",
+    UPDATE_VENDOR_URL :  "/expense/vendor_payment/",
+
+
+    CREATE_TRAVEL_URL: "/expense/request_travel/",
+    GET_TRAVEL_URL:  "/expense/request_travel/",
+    DELETE_TRAVEL_URL: "/expense/request_travel_details/",
+    UPDATE_TRAVEL_URL: "/expense/request_travel_details/",
+    
 
     // ========================================================================================
     USER_LOGIN_URL: "/users/admin-login/",

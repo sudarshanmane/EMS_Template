@@ -12,8 +12,6 @@ const initialState = {
 
 export const RootReducer = (state = initialState, action) => {
   switch (action.type) {
-
-
     case API_CONSTANTS.ADD_REPORT:
       return {
         ...state,
@@ -27,18 +25,18 @@ export const RootReducer = (state = initialState, action) => {
         addreportresult: action.result,
       };
 
-      case API_CONSTANTS.GET_REPORT_LIST:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.GET_REPORT_LIST_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          getreportlist: action.result,
-        };
+    case API_CONSTANTS.GET_REPORT_LIST:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_REPORT_LIST_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getreportlist: action.result,
+      };
 
     case API_CONSTANTS.UPDATE_REPORT:
       return {
@@ -125,179 +123,297 @@ export const RootReducer = (state = initialState, action) => {
         deletecategoryResult: action.result,
       };
 
-      case API_CONSTANTS.ADD_COMPANY_POLICY:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.ADD_COMPANY_POLICY_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          addCompanyPolicyresult: action.result,
-        };
+    // *********************
 
-  
-        case API_CONSTANTS.GET_COMPANY_POLICY:
-          return {
-            ...state,
-            loding: true,
-          };
-    
-        case API_CONSTANTS.GET_COMPANY_POLICY_SUCCESS:
-          return {
-            ...state,
-            loding: false,
-            getcompanypolicy: action.result,
-          };
+    case API_CONSTANTS.CREATE_CATEGORY_ITEM:
+      return {
+        ...state,
+        loding: true,
+      };
 
-          case API_CONSTANTS.UPDATE_COMPANY_POLICY:
-            return {
-              ...state,
-              loding: true,
-            };
-            
-      case API_CONSTANTS.UPDATE_COMPANY_POLICY_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          updateCompanyPolicyResult: action.result,
-        };
-  
-      case API_CONSTANTS.DELETE_COMPANY_POLICY:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.DELETE_COMPANY_POLICY_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          deleteCompanyPolicySuccess: action.result,
-        };
-  
+    case API_CONSTANTS.CREATE_CATEGORY_ITEM_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        createCategoryItemSuccess: action.result,
+      };
 
-        case API_CONSTANTS.ADD_MILEAGE:
-          return {
-            ...state,
-            loding: true,
-          };
-    
-        case API_CONSTANTS.ADD_MILEAGE_SUCCESS:
-          return {
-            ...state,
-            loding: false,
-            addMileageresult: action.result,
-          };
-  
-    
-          case API_CONSTANTS.GET_MILEAGE:
-            return {
-              ...state,
-              loding: true,
-            };
-      
-          case API_CONSTANTS.GET_MILEAGE_SUCCESS:
-            return {
-              ...state,
-              loding: false,
-              getMileageSuccess: action.result,
-            };
-  
-            case API_CONSTANTS.FETCH_CATEGORY:
-            return {
-              ...state,
-              loding: true,
-            };
-      
-          case API_CONSTANTS.FETCH_CATEGORY_SUCCESS:
-            return {
-              ...state,
-              loding: false,
-              fetchCategorySuccess: action.result,
-            };
+    // ***************************
 
-            case API_CONSTANTS.UPDATE_MILEAGE:
-              return {
-                ...state,
-                loding: true,
-              };
-              
-        case API_CONSTANTS.UPDATE_MILEAGE_SUCCESS:
-          return {
-            ...state,
-            loding: false,
-            updateMileageResult: action.result,
-          };
-    
-        case API_CONSTANTS.DELETE_MILEAGE:
-          return {
-            ...state,
-            loding: true,
-          };
-    
-        case API_CONSTANTS.DELETE_MILEAGE_SUCCESS:
-          return {
-            ...state,
-            loding: false,
-            deleteMileageSuccess: action.result,
-          };
+    case API_CONSTANTS.ADD_EXPENSE_POLICY:
+      return {
+        ...state,
+        loding: true,
+      };
 
-          case API_CONSTANTS.APPLY_CARD:
-          return {
-            ...state,
-            loding: true,
-          };
-    
-        case API_CONSTANTS.APPLY_CARD_SUCCESS:
-          return {
-            ...state,
-            loding: false,
-            applyCardresult: action.result,
-          };
-  
-    
-          case API_CONSTANTS.GET_CARD:
-            return {
-              ...state,
-              loding: true,
-            };
-      
-          case API_CONSTANTS.GET_CARD_SUCCESS:
-            return {
-              ...state,
-              loding: false,
-              getCardSuccess: action.result,
-            };
-  
-            case API_CONSTANTS.APPROVE_CARD:
-              return {
-                ...state,
-                loding: true,
-              };
-              
-        case API_CONSTANTS.APPROVE_CARD_SUCCESS:
-          return {
-            ...state,
-            loding: false,
-            approveCardSuccess: action.result,
-          };
-    
-        case API_CONSTANTS.REJECT_CARD:
-          return {
-            ...state,
-            loding: true,
-          };
-    
-        case API_CONSTANTS.REJECT_CARD_SUCCESS:
-          return {
-            ...state,
-            loding: false,
-            rejectCardSuccess: action.result,
-          };
-      // ====================================================================
+    case API_CONSTANTS.ADD_EXPENSE_POLICY_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        addexpenseresult: action.result,
+      };
+
+    case API_CONSTANTS.GET_EXPENSE_POLICY:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_EXPENSE_POLICY_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getexpensepolicy: action.result,
+      };
+
+    case API_CONSTANTS.UPDATE_EXPENSE_POLICY:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.UPDATE_EXPENSE_POLICY_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        updateExpensepolicyResult: action.result,
+      };
+
+    case API_CONSTANTS.DELETE_EXPENSE_POLICY:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.DELETE_EXPENSE_POLICY_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        deleteExpensepolicySuccess: action.result,
+      };
+
+    case API_CONSTANTS.ADD_MILEAGE:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.ADD_MILEAGE_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        addMileageresult: action.result,
+      };
+
+    case API_CONSTANTS.GET_MILEAGE:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_MILEAGE_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getMileageSuccess: action.result,
+      };
+
+    case API_CONSTANTS.FETCH_CATEGORY:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.FETCH_CATEGORY_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        fetchCategorySuccess: action.result,
+      };
+
+    case API_CONSTANTS.UPDATE_MILEAGE:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.UPDATE_MILEAGE_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        updateMileageResult: action.result,
+      };
+
+    case API_CONSTANTS.DELETE_MILEAGE:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.DELETE_MILEAGE_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        deleteMileageSuccess: action.result,
+      };
+
+    case API_CONSTANTS.APPLY_CARD:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.APPLY_CARD_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        applyCardresult: action.result,
+      };
+
+    case API_CONSTANTS.GET_CARD:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_CARD_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getCardSuccess: action.result,
+      };
+
+    case API_CONSTANTS.APPROVE_CARD:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.APPROVE_CARD_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        approveCardSuccess: action.result,
+      };
+
+    case API_CONSTANTS.REJECT_CARD:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.REJECT_CARD_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        rejectCardSuccess: action.result,
+      };
+
+    case API_CONSTANTS.CREATE_VENDOR:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.CREATE_VENDOR_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        createVendorSuccess: action.result,
+      };
+
+    case API_CONSTANTS.GET_VENDOR:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_VENDOR_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getVendorSuccess: action.result,
+      };
+
+    case API_CONSTANTS.DELETE_VENDOR:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.DELETE_VENDOR_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        deleteVendorSuccess: action.result,
+      };
+
+    case API_CONSTANTS.UPDATE_VENDOR:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.UPDATE_VENDOR_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        updateVendorResult: action.result,
+      };
+
+    case API_CONSTANTS.CREATE_TRAVEL:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.CREATE_TRAVEL_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        createTravelSuccess: action.result,
+      };
+
+    case API_CONSTANTS.GATE_TRAVEL:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GATE_TRAVEL_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getTravelSuccess: action.result,
+      };
+
+    case API_CONSTANTS.DELETE_TRAVEL:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.DELETE_TRAVEL_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        deleteTravelSuccess: action.result,
+      };
+
+    case API_CONSTANTS.UPDATE_TRAVEL:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.UPDATE_TRAVEL_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        updateTravelResult: action.result,
+      };
+
+    // ====================================================================
     case API_CONSTANTS.USER_LOGIN:
       return {
         ...state,
@@ -473,8 +589,6 @@ export const RootReducer = (state = initialState, action) => {
         addexpenseresult: action.result,
       };
 
-   
-
     case API_CONSTANTS.GET_ROLE:
       return {
         ...state,
@@ -624,7 +738,6 @@ export const RootReducer = (state = initialState, action) => {
         updatecompanylist: action.result,
       };
 
-
     case API_CONSTANTS.GET_USER_PANEL:
       return {
         ...state,
@@ -675,7 +788,6 @@ export const RootReducer = (state = initialState, action) => {
         panelaccountingcodeResult: action.result,
       };
 
-  
     case API_CONSTANTS.GET_EXPENSELIST_PANEL:
       return {
         ...state,

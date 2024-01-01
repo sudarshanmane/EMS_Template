@@ -311,7 +311,7 @@ const Managedjobs = () => {
                           <option>-</option>
                           <option>Web Development</option>
                           <option>Application Development</option>
-                          <option>IT Management</option>
+                          <option>IT </option>
                           <option>Accounts Management</option>
                           <option>Support Management</option>
                           <option>Marketing</option>
