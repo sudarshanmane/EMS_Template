@@ -1,10 +1,7 @@
-import { Form, Input, Table } from "antd";
+import { Table } from "antd";
 import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
-import {
-  onShowSizeChange,
-  itemRender,
-} from "../../MainPage/paginationfunction";
+import { itemRender } from "../../MainPage/paginationfunction";
 import { useDispatch, useSelector } from "react-redux";
 import { URLS } from "../../Globals/URLS";
 import { Link } from "react-router-dom";
@@ -22,17 +19,18 @@ import "react-datepicker/dist/react-datepicker.css";
 const Mileage = () => {
   const dispatch = useDispatch();
   const [selectedDate1, setSelectedDate1] = useState(null);
-  const [selectedDate2, setSelectedDate2] = useState(null);
-  const [defaultCategories, setDefaultCategories] = useState([]);
   const [focused, setFocused] = useState(false);
   const [allMileage, setAllMileage] = useState([]);
-  const [allCategory, setAllCategory] = useState([]);
   const [isAddFormVisible, setIsAddFormVisible] = useState(false);
   const [isEditFormVisible, setIsEditFormVisible] = useState(false);
   const [editMileageData, setEditMileageData] = useState(null);
   const [deleteMileageData, setDeleteMileageData] = useState(null);
   const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] =
     useState(false);
+  const [tablePagination, setTablePagination] = useState({
+    pageSize: 10, // Set your default page size
+    current: 1,
+  });
 
   const url = URLS.GET_MILEAGE_URL;
   const fetchurl = URLS.FETCH_CATEGORY_URL;
@@ -48,9 +46,6 @@ const Mileage = () => {
 
   const handleDateChange1 = (date) => {
     setSelectedDate1(date);
-  };
-  const handleDateChange2 = (date) => {
-    setSelectedDate2(date);
   };
 
   const {
@@ -68,8 +63,10 @@ const Mileage = () => {
 
   const { handleSubmit: handleDelete } = useForm({});
 
-  const onSubmit = (values) => {
-    dispatch(addMileage(values));
+  const onSubmit = async (values) => {
+    await dispatch(addMileage(values));
+    dispatch(getMileage({ payload: {}, URL: url }));
+    setIsAddFormVisible(false);
   };
 
   const onEdit = (record) => {
@@ -84,6 +81,15 @@ const Mileage = () => {
   const onUpdate = (values) => {
     dispatch(updateMileage({ id: editMileageData.id, payload: values }));
     setIsEditFormVisible(false);
+  };
+
+  const onDelete = () => {
+    const deletedMileageId = deleteMileageData.id;
+    dispatch(deleteMileage({ id: deletedMileageId }));
+    setIsDeleteConfirmationVisible(false);
+    setAllMileage((prevItems) =>
+      prevItems.filter((item) => item.id !== deletedMileageId)
+    );
   };
 
   function getPageDetails(url) {
@@ -142,19 +148,18 @@ const Mileage = () => {
   useEffect(() => {
     if (addMileageSelector) {
       dispatch(getMileage({ payload: {}, URL: url }));
+      setIsAddFormVisible(false);
     }
-    setIsAddFormVisible(false);
   }, [addMileageSelector]);
 
   const updatemilageSelector = useSelector(
     (state) => state.updateMileageResult
   );
-
+ 
   useEffect(() => {
     if (updatemilageSelector) {
       dispatch(getMileage({ payload: {}, URL: url }));
     }
-    setIsAddFormVisible(false);
   }, [updatemilageSelector]);
 
   const deleteMileageSelector = useSelector(
@@ -171,19 +176,16 @@ const Mileage = () => {
     setDeleteMileageData(record);
   };
 
-  const onDelete = () => {
-    const deletedMileageId = deleteMileageData.id;
-    dispatch(deleteMileage({ id: deletedMileageId }));
-    setIsDeleteConfirmationVisible(false);
-    setAllMileage((prevItems) =>
-      prevItems.filter((item) => item.id !== deletedMileageId)
-    );
-  };
   const columns = [
     {
       title: "Sr No",
       dataIndex: "id",
-      key: "id",
+      render: (text, record, index) => {
+        const { pageSize, current } = tablePagination;
+        return index + 1 + pageSize * (current - 1);
+      },
+      sorter: (a, b) => a.id.length - b.id.length,
+      width: "10%",
     },
     {
       title: "Start Date",
@@ -291,7 +293,7 @@ const Mileage = () => {
             <div className="col-lg-12">
               <div className="card mb-0">
                 <div className="card-header">
-                  <h4 className="card-title mb-0">Company Policies</h4>
+                  <h4 className="card-title mb-0">Mileage Report</h4>
                 </div>
                 <div className="card-body">
                   <div className="table-responsive">
@@ -302,7 +304,16 @@ const Mileage = () => {
                         showTotal: (total, range) =>
                           `Showing ${range[0]} to ${range[1]} of ${total} entries`,
                         showSizeChanger: true,
-                        onShowSizeChange: onShowSizeChange,
+                        onShowSizeChange: (current, pageSize) => {
+                          setTablePagination({
+                            ...tablePagination,
+                            pageSize,
+                            current,
+                          });
+                        },
+                        onChange: (current) => {
+                          setTablePagination({ ...tablePagination, current });
+                        },
                         itemRender: itemRender,
                       }}
                       style={{ overflowX: "auto" }}

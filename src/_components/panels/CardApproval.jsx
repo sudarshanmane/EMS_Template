@@ -26,7 +26,10 @@ const CardApproval = () => {
   const [isApproveFormVisible, setIsApproveFormVisible] = useState(false);
   const [rejectCardData, setRejectCardData] = useState(null);
   const [approveCardData, setApproveCardData] = useState(null);
-
+  const [tablePagination, setTablePagination] = useState({
+    pageSize: 10, // Set your default page size
+    current: 1,
+  });
 
   
   const {
@@ -120,6 +123,12 @@ const CardApproval = () => {
     {
       title: "Sr No",
       dataIndex: "id",
+      render: (text, record, index) => {
+        const { pageSize, current } = tablePagination;
+        return index + 1 + pageSize * (current - 1);
+      },
+      sorter: (a, b) => a.id.length - b.id.length,
+      width: "10%",
     },
     {
       title: "Name",
@@ -255,7 +264,16 @@ const CardApproval = () => {
                         showTotal: (total, range) =>
                           `Showing ${range[0]} to ${range[1]} of ${total} entries`,
                         showSizeChanger: true,
-                        onShowSizeChange: onShowSizeChange,
+                        onShowSizeChange: (current, pageSize) => {
+                          setTablePagination({
+                            ...tablePagination,
+                            pageSize,
+                            current,
+                          });
+                        },
+                        onChange: (current) => {
+                          setTablePagination({ ...tablePagination, current });
+                        },
                         itemRender: itemRender,
                       }}
                       style={{ overflowX: "auto" }}

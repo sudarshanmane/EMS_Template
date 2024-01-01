@@ -1,9 +1,7 @@
 /* eslint-disable no-undef */
 
 import React, { useEffect, useState } from "react";
-import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Table } from "antd";
 import "antd/dist/antd.min.css";
@@ -38,6 +36,10 @@ const CategoryTypePanel = () => {
   const [deleteCategoryData, setDeleteCategoryData] = useState(null);
   const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] =
     useState(false);
+  const [tablePagination, setTablePagination] = useState({
+    pageSize: 10, // Set your default page size
+    current: 1,
+  });
 
   const {
     register,
@@ -151,19 +153,6 @@ const CategoryTypePanel = () => {
     );
   };
 
-  const handleDateChange1 = (date) => {
-    setSelectedDate1(date);
-  };
-  const handleDateChange2 = (date) => {
-    setSelectedDate2(date);
-  };
-  const handleDateChange3 = (date) => {
-    setSelectedDate3(date);
-  };
-  const handleDateChange4 = (date) => {
-    setSelectedDate4(date);
-  };
-
   useEffect(() => {
     if ($(".select").length > 0) {
       $(".select").select2({
@@ -174,24 +163,21 @@ const CategoryTypePanel = () => {
   });
 
   const columns = [
-    {
+   {
       title: "Sr No",
       dataIndex: "id",
-      render: (text) => <span>{text}</span>,
-      // render: (text) => <strong>{text}</strong>,
-      sorter: (a, b) => a.item.length - b.item.length,
+      render: (text, record, index) => {
+        const { pageSize, current } = tablePagination;
+        return index + 1 + pageSize * (current - 1);
+      },
+      sorter: (a, b) => a.id.length - b.id.length,
+      width: "10%",
     },
     {
       title: "Category Name",
       dataIndex: "category_name",
       sorter: (a, b) => a.purchasefrom.length - b.purchasefrom.length,
     },
-    // {
-    //   title: "Override Policy",
-    //   dataIndex: "override_general_policy",
-    //   sorter: (a, b) => a.purchasedate.length - b.purchasedate.length,
-    // },
-
     {
       title: "Expense Amount",
       dataIndex: "expense_amount_limit",
@@ -225,7 +211,8 @@ const CategoryTypePanel = () => {
             className="btn btn-white btn-sm btn-rounded dropdown-toggle"
             to="#"
             data-bs-toggle="dropdown"
-            aria-expanded="false">
+            aria-expanded="false"
+          >
             <i
               className={
                 text === "New"
@@ -250,7 +237,8 @@ const CategoryTypePanel = () => {
               className="dropdown-item"
               to="#"
               data-bs-toggle="modal"
-              data-bs-target="#approve_leave">
+              data-bs-target="#approve_leave"
+            >
               <i className="far fa-dot-circle text-success" /> Approved
             </Link>
             <Link className="dropdown-item" to="#">
@@ -356,31 +344,40 @@ const CategoryTypePanel = () => {
           {/* /Search Filter */}
           <div className="row">
             <div className="col-md-12">
-            <div className="card mb-0">
+              <div className="card mb-0">
                 <div className="card-header">
                   <h4 className="card-title mb-0">Categories</h4>
                 </div>
                 <div className="card-body">
-              <div className="table-responsive">
-                <Table
-                  className="table-striped"
-                  pagination={{
-                    total: allCategoryType.length,
-                    showTotal: (total, range) =>
-                      `Showing ${range[0]} to ${range[1]} of ${total} entries`,
-                    showSizeChanger: true,
-                    onShowSizeChange: onShowSizeChange,
-                    itemRender: itemRender,
-                  }}
-                  style={{ overflowX: "auto" }}
-                  columns={columns}
-                  dataSource={allCategoryType}
-                  rowKey={(record) => record.id}
-                />
+                  <div className="table-responsive">
+                    <Table
+                      className="table-striped"
+                      pagination={{
+                        total: allCategoryType.length,
+                        showTotal: (total, range) =>
+                          `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+                        showSizeChanger: true,
+                        onShowSizeChange: (current, pageSize) => {
+                          setTablePagination({
+                            ...tablePagination,
+                            pageSize,
+                            current,
+                          });
+                        },
+                        onChange: (current) => {
+                          setTablePagination({ ...tablePagination, current });
+                        },
+                        itemRender: itemRender,
+                      }}
+                      style={{ overflowX: "auto" }}
+                      columns={columns}
+                      dataSource={allCategoryType}
+                      rowKey={(record) => record.id}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          </div>
           </div>
         </div>
         {/* /Page Content */}
@@ -451,8 +448,6 @@ const CategoryTypePanel = () => {
                       </div>
                     </div>
                   </div>
-
-                  
 
                   <div className="row">
                     <div className="col-md-6">
@@ -567,7 +562,6 @@ const CategoryTypePanel = () => {
                     </div>
                   </div>
 
-                 
                   <div className="row">
                     <div className="col-md-6">
                       <div className="input-block">

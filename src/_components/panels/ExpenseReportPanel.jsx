@@ -33,7 +33,6 @@ const ExpenseReport = () => {
   const [editReportData, setEditReportData] = useState(null);
   const [deleteReportData, setDeleteReportData] = useState(null);
   const [isEditFormVisible, setIsEditFormVisible] = useState(false);
-  const [editFormData, setEditFormData] = useState(null);
   const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] =
     useState(false);
 
@@ -71,14 +70,14 @@ const ExpenseReport = () => {
 
   const onEdit = (record) => {
     setIsEditFormVisible(true);
-    setEditFormData(record);
+    setEditReportData(record);
     setValue("description", record.description);
     setValue("start_date", record.start_date);
     setValue("end_date", record.end_date);
   };
 
   const onUpdate = (values) => {
-    dispatch(updateReportAction({ id: editFormData.id, payload: values }));
+    dispatch(updateReportAction({ id: editReportData.id, payload: values }));
     setIsEditFormVisible(false);
   };
 
