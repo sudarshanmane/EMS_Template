@@ -5,7 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { URLS } from "../../Globals/URLS";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-
+import DatePicker from "react-datepicker";
 import {
   getTravel,
   deleteTravel,
@@ -20,6 +20,8 @@ import {
 const TravelRequestPannel = () => {
   const [url, setUrl] = useState(URLS.GET_TRAVEL_URL);
   const dispatch = useDispatch();
+  const [selectedDate1, setSelectedDate1] = useState(null);
+  const [selectedDate2, setSelectedDate2] = useState(null);
   const [allTravel, setAllTravel] = useState([]);
   const [deleteTravelData, setDeleteTravelData] = useState(null);
   const [editTravelData, setEditTravelData] = useState(null);
@@ -27,6 +29,13 @@ const TravelRequestPannel = () => {
   const [isEditFormVisible, setIsEditFormVisible] = useState(false);
   const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] =
     useState(false);
+   
+    const handleDateChange1 = (date) => {
+      setSelectedDate1(date);
+    };
+    const handleDateChange2 = (date) => {
+      setSelectedDate2(date);
+    };
 
   const {
     register: updateregister,
@@ -101,7 +110,6 @@ const TravelRequestPannel = () => {
     const deletedTravelId = deleteTravelData.id;
     dispatch(deleteTravel({ id: deletedTravelId }));
     setIsDeleteConfirmationVisible(false);
-    alert("deleted successfully");
     setAllTravel((prevItems) =>
       prevItems.filter((item) => item.id !== deletedTravelId)
     );
@@ -211,6 +219,43 @@ const TravelRequestPannel = () => {
               </div>
             </div>
           </div>
+         {/* Search Filter */}
+         <div className="row filter-row">
+            <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+              <div className="input-block form-focus select-focus">
+                <div className="cal-icon">
+                  <DatePicker
+                    selected={selectedDate1}
+                    onChange={handleDateChange1}
+                    className="form-control floating datetimepicker"
+                    type="date"
+                  />
+                </div>
+                <label className="focus-label">Date</label>
+              </div>
+            </div>
+            <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+              <div className="input-block form-focus select-focus">
+                <div className="cal-icon">
+                  <DatePicker
+                    selected={selectedDate2}
+                    onChange={handleDateChange2}
+                    className="form-control floating datetimepicker"
+                    type="date"
+                  />
+                </div>
+                <label className="focus-label">Date</label>
+              </div>
+            </div>
+
+            <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+              <Link to="#" className="btn btn-success btn-block w-100">
+                {" "}
+                Search{" "}
+              </Link>
+            </div>
+          </div>
+          {/* /Search Filter */}
           <div className="row">
             <div className="col-sm-12">
               <div className="card mb-0">
@@ -219,43 +264,9 @@ const TravelRequestPannel = () => {
                 </div>
                 <div className="card-body">
                   <div className="table-responsive">
-                    {/* Search Filter */}
+                    
 
-                    <div className="row filter-row">
-                      <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-                        <div className="input-block form-focus select-focus">
-                          <div className="cal-icon">
-                            <label className="focus-label">From</label>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-                        <div className="input-block form-focus select-focus">
-                          <div className="cal-icon">
-                            <label className="focus-label">To</label>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-                        <Link
-                          to="#"
-                          className="btn btn-success btn-block w-100"
-                        >
-                          {" "}
-                          Search{" "}
-                        </Link>
-                      </div>
-                      <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-                        <Link
-                          to="#"
-                          onClick={() => downloadExlsFiles()}
-                          className="btn btn-warning btn-block w-100"
-                        >
-                          {" "}
-                          Export{" "}
-                        </Link>
-                      </div>
-                    </div>
+                  
 
                     <Table
                       className="table-striped"

@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React, { useEffect, useState,} from "react";
+import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import { URLS } from "../../Globals/URLS";
@@ -7,12 +7,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { createVendor } from "../../store/Action/Actions";
 
 const Vendors = () => {
-  const [url, setUrl] = useState(URLS.GET_VENDOR_URL);  
+  const [url, setUrl] = useState(URLS.GET_VENDOR_URL);
 
   const dispatch = useDispatch();
   const [isAddFormVisible, setIsAddFormVisible] = useState(false);
   const [submittedValues, setSubmittedValues] = useState(null);
- 
+
   const {
     register,
     handleSubmit,
@@ -29,26 +29,19 @@ const Vendors = () => {
 
   useEffect(() => {
     if (createVendorSelector && submittedValues) {
-      dispatch(createVendor(submittedValues)); 
+      dispatch(createVendor(submittedValues));
       setSubmittedValues(null);
       setIsAddFormVisible(false);
     }
   }, [createVendorSelector, submittedValues]);
- 
 
   return (
     <>
       <div className="page-wrapper">
-        <Helmet>
-          <title>Horizontal Form - HRMS Admin Template</title>
-          <meta name="description" content="Login page" />
-        </Helmet>
         <div className="content container-fluid">
-          {/* Page Header */}
           <div className="page-header">
             <div className="row"></div>
           </div>
-          {/* /Page Header */}
           <div className="row">
             <div className="col-xl-6 d-flex">
               <div className="card flex-fill">
