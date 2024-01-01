@@ -21,7 +21,6 @@ const Vendors = () => {
 
   const onSubmit = (values) => {
     dispatch(createVendor(values));
-    alert("Submitted Successfully");
   };
 
   const createVendorSelector = useSelector(

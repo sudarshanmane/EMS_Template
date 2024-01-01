@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 
 
+
 const Travels = () => {
   const [url, setUrl] = useState(URLS.CREATE_TRAVEL_URL);  
 
@@ -23,9 +24,8 @@ const Travels = () => {
 
   const onSubmit = (values) => {
     dispatch(createTravel(values));
-    alert("Submitted Successfully");
+   
   };
-
 
   const createTravelSelector = useSelector(
     (state) => state.createTravelSuccess

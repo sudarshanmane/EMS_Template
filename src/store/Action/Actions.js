@@ -76,40 +76,58 @@ function deleteCategorypanelAction(payload) {
     contentType: contentType.json,
   };
 }
-function addCompanyPolicy(payload) {
+
+// *********************
+function createCategoryItem(payload) {
   return {
-    type: API_CONSTANTS.ADD_COMPANY_POLICY,
+    type: API_CONSTANTS.CREATE_CATEGORY_ITEM,
     payload,
-    URL: URLS.ADD_COMPANY_POLICY_URL,
+    URL: URLS.CREATE_CATEGORY_ITEM_URL,
     contentType: contentType.json,
   };
 }
 
-function getCompanyPolicy(payload) {
+// *******************
+
+function addExpensePolicy(payload) {
   return {
-    type: API_CONSTANTS.GET_COMPANY_POLICY,
+    type: API_CONSTANTS.ADD_EXPENSE_POLICY,
+    payload,
+    URL: URLS.ADD_EXPENSE_POLICY_URL,
+    contentType: contentType.json,
+  };
+}
+
+function getExpensePolicy(payload) {
+  return {
+    type: API_CONSTANTS.GET_EXPENSE_POLICY,
     payload: payload.payload,
     URL: payload.URL,
     contentType: contentType.json,
   };
 }
 
-function updateCompanyPolicy(payload) {
+
+function updateExpensePolicy(payload) {
   return {
-    type: API_CONSTANTS.UPDATE_COMPANY_POLICY,
+    type: API_CONSTANTS.UPDATE_EXPENSE_POLICY,
     payload: payload.payload,
-    URL: URLS.UPDATE_COMPANY_POLICY_URL + payload.id + "/",
+    URL: URLS.UPDATE_EXPENSE_POLICY_URL + payload.id + "/",
     contentType: contentType.json,
   };
 }
 
-function deleteCompanyPolicy(payload) {
+function deleteExpensePolicy(payload) {
   return {
-    type: API_CONSTANTS.DELETE_COMPANY_POLICY,
-    URL: URLS.DELETE_COMPANY_POLICY_URL + payload.id + "/",
+    type: API_CONSTANTS.DELETE_EXPENSE_POLICY,
+    URL: URLS.DELETE_EXPENSE_POLICY_URL + payload.id + "/",
     contentType: contentType.json,
   };
 }
+
+
+
+
 
 function addMileage(payload) {
   return {
@@ -180,6 +198,16 @@ function approveCard(payload) {
   };
 }
 
+
+// function getExpensePolicy(payload) {
+//   return {
+//     type: API_CONSTANTS.GET_EXPENSE_POLICY,
+//     payload: payload.payload,
+//     URL: payload.URL,
+//     contentType: contentType.json,
+//   };
+// }
+
 function rejectCard(payload) {
   return {
     type: API_CONSTANTS.REJECT_CARD,
@@ -229,7 +257,7 @@ function updateVendor(payload) {
 
 function createTravel(payload) {
   return {
-    type: API_CONSTANTS.CREATE_VENDOR,
+    type: API_CONSTANTS.CREATE_TRAVEL,
     payload,
     URL: URLS.CREATE_TRAVEL_URL,
     contentType: contentType.json,
@@ -245,6 +273,25 @@ function getTravel(payload) {
     contentType: contentType.json,
   };
 }
+
+function deleteTravel(payload) {
+  return {
+    type: API_CONSTANTS.DELETE_TRAVEL,
+    URL: URLS.DELETE_TRAVEL_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+
+function updateTravel(payload) {
+  return {
+    type: API_CONSTANTS.UPDATE_TRAVEL,
+    payload: payload.payload,
+    URL: URLS.UPDATE_TRAVEL_URL+ payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
 
 // ================================================================================
 
@@ -1015,10 +1062,14 @@ export {
   getCategoryPanelAction,
   updateCategorypanle,
   deleteCategorypanelAction,
-  addCompanyPolicy,
-  getCompanyPolicy,
-  updateCompanyPolicy,
-  deleteCompanyPolicy,
+
+  createCategoryItem,
+  
+  addExpensePolicy,
+  getExpensePolicy,
+  updateExpensePolicy,
+  deleteExpensePolicy,
+
   addMileage,
   getMileage,
   fetchCategory,
@@ -1035,6 +1086,8 @@ export {
 
   createTravel,
   getTravel,
+  deleteTravel,
+  updateTravel,
 
   // ===========================================================
   userLogin,

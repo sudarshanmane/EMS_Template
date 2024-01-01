@@ -20,8 +20,12 @@ import {
   addCategoryAction,
   deleteCategorypanelAction,
   updateCategorypanle,
+  fetchCategory,
+  createCategoryItem,
 } from "../../store/Action/Actions";
 import { useForm } from "react-hook-form";
+const fetchurl = URLS.FETCH_CATEGORY_URL;
+
 
 const CategoryTypePanel = () => {
   const [url, setUrl] = useState(URLS.GET_CATEGORY_PANEL_URL);
@@ -38,12 +42,38 @@ const CategoryTypePanel = () => {
   const [deleteCategoryData, setDeleteCategoryData] = useState(null);
   const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] =
     useState(false);
+    const [submittedValues, setSubmittedValues] = useState(null);
+
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({});
+
+
+// ***********************
+
+const onSubmit_1 = (values) => {
+  dispatch(createCategoryItem(values));
+  alert("Submitted Successfully");
+};
+
+const createCategoryItemSelector = useSelector(
+  (state) => state.createCategoryItemSuccess
+);
+
+useEffect(() => {
+  if (createCategoryItemSelector && submittedValues) {
+    dispatch(createVendor(submittedValues)); 
+    setSubmittedValues(null);
+    setIsAddFormVisible(false);
+  }
+}, [createCategoryItemSelector, submittedValues]);
+
+
+// ************************
+
 
   const { handleSubmit: handleDelete } = useForm({});
 
@@ -93,7 +123,22 @@ const CategoryTypePanel = () => {
 
   useEffect(() => {
     if (categoryselector) {
-      const allCategoryType = categoryselector.map((element) => {
+      const allCategoryType = categoryselector?.map((element) => {
+        console.log(element?.sub_item, 'sdjkshdjshd');
+        let dataString = [];
+
+        if(element){
+          element?.sub_item?.map((data)=>{
+          console.log(data, 'skdjklsjdsjd')
+          dataString.push(data.item_name);
+          element.data1 = dataString;
+        })
+      } else {
+        element.data1 = [];
+      }
+
+      console.log(element, 'sjhdisdukhskdhskhds');
+
         return {
           id: element.id,
           category_name: element.category_name,
@@ -102,12 +147,15 @@ const CategoryTypePanel = () => {
           receipt_require_limit: element.receipt_require_limit,
           auto_approve_limit: element.auto_approve_limit,
           accounting_code: element.accounting_code,
+          sub_item:element?.data1 ? element?.data1 : [],
+          
         };
       });
+      console.log(allCategoryType, 'sjgdkshdkshudhsd');
       setAllCategoryType(allCategoryType);
     }
   }, [categoryselector]);
-
+  const categorySelector = useSelector((state) => state.fetchCategorySuccess);
   const addCategorylSelector = useSelector((state) => state.categoryresult);
 
   useEffect(() => {
@@ -164,6 +212,22 @@ const CategoryTypePanel = () => {
     setSelectedDate4(date);
   };
 
+  function fetchPageDetails(fetchurl) {
+    dispatch(fetchCategory({ payload: {}, URL: fetchurl }));
+  }
+
+  useEffect(() => {
+    fetchPageDetails(fetchurl);
+  }, []);
+
+  function fetchCategoryData(fetchurl) {
+    dispatch(fetchCategory({ payload: {}, URL: fetchurl }));
+  }
+
+  useEffect(() => {
+    fetchCategoryData(fetchurl);
+  }, []);
+
   useEffect(() => {
     if ($(".select").length > 0) {
       $(".select").select2({
@@ -200,7 +264,7 @@ const CategoryTypePanel = () => {
     },
 
     {
-      title: "Require Limit",
+      title: "Receipt Require Limit",
       dataIndex: "receipt_require_limit",
       render: (text) => <span>$ {text}</span>,
       sorter: (a, b) => a.paidby.length - b.paidby.length,
@@ -216,6 +280,26 @@ const CategoryTypePanel = () => {
       dataIndex: "accounting_code",
       sorter: (a, b) => a.amount.length - b.amount.length,
     },
+
+    {
+      title: "Items",
+      dataIndex: "sub_item",
+      render: (subItems) => {
+        console.log(subItems, 'subItems');
+        return(
+          subItems.map((item)=>{
+            return(
+              <div>
+                {item ? item : '-'}
+              </div>
+            )
+
+          })
+        )
+      },
+      sorter: (a, b) => a.amount.length - b.amount.length,      
+    },
+    
     {
       title: "Status",
       dataIndex: "status",
@@ -296,9 +380,14 @@ const CategoryTypePanel = () => {
             </Link>
           </div>
         </div>
+        
       ),
     },
+    
   ];
+
+  console.log(allCategoryType, 'sfhkshdkhsdhsd');
+
   return (
     <>
       <div className="page-wrapper">
@@ -315,6 +404,16 @@ const CategoryTypePanel = () => {
                 </ul>
               </div>
               <div className="col-auto float-end ms-auto">
+                
+
+                <Link
+                  to="#"
+                  className="btn add-btn"
+                  data-bs-toggle="modal"
+                  data-bs-target="#add_category_item"
+                >
+                  <i className="fa fa-plus" /> Add Category Item
+                </Link>
                 <Link
                   to="#"
                   className="btn add-btn"
@@ -323,6 +422,7 @@ const CategoryTypePanel = () => {
                 >
                   <i className="fa fa-plus" /> Add Category
                 </Link>
+
               </div>
             </div>
           </div>
@@ -496,6 +596,86 @@ const CategoryTypePanel = () => {
         </div>
         {/* /Add Expense Modal */}
         {/* Edit Expense Modal */}
+
+        {/* category item modal  */}
+        <div id="add_category_item" className="modal custom-modal fade" role="dialog">
+          <div
+            className="modal-dialog modal-dialog-centered modal-lg"
+            role="document"
+          >
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Add Expense Category Item</h5>
+                <button
+                  type="button"
+                  className="close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <form onSubmit={handleSubmit(onSubmit_1)}>
+                  <div className="row">
+                    <div className="col-md-6">
+                    <div className="input-block">
+                        <label className="col-form-label">
+                          Default Category
+                        </label>
+
+                        <select
+                          className="form-control"
+                          {...register("category")}
+                        >
+                          <option value="">Select </option>
+                          {categorySelector && categorySelector?.map((data) => {
+                            return (
+                              <option value={data.id}>
+                                {data.category_name}
+                              </option>
+                            );
+                          })}
+                        </select>
+                      </div>
+                      <div className="input-block">
+                        <label>Accounting Code</label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          {...register("acc_code")}
+                        />
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div className="input-block">
+                        <label>Category Item Name</label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          {...register("item_name")}
+                          
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  
+
+                  <div className="submit-section">
+                    <button
+                      className="btn btn-primary submit-btn"
+                      data-bs-dismiss="modal"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* modal end   */}
         <div
           id="edit_expense"
           className="modal custom-modal fade"

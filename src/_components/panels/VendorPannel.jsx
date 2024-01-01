@@ -4,13 +4,21 @@ import { Link } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
 import { URLS } from "../../Globals/URLS";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteVendor, getVendor, updateVendor } from "../../store/Action/Actions";
-import "react-datepicker/dist/react-datepicker.css";
+import { useForm } from "react-hook-form";
+
+
+
+import {
+  deleteVendor,
+  getVendor,
+  updateVendor,
+  createVendor,
+} from "../../store/Action/Actions";
 import {
   onShowSizeChange,
   itemRender,
 } from "../../MainPage/paginationfunction";
-import { useForm } from "react-hook-form";
+
 
 const VendorPannel = () => {
   const [url, setUrl] = useState(URLS.GET_VENDOR_URL);
@@ -23,11 +31,7 @@ const VendorPannel = () => {
   const [editVendorData, setEditVendorData] = useState(null);
   const [isAddFormVisible, setIsAddFormVisible] = useState(false);
   const [isEditFormVisible, setIsEditFormVisible] = useState(false);
-
-
-
-  const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] =
-    useState(false);
+  const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] = useState(false);
 
   const {
     register: updateregister,
@@ -35,11 +39,9 @@ const VendorPannel = () => {
     setValue,
   } = useForm({});
 
-  const { handleSubmit: handleDelete } = useForm({});
+  const DeleteVendor = (record) => {setDeleteVendorData(record);};
 
-  const handleEdit = (record) => {
-    console.log("Edit clicked for record:", record);
-  };
+  const { handleSubmit: handleDelete } = useForm({});
 
   const onEdit = (record) => {
     setIsEditFormVisible(true);
@@ -49,44 +51,42 @@ const VendorPannel = () => {
     setValue("mail_id", record.mail_id);
     setValue("website", record.website);
     setValue("fax", record.fax);
-    // setValue("vendor_bill", record.vendor_bill);
-    // setValue("amount", record.amount);
-    // setValue("paid_amount", record.paid_amount);
-    // setValue("due_amount", record.due_amount);
-    // setValue("paid", record.paid);
   };
 
   const onUpdate = (values) => {
     dispatch(updateVendor({ id: editVendorData.id, payload: values }));
     setIsEditFormVisible(false);
-    alert ("Updated successfully")
+ 
   };
+
+  const onDelete = () => {
+    const deletedVendorId = deleteVendorData.id;
+    dispatch(deleteVendor({ id: deletedVendorId }));
+    setIsDeleteConfirmationVisible(false);
+    setAllVendor((prevItems) =>
+      prevItems.filter((item) => item.id !== deletedVendorId)
+    );
+  };
+
 
   function getPageDetails(url) {
     dispatch(getVendor({ payload: {}, URL: url }));
   }
-
-  const handleDateChange1 = (date) => {
-    setSelectedDate1(date);
-  };
-  const handleDateChange2 = (date) => {
-    setSelectedDate2(date);
-  };
-
-  useEffect(() => {
-    getPageDetails(url);
-  }, []);
-
   function fetchPageDetials(url) {
     dispatch(getVendor({ payload: {}, URL: url }));
   }
 
   useEffect(() => {
+    getPageDetails(url);
+  }, []);
+
+  useEffect(() => {
     fetchPageDetials(url);
   }, []);
 
-  const getVendorSelector = useSelector((state) => state.getVendorSuccess);
 
+
+  const getVendorSelector = useSelector((state) => state.getVendorSuccess);
   useEffect(() => {
     if (getVendorSelector) {
       const allVendor = getVendorSelector.map((element) => {
@@ -103,8 +103,8 @@ const VendorPannel = () => {
     }
   }, [getVendorSelector]);
 
-  const updatevendorSelector = useSelector((state) => state.updateVendorResult);
 
+  const updatevendorSelector = useSelector((state) => state.updateVendorResult);
   useEffect(() => {
     if (updatevendorSelector) {
       dispatch(getVendor({ payload: {}, URL: url }));
@@ -112,28 +112,14 @@ const VendorPannel = () => {
     setIsAddFormVisible(false);
   }, [updatevendorSelector]);
 
-  const deleteVendorSelector = useSelector(
-    (state) => state.deleteVendorSuccess
-  );
+  
+  const deleteVendorSelector = useSelector((state) => state.deleteVendorSuccess);
   useEffect(() => {
     if (deleteVendorSelector) {
       dispatch(getVendor({ payload: {}, URL: url }));
     }
   }, [deleteVendorSelector]);
 
-  const DeleteVendor = (record) => {
-    setDeleteVendorData(record);
-  };
-
-  const onDelete = () => {
-    const deletedVendorId = deleteVendorData.id;
-    dispatch(deleteVendor({ id: deletedVendorId }));
-    setIsDeleteConfirmationVisible(false);
-    alert ("deleted successfully")
-    setAllVendor((prevItems) =>
-      prevItems.filter((item) => item.id !== deletedVendorId)
-    );
-  };
 
   const columns = [
     {
@@ -240,10 +226,8 @@ const VendorPannel = () => {
           <div className="row">
             <div className="col-lg-12">
               <div className="table-responsive">
-
                 <Table
                   className="table-striped"
-
                   pagination={{
                     total: allVendor.length,
                     showTotal: (total, range) =>
@@ -257,7 +241,6 @@ const VendorPannel = () => {
                   dataSource={allVendor}
                   rowKey={(record) => record.id}
                 />
-                
               </div>
             </div>
           </div>
@@ -284,7 +267,7 @@ const VendorPannel = () => {
               </div>
 
               <div className="modal-body">
-                <form onSubmit={handleUpdate(onUpdate)}>
+                <form onSubmit={handleUpdate(onUpdate)}>   
                   <div className="input-block row">
                     <label className="col-lg-3 col-form-label">
                       <h4> Company Name</h4>
@@ -348,7 +331,7 @@ const VendorPannel = () => {
 
                   <div className="text-end">
                     <button type="submit" className="btn btn-primary">
-                     Update
+                      Update
                     </button>
                   </div>
                 </form>

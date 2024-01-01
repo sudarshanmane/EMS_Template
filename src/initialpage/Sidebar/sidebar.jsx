@@ -307,14 +307,15 @@ const Sidebar = () => {
                     <li>
                       <Link
                         className={
-                          pathname.includes("companyPolicies-") ? "active" : ""
+                          pathname.includes("expensePolicies-") ? "active" : ""
                         }
-                        to="/home/companyPolicies"
+                        to="/home/ExpensePolicies"
                       >
                         {" "}
-                        Company Policies{" "}
+                        Expense Policies{" "}
                       </Link>
                     </li>
+
                     <li>
                       <Link
                         className={

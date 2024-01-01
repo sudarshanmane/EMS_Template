@@ -1,49 +1,56 @@
 import React, { useEffect, useState } from "react";
-import { Table, Input, Button, Space } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
+import { Table } from "antd";
 import { Link } from "react-router-dom";
+import "react-datepicker/dist/react-datepicker.css";
+import { URLS } from "../../Globals/URLS";
+import { useDispatch, useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
 
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import {
+  getTravel,
+  deleteTravel,
+  updateTravel,
+} from "../../store/Action/Actions";
+
 import {
   onShowSizeChange,
   itemRender,
 } from "../../MainPage/paginationfunction";
-import Offcanvas from "../../Entryfile/offcanvance";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { getTravel } from "../../store/Action/Actions";
-import { useDispatch, useSelector } from "react-redux";
-import { URLS } from "../../Globals/URLS";
-
 
 const TravelRequestPannel = () => {
+  const [url, setUrl] = useState(URLS.GET_TRAVEL_URL);
   const dispatch = useDispatch();
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const [allAccountingGroupCode, setAllAccountingGroupCode] = useState([]);
-  const [nameFilter, setNameFilter] = useState("");
-  const [url, setUrl]= useState(URLS.GET_TRAVEL_URL);
-  const [focused, setFocused] = useState(false);
-  const [selectedDate1, setSelectedDate1] = useState(null);
-  const [selectedDate2, setSelectedDate2] = useState(null);
   const [allTravel, setAllTravel] = useState([]);
+  const [deleteTravelData, setDeleteTravelData] = useState(null);
+  const [editTravelData, setEditTravelData] = useState(null);
+  const [isAddFormVisible, setIsAddFormVisible] = useState(false);
+  const [isEditFormVisible, setIsEditFormVisible] = useState(false);
+  const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] =
+    useState(false);
 
+  const {
+    register: updateregister,
+    handleSubmit: handleUpdate,
+    setValue,
+  } = useForm({});
 
-  const handleDateChange1 = (date) => {
-    setSelectedDate1(date);
+  const { handleSubmit: handleDelete } = useForm({});
+
+  const onEdit = (record) => {
+    setIsEditFormVisible(true);
+    setEditTravelData(record);
+    setValue("title", record.title);
+    setValue("travel_purpose", record.travel_purpose);
+    setValue("from_date", record.from_date);
+    setValue("to_date", record.to_date);
+    setValue("estimated_budget", record.estimated_budget);
   };
-  const handleDateChange2 = (date) => {
-    setSelectedDate2(date);
+
+  const onUpdate = (values) => {
+    dispatch(updateTravel({ id: editTravelData.id, payload: values }));
+    setIsEditFormVisible(false);
+   
   };
-
-  const handleEdit = (record) => {
-    console.log("Edit clicked for record:", record);
-  };
-
-  const handleDelete = (record) => {
-    console.log("Delete clicked for record:", record);
-  };
-
-
   function getPageDetails(url) {
     dispatch(getTravel({ payload: {}, URL: url }));
   }
@@ -61,12 +68,11 @@ const TravelRequestPannel = () => {
   }, []);
 
   const getTravelSelector = useSelector((state) => state.getTravelSuccess);
-
   useEffect(() => {
     if (getTravelSelector) {
       const allTravel = getTravelSelector.map((element) => {
         return {
-          // id: element.id,
+          id: element.id,
           title: element.title,
           travel_purpose: element.travel_purpose,
           from_date: element.from_date,
@@ -77,6 +83,37 @@ const TravelRequestPannel = () => {
       setAllTravel(allTravel);
     }
   }, [getTravelSelector]);
+
+  const deleteTravelSelector = useSelector(
+    (state) => state.deleteTravelSuccess
+  );
+  useEffect(() => {
+    if (deleteTravelSelector) {
+      dispatch(getTravel({ payload: {}, URL: url }));
+    } setIsAddFormVisible(false);
+  }, [deleteTravelSelector]);
+
+  const DeleteTravel = (record) => {
+    setDeleteTravelData(record);
+  };
+
+  const onDelete = () => {
+    const deletedTravelId = deleteTravelData.id;
+    dispatch(deleteTravel({ id: deletedTravelId }));
+    setIsDeleteConfirmationVisible(false);
+    alert("deleted successfully");
+    setAllTravel((prevItems) =>
+      prevItems.filter((item) => item.id !== deletedTravelId)
+    );
+  };
+
+  const updatetravelSelector = useSelector((state) => state.updateTravelResult);
+  useEffect(() => {
+    if (updatetravelSelector) {
+      dispatch(getTravel({ payload: {}, URL: url }));
+    }
+    setIsAddFormVisible(false);
+  }, [updatetravelSelector]);
 
   const columns = [
     {
@@ -109,39 +146,49 @@ const TravelRequestPannel = () => {
       dataIndex: "estimated_budget",
       key: "",
     },
-    
-   
+
     {
-      title: "Actions",
-      key: "actions",
-      render: (text, record) => (
-        <Space size="small">
-          <Button
-            type="primary"
-            icon={<EditOutlined />}
-            onClick={() => handleEdit(record)}
-          />
-          <Button
-            type="default"
-            icon={<DeleteOutlined />}
-            onClick={() => handleDelete(record)}
-          />
-        </Space>
+      title: "Action",
+      render: (record) => (
+        <div className="dropdown dropdown-action text-end">
+          <Link
+            to="#"
+            className="action-icon dropdown-toggle"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i className="material-icons">more_vert</i>
+          </Link>
+          <div className="dropdown-menu dropdown-menu-right">
+            <Link
+              className="dropdown-item"
+              to="#"
+              data-bs-toggle="modal"
+              data-bs-target="#edit_travel"
+              onClick={() => onEdit(record)}
+            >
+              <i className="fa fa-pencil m-r-5" /> Edit
+            </Link>
+
+            <Link
+              className="dropdown-item"
+              to="#"
+              data-bs-toggle="modal"
+              data-bs-target="#delete_travel"
+              onClick={() => {
+                DeleteTravel(record);
+              }}
+            >
+              <i className="fa fa-trash m-r-5" /> Delete
+            </Link>
+          </div>
+        </div>
       ),
     },
   ];
 
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: (selectedKeys) => {
-      setSelectedRowKeys(selectedKeys);
-    },
-    checkStrictly: true,
-  };
-
   return (
     <>
-      <Offcanvas />
       <div className="page-wrapper">
         <div className="content container-fluid">
           <div className="page-header">
@@ -151,16 +198,13 @@ const TravelRequestPannel = () => {
                   <li className="breadcrumb-item">
                     <Link to="/app/main/dashboard">Dashboard</Link>
                   </li>
-                  <li className="breadcrumb-item active">
-                   Trvel Request
-                  </li>
-
+                  <li className="breadcrumb-item active">Travel Request</li>
                 </ul>
                 <div className="col-auto float-end ms-auto">
                   <Link to="/home/Travels">
                     <button type="button" className="btn add-btn">
                       <i className="fa fa-plus" />
-                     Add Travels
+                      Add Travels
                     </button>
                   </Link>
                 </div>
@@ -176,34 +220,11 @@ const TravelRequestPannel = () => {
                 <div className="card-body">
                   <div className="table-responsive">
                     {/* Search Filter */}
+
                     <div className="row filter-row">
-                      <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-                        <div
-                          className={
-                            focused
-                              ? "input-block form-focus focused"
-                              : "input-block form-focus"
-                          }
-                        >
-                          <input
-                            type="text"
-                            className="form-control floating"
-                            onFocus={() => setFocused(true)}
-                            onBlur={() => setFocused(false)}
-                          />
-                          <label className="focus-label">Search</label>
-                        </div>
-                      </div>
                       <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
                         <div className="input-block form-focus select-focus">
                           <div className="cal-icon">
-                            <DatePicker
-                              selected={selectedDate1}
-                              onChange={handleDateChange1}
-                              className="form-control floating"
-                              type="date"
-                              placeholderText="2023-07-14"
-                            />
                             <label className="focus-label">From</label>
                           </div>
                         </div>
@@ -211,13 +232,6 @@ const TravelRequestPannel = () => {
                       <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
                         <div className="input-block form-focus select-focus">
                           <div className="cal-icon">
-                            <DatePicker
-                              selected={selectedDate2}
-                              onChange={handleDateChange2}
-                              className="form-control floating"
-                              type="date"
-                              placeholderText="2023-07-14"
-                            />
                             <label className="focus-label">To</label>
                           </div>
                         </div>
@@ -226,9 +240,6 @@ const TravelRequestPannel = () => {
                         <Link
                           to="#"
                           className="btn btn-success btn-block w-100"
-                          // value={searchTerm}
-                          // onChange={(e) => handleSearch(e.target.value)}
-                          // ref={inputSearchRef}
                         >
                           {" "}
                           Search{" "}
@@ -246,14 +257,9 @@ const TravelRequestPannel = () => {
                       </div>
                     </div>
 
-
-                    {/* Search Filter */}
                     <Table
-                      dataSource={allTravel}
-                      columns={columns}
-                      rowSelection={rowSelection}
+                      className="table-striped"
                       pagination={{
-                        // total: allExpense.length,
                         total: allTravel.length,
                         showTotal: (total, range) =>
                           `Showing ${range[0]} to ${range[1]} of ${total} entries`,
@@ -262,34 +268,159 @@ const TravelRequestPannel = () => {
                         itemRender: itemRender,
                       }}
                       style={{ overflowX: "auto" }}
-                      bordered
+                      columns={columns}
+                      dataSource={allTravel}
                       rowKey={(record) => record.id}
                     />
-                    {/* <Col lg={6} xs={24} className="action-col">
-        <Select
-          size="large"
-          defaultValue="Actions"
-          style={{ width: "100% " }}
-          onChange={(value) => setAction(value)}
-          options={AccountCodeOperations}
-        />
-      </Col> */}
-                    {/* <Row>
-        <Col lg={24} xs={24} style={{ display: "flex", justifyContent: "end" }}>
-          <Button
-            size="large"
-            htmlType="submit"
-            type="primary"
-            style={{
-              textAlign: "end",
-              marginTop: "15px",
-            }}
-            onClick={selectedAction}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Edit Expense Modal */}
+
+        <div id="edit_travel" className="modal custom-modal fade" role="dialog">
+          <div
+            className="modal-dialog modal-dialog-centered modal-lg"
+            role="document"
           >
-            Submit
-          </Button>
-        </Col>
-      </Row> */}
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Update Travel</h5>
+                <button
+                  type="button"
+                  className="close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+
+              <div className="modal-body">
+                <form onSubmit={handleUpdate(onUpdate)}>
+                  <div className="input-block row">
+                    <label className="col-lg-3 col-form-label">
+                      <h4> Employee Name</h4>
+                    </label>
+                    <div className="col-lg-9">
+                      <input
+                        type="text"
+                        className="form-control"
+                        {...updateregister(" ")}
+                      />
+                    </div>
+                  </div>
+                  <div className="input-block row">
+                    <label className="col-lg-3 col-form-label">
+                      <h4>Title</h4>
+                    </label>
+                    <div className="col-lg-9">
+                      <input
+                        type="text"
+                        className="form-control"
+                        {...updateregister("title")}
+                      />
+                    </div>
+                  </div>
+                  <div className="input-block row">
+                    <label className="col-lg-3 col-form-label">
+                      <h4>Travel Purpose</h4>
+                    </label>
+                    <div className="col-lg-9">
+                      <input
+                        type="text"
+                        className="form-control"
+                        {...updateregister("travel_purpose")}
+                      />
+                    </div>
+                  </div>
+                  <div className="input-block row">
+                    <label className="col-lg-3 col-form-label">
+                      <h4>From Date</h4>
+                    </label>
+                    <div className="col-lg-9">
+                      <input
+                        type="date"
+                        className="form-control"
+                        {...updateregister("from_date")}
+                      />
+                    </div>
+                  </div>
+                  <div className="input-block row">
+                    <label className="col-lg-3 col-form-label">
+                      <h4>To Date</h4>
+                    </label>
+                    <div className="col-lg-9">
+                      <input
+                        type="date"
+                        className="form-control"
+                        {...updateregister("to_date")}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="input-block row">
+                    <label className="col-lg-3 col-form-label">
+                      <h4>Estimated Budget</h4>
+                    </label>
+                    <div className="col-lg-9">
+                      <input
+                        type="number"
+                        className="form-control"
+                        {...updateregister("estimated_budget")}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="text-end">
+                    <button type="submit" className="btn btn-primary">
+                      Update
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Delete Category Modal */}
+
+        <div
+          className="modal custom-modal fade"
+          id="delete_travel"
+          role="dialog"
+        >
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-body">
+                <div className="form-header">
+                  <h3>Delete Travel</h3>
+                  <p>Are you sure want to delete?</p>
+                </div>
+                <div className="modal-btn delete-action">
+                  <div className="row">
+                    <div className="col-6">
+                      <Link
+                        to=""
+                        className="btn btn-primary continue-btn"
+                        onClick={handleDelete(onDelete)}
+                        data-bs-dismiss="modal"
+                      >
+                        Delete
+                      </Link>
+                    </div>
+                    <div className="col-6">
+                      <Link
+                        to=""
+                        data-bs-dismiss="modal"
+                        className="btn btn-primary cancel-btn"
+                      >
+                        Cancel
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>

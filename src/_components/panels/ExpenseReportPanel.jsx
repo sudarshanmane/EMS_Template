@@ -517,7 +517,7 @@ const ExpenseReport = () => {
                 </button>
               </div>
               <div className="modal-body">
-                <form onSubmit={handleUpdate(onUpdate)}>
+                <form onSubmit={handleUpdate(onUpdate)}>  
                   <div className="input-block">
                     <div className="col-md-12">
                       <div className="input-block">
