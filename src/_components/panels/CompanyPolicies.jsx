@@ -17,8 +17,8 @@ import { useForm } from "react-hook-form";
 import "react-datepicker/dist/react-datepicker.css";
 
 const CompanyPolicies = () => {
-    const [url, setUrl] = useState(URLS.GET_COMPANY_POLICY_URL);
-
+  // const [url, setUrl] = useState(URLS.GET_COMPANY_POLICY_URL);
+  const url = URLS.GET_COMPANY_POLICY_URL;
   const dispatch = useDispatch();
   const [allCompanyPolicies, setAllCompanyPolicies] = useState([]);
   const [focused, setFocused] = useState(false);
@@ -28,7 +28,6 @@ const CompanyPolicies = () => {
   const [deleteCompanyData, setDeleteCompanyData] = useState(null);
   const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] =
     useState(false);
-
 
   const {
     register,
@@ -82,16 +81,18 @@ const CompanyPolicies = () => {
     if (companyselector) {
       const allCompanyPolicies = companyselector.map((element) => {
         return {
-                 id: element.id,
-                 expense_amt_limit: element.expense_amt_limit,
-                 receipt_require_lmt: element.receipt_require_lmt,
+          id: element.id,
+          expense_amt_limit: element.expense_amt_limit,
+          receipt_require_lmt: element.receipt_require_lmt,
         };
       });
       setAllCompanyPolicies(allCompanyPolicies);
     }
   }, [companyselector]);
 
-  const addCompanySelector = useSelector((state) => state.addCompanyPolicyresult);
+  const addCompanySelector = useSelector(
+    (state) => state.addCompanyPolicyresult
+  );
 
   useEffect(() => {
     if (addCompanySelector) {
@@ -218,32 +219,32 @@ const CompanyPolicies = () => {
           {/* /Page Header */}
           <div className="row">
             <div className="col-lg-12">
-            <div className="card mb-0">
+              <div className="card mb-0">
                 <div className="card-header">
                   <h4 className="card-title mb-0">Company Policies</h4>
                 </div>
                 <div className="card-body">
-              <div className="table-responsive">
-                <Table
-                  className="table-striped"
-                  pagination={{
-                    total: allCompanyPolicies.length,
-                    showTotal: (total, range) =>
-                      `Showing ${range[0]} to ${range[1]} of ${total} entries`,
-                    showSizeChanger: true,
-                    onShowSizeChange: onShowSizeChange,
-                    itemRender: itemRender,
-                  }}
-                  style={{ overflowX: "auto" }}
-                  columns={columns}
-                  dataSource={allCompanyPolicies}
-                  rowKey={(record) => record.id}
-                />
+                  <div className="table-responsive">
+                    <Table
+                      className="table-striped"
+                      pagination={{
+                        total: allCompanyPolicies.length,
+                        showTotal: (total, range) =>
+                          `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+                        showSizeChanger: true,
+                        onShowSizeChange: onShowSizeChange,
+                        itemRender: itemRender,
+                      }}
+                      style={{ overflowX: "auto" }}
+                      columns={columns}
+                      dataSource={allCompanyPolicies}
+                      rowKey={(record) => record.id}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        </div>
         </div>
         {/* Add Expense Modal */}
         <div id="add_company" className="modal custom-modal fade" role="dialog">
@@ -264,102 +265,108 @@ const CompanyPolicies = () => {
                 </button>
               </div>
               <div className="modal-body">
-              <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="input-block">
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <div className="input-block">
+                    <label>
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value="True"
+                        // {...register("override_general_policy")}
+                      />{" "}
+                      Expense Amount Limit
+                    </label>
+
+                    <div className="col-md-12">
+                      <div className="input-group">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text">$USD</span>
+                        </div>
+                        <input
+                          className="form-control"
+                          type="number"
+                          {...register("expense_amt_limit")}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+
+                  <div className="input-block">
+                    <label>
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value="True"
+                        // {...register("override_general_policy")}
+                      />{" "}
+                      Receipt Required limit
+                    </label>
+
+                    <div className="col-md-12">
+                      <div className="input-group">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text">$USD</span>
+                        </div>
+                        <input
+                          className="form-control"
+                          type="number"
+                          {...register("receipt_require_lmt")}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+
+                  <div className="col-lg-10">
+                    <div className="checkbox">
                       <label>
                         <input
                           class="form-check-input"
                           type="checkbox"
                           value="True"
-                          // {...register("override_general_policy")}
+                          {...register("make_description_mandotary")}
                         />{" "}
-                        Expense Amount Limit 
+                        Make Description Mandatory
                       </label>
-                     
-                      <div className="col-md-12">
-                        <div className="input-group">
-                          <div className="input-group-prepend">
-                            <span className="input-group-text">$USD</span>
-                          </div>
-                          <input className="form-control" type="number" 
-                           {...register("expense_amt_limit")}
-                           />
-                        </div>
-                      </div>
                     </div>
-
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-
-                    <div className="input-block">
+                  </div>
+                  <br></br>
+                  <br></br>
+                  <div className="col-md-10">
+                    <div className="checkbox">
                       <label>
                         <input
                           class="form-check-input"
                           type="checkbox"
                           value="True"
-                          // {...register("override_general_policy")}
+                          {...register(
+                            "allow_uncategorized_expe_to_be_part_of_expense_report"
+                          )}
                         />{" "}
-                        Receipt Required limit
+                        Allow Uncategorized Expenses To Be The Part Of Expense
+                        Report
                       </label>
-                    
-                      <div className="col-md-12">
-                        <div className="input-group">
-                          <div className="input-group-prepend">
-                            <span className="input-group-text">$USD</span>
-                          </div>
-                          <input className="form-control" type="number"
-                           {...register("receipt_require_lmt")}
-                            />
-                        </div>
-                      </div>
                     </div>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                   
-                    <div className="col-lg-10">
-                      <div className="checkbox">
-                        <label>
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            value="True"
-                            {...register("make_description_mandotary")}
-                          />{" "}
-                          Make Description Mandatory
-                        </label>
-                      </div>
-                    </div>
-                    <br></br>
-                    <br></br>
-                    <div className="col-md-10">
-                      <div className="checkbox">
-                        <label>
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            value="True"
-                            {...register("allow_uncategorized_expe_to_be_part_of_expense_report")}
-                          />{" "}
-                          Allow Uncategorized Expenses To Be The Part Of Expense
-                          Report
-                        </label>
-                      </div>
-                    </div>
+                  </div>
 
-                    <div className="submit-section">
-                      <button
-                        className="btn btn-primary submit-btn"
-                        data-bs-dismiss="modal"
-                      >
-                        Save
-                      </button>
-                    </div>
-                  </form>
+                  <div className="submit-section">
+                    <button
+                      className="btn btn-primary submit-btn"
+                      data-bs-dismiss="modal"
+                    >
+                      Save
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
@@ -388,100 +395,105 @@ const CompanyPolicies = () => {
                 </button>
               </div>
               <div className="modal-body">
-              <form onSubmit={handleUpdate(onUpdate)}>
-                    <div className="input-block">
+                <form onSubmit={handleUpdate(onUpdate)}>
+                  <div className="input-block">
+                    <label>
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value="True"
+                        // {...updateregister("override_general_policy")}
+                      />{" "}
+                      Expense Amount Limit Receipt Required limit
+                    </label>
+                    <div className="col-md-12">
+                      <div className="input-group">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text">$USD</span>
+                        </div>
+                        <input
+                          className="form-control"
+                          type="number"
+                          {...updateregister("expense_amt_limit")}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+
+                  <div className="input-block">
+                    <label>
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        value="True"
+                        // {...updateregister("override_general_policy")}
+                      />{" "}
+                      Receipt Required limit
+                    </label>
+                    <div className="col-md-12">
+                      <div className="input-group">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text">$USD</span>
+                        </div>
+                        <input
+                          className="form-control"
+                          type="number"
+                          {...updateregister("receipt_require_lmt")}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  <div className="col-md-10">
+                    <div className="checkbox">
                       <label>
                         <input
                           class="form-check-input"
                           type="checkbox"
                           value="True"
-                          // {...updateregister("override_general_policy")}
+                          {...updateregister("make_description_mandotary")}
                         />{" "}
-                        Expense Amount Limit Receipt Required limit
+                        Make Description Mandatory
                       </label>
-                      <div className="col-md-12">
-                        <div className="input-group">
-                          <div className="input-group-prepend">
-                            <span className="input-group-text">$USD</span>
-                          </div>
-                          <input className="form-control" type="number" 
-                           {...updateregister("expense_amt_limit")}
-                           />
-                        </div>
-                      </div>
                     </div>
-
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-
-
-                    <div className="input-block">
+                  </div>
+                  <br></br>
+                  <br></br>
+                  <div className="col-md-10">
+                    <div className="checkbox">
                       <label>
                         <input
                           class="form-check-input"
                           type="checkbox"
                           value="True"
-                          // {...updateregister("override_general_policy")}
+                          {...updateregister(
+                            "allow_uncategorized_expe_to_be_part_of_expense_report"
+                          )}
                         />{" "}
-                        Receipt Required limit
+                        Allow Uncategorized Expenses To Be The Part Of Expense
+                        Report
                       </label>
-                      <div className="col-md-12">
-                        <div className="input-group">
-                          <div className="input-group-prepend">
-                            <span className="input-group-text">$USD</span>
-                          </div>
-                          <input className="form-control" type="number"
-                           {...updateregister("receipt_require_lmt")}
-                            />
-                        </div>
-                      </div>
                     </div>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    <div className="col-md-10">
-                      <div className="checkbox">
-                        <label>
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            value="True"
-                            {...updateregister("make_description_mandotary")}
-                          />{" "}
-                          Make Description Mandatory
-                        </label>
-                      </div>
-                    </div>
-                    <br></br>
-                    <br></br>
-                    <div className="col-md-10">
-                      <div className="checkbox">
-                        <label>
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            value="True"
-                            {...updateregister("allow_uncategorized_expe_to_be_part_of_expense_report")}
-                          />{" "}
-                          Allow Uncategorized Expenses To Be The Part Of Expense
-                          Report
-                        </label>
-                      </div>
-                    </div>
+                  </div>
 
-                    <div className="submit-section">
-                      <button
-                        className="btn btn-primary submit-btn"
-                        data-bs-dismiss="modal"
-                      >
-                        Update
-                      </button>
-                    </div>
-                  </form>
+                  <div className="submit-section">
+                    <button
+                      className="btn btn-primary submit-btn"
+                      data-bs-dismiss="modal"
+                    >
+                      Update
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
