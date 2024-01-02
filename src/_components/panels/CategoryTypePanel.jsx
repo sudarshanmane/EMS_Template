@@ -7,7 +7,6 @@ import { Table } from "antd";
 import "antd/dist/antd.min.css";
 import {
   itemRender,
-  onShowSizeChange,
 } from "../../MainPage/paginationfunction";
 import "antd/dist/antd.min.css";
 import Offcanvas from "../../Entryfile/offcanvance";
@@ -22,16 +21,13 @@ import {
   createCategoryItem,
 } from "../../store/Action/Actions";
 import { useForm } from "react-hook-form";
-const fetchurl = URLS.FETCH_CATEGORY_URL;
-
 
 const CategoryTypePanel = () => {
+  const fetchurl = URLS.FETCH_CATEGORY_URL;
   const [url, setUrl] = useState(URLS.GET_CATEGORY_PANEL_URL);
   const dispatch = useDispatch();
   const [allCategoryType, setAllCategoryType] = useState([]);
   const [focused, setFocused] = useState(false);
-  const [selectedDate1, setSelectedDate1] = useState(null);
-  const [selectedDate2, setSelectedDate2] = useState(null);
   const [allCategoryList, setAllCategoryList] = useState([]);
   const [isAddFormVisible, setIsAddFormVisible] = useState(false);
   const [isEditFormVisible, setIsEditFormVisible] = useState(false);
@@ -44,8 +40,7 @@ const CategoryTypePanel = () => {
     pageSize: 10, // Set your default page size
     current: 1,
   });
-    const [submittedValues, setSubmittedValues] = useState(null);
-
+  const [submittedValues, setSubmittedValues] = useState(null);
 
   const {
     register,
@@ -53,29 +48,10 @@ const CategoryTypePanel = () => {
     formState: { errors },
   } = useForm({});
 
-
-// ***********************
-
-const onSubmit_1 = (values) => {
-  dispatch(createCategoryItem(values));
-  alert("Submitted Successfully");
-};
-
-const createCategoryItemSelector = useSelector(
-  (state) => state.createCategoryItemSuccess
-);
-
-useEffect(() => {
-  if (createCategoryItemSelector && submittedValues) {
-    dispatch(createVendor(submittedValues)); 
-    setSubmittedValues(null);
-    setIsAddFormVisible(false);
-  }
-}, [createCategoryItemSelector, submittedValues]);
-
-
-// ************************
-
+  const {
+    register: createregister,
+    handleSubmit: handleCreate,
+  } = useForm({});
 
   const { handleSubmit: handleDelete } = useForm({});
 
@@ -84,6 +60,12 @@ useEffect(() => {
     handleSubmit: handleUpdate,
     setValue,
   } = useForm({});
+
+  const onCreate = async (values) => {
+    await dispatch(createCategoryItem(values));
+    dispatch(getCategoryPanelAction({ payload: {}, URL: url }));
+    setIsAddFormVisible(false);
+  };
 
   const onSubmit = (values) => {
     dispatch(addCategoryAction(values));
@@ -126,20 +108,16 @@ useEffect(() => {
   useEffect(() => {
     if (categoryselector) {
       const allCategoryType = categoryselector?.map((element) => {
-        console.log(element?.sub_item, 'sdjkshdjshd');
         let dataString = [];
 
-        if(element){
-          element?.sub_item?.map((data)=>{
-          console.log(data, 'skdjklsjdsjd')
-          dataString.push(data.item_name);
-          element.data1 = dataString;
-        })
-      } else {
-        element.data1 = [];
-      }
-
-      console.log(element, 'sjhdisdukhskdhskhds');
+        if (element) {
+          element?.sub_item?.map((data) => {
+            dataString.push(data.item_name);
+            element.data1 = dataString;
+          });
+        } else {
+          element.data1 = [];
+        }
 
         return {
           id: element.id,
@@ -149,15 +127,27 @@ useEffect(() => {
           receipt_require_limit: element.receipt_require_limit,
           auto_approve_limit: element.auto_approve_limit,
           accounting_code: element.accounting_code,
-          sub_item:element?.data1 ? element?.data1 : [],
-          
+          sub_item: element?.data1 ? element?.data1 : [],
         };
       });
-      console.log(allCategoryType, 'sjgdkshdkshudhsd');
       setAllCategoryType(allCategoryType);
     }
   }, [categoryselector]);
+
   const categorySelector = useSelector((state) => state.fetchCategorySuccess);
+
+  const createCategoryItemSelector = useSelector(
+    (state) => state.createCategoryItemSuccess
+  );
+
+  useEffect(() => {
+    if (createCategoryItemSelector && submittedValues) {
+      dispatch(createVendor(submittedValues));
+      setSubmittedValues(null);
+      setIsAddFormVisible(false);
+    }
+  }, [createCategoryItemSelector, submittedValues]);
+  
   const addCategorylSelector = useSelector((state) => state.categoryresult);
 
   useEffect(() => {
@@ -201,19 +191,6 @@ useEffect(() => {
     );
   };
 
-  const handleDateChange1 = (date) => {
-    setSelectedDate1(date);
-  };
-  const handleDateChange2 = (date) => {
-    setSelectedDate2(date);
-  };
-  const handleDateChange3 = (date) => {
-    setSelectedDate3(date);
-  };
-  const handleDateChange4 = (date) => {
-    setSelectedDate4(date);
-  };
-
   function fetchPageDetails(fetchurl) {
     dispatch(fetchCategory({ payload: {}, URL: fetchurl }));
   }
@@ -240,15 +217,13 @@ useEffect(() => {
   });
 
   const columns = [
-   {
+    {
       title: "Sr No",
       dataIndex: "id",
       render: (text, record, index) => {
         const { pageSize, current } = tablePagination;
         return index + 1 + pageSize * (current - 1);
       },
-      sorter: (a, b) => a.id.length - b.id.length,
-      width: "10%",
     },
     {
       title: "Category Name",
@@ -284,21 +259,14 @@ useEffect(() => {
       title: "Items",
       dataIndex: "sub_item",
       render: (subItems) => {
-        console.log(subItems, 'subItems');
-        return(
-          subItems.map((item)=>{
-            return(
-              <div>
-                {item ? item : '-'}
-              </div>
-            )
-
-          })
-        )
+        console.log(subItems, "subItems");
+        return subItems.map((item) => {
+          return <div>{item ? item : "-"}</div>;
+        });
       },
-      sorter: (a, b) => a.amount.length - b.amount.length,      
+      sorter: (a, b) => a.amount.length - b.amount.length,
     },
-    
+
     {
       title: "Status",
       dataIndex: "status",
@@ -381,13 +349,9 @@ useEffect(() => {
             </Link>
           </div>
         </div>
-        
       ),
     },
-    
   ];
-
-  console.log(allCategoryType, 'sfhkshdkhsdhsd');
 
   return (
     <>
@@ -405,8 +369,6 @@ useEffect(() => {
                 </ul>
               </div>
               <div className="col-auto float-end ms-auto">
-                
-
                 <Link
                   to="#"
                   className="btn add-btn"
@@ -423,7 +385,6 @@ useEffect(() => {
                 >
                   <i className="fa fa-plus" /> Add Category
                 </Link>
-
               </div>
             </div>
           </div>
@@ -603,10 +564,13 @@ useEffect(() => {
           </div>
         </div>
         {/* /Add Expense Modal */}
-        {/* Edit Expense Modal */}
-
+      
         {/* category item modal  */}
-        <div id="add_category_item" className="modal custom-modal fade" role="dialog">
+        <div
+          id="add_category_item"
+          className="modal custom-modal fade"
+          role="dialog"
+        >
           <div
             className="modal-dialog modal-dialog-centered modal-lg"
             role="document"
@@ -624,26 +588,27 @@ useEffect(() => {
                 </button>
               </div>
               <div className="modal-body">
-                <form onSubmit={handleSubmit(onSubmit_1)}>
+                <form onSubmit={handleCreate(onCreate)}>
                   <div className="row">
                     <div className="col-md-6">
-                    <div className="input-block">
+                      <div className="input-block">
                         <label className="col-form-label">
                           Default Category
                         </label>
 
                         <select
                           className="form-control"
-                          {...register("category")}
+                          {...createregister("category")}
                         >
                           <option value="">Select </option>
-                          {categorySelector && categorySelector?.map((data) => {
-                            return (
-                              <option value={data.id}>
-                                {data.category_name}
-                              </option>
-                            );
-                          })}
+                          {categorySelector &&
+                            categorySelector?.map((data) => {
+                              return (
+                                <option value={data.id}>
+                                  {data.category_name}
+                                </option>
+                              );
+                            })}
                         </select>
                       </div>
                       <div className="input-block">
@@ -651,7 +616,7 @@ useEffect(() => {
                         <input
                           className="form-control"
                           type="text"
-                          {...register("acc_code")}
+                          {...createregister("acc_code")}
                         />
                       </div>
                     </div>
@@ -661,14 +626,11 @@ useEffect(() => {
                         <input
                           className="form-control"
                           type="text"
-                          {...register("item_name")}
-                          
+                          {...createregister("item_name")}
                         />
                       </div>
                     </div>
                   </div>
-
-                  
 
                   <div className="submit-section">
                     <button

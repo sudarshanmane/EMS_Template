@@ -158,11 +158,6 @@ const ExpenseReport = () => {
   };
 
   const columns = [
-    // {
-    //   title: "Sr No",
-    //   dataIndex: "id",
-    //   key: "id",
-    // },
     {
       title: "Report No",
       dataIndex: "report_number",

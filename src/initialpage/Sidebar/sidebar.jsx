@@ -97,7 +97,7 @@ const Sidebar = () => {
                         }
                         to="/home/role-add"
                       >
-                        Add Role
+                       Role
                       </Link>
                     </li>
                     <li>
@@ -105,9 +105,9 @@ const Sidebar = () => {
                         className={
                           pathname.includes("userpanel") ? "active" : ""
                         }
-                        to="/home/userpanel"
+                        to="/home/rolespermission"
                       >
-                        Add User
+                        Permissions
                       </Link>
                     </li>
                   </ul>
@@ -312,7 +312,7 @@ const Sidebar = () => {
                         to="/home/ExpensePolicies"
                       >
                         {" "}
-                        Expense Policies{" "}
+                        Expense Policy{" "}
                       </Link>
                     </li>
 

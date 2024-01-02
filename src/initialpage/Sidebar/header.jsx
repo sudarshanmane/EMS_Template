@@ -15,6 +15,7 @@ import {
 } from "../../Entryfile/imagepath";
 import notifications from "../../assets/json/notifications";
 import message from "../../assets/json/message";
+import { clearLocalStorage } from "../../utils/sessionStorage";
 
 const Header = (props) => {
   const data = notifications.notifications;
@@ -234,12 +235,12 @@ const Header = (props) => {
             <Link className="dropdown-item" to="/home/ProfileForm">
               Update Profile
             </Link>
-            <Link className="dropdown-item" to="/home/ChangePasswordForm">
+            <Link className="dropdown-item" to="/home/changepassword">
               Change Password
             </Link>
-            <Link className="dropdown-item" to="/login">
+            <div className="dropdown-item" onClick={() => clearLocalStorage()}>
               Logout
-            </Link>
+            </div>
           </div>
         </li>
       </ul>
@@ -258,10 +259,10 @@ const Header = (props) => {
           <Link className="dropdown-item" to="/home/ProfileForm">
             Update Profile
           </Link>
-          <Link className="dropdown-item" to="/home/ChangePasswordForm">
+          <Link className="dropdown-item" to="/home/changepassword">
             Change Password
           </Link>
-          <Link className="dropdown-item" to="/login">
+          <Link className="dropdown-item" to="/">
             Logout
           </Link>
         </div>

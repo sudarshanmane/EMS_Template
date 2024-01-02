@@ -2,7 +2,7 @@ import React from "react";
 import { Helmet } from "react-helmet";
 import Offcanvas from "../../../Entryfile/offcanvance";
 import { Applogo } from "../../../Entryfile/imagepath";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { Link } from "react-router-dom";
 
 const ChangePassword = () => {
   return (

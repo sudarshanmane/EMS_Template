@@ -155,8 +155,6 @@ const ExpensePolicies = () => {
         const { pageSize, current } = tablePagination;
         return index + 1 + pageSize * (current - 1);
       },
-      sorter: (a, b) => a.id.length - b.id.length,
-      width: "10%",
     },
     {
       title: "Expense Amount Limit ",
