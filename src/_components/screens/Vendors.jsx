@@ -23,7 +23,7 @@ const Vendors = () => {
 
   const onSubmit = (values) => {
     dispatch(createVendor(values));
-    navigate("/home/VendorPannel");
+  
   };
 
   const createVendorSelector = useSelector(

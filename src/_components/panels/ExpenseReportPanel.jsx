@@ -392,6 +392,7 @@ const ExpenseReport = () => {
             </div>
           </div>
         </div>
+        
         {/* Add Expense Modal */}
         <div id="add_report" className="modal custom-modal fade" role="dialog">
           <div
@@ -495,6 +496,7 @@ const ExpenseReport = () => {
             </div>
           </div>
         </div>
+        
         {/* /Add Expense Modal */}
 
         {/* Edit Expense Modal */}

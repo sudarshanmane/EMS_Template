@@ -4,12 +4,15 @@ import { Link } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
 import { URLS } from "../../Globals/URLS";
 import { useDispatch, useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import DatePicker from "react-datepicker";
+import { format } from "date-fns";
+
 import {
   getTravel,
   deleteTravel,
   updateTravel,
+  createTravel,
 } from "../../store/Action/Actions";
 
 import {
@@ -29,13 +32,15 @@ const TravelRequestPannel = () => {
   const [isEditFormVisible, setIsEditFormVisible] = useState(false);
   const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] =
     useState(false);
-   
-    const handleDateChange1 = (date) => {
-      setSelectedDate1(date);
-    };
-    const handleDateChange2 = (date) => {
-      setSelectedDate2(date);
-    };
+
+  const [submittedValues, setSubmittedValues] = useState(null);
+
+  const handleDateChange1 = (date) => {
+    setSelectedDate1(date);
+  };
+  const handleDateChange2 = (date) => {
+    setSelectedDate2(date);
+  };
 
   const {
     register: updateregister,
@@ -43,7 +48,35 @@ const TravelRequestPannel = () => {
     setValue,
   } = useForm({});
 
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({});
+
+  const formatDate = (date) => {
+    return format(date, "yyyy-MM-dd");
+  };
+
   const { handleSubmit: handleDelete } = useForm({});
+
+  const onSubmit = async (values) => {
+    await dispatch(createTravel(values));
+    dispatch(getTravel({ payload: {}, URL: url }));
+    setIsAddFormVisible(false);
+  };
+
+  const createTravelSelector = useSelector(
+    (state) => state.createTravelSuccess
+  );
+  useEffect(() => {
+    if (createTravelSelector && submittedValues) {
+      dispatch(createTravel(submittedValues));
+      setSubmittedValues(null);
+      setIsAddFormVisible(false);
+    }
+  }, [createTravelSelector, submittedValues]);
 
   const onEdit = (record) => {
     setIsEditFormVisible(true);
@@ -58,7 +91,6 @@ const TravelRequestPannel = () => {
   const onUpdate = (values) => {
     dispatch(updateTravel({ id: editTravelData.id, payload: values }));
     setIsEditFormVisible(false);
-   
   };
   function getPageDetails(url) {
     dispatch(getTravel({ payload: {}, URL: url }));
@@ -99,7 +131,8 @@ const TravelRequestPannel = () => {
   useEffect(() => {
     if (deleteTravelSelector) {
       dispatch(getTravel({ payload: {}, URL: url }));
-    } setIsAddFormVisible(false);
+    }
+    setIsAddFormVisible(false);
   }, [deleteTravelSelector]);
 
   const DeleteTravel = (record) => {
@@ -128,31 +161,37 @@ const TravelRequestPannel = () => {
       title: "Employee Name",
       dataIndex: "",
       key: "",
+      sorter: (a, b) => a.start_date.length - b.start_date.length,
     },
     {
       title: "Title",
       dataIndex: "title",
       key: "",
+      sorter: (a, b) => a.start_date.length - b.start_date.length,
     },
     {
       title: "Travel Purpose",
       dataIndex: "travel_purpose",
       key: "",
+      sorter: (a, b) => a.start_date.length - b.start_date.length,
     },
     {
       title: "From_Date",
       dataIndex: "from_date",
       key: "",
+      sorter: (a, b) => a.start_date.length - b.start_date.length,
     },
     {
       title: "To_Date",
       dataIndex: "to_date",
       key: "",
+      sorter: (a, b) => a.start_date.length - b.start_date.length,
     },
     {
       title: "Estimated_Budget",
       dataIndex: "estimated_budget",
       key: "",
+      sorter: (a, b) => a.start_date.length - b.start_date.length,
     },
 
     {
@@ -209,18 +248,20 @@ const TravelRequestPannel = () => {
                   <li className="breadcrumb-item active">Travel Request</li>
                 </ul>
                 <div className="col-auto float-end ms-auto">
-                  <Link to="/home/Travels">
-                    <button type="button" className="btn add-btn">
-                      <i className="fa fa-plus" />
-                      Add Travels
-                    </button>
+                  <Link
+                    to="#"
+                    className="btn add-btn"
+                    data-bs-toggle="modal"
+                    data-bs-target="#add_travel"
+                  >
+                    <i className="fa fa-plus" /> Add Travels
                   </Link>
                 </div>
               </div>
             </div>
           </div>
-         {/* Search Filter */}
-         <div className="row filter-row">
+          {/* Search Filter */}
+          <div className="row filter-row">
             <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
               <div className="input-block form-focus select-focus">
                 <div className="cal-icon">
@@ -260,7 +301,7 @@ const TravelRequestPannel = () => {
             <div className="col-sm-12">
               <div className="card mb-0">
                 <div className="card-header">
-                  <h4 className="card-title mb-0">Travel Request</h4>
+                  <lable className="card-title mb-0">Travel Request</lable>
                 </div>
                 <div className="card-body">
                   <div className="table-responsive">
@@ -286,16 +327,15 @@ const TravelRequestPannel = () => {
           </div>
         </div>
 
-        {/* Edit Expense Modal */}
-
-        <div id="edit_travel" className="modal custom-modal fade" role="dialog">
+        {/* Add Travel Request */}
+        <div id="add_travel" className="modal custom-modal fade" role="dialog">
           <div
-            className="modal-dialog modal-dialog-centered modal-lg"
+            className="modal-dialog modal-dialog-centered modal-md"
             role="document"
           >
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">Update Travel</h5>
+                <h5 className="modal-title">Add Travel Request</h5>
                 <button
                   type="button"
                   className="close"
@@ -305,86 +345,270 @@ const TravelRequestPannel = () => {
                   <span aria-hidden="true">×</span>
                 </button>
               </div>
+              <div className="modal-body">
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <div className="input-block">
+                    <div className="col-md-12">
+                      <div className="input-block">
+                        <label>Employee Name</label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          {...register(" ")}
+                        />
+                      </div>
+                    </div>
+                  </div>
 
+                  <div className="input-block">
+                    <div className="col-md-12">
+                      <div className="input-block">
+                        <label>Title</label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          {...register("title")}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="input-block">
+                    <div className="col-md-12">
+                      <div className="input-block">
+                        <label>Travel Purposes</label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          {...register("travel_purpose")}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="input-block">
+                    <label className="col-form-label" id="start_date">
+                      From Date <span className="text-danger">*</span>
+                    </label>
+                    <div className="">
+                      <Controller
+                        control={control}
+                        name="from_date"
+                        render={({ field }) => (
+                          <DatePicker
+                            selected={
+                              field.value ? new Date(field.value) : null
+                            }
+                            onChange={(date) => {
+                              const formattedDate = formatDate(date);
+                              field.onChange(formattedDate);
+                              setValue("from_date", formattedDate);
+                            }}
+                            dateFormat="yyyy-MM-dd"
+                            className="form-control"
+                          />
+                        )}
+                      />
+                      <div className="text-danger">
+                        {errors.from_date?.message}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="input-block">
+                    <label className="col-form-label" id="to_date">
+                      To Date <span className="text-danger">*</span>
+                    </label>
+                    <div className="">
+                      <Controller
+                        control={control}
+                        name="to_date"
+                        render={({ field }) => (
+                          <DatePicker
+                            selected={
+                              field.value ? new Date(field.value) : null
+                            }
+                            onChange={(date) => {
+                              const formattedDate = formatDate(date);
+                              field.onChange(formattedDate);
+                              setValue("to_date", formattedDate);
+                            }}
+                            dateFormat="yyyy-MM-dd"
+                            className="form-control"
+                          />
+                        )}
+                      />
+                      <div className="text-danger">
+                        {errors.to_date?.message}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="input-block">
+                    <div className="col-md-12">
+                      <div className="input-block">
+                        <label>Estimated Budget</label>
+                        <input
+                          className="form-control"
+                          type="number"
+                          {...register("estimated_budget")}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="submit-section">
+                    <button
+                      className="btn btn-primary submit-btn"
+                      data-bs-dismiss="modal"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Add Travel Request */}
+
+        {/* Edit Expense Modal */}
+
+        <div id="edit_travel" className="modal custom-modal fade" role="dialog">
+          <div
+            className="modal-dialog modal-dialog-centered modal-md"
+            role="document"
+          >
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Add Travel Request</h5>
+                <button
+                  type="button"
+                  className="close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
               <div className="modal-body">
                 <form onSubmit={handleUpdate(onUpdate)}>
-                  <div className="input-block row">
-                    <label className="col-lg-3 col-form-label">
-                      <h4> Employee Name</h4>
-                    </label>
-                    <div className="col-lg-9">
-                      <input
-                        type="text"
-                        className="form-control"
-                        {...updateregister(" ")}
-                      />
-                    </div>
-                  </div>
-                  <div className="input-block row">
-                    <label className="col-lg-3 col-form-label">
-                      <h4>Title</h4>
-                    </label>
-                    <div className="col-lg-9">
-                      <input
-                        type="text"
-                        className="form-control"
-                        {...updateregister("title")}
-                      />
-                    </div>
-                  </div>
-                  <div className="input-block row">
-                    <label className="col-lg-3 col-form-label">
-                      <h4>Travel Purpose</h4>
-                    </label>
-                    <div className="col-lg-9">
-                      <input
-                        type="text"
-                        className="form-control"
-                        {...updateregister("travel_purpose")}
-                      />
-                    </div>
-                  </div>
-                  <div className="input-block row">
-                    <label className="col-lg-3 col-form-label">
-                      <h4>From Date</h4>
-                    </label>
-                    <div className="col-lg-9">
-                      <input
-                        type="date"
-                        className="form-control"
-                        {...updateregister("from_date")}
-                      />
-                    </div>
-                  </div>
-                  <div className="input-block row">
-                    <label className="col-lg-3 col-form-label">
-                      <h4>To Date</h4>
-                    </label>
-                    <div className="col-lg-9">
-                      <input
-                        type="date"
-                        className="form-control"
-                        {...updateregister("to_date")}
-                      />
+                  <div className="input-block">
+                    <div className="col-md-12">
+                      <div className="input-block">
+                        <label>Employee Name</label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          {...updateregister(" ")}
+                        />
+                      </div>
                     </div>
                   </div>
 
-                  <div className="input-block row">
-                    <label className="col-lg-3 col-form-label">
-                      <h4>Estimated Budget</h4>
-                    </label>
-                    <div className="col-lg-9">
-                      <input
-                        type="number"
-                        className="form-control"
-                        {...updateregister("estimated_budget")}
-                      />
+                  <div className="input-block">
+                    <div className="col-md-12">
+                      <div className="input-block">
+                        <label>Title</label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          {...updateregister("title")}
+                        />
+                      </div>
                     </div>
                   </div>
 
-                  <div className="text-end">
-                    <button type="submit" className="btn btn-primary">
-                      Update
+                  <div className="input-block">
+                    <div className="col-md-12">
+                      <div className="input-block">
+                        <label>Travel Purposes</label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          {...updateregister("travel_purpose")}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="input-block">
+                    <label className="col-form-label" id="start_date">
+                      From Date <span className="text-danger">*</span>
+                    </label>
+                    <div className="">
+                      <Controller
+                        control={control}
+                        name="from_date"
+                        render={({ field }) => (
+                          <DatePicker
+                            selected={
+                              field.value ? new Date(field.value) : null
+                            }
+                            onChange={(date) => {
+                              const formattedDate = formatDate(date);
+                              field.onChange(formattedDate);
+                              setValue("from_date", formattedDate);
+                            }}
+                            dateFormat="yyyy-MM-dd"
+                            className="form-control"
+                          />
+                        )}
+                      />
+                      <div className="text-danger">
+                        {errors.from_date?.message}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="input-block">
+                    <label className="col-form-label" id="to_date">
+                      To Date <span className="text-danger">*</span>
+                    </label>
+                    <div className="">
+                      <Controller
+                        control={control}
+                        name="to_date"
+                        render={({ field }) => (
+                          <DatePicker
+                            selected={
+                              field.value ? new Date(field.value) : null
+                            }
+                            onChange={(date) => {
+                              const formattedDate = formatDate(date);
+                              field.onChange(formattedDate);
+                              setValue("to_date", formattedDate);
+                            }}
+                            dateFormat="yyyy-MM-dd"
+                            className="form-control"
+                          />
+                        )}
+                      />
+                      <div className="text-danger">
+                        {errors.to_date?.message}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="input-block">
+                    <div className="col-md-12">
+                      <div className="input-block">
+                        <label>Estimated Budget</label>
+                        <input
+                          className="form-control"
+                          type="number"
+                          {...updateregister("estimated_budget")}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="submit-section">
+                    <button
+                      className="btn btn-primary submit-btn"
+                      data-bs-dismiss="modal"
+                    >
+                      Submit
                     </button>
                   </div>
                 </form>
