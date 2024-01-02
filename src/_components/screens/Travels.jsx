@@ -1,17 +1,17 @@
 /* eslint-disable no-undef */
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
 import { createTravel } from "../../store/Action/Actions";
 import { URLS } from "../../Globals/URLS";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 
 
 const Travels = () => {
   const [url, setUrl] = useState(URLS.CREATE_TRAVEL_URL);  
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isAddFormVisible, setIsAddFormVisible] = useState(false);
   const [submittedValues, setSubmittedValues] = useState(null);
@@ -24,22 +24,20 @@ const Travels = () => {
 
   const onSubmit = (values) => {
     dispatch(createTravel(values));
-   
+    navigate("/home/TravelRequestPannel");
   };
-
   const createTravelSelector = useSelector(
     (state) => state.createTravelSuccess
   );
-
+ 
   useEffect(() => {
     if (createTravelSelector && submittedValues) {
       dispatch(createTravel(submittedValues)); 
       setSubmittedValues(null);
       setIsAddFormVisible(false);
     }
-  }, [createTravelSelector, submittedValues]);
- 
-
+  }, [createTravelSelector, submittedValues, navigate]);
+  
   return (
     <>
       <div className="page-wrapper">

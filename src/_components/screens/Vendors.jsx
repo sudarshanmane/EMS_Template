@@ -5,10 +5,12 @@ import { useForm } from "react-hook-form";
 import { URLS } from "../../Globals/URLS";
 import { useDispatch, useSelector } from "react-redux";
 import { createVendor } from "../../store/Action/Actions";
+import { useNavigate } from "react-router-dom";
+
 
 const Vendors = () => {
   const [url, setUrl] = useState(URLS.GET_VENDOR_URL);
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isAddFormVisible, setIsAddFormVisible] = useState(false);
   const [submittedValues, setSubmittedValues] = useState(null);
@@ -21,6 +23,7 @@ const Vendors = () => {
 
   const onSubmit = (values) => {
     dispatch(createVendor(values));
+    navigate("/home/VendorPannel");
   };
 
   const createVendorSelector = useSelector(
@@ -39,9 +42,6 @@ const Vendors = () => {
     <>
       <div className="page-wrapper">
         <div className="content container-fluid">
-          <div className="page-header">
-            <div className="row"></div>
-          </div>
           <div className="row">
             <div className="col-xl-6 d-flex">
               <div className="card flex-fill">

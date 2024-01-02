@@ -264,10 +264,6 @@ const TravelRequestPannel = () => {
                 </div>
                 <div className="card-body">
                   <div className="table-responsive">
-                    
-
-                  
-
                     <Table
                       className="table-striped"
                       pagination={{

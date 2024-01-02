@@ -6,8 +6,6 @@ import { URLS } from "../../Globals/URLS";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 
-
-
 import {
   deleteVendor,
   getVendor,
@@ -18,7 +16,6 @@ import {
   onShowSizeChange,
   itemRender,
 } from "../../MainPage/paginationfunction";
-
 
 const VendorPannel = () => {
   const [url, setUrl] = useState(URLS.GET_VENDOR_URL);
@@ -31,7 +28,8 @@ const VendorPannel = () => {
   const [editVendorData, setEditVendorData] = useState(null);
   const [isAddFormVisible, setIsAddFormVisible] = useState(false);
   const [isEditFormVisible, setIsEditFormVisible] = useState(false);
-  const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] = useState(false);
+  const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] =
+    useState(false);
 
   const {
     register: updateregister,
@@ -39,7 +37,9 @@ const VendorPannel = () => {
     setValue,
   } = useForm({});
 
-  const DeleteVendor = (record) => {setDeleteVendorData(record);};
+  const DeleteVendor = (record) => {
+    setDeleteVendorData(record);
+  };
 
   const { handleSubmit: handleDelete } = useForm({});
 
@@ -56,7 +56,6 @@ const VendorPannel = () => {
   const onUpdate = (values) => {
     dispatch(updateVendor({ id: editVendorData.id, payload: values }));
     setIsEditFormVisible(false);
- 
   };
 
   const onDelete = () => {
@@ -67,7 +66,6 @@ const VendorPannel = () => {
       prevItems.filter((item) => item.id !== deletedVendorId)
     );
   };
-
 
   function getPageDetails(url) {
     dispatch(getVendor({ payload: {}, URL: url }));
@@ -83,8 +81,6 @@ const VendorPannel = () => {
   useEffect(() => {
     fetchPageDetials(url);
   }, []);
-
-
 
   const getVendorSelector = useSelector((state) => state.getVendorSuccess);
   useEffect(() => {
@@ -103,7 +99,6 @@ const VendorPannel = () => {
     }
   }, [getVendorSelector]);
 
-
   const updatevendorSelector = useSelector((state) => state.updateVendorResult);
   useEffect(() => {
     if (updatevendorSelector) {
@@ -112,14 +107,14 @@ const VendorPannel = () => {
     setIsAddFormVisible(false);
   }, [updatevendorSelector]);
 
-  
-  const deleteVendorSelector = useSelector((state) => state.deleteVendorSuccess);
+  const deleteVendorSelector = useSelector(
+    (state) => state.deleteVendorSuccess
+  );
   useEffect(() => {
     if (deleteVendorSelector) {
       dispatch(getVendor({ payload: {}, URL: url }));
     }
   }, [deleteVendorSelector]);
-
 
   const columns = [
     {
@@ -206,7 +201,6 @@ const VendorPannel = () => {
           <div className="page-header">
             <div className="row">
               <div className="col">
-                <h3 className="page-title">Vendors</h3>
                 <ul className="breadcrumb">
                   <li className="breadcrumb-item">
                     <Link to="/app/main/dashboard">Dashboard</Link>
@@ -222,25 +216,58 @@ const VendorPannel = () => {
             </div>
           </div>
           {/* /Page Header */}
-
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="table-responsive">
-                <Table
-                  className="table-striped"
-                  pagination={{
-                    total: allVendor.length,
-                    showTotal: (total, range) =>
-                      `Showing ${range[0]} to ${range[1]} of ${total} entries`,
-                    showSizeChanger: true,
-                    onShowSizeChange: onShowSizeChange,
-                    itemRender: itemRender,
-                  }}
-                  style={{ overflowX: "auto" }}
-                  columns={columns}
-                  dataSource={allVendor}
-                  rowKey={(record) => record.id}
+          {/* Search Filter */}
+          <div className="row filter-row">
+            <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+              <div
+                className={
+                  focused
+                    ? "input-block form-focus focused"
+                    : "input-block form-focus"
+                }
+              >
+                <input
+                  type="text"
+                  className="form-control floating"
+                  onFocus={() => setFocused(true)}
+                  onBlur={() => setFocused(false)}
                 />
+                <label className="focus-label">Search</label>
+              </div>
+            </div>
+            <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+              <Link to="#" className="btn btn-success btn-block w-100">
+                {" "}
+                Search{" "}
+              </Link>
+            </div>
+          </div>
+          {/* /Search Filter */}
+          <div className="row">
+            <div className="col-sm-12">
+              <div className="card mb-0">
+                <div className="card-header">
+                  <h4 className="card-title mb-0">Vendor</h4>
+                </div>
+                <div className="card-body">
+                  <div className="table-responsive">
+                    <Table
+                      className="table-striped"
+                      pagination={{
+                        total: allVendor.length,
+                        showTotal: (total, range) =>
+                          `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+                        showSizeChanger: true,
+                        onShowSizeChange: onShowSizeChange,
+                        itemRender: itemRender,
+                      }}
+                      style={{ overflowX: "auto" }}
+                      columns={columns}
+                      dataSource={allVendor}
+                      rowKey={(record) => record.id}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -267,7 +294,7 @@ const VendorPannel = () => {
               </div>
 
               <div className="modal-body">
-                <form onSubmit={handleUpdate(onUpdate)}>   
+                <form onSubmit={handleUpdate(onUpdate)}>
                   <div className="input-block row">
                     <label className="col-lg-3 col-form-label">
                       <h4> Company Name</h4>

@@ -329,7 +329,7 @@ const ExpenseReport = () => {
                 <label className="focus-label">Search</label>
               </div>
             </div>
-            <div className="col-sm-6 col-md-3">
+            <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
               <div className="input-block form-focus select-focus">
                 <div className="cal-icon">
                   <DatePicker
@@ -339,10 +339,10 @@ const ExpenseReport = () => {
                     type="date"
                   />
                 </div>
-                <label className="focus-label">From</label>
+                <label className="focus-label">Date</label>
               </div>
             </div>
-            <div className="col-sm-6 col-md-3">
+            <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
               <div className="input-block form-focus select-focus">
                 <div className="cal-icon">
                   <DatePicker
@@ -352,10 +352,10 @@ const ExpenseReport = () => {
                     type="date"
                   />
                 </div>
-                <label className="focus-label">To</label>
+                <label className="focus-label">Date</label>
               </div>
             </div>
-            <div className="col-sm-6 col-md-3">
+            <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
               <Link to="#" className="btn btn-success btn-block w-100">
                 {" "}
                 Search{" "}
