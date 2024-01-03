@@ -15,9 +15,7 @@ import Mileage from "../../_components/screens/Mileage";
 import Expenses from "../../_components/screens/Expenses";
 import ReimbursmentRecord from "../../_components/screens/ReimbursmentRecord";
 import TravelRequestPannel from "../../_components/panels/TravelRequestPannel";
-import Travels from "../../_components/screens/Travels";
 import VendorPannel from "../../_components/panels/VendorPannel";
-import Vendors from "../../_components/screens/Vendors";
 import ExpensePolicies from "../../_components/panels/ExpensePolicies";
 import Loginpage from "../../initialpage/loginpage";
 import ChangePassword from "../../MainPage/Administration/Settings/changepassword";
@@ -81,12 +79,10 @@ const Navigates = () => {
             path="TravelRequestPannel"
             element={<TravelRequestPannel></TravelRequestPannel>}
           ></Route>
-          <Route path="Travels" element={<Travels></Travels>}></Route>
           <Route
             path="VendorPannel"
             element={<VendorPannel></VendorPannel>}
           ></Route>
-          <Route path="Vendors" element={<Vendors></Vendors>}></Route>
           <Route
             path="changepassword"
             element={<ChangePassword></ChangePassword>}

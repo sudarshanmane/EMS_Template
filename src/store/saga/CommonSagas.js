@@ -82,6 +82,41 @@ function* deleteReport(action) {
     yield call(errorSaga, "Something went wrong!");
   }
 }
+function* approveReport(action) {
+  try {
+    let result = yield call(Method.putData, action);
+    if (result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* rejectReport(action) {
+  try {
+    let result = yield call(Method.putData, action);
+    if (result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "Something went wrong!");
+  }
+}
+
+
 
 function* categoryPanelList(action) {
   try {
@@ -215,7 +250,6 @@ function* getExpensePolicy(action) {
     yield call(errorSaga, "The credentials you entered are incorrect!");
   }
 }
-
 
 
 function* updateExpensePolicy(action) {
@@ -1959,6 +1993,8 @@ export {
   addReportsubmit,
   updateReport,
   deleteReport,
+  approveReport,
+  rejectReport,
 
   getAddCategoryList,
   categoryPanelList,

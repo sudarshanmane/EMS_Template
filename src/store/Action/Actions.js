@@ -42,6 +42,24 @@ function setDeleteReportFalse(payload) {
   };
 }
 
+function approveReport(payload) {
+  return {
+    type: API_CONSTANTS.APPROVE_REPORT,
+    payload: payload.payload,
+    URL: URLS.APPROVE_REPORT_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+ 
+function rejectReport(payload) {
+  return {
+    type: API_CONSTANTS.REJECT_REPORT,
+    payload: payload.payload,
+    URL: URLS.REJECT_REPORT_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
 function addCategoryAction(payload) {
   return {
     type: API_CONSTANTS.ADD_CATEGORY,
@@ -1058,6 +1076,9 @@ export {
   updateReportAction,
   deleteReportAction,
   setDeleteReportFalse,
+  approveReport,
+  rejectReport,
+
   addCategoryAction,
   getCategoryPanelAction,
   updateCategorypanle,

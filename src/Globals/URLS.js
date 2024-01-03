@@ -1,13 +1,17 @@
 export const URLS = {
-    BASE_URL_EXPORT: "http://127.0.0.1:8000",
+    BASE_URL_EXPORT: "http://127.0.0.1:8001",
     ADD_REPORT_URL: "/expense/expensereport/",
     GET_REPORT_LIST_URL:"/expense/expensereport/",
     UPDATE_REPORT: "/expense/expensereport/",
+
+    APPROVE_REPORT_URL: "/expense/approve-report/2/",
+    REJECT_REPORT_URL: "/expense/reject-report/2/",
 
     ADD_CATEGORY_URL: "/expense/expensecategory/",
     GET_CATEGORY_PANEL_URL: "/expense/expensecategory/",
     UPDATE_CATEGORY_PANEL_URL: "/expense/expensecategory/",
     DELETE_CATEGORY_PANEL_URL: "/expense/expensecategory/",
+
     
 // ******************
 

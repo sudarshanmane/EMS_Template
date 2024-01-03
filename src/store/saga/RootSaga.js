@@ -10,6 +10,8 @@ import {
   categoryPanelList,
   updateCategoryPanel,
   deleteCategory,
+  approveReport,
+  rejectReport,
 
   addExpensePolicy,
   updateExpensePolicy,
@@ -124,6 +126,10 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.GET_REPORT_LIST, getReportList);
   yield takeEvery(API_CONSTANTS.UPDATE_REPORT, updateReport);
   yield takeEvery(API_CONSTANTS.DELETE_REPORT, deleteReport);
+  yield takeEvery(API_CONSTANTS.APPROVE_REPORT, approveReport);
+  yield takeEvery(API_CONSTANTS.REJECT_REPORT, rejectReport);
+
+
 
   yield takeEvery(API_CONSTANTS.ADD_CATEGORY, getAddCategoryList);
   yield takeEvery(API_CONSTANTS.GET_CATEGORYLIST_PANEL, categoryPanelList);
@@ -141,7 +147,7 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.GET_EXPENSE_POLICY, getExpensePolicy);
   yield takeEvery(API_CONSTANTS.UPDATE_EXPENSE_POLICY, updateExpensePolicy);
   yield takeEvery(API_CONSTANTS.DELETE_EXPENSE_POLICY, deleteExpensePolicy);
-
+ 
   yield takeEvery(API_CONSTANTS.ADD_MILEAGE, addMileage);
   yield takeEvery(API_CONSTANTS.GET_MILEAGE, getMileage);
   yield takeEvery(API_CONSTANTS.FETCH_CATEGORY, fetchCategory);
@@ -354,3 +360,4 @@ export function* RootSaga() {
   );
   yield takeEvery(API_CONSTANTS.EXPORT_COMPANY_PANEL, exportCompanypanel);
 }
+                                    

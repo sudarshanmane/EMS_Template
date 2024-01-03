@@ -71,6 +71,34 @@ export const RootReducer = (state = initialState, action) => {
         deleteReportSuccess: false,
       };
 
+      case API_CONSTANTS.APPROVE_REPORT:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.APPROVE_REPORT_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        approveReportSuccess: action.result,
+      };
+
+    case API_CONSTANTS.REJECT_REPORT:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.REJECT_REPORT_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        rejectReportSuccess: action.result,
+      };
+
+
+
     case API_CONSTANTS.ADD_CATEGORY:
       return {
         ...state,

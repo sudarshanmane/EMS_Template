@@ -83,7 +83,6 @@ const Sidebar = () => {
                   <span className="menu-arrow" />
                 </Link>
 
-                
                 {isSideMenu == "user" ? (
                   <ul
                     style={{
@@ -97,7 +96,7 @@ const Sidebar = () => {
                         }
                         to="/home/role-add"
                       >
-                       Role
+                        Role
                       </Link>
                     </li>
                     <li>
@@ -173,7 +172,9 @@ const Sidebar = () => {
                     <li>
                       <Link
                         className={
-                          pathname.includes("expenseapprovemanager") ? "active" : ""
+                          pathname.includes("expenseapprovemanager")
+                            ? "active"
+                            : ""
                         }
                         to="/home/expenseapprovalbyfinancemanager"
                       >
@@ -255,36 +256,40 @@ const Sidebar = () => {
                 )}
               </li>
 
-
               <li className="submenu">
                 <Link
                   to="/home/TravelRequestPannel"
-                  className={isSideMenu == "TravelRequestPannel" ? "subdrop" : ""}
+                  className={
+                    isSideMenu == "TravelRequestPannel" ? "subdrop" : ""
+                  }
                   onClick={() =>
-                    toggleSidebar(isSideMenu == "TravelRequestPannel" ? "" : "TravelRequestPannel")
+                    toggleSidebar(
+                      isSideMenu == "TravelRequestPannel"
+                        ? ""
+                        : "TravelRequestPannel"
+                    )
                   }
                 >
-                  <i className="la la-file-text" /> <span> Travels Request </span>{" "}
+                  <i className="la la-file-text" />{" "}
+                  <span> Travels Request </span>{" "}
                   {/* <span className="menu-arrow" /> */}
                 </Link>
-               
               </li>
-
-
 
               <li className="submenu">
                 <Link
                   to="/home/VendorPannel"
                   className={isSideMenu == "VendorPannel" ? "subdrop" : ""}
                   onClick={() =>
-                    toggleSidebar(isSideMenu == "VendorPannel" ? "" : "VendorPannel")
+                    toggleSidebar(
+                      isSideMenu == "VendorPannel" ? "" : "VendorPannel"
+                    )
                   }
                 >
                   <i className="la la-file-text" /> <span> Vendors </span>{" "}
                   {/* <span className="menu-arrow" /> */}
                 </Link>
-               
-              </li>  
+              </li>
 
               {/* ============================================== */}
 
@@ -745,7 +750,7 @@ const Sidebar = () => {
                 className="nav-link"
                 id="v-pills-performance-tab"
                 title="Performance"
-                data-bs-toggle="pill" 
+                data-bs-toggle="pill"
                 to="#v-pills-performance"
                 role="tab"
                 aria-controls="v-pills-performance"
