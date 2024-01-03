@@ -30,7 +30,7 @@ import ClientProfile from "../../MainPage/Pages/Profile/clientprofile";
 import EmployeeProfile from "../../MainPage/Pages/Profile/employeeprofile";
 import ExpenseReportPanel from "../../_components/panels/ExpenseReportPanel";
 import UserPanel from "../../_components/panels/UserPanel";
-import Users from "../../_components/screens/Users"
+import Users from "../../_components/screens/Users";
 import AddReport from "../../_components/screens/AddReport";
 // import CompanyPolicies from "../../_components/screens/CompanyPolicies";
 import CompanyPolicies from "../../_components/panels/CompanyPolicies";
@@ -40,44 +40,117 @@ const Navigates = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/home/role-add"></Navigate>}></Route>
+        <Route
+          path="/"
+          element={<Navigate to="/home/role-add"></Navigate>}
+        ></Route>
         <Route path="/home" element={<PrivateRoute></PrivateRoute>}>
           <Route path="role-add" element={<Roleadd></Roleadd>}></Route>
           <Route path="add-user" element={<Adduser></Adduser>}></Route>
           {/* <Route path="reports" element={<Reports></Reports>}></Route> */}
-          <Route path="companyPanel" element={<CompanyPanel></CompanyPanel>}></Route>
+          <Route
+            path="companyPanel"
+            element={<CompanyPanel></CompanyPanel>}
+          ></Route>
           <Route path="applyforcard" element={<Card></Card>}></Route>
           <Route path="addexpense" element={<Addexpense></Addexpense>}></Route>
-          <Route path="expensepanel" element={<ExpensePanel></ExpensePanel>}></Route>
-          <Route path="expensecategorypanel" element={<CategoryTypePanel></CategoryTypePanel>}></Route>
-          <Route path="expensetypepanel" element={<ExpenseTypePanel></ExpenseTypePanel>} ></Route>
-          <Route path="expenseapproval" element={<Expenseapprovedpanel></Expenseapprovedpanel>} ></Route>
-          <Route path="expenseapprovalbyfinancemanager" element={<ExpenseApprovalManager></ExpenseApprovalManager>} ></Route>
-          <Route path="expenseitemization" element={<Expenseitemization></Expenseitemization>} ></Route>
-          <Route path="expenseitemizationpanel" element={<ExpenseItemizationPanel></ExpenseItemizationPanel>} ></Route>
-          <Route path="expenseitemsetuppanel" element={<ExpenseItemSetupPanel></ExpenseItemSetupPanel>} ></Route>
-          <Route path="expenseitemsetup" element={<ExpenseItemSetup></ExpenseItemSetup>} ></Route>
-          <Route path="externalaccountcode" element={<AddExternalAccountCode></AddExternalAccountCode>} ></Route> 
-          <Route path="externalaccountcodepanel" element={<ExternalAccountPanel></ExternalAccountPanel>} ></Route>
-          <Route path="ProfileForm" element={<ProfileForm></ProfileForm>} ></Route>
-          <Route path="ChangePasswordForm" element={<ChangePasswordForm></ChangePasswordForm>}></Route>
-          <Route path="client-profile" element={<ClientProfile></ClientProfile>}></Route>
-          <Route path="employee-profile" element={<EmployeeProfile></EmployeeProfile>}></Route>
-          <Route path="Reports" element={<ExpenseReportPanel></ExpenseReportPanel>}></Route>
-          <Route path="accountingcodepanel" element={<AccountCodePanel></AccountCodePanel>}></Route>
-          <Route path="accountingcodegrouppanel" element={<AccountingCodeGroupPanel></AccountingCodeGroupPanel>}></Route>
-          <Route path="codegroup" element={<CodeAccountGroup></CodeAccountGroup>}></Route>
-          <Route path="cardapproval" element={<CardApproval></CardApproval>}></Route>
-          <Route path="cardholdlist" element={<CardHoldList></CardHoldList>}></Route>
-          <Route path="cardrejectlist" element={<CardRejectList></CardRejectList>}></Route>
+          <Route
+            path="expensepanel"
+            element={<ExpensePanel></ExpensePanel>}
+          ></Route>
+          <Route
+            path="expensecategorypanel"
+            element={<CategoryTypePanel></CategoryTypePanel>}
+          ></Route>
+          <Route
+            path="expensetypepanel"
+            element={<ExpenseTypePanel></ExpenseTypePanel>}
+          ></Route>
+          <Route
+            path="expenseapproval"
+            element={<Expenseapprovedpanel></Expenseapprovedpanel>}
+          ></Route>
+          <Route
+            path="expenseapprovalbyfinancemanager"
+            element={<ExpenseApprovalManager></ExpenseApprovalManager>}
+          ></Route>
+          <Route
+            path="expenseitemization"
+            element={<Expenseitemization></Expenseitemization>}
+          ></Route>
+          <Route
+            path="expenseitemizationpanel"
+            element={<ExpenseItemizationPanel></ExpenseItemizationPanel>}
+          ></Route>
+          <Route
+            path="expenseitemsetuppanel"
+            element={<ExpenseItemSetupPanel></ExpenseItemSetupPanel>}
+          ></Route>
+          <Route
+            path="expenseitemsetup"
+            element={<ExpenseItemSetup></ExpenseItemSetup>}
+          ></Route>
+          <Route
+            path="externalaccountcode"
+            element={<AddExternalAccountCode></AddExternalAccountCode>}
+          ></Route>
+          <Route
+            path="externalaccountcodepanel"
+            element={<ExternalAccountPanel></ExternalAccountPanel>}
+          ></Route>
+          <Route
+            path="ProfileForm"
+            element={<ProfileForm></ProfileForm>}
+          ></Route>
+          <Route
+            path="ChangePasswordForm"
+            element={<ChangePasswordForm></ChangePasswordForm>}
+          ></Route>
+          <Route
+            path="client-profile"
+            element={<ClientProfile></ClientProfile>}
+          ></Route>
+          <Route
+            path="employee-profile"
+            element={<EmployeeProfile></EmployeeProfile>}
+          ></Route>
+          <Route
+            path="Reports"
+            element={<ExpenseReportPanel></ExpenseReportPanel>}
+          ></Route>
+          <Route
+            path="accountingcodepanel"
+            element={<AccountCodePanel></AccountCodePanel>}
+          ></Route>
+          <Route
+            path="accountingcodegrouppanel"
+            element={<AccountingCodeGroupPanel></AccountingCodeGroupPanel>}
+          ></Route>
+          <Route
+            path="codegroup"
+            element={<CodeAccountGroup></CodeAccountGroup>}
+          ></Route>
+          <Route
+            path="cardapproval"
+            element={<CardApproval></CardApproval>}
+          ></Route>
+          <Route
+            path="cardholdlist"
+            element={<CardHoldList></CardHoldList>}
+          ></Route>
+          <Route
+            path="cardrejectlist"
+            element={<CardRejectList></CardRejectList>}
+          ></Route>
           <Route path="userpanel" element={<UserPanel></UserPanel>}></Route>
           <Route path="addusers" element={<Users></Users>}></Route>
           <Route path="addreport" element={<AddReport></AddReport>}></Route>
-          <Route path="companyPolicies" element={<CompanyPolicies></CompanyPolicies>}></Route>
+          <Route
+            path="companyPolicies"
+            element={<CompanyPolicies></CompanyPolicies>}
+          ></Route>
           <Route path="mileage" element={<Mileage></Mileage>}></Route>
           <Route path="expenses" element={<Expenses></Expenses>}></Route>
-        
-
         </Route>
       </Routes>
     </BrowserRouter>

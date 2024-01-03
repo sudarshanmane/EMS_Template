@@ -807,7 +807,6 @@ function exportExternalAccountCodeAction(payload) {
 }
 
 function exportUserAction(payload) {
-  console.log("EXPORT_BUTTON", payload);
   return {
     type: API_CONSTANTS.EXPORT_USER,
     payload: payload.payload,
@@ -817,7 +816,6 @@ function exportUserAction(payload) {
 }
 
 function exportFinanceMangerListAction(payload) {
-  console.log("EXPORT_BUTTON", payload);
   return {
     type: API_CONSTANTS.EXPORT_FINANCE_MANAGER_LIST,
     payload: payload.payload,
@@ -947,7 +945,35 @@ function exportCompanyPanelAction(payload) {
   };
 }
 
+//---------------------------- SUDARSHAN -------------------------------
+
+function addBulkExpenseReport(payload) {
+  return {
+    type: API_CONSTANTS.ADD_BULK_EXPENSE_REPORT,
+    payload,
+    URL: URLS.ADD_BULK_EXPENSE_REPORT_URL,
+    contentType: contentType.form,
+  };
+}
+
+function setAddBulkExpenseReport() {
+  return {
+    type: API_CONSTANTS.SET_ADD_BULK_EXPENSE_FALSE,
+  };
+}
+
+function getCategoryListBulkExpense() {
+  return {
+    type: API_CONSTANTS.GET_CATEGORY_LIST_BULK_EXPENSE,
+    URL: URLS.GET_CATEGORY_PANEL_URL,
+    contentType: contentType.json,
+  };
+}
+
 export {
+  getCategoryListBulkExpense,
+  setAddBulkExpenseReport,
+  addBulkExpenseReport,
   addReport,
   updateReportAction,
   deleteReportAction,

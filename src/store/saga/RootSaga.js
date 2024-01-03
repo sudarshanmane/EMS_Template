@@ -1,4 +1,4 @@
-import { takeEvery } from "redux-saga/effects";
+import { take, takeEvery } from "redux-saga/effects";
 import { API_CONSTANTS } from "../../Globals/APIConstants";
 
 import {
@@ -311,4 +311,13 @@ export function* RootSaga() {
     ownExpenseApproveList
   );
   yield takeEvery(API_CONSTANTS.EXPORT_COMPANY_PANEL, exportCompanypanel);
+
+  // -------------------- SUDARSHAN ------------------
+
+  yield takeEvery(API_CONSTANTS.ADD_BULK_EXPENSE_REPORT, postCommonGenerator);
+
+  yield takeEvery(
+    API_CONSTANTS.GET_CATEGORY_LIST_BULK_EXPENSE,
+    getCommonGenerator
+  );
 }

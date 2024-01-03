@@ -137,7 +137,6 @@ function* updateCategoryPanel(action) {
   }
 }
 
-
 function* deleteCategory(action) {
   try {
     let result = yield call(Method.deleteData, action);
@@ -269,7 +268,6 @@ function* fetchCategory(action) {
     yield call(errorSaga, "The credentials you entered are incorrect!");
   }
 }
-
 
 function* addMileage(action) {
   try {
@@ -474,8 +472,6 @@ function* getCommonAllFetchGenerator(action) {
     yield call(errorSaga, "The credentials you entered are incorrect!");
   }
 }
-
-
 
 function* addExpenseItem(action) {
   try {
@@ -713,8 +709,6 @@ function* AddExpesnesubmit(action) {
     yield call(errorSaga, "The credentials you entered are incorrect!");
   }
 }
-
-
 
 function* getManagerList(action) {
   try {
@@ -1029,10 +1023,6 @@ function* UpdateCompanyList(action) {
   }
 }
 
-
-
-
-
 function* searchExpenseType(action) {
   try {
     let result = yield call(Method.getData, action);
@@ -1161,7 +1151,6 @@ function* updateUser(action) {
     yield call(errorSaga, "The credentials you entered are incorrect!");
   }
 }
-
 
 function* approvedExpensemanager(action) {
   try {
@@ -1433,7 +1422,7 @@ function* postCommonGenerator(action) {
       yield put({
         type: `${action.type}_SUCCESS`,
         status: "ok",
-        result: result.data,
+        result: result,
       });
     } else {
       yield call(failSaga, "Server Down!");
@@ -1746,7 +1735,6 @@ function* commanmanagercardlidtfunction(action) {
 
 function* ownExpenseApproveList(action) {
   try {
-    console.log("actionaction", action);
     let result = yield call(Method.getData, action);
     if (result.status === 200) {
       yield put({
@@ -1764,7 +1752,6 @@ function* ownExpenseApproveList(action) {
 
 function* exportCompanypanel(action) {
   try {
-    console.log("actionaction", action);
     let result = yield call(Method.getData, action);
     if (result.status === 200) {
       yield put({
@@ -1785,23 +1772,19 @@ export {
   addReportsubmit,
   updateReport,
   deleteReport,
-
   getAddCategoryList,
   categoryPanelList,
   updateCategoryPanel,
   deleteCategory,
-
   getCompanyPolicy,
   addCompanyPolicy,
   updateCompanyPolicy,
   deleteCompanyPolicy,
-
   getMileage,
   fetchCategory,
   addMileage,
   updateMileage,
   deleteMileage,
-
   applyCard,
   getCard,
   updateCard,
@@ -1812,7 +1795,6 @@ export {
   UserRegisterGenerator,
   addExpenseItem,
   addExpenseType,
- 
   addExternalcodeType,
   addUser,
   getManagerList,
@@ -1826,7 +1808,6 @@ export {
   getAccountingCodeList,
   itemizationsubmit,
   AddExpesnesubmit,
-
   getExpenseTypePanel,
   getExternalAccountPanel,
   AboutUs,
@@ -1836,13 +1817,10 @@ export {
   ChangePassword,
   itemizationPanel,
   accountingCodePanel,
-
   expensePanelList,
   getExpenseItemSetupPanel,
   GetCompanyList,
- 
   getAddUserPanel,
-  
   searchExpenseType,
   searchExternalAccountCode,
   UpdateExpenseItemSetup,
@@ -1850,7 +1828,7 @@ export {
   updateUser,
   updateExternalAccountCode,
   UpdateAccountcodePanel,
- 
+
   // UpdateExpenseIemaiztaion,
   UpdateExpenseItemization,
   UpdateExpenseList,

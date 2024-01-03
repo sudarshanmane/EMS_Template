@@ -12,8 +12,6 @@ const initialState = {
 
 export const RootReducer = (state = initialState, action) => {
   switch (action.type) {
-
-
     case API_CONSTANTS.ADD_REPORT:
       return {
         ...state,
@@ -27,18 +25,18 @@ export const RootReducer = (state = initialState, action) => {
         addreportresult: action.result,
       };
 
-      case API_CONSTANTS.GET_REPORT_LIST:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.GET_REPORT_LIST_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          getreportlist: action.result,
-        };
+    case API_CONSTANTS.GET_REPORT_LIST:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_REPORT_LIST_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getreportlist: action.result,
+      };
 
     case API_CONSTANTS.UPDATE_REPORT:
       return {
@@ -125,179 +123,176 @@ export const RootReducer = (state = initialState, action) => {
         deletecategoryResult: action.result,
       };
 
-      case API_CONSTANTS.ADD_COMPANY_POLICY:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.ADD_COMPANY_POLICY_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          addCompanyPolicyresult: action.result,
-        };
+    case API_CONSTANTS.ADD_COMPANY_POLICY:
+      return {
+        ...state,
+        loding: true,
+      };
 
-  
-        case API_CONSTANTS.GET_COMPANY_POLICY:
-          return {
-            ...state,
-            loding: true,
-          };
-    
-        case API_CONSTANTS.GET_COMPANY_POLICY_SUCCESS:
-          return {
-            ...state,
-            loding: false,
-            getcompanypolicy: action.result,
-          };
+    case API_CONSTANTS.ADD_COMPANY_POLICY_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        addCompanyPolicyresult: action.result,
+      };
 
-          case API_CONSTANTS.UPDATE_COMPANY_POLICY:
-            return {
-              ...state,
-              loding: true,
-            };
-            
-      case API_CONSTANTS.UPDATE_COMPANY_POLICY_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          updateCompanyPolicyResult: action.result,
-        };
-  
-      case API_CONSTANTS.DELETE_COMPANY_POLICY:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.DELETE_COMPANY_POLICY_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          deleteCompanyPolicySuccess: action.result,
-        };
-  
+    case API_CONSTANTS.GET_COMPANY_POLICY:
+      return {
+        ...state,
+        loding: true,
+      };
 
-        case API_CONSTANTS.ADD_MILEAGE:
-          return {
-            ...state,
-            loding: true,
-          };
-    
-        case API_CONSTANTS.ADD_MILEAGE_SUCCESS:
-          return {
-            ...state,
-            loding: false,
-            addMileageresult: action.result,
-          };
-  
-    
-          case API_CONSTANTS.GET_MILEAGE:
-            return {
-              ...state,
-              loding: true,
-            };
-      
-          case API_CONSTANTS.GET_MILEAGE_SUCCESS:
-            return {
-              ...state,
-              loding: false,
-              getMileageSuccess: action.result,
-            };
-  
-            case API_CONSTANTS.FETCH_CATEGORY:
-            return {
-              ...state,
-              loding: true,
-            };
-      
-          case API_CONSTANTS.FETCH_CATEGORY_SUCCESS:
-            return {
-              ...state,
-              loding: false,
-              fetchCategorySuccess: action.result,
-            };
+    case API_CONSTANTS.GET_COMPANY_POLICY_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getcompanypolicy: action.result,
+      };
 
-            case API_CONSTANTS.UPDATE_MILEAGE:
-              return {
-                ...state,
-                loding: true,
-              };
-              
-        case API_CONSTANTS.UPDATE_MILEAGE_SUCCESS:
-          return {
-            ...state,
-            loding: false,
-            updateMileageResult: action.result,
-          };
-    
-        case API_CONSTANTS.DELETE_MILEAGE:
-          return {
-            ...state,
-            loding: true,
-          };
-    
-        case API_CONSTANTS.DELETE_MILEAGE_SUCCESS:
-          return {
-            ...state,
-            loding: false,
-            deleteMileageSuccess: action.result,
-          };
+    case API_CONSTANTS.UPDATE_COMPANY_POLICY:
+      return {
+        ...state,
+        loding: true,
+      };
 
-          case API_CONSTANTS.APPLY_CARD:
-          return {
-            ...state,
-            loding: true,
-          };
-    
-        case API_CONSTANTS.APPLY_CARD_SUCCESS:
-          return {
-            ...state,
-            loding: false,
-            applyCardresult: action.result,
-          };
-  
-    
-          case API_CONSTANTS.GET_CARD:
-            return {
-              ...state,
-              loding: true,
-            };
-      
-          case API_CONSTANTS.GET_CARD_SUCCESS:
-            return {
-              ...state,
-              loding: false,
-              getCardSuccess: action.result,
-            };
-  
-            case API_CONSTANTS.UPDATE_CARD:
-              return {
-                ...state,
-                loding: true,
-              };
-              
-        case API_CONSTANTS.UPDATE_CARD_SUCCESS:
-          return {
-            ...state,
-            loding: false,
-            updateCardResult: action.result,
-          };
-    
-        case API_CONSTANTS.REJECT_CARD:
-          return {
-            ...state,
-            loding: true,
-          };
-    
-        case API_CONSTANTS.REJECT_CARD_SUCCESS:
-          return {
-            ...state,
-            loding: false,
-            rejectCardSuccess: action.result,
-          };
-      // ====================================================================
+    case API_CONSTANTS.UPDATE_COMPANY_POLICY_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        updateCompanyPolicyResult: action.result,
+      };
+
+    case API_CONSTANTS.DELETE_COMPANY_POLICY:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.DELETE_COMPANY_POLICY_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        deleteCompanyPolicySuccess: action.result,
+      };
+
+    case API_CONSTANTS.ADD_MILEAGE:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.ADD_MILEAGE_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        addMileageresult: action.result,
+      };
+
+    case API_CONSTANTS.GET_MILEAGE:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_MILEAGE_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getMileageSuccess: action.result,
+      };
+
+    case API_CONSTANTS.FETCH_CATEGORY:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.FETCH_CATEGORY_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        fetchCategorySuccess: action.result,
+      };
+
+    case API_CONSTANTS.UPDATE_MILEAGE:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.UPDATE_MILEAGE_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        updateMileageResult: action.result,
+      };
+
+    case API_CONSTANTS.DELETE_MILEAGE:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.DELETE_MILEAGE_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        deleteMileageSuccess: action.result,
+      };
+
+    case API_CONSTANTS.APPLY_CARD:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.APPLY_CARD_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        applyCardresult: action.result,
+      };
+
+    case API_CONSTANTS.GET_CARD:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_CARD_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getCardSuccess: action.result,
+      };
+
+    case API_CONSTANTS.UPDATE_CARD:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.UPDATE_CARD_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        updateCardResult: action.result,
+      };
+
+    case API_CONSTANTS.REJECT_CARD:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.REJECT_CARD_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        rejectCardSuccess: action.result,
+      };
+
+    // ====================================================================
     case API_CONSTANTS.USER_LOGIN:
       return {
         ...state,
@@ -473,8 +468,6 @@ export const RootReducer = (state = initialState, action) => {
         addexpenseresult: action.result,
       };
 
-   
-
     case API_CONSTANTS.GET_ROLE:
       return {
         ...state,
@@ -624,7 +617,6 @@ export const RootReducer = (state = initialState, action) => {
         updatecompanylist: action.result,
       };
 
-
     case API_CONSTANTS.GET_USER_PANEL:
       return {
         ...state,
@@ -675,7 +667,6 @@ export const RootReducer = (state = initialState, action) => {
         panelaccountingcodeResult: action.result,
       };
 
-  
     case API_CONSTANTS.GET_EXPENSELIST_PANEL:
       return {
         ...state,
@@ -1285,6 +1276,7 @@ export const RootReducer = (state = initialState, action) => {
         loding: false,
         deleteexpenseitemizationResult: action.result,
       };
+
     case API_CONSTANTS.DELETE_ACCOUNTINGCODE_PANEL:
       return {
         ...state,
@@ -1297,6 +1289,7 @@ export const RootReducer = (state = initialState, action) => {
         loding: false,
         deleteaccountingcodeResult: action.result,
       };
+
     case API_CONSTANTS.DELETE_EXPENSE_PANEL:
       return {
         ...state,
@@ -1358,6 +1351,7 @@ export const RootReducer = (state = initialState, action) => {
         loding: false,
         ownExpenseApproveResult: action.result,
       };
+
     case API_CONSTANTS.EXPORT_COMPANY_PANEL:
       return {
         ...state,
@@ -1370,6 +1364,43 @@ export const RootReducer = (state = initialState, action) => {
         loding: false,
         exportcompanyResult: action.result,
       };
+
+    case API_CONSTANTS.ADD_BULK_EXPENSE_REPORT: {
+      return {
+        ...state,
+        loding: true,
+      };
+    }
+
+    case API_CONSTANTS.ADD_BULK_EXPENSE_REPORT_SUCCESS: {
+      return {
+        ...state,
+        loding: false,
+        addExpenseReportResult: action.result,
+      };
+    }
+
+    case API_CONSTANTS.SET_ADD_BULK_EXPENSE_FALSE: {
+      return {
+        ...state,
+        addExpenseReportResult: false,
+      };
+    }
+
+    case API_CONSTANTS.GET_CATEGORY_LIST_BULK_EXPENSE: {
+      return {
+        ...state,
+        loding: true,
+      };
+    }
+
+    case API_CONSTANTS.GET_CATEGORY_LIST_BULK_EXPENSE_SUCCESS: {
+      return {
+        ...state,
+        loding: false,
+        addBulkExpenseCategoryList: action.result,
+      };
+    }
 
     default:
       return state;

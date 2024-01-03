@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import {
   Button,
@@ -9,9 +8,9 @@ import {
   Col,
   Upload,
   Select,
+  Checkbox,
 } from "antd";
 import { AlignCenterOutlined, InboxOutlined } from "@ant-design/icons";
-import Dragger from "antd/es/upload/Dragger";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getItemListonItemization,
@@ -23,6 +22,7 @@ import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import Offcanvas from "../../Entryfile/offcanvance";
+import AddExpenseBulk from "./AddExpenseBulk";
 
 const Addexpense = ({ initialData }) => {
   const [file, setFile] = useState([]);
@@ -127,8 +127,6 @@ const Addexpense = ({ initialData }) => {
     setShowInvoiceView(!showInvoiceView);
   };
 
-  
-
   return (
     <>
       <div className="page-wrapper">
@@ -137,7 +135,6 @@ const Addexpense = ({ initialData }) => {
           <meta name="description" content="Login page" />
         </Helmet>
         <div className="content container-fluid">
-          {/* {/ Page Header /} */}
           <div className="page-header">
             <div className="row">
               <div className="col">
@@ -151,7 +148,6 @@ const Addexpense = ({ initialData }) => {
               </div>
             </div>
           </div>
-          {/* {/ /Page Header /} */}
 
           <div className="row">
             <div className="col-md-12">
@@ -286,10 +282,13 @@ const Addexpense = ({ initialData }) => {
                                 </small>
                               </div>
                               <div className="text-end mt-3">
-                      <button type="submit" className="btn btn-primary">
-                        Submit
-                      </button>
-                    </div>
+                                <button
+                                  type="submit"
+                                  className="btn btn-primary"
+                                >
+                                  Submit
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -453,70 +452,19 @@ const Addexpense = ({ initialData }) => {
                               </div>
                             </div>
                             <div className="text-end mt-3">
-                      <button type="submit" className="btn btn-primary">
-                        Submit
-                      </button>
-                    </div>
+                              <button type="submit" className="btn btn-primary">
+                                Submit
+                              </button>
+                            </div>
                           </div>
                         </div>
-                        <div className="row"></div>
                       </div>
                     </div>
-
-                    <div className="tab-pane fade" id="bulk_expense">
-                      <table className="table table-hover">
-                        <thead>
-                          <tr>
-                            <th>Date</th>
-                            <th>Category</th>
-                            <th>Amount</th>
-                            <th>Description</th>
-                            <th>Reimbursable</th>
-                            <th>Receipt</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>
-                              <div className="mb-3">
-                                <input type="date" className="form-control" />
-                              </div>
-                            </td>
-                            <td>
-                              <div className="mb-3">
-                                <input type="text" className="form-control" />
-                              </div>
-                            </td>
-                            <td>
-                              <div className="mb-3">
-                                <input type="number" className="form-control" />
-                              </div>
-                            </td>
-                            <td>
-                              <div className="mb-3">
-                                <input type="text" className="form-control" />
-                              </div>
-                            </td>
-                            <td>
-                              <div className="mb-3">
-                              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
-                              </div>
-                            </td>
-                            <td>
-                              <div className="mb-3">
-                                <input type="file" className="form-control" />
-                              </div>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      <div className="text-end mt-3">
-                      <button type="submit" className="btn btn-primary">
-                        Submit
-                      </button>
-                    </div>
-                    </div>
                   </form>
+
+                  <div className="tab-pane fade" id="bulk_expense">
+                    <AddExpenseBulk></AddExpenseBulk>
+                  </div>
                 </div>
               </div>
             </div>
@@ -528,4 +476,3 @@ const Addexpense = ({ initialData }) => {
   );
 };
 export default Addexpense;
-
