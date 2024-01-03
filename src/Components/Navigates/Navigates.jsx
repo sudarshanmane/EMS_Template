@@ -98,7 +98,10 @@ const Navigates = () => {
           ></Route>
         </Route>
         <Route path="/login" element={<Loginpage></Loginpage>}></Route>
-        <Route path="/register" element={<Registrationpage></Registrationpage>}></Route>
+        <Route
+          path="/register"
+          element={<Registrationpage></Registrationpage>}
+        ></Route>
       </Routes>
     </BrowserRouter>
   );

@@ -13,7 +13,7 @@ function* errorSaga(mes) {
 function* UserLoginGenerator(action) {
   try {
     let result = yield call(Method.postData, action);
-    if (result.status === 202) {
+    if (result.status === 200) {
       yield put({
         type: `${action.type}_SUCCESS`,
         status: "ok",
@@ -30,7 +30,6 @@ function* UserLoginGenerator(action) {
 function* UserRegisterGenerator(action) {
   try {
     let result = yield call(Method.postData, action);
-    console.log("resultresultresultresult", result);
     if (result.status === 200) {
       yield put({
         type: `${action.type}_SUCCESS`,
@@ -594,8 +593,6 @@ function* updateTravel(action) {
 }
 
 // =====================================================================================
-
-
 
 function* getCommonGenerator(action) {
   try {
@@ -1932,46 +1929,38 @@ function* exportCompanypanel(action) {
 export {
   UserLoginGenerator,
   UserRegisterGenerator,
-
   getReportList,
   addReportsubmit,
   updateReport,
   deleteReport,
-
   getAddCategoryList,
   categoryPanelList,
   updateCategoryPanel,
   deleteCategory,
   createCategoryItem,
-
   addExpensePolicy,
   getExpensePolicy,
   updateExpensePolicy,
   deleteExpensePolicy,
-
   getMileage,
   fetchCategory,
   addMileage,
   updateMileage,
   deleteMileage,
-
   applyCard,
   getCard,
   approveCard,
   rejectCard,
-
   getVendor,
   createVendor,
   deleteVendor,
   updateVendor,
-  
   createTravel,
   getTravel,
   deleteTravel,
   updateTravel,
   // =========================================
   approvedExpensemanager,
-
   addExpenseItem,
   addExpenseType,
   addExternalcodeType,

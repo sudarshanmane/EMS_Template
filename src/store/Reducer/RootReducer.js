@@ -12,31 +12,30 @@ const initialState = {
 
 export const RootReducer = (state = initialState, action) => {
   switch (action.type) {
-
     case API_CONSTANTS.USER_LOGIN:
       return {
         ...state,
         loding: true,
       };
 
-      case API_CONSTANTS.USER_REGISTER:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.USER_REGISTER_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          registerDetails: action.result,
-        };
-  
     case API_CONSTANTS.USER_LOGIN_SUCCESS:
       return {
         ...state,
         loding: false,
         loginDetails: action.result,
+      };
+
+    case API_CONSTANTS.USER_REGISTER:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.USER_REGISTER_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        registerDetails: action.result,
       };
 
     case API_CONSTANTS.ADD_REPORT:
@@ -150,8 +149,6 @@ export const RootReducer = (state = initialState, action) => {
         deletecategoryResult: action.result,
       };
 
-    // *********************
-
     case API_CONSTANTS.CREATE_CATEGORY_ITEM:
       return {
         ...state,
@@ -164,8 +161,6 @@ export const RootReducer = (state = initialState, action) => {
         loding: false,
         createCategoryItemSuccess: action.result,
       };
-
-    // ***************************
 
     case API_CONSTANTS.ADD_EXPENSE_POLICY:
       return {
@@ -441,8 +436,7 @@ export const RootReducer = (state = initialState, action) => {
       };
 
     // ====================================================================
-   
-   
+
     case API_CONSTANTS.ADD_EXPENSE_ITEM_SETUP:
       return {
         ...state,

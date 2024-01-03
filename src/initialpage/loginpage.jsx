@@ -2,7 +2,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Applogo } from "../Entryfile/imagepath.jsx";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
@@ -33,14 +33,18 @@ const Loginpage = (props) => {
     dispatch(userLogin(values));
   };
 
-  const selector = useSelector((state) => state.loginDetails);
+  const navigate = useNavigate();
+
+  const loginselector = useSelector((state) => state.loginDetails);
 
   useEffect(() => {
-    if (selector) {
-      setUser(selector);
-      window.location.href = "/";
+    console.log("Selector:", loginselector);
+    if (loginselector) {
+      console.log("User details:", loginselector);
+      setUser(loginselector);
+      navigate("/");
     }
-  }, [selector]);
+  }, [loginselector]);
 
   const userDetails = getUser();
 

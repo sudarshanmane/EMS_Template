@@ -371,7 +371,7 @@ const Sidebar = () => {
                     <li>
                       <Link
                         className={
-                          pathname.includes("profile/employee-") ? "active" : ""
+                          pathname.includes("employee-") ? "active" : ""
                         }
                         to="/home/employee-profile"
                       >

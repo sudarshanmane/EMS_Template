@@ -1,4 +1,4 @@
-import { getUser } from "../../utils/sessionStorage";
+import { getToken, getUser } from "../../utils/sessionStorage";
 import { http } from "./http";
 
 export const Method = {
@@ -7,8 +7,10 @@ export const Method = {
       const response = http.post(action.URL, action.payload, {
         headers: {
           "Content-Type": action.contentType,
+          Authorization: `Token ${getToken() ? getToken() : ""}`,
         },
       });
+
       return response;
     } catch (error) {
       console.log(error);
@@ -20,6 +22,7 @@ export const Method = {
       const response = http.get(action.URL, {
         headers: {
           "Content-Type": action.contentType,
+          Authorization: `Token ${getToken() ? getToken() : ""}`,
         },
       });
       return response;
@@ -33,6 +36,7 @@ export const Method = {
       const response = http.put(action.URL, action.payload, {
         headers: {
           "Content-Type": action.contentType,
+          Authorization: `Token ${getToken() ? getToken() : ""}`,
         },
       });
       return response;
@@ -45,6 +49,7 @@ export const Method = {
       const response = http.delete(action.URL, {
         headers: {
           "Content-Type": action.contentType,
+          Authorization: `Token ${getToken() ? getToken() : ""}`,
         },
       });
       return response;
