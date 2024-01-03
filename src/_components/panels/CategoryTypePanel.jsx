@@ -1,15 +1,12 @@
 /* eslint-disable no-undef */
 
 import React, { useEffect, useState } from "react";
-import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Table } from "antd";
 import "antd/dist/antd.min.css";
 import {
   itemRender,
-  onShowSizeChange,
 } from "../../MainPage/paginationfunction";
 import "antd/dist/antd.min.css";
 import Offcanvas from "../../Entryfile/offcanvance";
@@ -20,16 +17,17 @@ import {
   addCategoryAction,
   deleteCategorypanelAction,
   updateCategorypanle,
+  fetchCategory,
+  createCategoryItem,
 } from "../../store/Action/Actions";
 import { useForm } from "react-hook-form";
 
 const CategoryTypePanel = () => {
+  const fetchurl = URLS.FETCH_CATEGORY_URL;
   const [url, setUrl] = useState(URLS.GET_CATEGORY_PANEL_URL);
   const dispatch = useDispatch();
   const [allCategoryType, setAllCategoryType] = useState([]);
   const [focused, setFocused] = useState(false);
-  const [selectedDate1, setSelectedDate1] = useState(null);
-  const [selectedDate2, setSelectedDate2] = useState(null);
   const [allCategoryList, setAllCategoryList] = useState([]);
   const [isAddFormVisible, setIsAddFormVisible] = useState(false);
   const [isEditFormVisible, setIsEditFormVisible] = useState(false);
@@ -38,11 +36,21 @@ const CategoryTypePanel = () => {
   const [deleteCategoryData, setDeleteCategoryData] = useState(null);
   const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] =
     useState(false);
+  const [tablePagination, setTablePagination] = useState({
+    pageSize: 10, // Set your default page size
+    current: 1,
+  });
+  const [submittedValues, setSubmittedValues] = useState(null);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+  } = useForm({});
+
+  const {
+    register: createregister,
+    handleSubmit: handleCreate,
   } = useForm({});
 
   const { handleSubmit: handleDelete } = useForm({});
@@ -52,6 +60,12 @@ const CategoryTypePanel = () => {
     handleSubmit: handleUpdate,
     setValue,
   } = useForm({});
+
+  const onCreate = async (values) => {
+    await dispatch(createCategoryItem(values));
+    dispatch(getCategoryPanelAction({ payload: {}, URL: url }));
+    setIsAddFormVisible(false);
+  };
 
   const onSubmit = (values) => {
     dispatch(addCategoryAction(values));
@@ -93,7 +107,18 @@ const CategoryTypePanel = () => {
 
   useEffect(() => {
     if (categoryselector) {
-      const allCategoryType = categoryselector.map((element) => {
+      const allCategoryType = categoryselector?.map((element) => {
+        let dataString = [];
+
+        if (element) {
+          element?.sub_item?.map((data) => {
+            dataString.push(data.item_name);
+            element.data1 = dataString;
+          });
+        } else {
+          element.data1 = [];
+        }
+
         return {
           id: element.id,
           category_name: element.category_name,
@@ -102,12 +127,27 @@ const CategoryTypePanel = () => {
           receipt_require_limit: element.receipt_require_limit,
           auto_approve_limit: element.auto_approve_limit,
           accounting_code: element.accounting_code,
+          sub_item: element?.data1 ? element?.data1 : [],
         };
       });
       setAllCategoryType(allCategoryType);
     }
   }, [categoryselector]);
 
+  const categorySelector = useSelector((state) => state.fetchCategorySuccess);
+
+  const createCategoryItemSelector = useSelector(
+    (state) => state.createCategoryItemSuccess
+  );
+
+  useEffect(() => {
+    if (createCategoryItemSelector && submittedValues) {
+      dispatch(createVendor(submittedValues));
+      setSubmittedValues(null);
+      setIsAddFormVisible(false);
+    }
+  }, [createCategoryItemSelector, submittedValues]);
+  
   const addCategorylSelector = useSelector((state) => state.categoryresult);
 
   useEffect(() => {
@@ -151,18 +191,21 @@ const CategoryTypePanel = () => {
     );
   };
 
-  const handleDateChange1 = (date) => {
-    setSelectedDate1(date);
-  };
-  const handleDateChange2 = (date) => {
-    setSelectedDate2(date);
-  };
-  const handleDateChange3 = (date) => {
-    setSelectedDate3(date);
-  };
-  const handleDateChange4 = (date) => {
-    setSelectedDate4(date);
-  };
+  function fetchPageDetails(fetchurl) {
+    dispatch(fetchCategory({ payload: {}, URL: fetchurl }));
+  }
+
+  useEffect(() => {
+    fetchPageDetails(fetchurl);
+  }, []);
+
+  function fetchCategoryData(fetchurl) {
+    dispatch(fetchCategory({ payload: {}, URL: fetchurl }));
+  }
+
+  useEffect(() => {
+    fetchCategoryData(fetchurl);
+  }, []);
 
   useEffect(() => {
     if ($(".select").length > 0) {
@@ -177,21 +220,16 @@ const CategoryTypePanel = () => {
     {
       title: "Sr No",
       dataIndex: "id",
-      render: (text) => <span>{text}</span>,
-      // render: (text) => <strong>{text}</strong>,
-      sorter: (a, b) => a.item.length - b.item.length,
+      render: (text, record, index) => {
+        const { pageSize, current } = tablePagination;
+        return index + 1 + pageSize * (current - 1);
+      },
     },
     {
       title: "Category Name",
       dataIndex: "category_name",
       sorter: (a, b) => a.purchasefrom.length - b.purchasefrom.length,
     },
-    // {
-    //   title: "Override Policy",
-    //   dataIndex: "override_general_policy",
-    //   sorter: (a, b) => a.purchasedate.length - b.purchasedate.length,
-    // },
-
     {
       title: "Expense Amount",
       dataIndex: "expense_amount_limit",
@@ -200,7 +238,7 @@ const CategoryTypePanel = () => {
     },
 
     {
-      title: "Require Limit",
+      title: "Receipt Require Limit",
       dataIndex: "receipt_require_limit",
       render: (text) => <span>$ {text}</span>,
       sorter: (a, b) => a.paidby.length - b.paidby.length,
@@ -216,6 +254,19 @@ const CategoryTypePanel = () => {
       dataIndex: "accounting_code",
       sorter: (a, b) => a.amount.length - b.amount.length,
     },
+
+    {
+      title: "Items",
+      dataIndex: "sub_item",
+      render: (subItems) => {
+        console.log(subItems, "subItems");
+        return subItems.map((item) => {
+          return <div>{item ? item : "-"}</div>;
+        });
+      },
+      sorter: (a, b) => a.amount.length - b.amount.length,
+    },
+
     {
       title: "Status",
       dataIndex: "status",
@@ -225,7 +276,8 @@ const CategoryTypePanel = () => {
             className="btn btn-white btn-sm btn-rounded dropdown-toggle"
             to="#"
             data-bs-toggle="dropdown"
-            aria-expanded="false">
+            aria-expanded="false"
+          >
             <i
               className={
                 text === "New"
@@ -250,7 +302,8 @@ const CategoryTypePanel = () => {
               className="dropdown-item"
               to="#"
               data-bs-toggle="modal"
-              data-bs-target="#approve_leave">
+              data-bs-target="#approve_leave"
+            >
               <i className="far fa-dot-circle text-success" /> Approved
             </Link>
             <Link className="dropdown-item" to="#">
@@ -299,6 +352,7 @@ const CategoryTypePanel = () => {
       ),
     },
   ];
+
   return (
     <>
       <div className="page-wrapper">
@@ -315,6 +369,14 @@ const CategoryTypePanel = () => {
                 </ul>
               </div>
               <div className="col-auto float-end ms-auto">
+                <Link
+                  to="#"
+                  className="btn add-btn"
+                  data-bs-toggle="modal"
+                  data-bs-target="#add_category_item"
+                >
+                  <i className="fa fa-plus" /> Add Category Item
+                </Link>
                 <Link
                   to="#"
                   className="btn add-btn"
@@ -356,31 +418,40 @@ const CategoryTypePanel = () => {
           {/* /Search Filter */}
           <div className="row">
             <div className="col-md-12">
-            <div className="card mb-0">
+              <div className="card mb-0">
                 <div className="card-header">
                   <h4 className="card-title mb-0">Categories</h4>
                 </div>
                 <div className="card-body">
-              <div className="table-responsive">
-                <Table
-                  className="table-striped"
-                  pagination={{
-                    total: allCategoryType.length,
-                    showTotal: (total, range) =>
-                      `Showing ${range[0]} to ${range[1]} of ${total} entries`,
-                    showSizeChanger: true,
-                    onShowSizeChange: onShowSizeChange,
-                    itemRender: itemRender,
-                  }}
-                  style={{ overflowX: "auto" }}
-                  columns={columns}
-                  dataSource={allCategoryType}
-                  rowKey={(record) => record.id}
-                />
+                  <div className="table-responsive">
+                    <Table
+                      className="table-striped"
+                      pagination={{
+                        total: allCategoryType.length,
+                        showTotal: (total, range) =>
+                          `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+                        showSizeChanger: true,
+                        onShowSizeChange: (current, pageSize) => {
+                          setTablePagination({
+                            ...tablePagination,
+                            pageSize,
+                            current,
+                          });
+                        },
+                        onChange: (current) => {
+                          setTablePagination({ ...tablePagination, current });
+                        },
+                        itemRender: itemRender,
+                      }}
+                      style={{ overflowX: "auto" }}
+                      columns={columns}
+                      dataSource={allCategoryType}
+                      rowKey={(record) => record.id}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          </div>
           </div>
         </div>
         {/* /Page Content */}
@@ -452,8 +523,6 @@ const CategoryTypePanel = () => {
                     </div>
                   </div>
 
-                  
-
                   <div className="row">
                     <div className="col-md-6">
                       <div className="input-block">
@@ -495,7 +564,88 @@ const CategoryTypePanel = () => {
           </div>
         </div>
         {/* /Add Expense Modal */}
-        {/* Edit Expense Modal */}
+      
+        {/* category item modal  */}
+        <div
+          id="add_category_item"
+          className="modal custom-modal fade"
+          role="dialog"
+        >
+          <div
+            className="modal-dialog modal-dialog-centered modal-lg"
+            role="document"
+          >
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Add Expense Category Item</h5>
+                <button
+                  type="button"
+                  className="close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <form onSubmit={handleCreate(onCreate)}>
+                  <div className="row">
+                    <div className="col-md-6">
+                      <div className="input-block">
+                        <label className="col-form-label">
+                          Default Category
+                        </label>
+
+                        <select
+                          className="form-control"
+                          {...createregister("category")}
+                        >
+                          <option value="">Select </option>
+                          {categorySelector &&
+                            categorySelector?.map((data) => {
+                              return (
+                                <option value={data.id}>
+                                  {data.category_name}
+                                </option>
+                              );
+                            })}
+                        </select>
+                      </div>
+                      <div className="input-block">
+                        <label>Accounting Code</label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          {...createregister("acc_code")}
+                        />
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div className="input-block">
+                        <label>Category Item Name</label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          {...createregister("item_name")}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="submit-section">
+                    <button
+                      className="btn btn-primary submit-btn"
+                      data-bs-dismiss="modal"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* modal end   */}
         <div
           id="edit_expense"
           className="modal custom-modal fade"
@@ -567,7 +717,6 @@ const CategoryTypePanel = () => {
                     </div>
                   </div>
 
-                 
                   <div className="row">
                     <div className="col-md-6">
                       <div className="input-block">

@@ -12,7 +12,7 @@ import {
   exportExpenseTypeAction,
   getExpenseTypePanelAction,
 } from "../../store/Action/Actions";
-import Expensetypes from "../../_components/screens/Expensetypes";
+import Expensetypes from "../../_components/screens/Expensetypes";  
 import { URLS } from "../../Globals/URLS";
 import { Link } from "react-router-dom";
 import {

@@ -2,13 +2,14 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Applogo } from "../Entryfile/imagepath.jsx";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { login } from "../Entryfile/features/users.jsx";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup.js";
+import { setUser } from "../utils/sessionStorage.js";
 
 const Loginpage = (props) => {
   const validationSchema = Yup.object().shape({
@@ -26,11 +27,13 @@ const Loginpage = (props) => {
     resolver: yupResolver(validationSchema),
   });
 
+  const navigate = useNavigate();
   const onSubmit = (data) => {
-    dispatch(login(data));
-
-    props.history.push("/app/main/dashboard");
+    // dispatch(login(data));
+    setUser(data);
+    navigate("/");
   };
+
   const dispatch = useDispatch();
 
   const [eye, seteye] = useState(true);

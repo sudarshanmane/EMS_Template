@@ -1317,7 +1317,7 @@ const ProjectList = () => {
                     <tr>
                       <td>
                         <Link to="/app/projects/projects-view">
-                          Office Management
+                          Office 
                         </Link>
                       </td>
                       <td>PRO-0009</td>

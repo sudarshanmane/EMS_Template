@@ -217,7 +217,7 @@ const Interviewquestion = () => {
                           <option value="Web">Web Development</option>
                           <option>Application Development</option>
                           <option>IT Management</option>
-                          <option>Accounts Management</option>
+                          <option>Accounts </option>
                           <option>Support Management</option>
                           <option>Marketing</option>
                         </select>
