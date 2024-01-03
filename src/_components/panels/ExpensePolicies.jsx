@@ -265,6 +265,35 @@ const ExpensePolicies = () => {
             </div>
           </div>
           {/* {/ /Page Header /} */}
+
+            {/* Search Filter */}
+            <div className="row filter-row">
+            <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+              <div
+                className={
+                  focused
+                    ? "input-block form-focus focused"
+                    : "input-block form-focus"
+                }
+              >
+                <input
+                  type="text"
+                  className="form-control floating"
+                  onFocus={() => setFocused(true)}
+                  onBlur={() => setFocused(false)}
+                />
+                <label className="focus-label">Search</label>
+              </div>
+            </div>
+            <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+              <Link to="#" className="btn btn-success btn-block w-100">
+                {" "}
+                Search{" "}
+              </Link>
+            </div>
+          </div>
+          {/* /Search Filter */}
+          
           <div className="row">
             <div className="col-lg-12">
               <div className="card mb-0">
