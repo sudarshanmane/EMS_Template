@@ -1,17 +1,18 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unescaped-entities */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Applogo } from "../Entryfile/imagepath.jsx";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
-import { useDispatch } from "react-redux";
-import { login } from "../Entryfile/features/users.jsx";
+import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup.js";
-import { setUser } from "../utils/sessionStorage.js";
+import { getUser, setUser } from "../utils/sessionStorage.js";
+import { userLogin } from "../store/Action/Actions.js";
 
 const Loginpage = (props) => {
+  const dispatch = useDispatch();
   const validationSchema = Yup.object().shape({
     email: Yup.string().required("Email is required").email("Email is invalid"),
     password: Yup.string()
@@ -19,6 +20,7 @@ const Loginpage = (props) => {
       .min(6, "Password must be at least 6 characters")
       .max(20, "Password must not exceed 20 characters"),
   });
+
   const {
     register,
     handleSubmit,
@@ -27,14 +29,24 @@ const Loginpage = (props) => {
     resolver: yupResolver(validationSchema),
   });
 
-  const navigate = useNavigate();
-  const onSubmit = (data) => {
-    // dispatch(login(data));
-    setUser(data);
-    navigate("/");
+  const onSubmit = (values) => {
+    dispatch(userLogin(values));
   };
 
-  const dispatch = useDispatch();
+  const selector = useSelector((state) => state.loginDetails);
+
+  useEffect(() => {
+    if (selector) {
+      setUser(selector);
+      window.location.href = "/";
+    }
+  }, [selector]);
+
+  const userDetails = getUser();
+
+  if (userDetails) {
+    window.location.href = "/";
+  }
 
   const [eye, seteye] = useState(true);
 

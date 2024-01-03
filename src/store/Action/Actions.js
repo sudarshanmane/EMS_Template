@@ -2,6 +2,24 @@ import { API_CONSTANTS } from "../../Globals/APIConstants";
 import { contentType } from "../../Globals/ContentType";
 import { URLS } from "../../Globals/URLS";
 
+function userLogin(payload) {
+  return {
+    type: API_CONSTANTS.USER_LOGIN,
+    payload,
+    URL: URLS.USER_LOGIN_URL,
+    contentType: contentType.json,
+  };
+}
+
+function userRegister(payload) {
+  return {
+    type: API_CONSTANTS.USER_REGISTER,
+    payload,
+    URL: URLS.USER_REGISTER_URL,
+    contentType: contentType.json,
+  };
+}
+
 function addReport(payload) {
   return {
     type: API_CONSTANTS.ADD_REPORT,
@@ -77,7 +95,7 @@ function deleteCategorypanelAction(payload) {
   };
 }
 
-// *********************
+
 function createCategoryItem(payload) {
   return {
     type: API_CONSTANTS.CREATE_CATEGORY_ITEM,
@@ -86,8 +104,6 @@ function createCategoryItem(payload) {
     contentType: contentType.json,
   };
 }
-
-// *******************
 
 function addExpensePolicy(payload) {
   return {
@@ -124,10 +140,6 @@ function deleteExpensePolicy(payload) {
     contentType: contentType.json,
   };
 }
-
-
-
-
 
 function addMileage(payload) {
   return {
@@ -295,22 +307,8 @@ function updateTravel(payload) {
 
 // ================================================================================
 
-function userLogin(payload) {
-  return {
-    type: API_CONSTANTS.USER_LOGIN,
-    payload,
-    URL: URLS.USER_LOGIN_URL,
-    contentType: contentType.json,
-  };
-}
-function userRegister(payload) {
-  return {
-    type: API_CONSTANTS.USER_REGISTER,
-    payload,
-    URL: URLS.USER_REGISTER_URL,
-    contentType: contentType.json,
-  };
-}
+
+
 
 function addExpenseItemSetup(payload) {
   return {
@@ -1054,15 +1052,18 @@ function exportCompanyPanelAction(payload) {
 }
 
 export {
+  userLogin,
+  userRegister,
+  
   addReport,
   updateReportAction,
   deleteReportAction,
   setDeleteReportFalse,
+
   addCategoryAction,
   getCategoryPanelAction,
   updateCategorypanle,
   deleteCategorypanelAction,
-
   createCategoryItem,
   
   addExpensePolicy,
@@ -1075,10 +1076,12 @@ export {
   fetchCategory,
   updateMileage,
   deleteMileage,
+
   applyCard,
   getCard,
   approveCard,
   rejectCard,
+  
   createVendor,
   getVendor,
   deleteVendor,
@@ -1090,8 +1093,8 @@ export {
   updateTravel,
 
   // ===========================================================
-  userLogin,
-  userRegister,
+ 
+
   addExpenseItemSetup,
   getAccountingCodeAction,
   addExpenseTypeSetup,

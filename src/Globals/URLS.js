@@ -1,5 +1,8 @@
 export const URLS = {
     BASE_URL_EXPORT: "http://127.0.0.1:8000",
+    USER_LOGIN_URL: "/login_web/",
+    USER_REGISTER_URL: "/userregister/",
+
     ADD_REPORT_URL: "/expense/expensereport/",
     GET_REPORT_LIST_URL:"/expense/expensereport/",
     UPDATE_REPORT: "/expense/expensereport/",
@@ -8,19 +11,13 @@ export const URLS = {
     GET_CATEGORY_PANEL_URL: "/expense/expensecategory/",
     UPDATE_CATEGORY_PANEL_URL: "/expense/expensecategory/",
     DELETE_CATEGORY_PANEL_URL: "/expense/expensecategory/",
-    
-// ******************
-
     CREATE_CATEGORY_ITEM_URL: "/expense/expensecategoryitem/",
-
-// *********************
 
     ADD_EXPENSE_POLICY_URL: "/expense/expensepolicy/",
     GET_EXPENSE_POLICY_URL: "/expense/expensepolicy/",
     UPDATE_EXPENSE_POLICY_URL: "/expense/expensepolicy/",
     DELETE_EXPENSE_POLICY_URL: "/expense/expensepolicy/",
-
-     
+   
     ADD_MILEAGE_URL: "/expense/expensemileage/",
     GET_MILEAGE_URL: "/expense/expensemileage/",
     FETCH_CATEGORY_URL: "/expense/get_categories/",
@@ -32,12 +29,10 @@ export const URLS = {
     REJECT_CARD_URL: "/card/reject_card/",
     APPROVE_CARD_URL: "/card/reject_card/",
 
-
     CREATE_VENDOR_URL : "/expense/register_vendor/",
     GET_VENDOR_URL: "/expense/register_vendor/",
     DELETE_VENDOR_URL : "/expense/vendor_payment/",
     UPDATE_VENDOR_URL :  "/expense/vendor_payment/",
-
 
     CREATE_TRAVEL_URL: "/expense/request_travel/",
     GET_TRAVEL_URL:  "/expense/request_travel/",
@@ -46,8 +41,8 @@ export const URLS = {
     
 
     // ========================================================================================
-    USER_LOGIN_URL: "/users/admin-login/",
-    USER_REGISTER_URL: "/authentication/register/",
+   
+   
     GET_AGENCY_LIST_URL: "/document/agency-list/",
     EXPENSE_ITEM_SETUP_URL: "/expense/expenseitemsetup/",
     UPDATE_EXPENSE_ITEM_SETUP_URL: "/expense/expenseitemsetup/",

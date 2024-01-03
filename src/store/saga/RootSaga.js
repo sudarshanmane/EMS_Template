@@ -2,10 +2,14 @@ import { takeEvery } from "redux-saga/effects";
 import { API_CONSTANTS } from "../../Globals/APIConstants";
 
 import {
+  UserLoginGenerator,
+  UserRegisterGenerator,
+
   addReportsubmit,
   getReportList,
   updateReport,
   deleteReport,
+
   getAddCategoryList,
   categoryPanelList,
   updateCategoryPanel,
@@ -22,10 +26,12 @@ import {
   addMileage,
   updateMileage,
   deleteMileage,
+
   applyCard,
   getCard,
   approveCard,
   rejectCard,
+
   createVendor,
   getVendor,
   deleteVendor,
@@ -36,8 +42,7 @@ import {
   deleteTravel,
  
   // =======================================
-  UserLoginGenerator,
-  UserRegisterGenerator,
+
   Updateuserprofile,
   addExpenseItem,
   addExpenseType,
@@ -120,6 +125,9 @@ import {
 } from "./CommonSagas";
 
 export function* RootSaga() {
+  yield takeEvery(API_CONSTANTS.USER_LOGIN, UserLoginGenerator);
+  yield takeEvery(API_CONSTANTS.USER_REGISTER, UserRegisterGenerator);
+
   yield takeEvery(API_CONSTANTS.ADD_REPORT, addReportsubmit);
   yield takeEvery(API_CONSTANTS.GET_REPORT_LIST, getReportList);
   yield takeEvery(API_CONSTANTS.UPDATE_REPORT, updateReport);
@@ -129,13 +137,7 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.GET_CATEGORYLIST_PANEL, categoryPanelList);
   yield takeEvery(API_CONSTANTS.UPDATE_CATEGORY_PANEL, updateCategoryPanel);
   yield takeEvery(API_CONSTANTS.DELETE_CATEGORY_PANEL, deleteCategory);
-
-  
-  // **************************** 
   yield takeEvery(API_CONSTANTS.CREATE_CATEGORY_ITEM, createCategoryItem);
-
-  // **********************
-
   
   yield takeEvery(API_CONSTANTS.ADD_EXPENSE_POLICY, addExpensePolicy);
   yield takeEvery(API_CONSTANTS.GET_EXPENSE_POLICY, getExpensePolicy);
@@ -171,8 +173,7 @@ export function* RootSaga() {
 
 
   // ============================================================
-  yield takeEvery(API_CONSTANTS.USER_LOGIN, UserLoginGenerator);
-  yield takeEvery(API_CONSTANTS.USER_REGISTER, UserRegisterGenerator);
+
   yield takeEvery(API_CONSTANTS.ADD_EXPENSE_TYPE_SETUP, addExpenseType);
   yield takeEvery(API_CONSTANTS.UPDATE_USER_PROFILE, Updateuserprofile);
   yield takeEvery(API_CONSTANTS.ADD_EXPENSE_ITEM_SETUP, addExpenseItem);

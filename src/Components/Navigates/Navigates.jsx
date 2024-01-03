@@ -22,6 +22,7 @@ import ExpensePolicies from "../../_components/panels/ExpensePolicies";
 import Loginpage from "../../initialpage/loginpage";
 import ChangePassword from "../../MainPage/Administration/Settings/changepassword";
 import RolePermisson from "../../MainPage/Administration/Settings/rolespermission";
+import Registrationpage from "../../initialpage/RegistrationPage";
 
 const Navigates = () => {
   return (
@@ -97,6 +98,7 @@ const Navigates = () => {
           ></Route>
         </Route>
         <Route path="/login" element={<Loginpage></Loginpage>}></Route>
+        <Route path="/register" element={<Registrationpage></Registrationpage>}></Route>
       </Routes>
     </BrowserRouter>
   );
