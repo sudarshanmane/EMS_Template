@@ -32,7 +32,6 @@ const TravelRequestPannel = () => {
   const [isEditFormVisible, setIsEditFormVisible] = useState(false);
   const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] =
     useState(false);
-
   const [submittedValues, setSubmittedValues] = useState(null);
 
   const handleDateChange1 = (date) => {
@@ -43,38 +42,49 @@ const TravelRequestPannel = () => {
   };
 
   const {
-    register: updateregister,
-    handleSubmit: handleUpdate,
-    setValue,
-  } = useForm({});
-
-  const {
     register,
     handleSubmit,
     control,
     formState: { errors },
   } = useForm({});
 
+  const {
+    register: updateregister,
+    handleSubmit: handleUpdate,
+    setValue,
+  } = useForm({});
+
+  const { handleSubmit: handleDelete } = useForm({});
+
   const formatDate = (date) => {
     return format(date, "yyyy-MM-dd");
   };
 
-  const { handleSubmit: handleDelete } = useForm({});
-
   const onSubmit = async (values) => {
     await dispatch(createTravel(values));
-    dispatch(getTravel({ payload: {}, URL: url }));
+    setSubmittedValues(values);
     setIsAddFormVisible(false);
   };
+
+  const updatetravelSelector = useSelector((state) => state.updateTravelResult);
+  useEffect(() => {
+    if (updatetravelSelector) {
+      dispatch(getTravel({ payload: {}, URL: url }));
+    }
+    setIsAddFormVisible(false);
+  }, [updatetravelSelector]);
 
   const createTravelSelector = useSelector(
     (state) => state.createTravelSuccess
   );
+
   useEffect(() => {
     if (createTravelSelector && submittedValues) {
-      dispatch(createTravel(submittedValues));
-      setSubmittedValues(null);
-      setIsAddFormVisible(false);
+      const createdTravel = createTravelSelector;
+      if (createdTravel) {
+        dispatch(getTravel({ payload: {}, URL: url }));
+        setSubmittedValues(null);
+      }
     }
   }, [createTravelSelector, submittedValues]);
 
@@ -147,14 +157,6 @@ const TravelRequestPannel = () => {
       prevItems.filter((item) => item.id !== deletedTravelId)
     );
   };
-
-  const updatetravelSelector = useSelector((state) => state.updateTravelResult);
-  useEffect(() => {
-    if (updatetravelSelector) {
-      dispatch(getTravel({ payload: {}, URL: url }));
-    }
-    setIsAddFormVisible(false);
-  }, [updatetravelSelector]);
 
   const columns = [
     {
