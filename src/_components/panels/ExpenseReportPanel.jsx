@@ -35,7 +35,6 @@ const ExpenseReport = () => {
   const [isEditFormVisible, setIsEditFormVisible] = useState(false);
   const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] =
     useState(false);
-
   const url = URLS.GET_REPORT_LIST_URL;
 
   const handleDateChange1 = (date) => {
@@ -60,12 +59,21 @@ const ExpenseReport = () => {
     formState: { errors },
   } = useForm({});
 
-  const { register: updateregister, handleSubmit: handleUpdate,  setValue,} = useForm({});
+  const {
+    register: updateregister,
+    handleSubmit: handleUpdate,
+    setValue,
+  } = useForm({});
 
   const { handleSubmit: handleDelete } = useForm({});
 
   const onSubmit = (values) => {
     dispatch(addReport(values));
+  };
+
+  const viewReport = (record) => {
+    setViewReportData(record);
+    setIsAddFormVisible(false);
   };
 
   const onEdit = (record) => {
@@ -250,6 +258,17 @@ const ExpenseReport = () => {
               className="dropdown-item"
               to="#"
               data-bs-toggle="modal"
+              data-bs-target="#view_report"
+              onClick={() => {
+                viewReport(record);
+              }}
+            >
+              <i className="fa fa-eye m-r-5" /> View
+            </Link>
+            <Link
+              className="dropdown-item"
+              to="#"
+              data-bs-toggle="modal"
               data-bs-target="#edit_report"
               onClick={() => onEdit(record)}
             >
@@ -387,7 +406,7 @@ const ExpenseReport = () => {
             </div>
           </div>
         </div>
-        
+
         {/* Add Expense Modal */}
         <div id="add_report" className="modal custom-modal fade" role="dialog">
           <div
@@ -491,9 +510,40 @@ const ExpenseReport = () => {
             </div>
           </div>
         </div>
-        
-        {/* /Add Expense Modal */}
 
+        {/* /Add Expense Modal */}
+        {/* View Expense Modal */}
+        <div id="view_report" className="modal custom-modal fade" role="dialog">
+          <div
+            className="modal-dialog modal-dialog-centered modal-md"
+            role="document"
+          >
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">View Expense Report</h5>
+                <button
+                  type="button"
+                  className="close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                {viewReportData && (
+                  <div>
+                    <p>Report No: {viewReportData.report_number}</p>
+                    <p>Description: {viewReportData.description}</p>
+                    <p>Start Date: {viewReportData.start_date}</p>
+                    <p>End Date: {viewReportData.end_date}</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* /View Expense Modal */}
         {/* Edit Expense Modal */}
         <div id="edit_report" className="modal custom-modal fade" role="dialog">
           <div
@@ -513,7 +563,7 @@ const ExpenseReport = () => {
                 </button>
               </div>
               <div className="modal-body">
-                <form onSubmit={handleUpdate(onUpdate)}>  
+                <form onSubmit={handleUpdate(onUpdate)}>
                   <div className="input-block">
                     <div className="col-md-12">
                       <div className="input-block">
