@@ -3,9 +3,15 @@ export const URLS = {
   USER_LOGIN_URL: "/users/api/v2/login_web/",
   USER_REGISTER_URL: "/userregister/",
 
+  APPROVE_EXPENSE_URL: "/api/version_0/expense/approve-expense/",
+  REJECT_EXPENSE_URL: "/api/version_0/expense/reject-expense/",
+  APPROVE_REPORT_URL: "/api/version_0/expense/approve-report/",
+  REJECT_REPORT_URL: "/api/version_0/expense/reject-report/",
   ADD_REPORT_URL: "/api/version_0/expense/expensereport/",
   GET_REPORT_LIST_URL: "/api/version_0/expense/expensereport/",
   UPDATE_REPORT: "/api/version_0/expense/expensereport/",
+  VIEW_REPORT_URL: "/api/version_0/expense/expensereport/",
+  VIEW_REPORT_BY_ID_URL: "/api/version_0/expense/expensereport/",
 
   ADD_CATEGORY_URL: "/api/version_0/expense/expensecategory/",
   GET_CATEGORY_PANEL_URL: "/api/version_0/expense/expensecategory/",

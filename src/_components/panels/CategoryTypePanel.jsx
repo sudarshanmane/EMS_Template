@@ -372,7 +372,7 @@ const CategoryTypePanel = () => {
                 <Link
                   to="#"
                   className="btn add-btn"
-                  data-bs-toggle="modal"
+                  data-bs-toggle="modal"  
                   data-bs-target="#add_category_item"
                 >
                   <i className="fa fa-plus" /> Add Category Item

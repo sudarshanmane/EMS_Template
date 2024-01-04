@@ -60,6 +60,51 @@ function setDeleteReportFalse(payload) {
   };
 }
 
+function getReportDetails(payload) {
+  return {
+    type: API_CONSTANTS.VIEW_REPORT,
+    payload: payload.payload,
+    URL: URLS.VIEW_REPORT_BY_ID_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+function approveReport(payload) {
+  return {
+    type: API_CONSTANTS.APPROVE_REPORT,
+    payload: payload.payload,
+    URL: URLS.APPROVE_REPORT_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+function rejectReport(payload) {
+  return {
+    type: API_CONSTANTS.REJECT_REPORT,
+    payload: payload.payload,
+    URL: URLS.REJECT_REPORT_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+function approveExpense(payload) {
+  return {
+    type: API_CONSTANTS.APPROVE_EXPENSE,
+    payload: payload.payload,
+    URL: URLS.APPROVE_EXPENSE_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+function rejectExpense(payload) {
+  return {
+    type: API_CONSTANTS.REJECT_EXPENSE,
+    payload: payload.payload,
+    URL: URLS.REJECT_EXPENSE_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
 function addCategoryAction(payload) {
   return {
     type: API_CONSTANTS.ADD_CATEGORY,
@@ -95,7 +140,6 @@ function deleteCategorypanelAction(payload) {
   };
 }
 
-
 function createCategoryItem(payload) {
   return {
     type: API_CONSTANTS.CREATE_CATEGORY_ITEM,
@@ -122,7 +166,6 @@ function getExpensePolicy(payload) {
     contentType: contentType.json,
   };
 }
-
 
 function updateExpensePolicy(payload) {
   return {
@@ -210,7 +253,6 @@ function approveCard(payload) {
   };
 }
 
-
 // function getExpensePolicy(payload) {
 //   return {
 //     type: API_CONSTANTS.GET_EXPENSE_POLICY,
@@ -228,7 +270,6 @@ function rejectCard(payload) {
     contentType: contentType.json,
   };
 }
-
 
 function createVendor(payload) {
   return {
@@ -248,7 +289,6 @@ function getVendor(payload) {
   };
 }
 
-
 function deleteVendor(payload) {
   return {
     type: API_CONSTANTS.DELETE_VENDOR,
@@ -261,11 +301,10 @@ function updateVendor(payload) {
   return {
     type: API_CONSTANTS.UPDATE_VENDOR,
     payload: payload.payload,
-    URL: URLS.UPDATE_VENDOR_URL+ payload.id + "/",
+    URL: URLS.UPDATE_VENDOR_URL + payload.id + "/",
     contentType: contentType.json,
   };
 }
-
 
 function createTravel(payload) {
   return {
@@ -275,7 +314,6 @@ function createTravel(payload) {
     contentType: contentType.json,
   };
 }
-
 
 function getTravel(payload) {
   return {
@@ -294,21 +332,16 @@ function deleteTravel(payload) {
   };
 }
 
-
 function updateTravel(payload) {
   return {
     type: API_CONSTANTS.UPDATE_TRAVEL,
     payload: payload.payload,
-    URL: URLS.UPDATE_TRAVEL_URL+ payload.id + "/",
+    URL: URLS.UPDATE_TRAVEL_URL + payload.id + "/",
     contentType: contentType.json,
   };
 }
 
-
 // ================================================================================
-
-
-
 
 function addExpenseItemSetup(payload) {
   return {
@@ -1054,47 +1087,43 @@ function exportCompanyPanelAction(payload) {
 export {
   userLogin,
   userRegister,
-  
   addReport,
   updateReportAction,
   deleteReportAction,
   setDeleteReportFalse,
-
+  getReportDetails,
+  approveReport,
+  rejectReport,
+  approveExpense,
+  rejectExpense,
   addCategoryAction,
   getCategoryPanelAction,
   updateCategorypanle,
   deleteCategorypanelAction,
   createCategoryItem,
-  
   addExpensePolicy,
   getExpensePolicy,
   updateExpensePolicy,
   deleteExpensePolicy,
-
   addMileage,
   getMileage,
   fetchCategory,
   updateMileage,
   deleteMileage,
-
   applyCard,
   getCard,
   approveCard,
   rejectCard,
-  
   createVendor,
   getVendor,
   deleteVendor,
   updateVendor,
-
   createTravel,
   getTravel,
   deleteTravel,
   updateTravel,
 
   // ===========================================================
- 
-
   addExpenseItemSetup,
   getAccountingCodeAction,
   addExpenseTypeSetup,

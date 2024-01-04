@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Table } from "antd";
@@ -35,6 +35,7 @@ const ExpenseReport = () => {
   const [isEditFormVisible, setIsEditFormVisible] = useState(false);
   const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] =
     useState(false);
+  const navigate = useNavigate();
   const url = URLS.GET_REPORT_LIST_URL;
 
   const handleDateChange1 = (date) => {
@@ -43,27 +44,10 @@ const ExpenseReport = () => {
   const handleDateChange2 = (date) => {
     setSelectedDate2(date);
   };
-  const handleView = (record) => {
-    setViewReportData(record);
-    setIsAddFormVisible(false);
-  };
 
   const formatDate = (date) => {
     return format(date, "yyyy-MM-dd");
   };
-
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm({});
-
-  const {
-    register: updateregister,
-    handleSubmit: handleUpdate,
-    setValue,
-  } = useForm({});
 
   const { handleSubmit: handleDelete } = useForm({});
 
@@ -74,6 +58,7 @@ const ExpenseReport = () => {
   const viewReport = (record) => {
     setViewReportData(record);
     setIsAddFormVisible(false);
+    navigate("/home/viewReport", { state: record });
   };
 
   const onEdit = (record) => {
@@ -97,6 +82,18 @@ const ExpenseReport = () => {
       prevItems.filter((item) => item.id !== deletedReportId)
     );
   };
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({});
+
+  const {
+    register: updateregister,
+    handleSubmit: handleUpdate,
+    setValue,
+  } = useForm({});
 
   function getPageDetails(url) {
     dispatch(getReportList({ payload: {}, URL: url }));
@@ -255,13 +252,9 @@ const ExpenseReport = () => {
           </Link>
           <div className="dropdown-menu dropdown-menu-right">
             <Link
+              to={`/home/viewReport/${record.id}`}
               className="dropdown-item"
-              to="#"
-              data-bs-toggle="modal"
-              data-bs-target="#view_report"
-              onClick={() => {
-                viewReport(record);
-              }}
+              onClick={() => viewReport(record)}
             >
               <i className="fa fa-eye m-r-5" /> View
             </Link>
@@ -512,38 +505,7 @@ const ExpenseReport = () => {
         </div>
 
         {/* /Add Expense Modal */}
-        {/* View Expense Modal */}
-        <div id="view_report" className="modal custom-modal fade" role="dialog">
-          <div
-            className="modal-dialog modal-dialog-centered modal-md"
-            role="document"
-          >
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">View Expense Report</h5>
-                <button
-                  type="button"
-                  className="close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">×</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                {viewReportData && (
-                  <div>
-                    <p>Report No: {viewReportData.report_number}</p>
-                    <p>Description: {viewReportData.description}</p>
-                    <p>Start Date: {viewReportData.start_date}</p>
-                    <p>End Date: {viewReportData.end_date}</p>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* /View Expense Modal */}
+
         {/* Edit Expense Modal */}
         <div id="edit_report" className="modal custom-modal fade" role="dialog">
           <div
