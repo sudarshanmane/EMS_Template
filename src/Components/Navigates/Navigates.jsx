@@ -22,6 +22,17 @@ import ChangePassword from "../../MainPage/Administration/Settings/changepasswor
 import RolePermisson from "../../MainPage/Administration/Settings/rolespermission";
 import Registrationpage from "../../initialpage/RegistrationPage";
 import ViewReport from "../../_components/panels/ViewReport";
+import Employeeslist from "../../MainPage/Employees/Employees/employeeslist";
+import Addemployees from "../../MainPage/Employees/Employees/addemployee"; 
+import Certification from "../../MainPage/Employees/Employees/certification";
+import Educationform from "../../MainPage/Employees/Employees/educationform";
+import Experience from "../../MainPage/Employees/Employees/experience";
+import Salary from "../../MainPage/Employees/Employees/salary";
+import UserRegistrationSetting from "../../MainPage/Employees/Employees/userRegistrationSetting";
+import UserRegistration from "../../MainPage/Employees/Employees/userRegistration";
+import PersonalInformation from "../../MainPage/Employees/Employees/PersonalInformation";
+
+
 
 const Navigates = () => {
   return (
@@ -36,6 +47,17 @@ const Navigates = () => {
           <Route path="applyforcard" element={<Card></Card>}></Route>
           <Route path="/home/viewReport/:id" element={<ViewReport />} />
           <Route path="addexpense" element={<Addexpense></Addexpense>}></Route>
+          <Route path="addemployee" element={<Addemployees></Addemployees>}></Route>
+          <Route path="certification" element={<Certification></Certification>}></Route>
+          <Route path="educationform" element={<Educationform></Educationform>}></Route>
+          <Route path="experience" element={<Experience></Experience>}></Route>
+          <Route path="salary" element={<Salary></Salary>}></Route>
+          <Route path="userRegistrationSetting" element={<UserRegistrationSetting></UserRegistrationSetting>}></Route>
+          <Route path="userRegistration" element={<UserRegistration></UserRegistration>}></Route>
+          <Route path="PersonalInformation" element={<PersonalInformation></PersonalInformation>}></Route>
+
+
+
           <Route
             path="expensepanel"
             element={<ExpensePanel></ExpensePanel>}
@@ -63,6 +85,10 @@ const Navigates = () => {
           <Route
             path="Reports"
             element={<ExpenseReportPanel></ExpenseReportPanel>}
+          ></Route>
+            <Route
+            path="employeeslist"
+            element={<Employeeslist></Employeeslist>}
           ></Route>
           <Route
             path="cardapproval"

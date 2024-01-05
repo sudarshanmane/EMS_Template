@@ -20,6 +20,24 @@ function userRegister(payload) {
   };
 }
 
+function getUserRole(payload) {
+  return {
+    type: API_CONSTANTS.GET_USER_ROLE,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
+function getAllStaff(payload) {
+  return {
+    type: API_CONSTANTS.GET_STAFF_LIST,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
 function addReport(payload) {
   return {
     type: API_CONSTANTS.ADD_REPORT,
@@ -77,6 +95,7 @@ function approveReport(payload) {
     contentType: contentType.json,
   };
 }
+
 
 function rejectReport(payload) {
   return {
@@ -247,7 +266,7 @@ function getCard(payload) {
 function approveCard(payload) {
   return {
     type: API_CONSTANTS.APPROVE_CARD,
-    payload: payload.payload,
+    payload: payload.payload, 
     URL: URLS.APPROVE_CARD_URL + payload.id + "/",
     contentType: contentType.json,
   };
@@ -336,6 +355,7 @@ function updateTravel(payload) {
   return {
     type: API_CONSTANTS.UPDATE_TRAVEL,
     payload: payload.payload,
+    URL: URLS.UPDATE_TRAVEL_URL + payload.id + "/",
     URL: URLS.UPDATE_TRAVEL_URL + payload.id + "/",
     contentType: contentType.json,
   };
@@ -1087,6 +1107,8 @@ function exportCompanyPanelAction(payload) {
 export {
   userLogin,
   userRegister,
+  getUserRole,
+  getAllStaff,
   addReport,
   updateReportAction,
   deleteReportAction,
@@ -1122,6 +1144,7 @@ export {
   getTravel,
   deleteTravel,
   updateTravel,
+ 
 
   // ===========================================================
   addExpenseItemSetup,

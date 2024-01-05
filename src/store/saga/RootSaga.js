@@ -4,6 +4,8 @@ import { API_CONSTANTS } from "../../Globals/APIConstants";
 import {
   UserLoginGenerator,
   UserRegisterGenerator,
+  getRole,
+  getStaff,
   addReportsubmit,
   getReportList,
   updateReport,
@@ -48,7 +50,7 @@ import {
   getItemNameList,
   itemizationsubmit,
   AddExpesnesubmit,
-  getRole,
+
   getManagerList,
   addRole,
   getAccountingCodeList,
@@ -113,6 +115,8 @@ import {
   exportCompanypanel,
   createCategoryItem,
   updateTravel,
+  getAllUser,
+  addAllUser,
   rejectExpense,
   approveExpense,
 } from "./CommonSagas";
@@ -120,6 +124,8 @@ import {
 export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.USER_LOGIN, UserLoginGenerator);
   yield takeEvery(API_CONSTANTS.USER_REGISTER, UserRegisterGenerator);
+  yield takeEvery(API_CONSTANTS.GET_USER_ROLE, getRole);
+  yield takeEvery(API_CONSTANTS.GET_STAFF_LIST, getStaff);
 
   yield takeEvery(API_CONSTANTS.ADD_REPORT, addReportsubmit);
   yield takeEvery(API_CONSTANTS.GET_REPORT_LIST, getReportList);
@@ -163,6 +169,9 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.GATE_TRAVEL, getTravel);
   yield takeEvery(API_CONSTANTS.DELETE_TRAVEL, deleteTravel);
   yield takeEvery(API_CONSTANTS.UPDATE_TRAVEL, updateTravel);
+
+  yield takeEvery(API_CONSTANTS.GET_ALL_USER, getAllUser);
+  yield takeEvery(API_CONSTANTS.ADD_ALL_USER, addAllUser);
 
   // ============================================================
 

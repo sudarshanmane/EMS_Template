@@ -90,31 +90,26 @@ const Sidebar = () => {
                     }}
                   >
                     <li>
-                      <Link
-                        className={
-                          pathname.includes("role-add") ? "active" : ""
-                        }
-                        to="/home/role-add"
-                      >
-                        Role
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className={
-                          pathname.includes("userpanel") ? "active" : ""
-                        }
-                        to="/home/rolespermission"
-                      >
-                        Permissions
-                      </Link>
-                    </li>
+                        <Link
+                          className={
+                            pathname.includes("employeeslist")
+                              ? "active"
+                              : pathname.includes("employees-list")
+                              ? "active"
+                              : ""
+                          }
+                          to="/home/employeeslist"
+                        >
+                          All Users
+                        </Link>
+                      </li>
+                  
                   </ul>
                 ) : (
                   ""
                 )}
               </li>
-              <li className="submenu">
+              {/* <li className="submenu">
                 <Link
                   to="#"
                   className={isSideMenu == "company" ? "subdrop" : ""}
@@ -144,7 +139,7 @@ const Sidebar = () => {
                 ) : (
                   ""
                 )}
-              </li>
+              </li> */}
 
               <li className="submenu">
                 <Link

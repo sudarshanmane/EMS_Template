@@ -44,6 +44,47 @@ function* UserRegisterGenerator(action) {
   }
 }
 
+function* getRole(action) {
+  try {
+    let result = yield call(Method.getData, action);
+    if (
+      result.status === 202 ||
+      result.status === 201 ||
+      result.status === 200
+    ) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+function* getStaff(action) {
+  try {
+    let result = yield call(Method.getData, action);
+    if (
+      result.status === 202 ||
+      result.status === 201 ||
+      result.status === 200
+    ) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
 function* getReportList(action) {
   try {
     let result = yield call(Method.getData, action);
@@ -684,6 +725,45 @@ function* updateTravel(action) {
   }
 }
 
+function* addAllUser(action) {
+  try {
+    let result = yield call(Method.postData, action);
+    if (result.status === 201 || result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    console.error("Saga error:", error);
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* getAllUser(action) {
+  try {
+    let result = yield call(Method.getData, action);
+    if (
+      result.status === 202 ||
+      result.status === 201 ||
+      result.status === 200
+    ) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
 // =====================================================================================
 
 function* getCommonGenerator(action) {
@@ -993,26 +1073,6 @@ function* addRole(action) {
   }
 }
 
-function* getRole(action) {
-  try {
-    let result = yield call(Method.getData, action);
-    if (
-      result.status === 202 ||
-      result.status === 201 ||
-      result.status === 200
-    ) {
-      yield put({
-        type: `${action.type}_SUCCESS`,
-        status: "ok",
-        result: result.data,
-      });
-    } else {
-      yield call(failSaga, "Server Down!");
-    }
-  } catch (error) {
-    yield call(errorSaga, "The credentials you entered are incorrect!");
-  }
-}
 
 function* getExpenseTypePanel(action) {
   try {
@@ -2021,6 +2081,8 @@ function* exportCompanypanel(action) {
 export {
   UserLoginGenerator,
   UserRegisterGenerator,
+  getStaff,
+  getRole,
   getReportList,
   addReportsubmit,
   updateReport,
@@ -2057,6 +2119,8 @@ export {
   getTravel,
   deleteTravel,
   updateTravel,
+  getAllUser,
+  addAllUser,
   // =========================================
   approvedExpensemanager,
   addExpenseItem,
@@ -2070,7 +2134,6 @@ export {
   accountingCodeSubmit,
   Updateuserprofile,
   getCommonGenerator,
-  getRole,
   getAccountingCodeList,
   itemizationsubmit,
   AddExpesnesubmit,

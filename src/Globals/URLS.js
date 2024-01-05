@@ -2,6 +2,9 @@ export const URLS = {
   BASE_URL_EXPORT: "http://127.0.0.1:8001",
   USER_LOGIN_URL: "/users/api/v2/login_web/",
   USER_REGISTER_URL: "/userregister/",
+  GET_USER_ROLE_URL: "/users/api/v2/getcurrentuserrole/",
+  GET_STAFF_LIST_URL: "/users/api/v2/getallstaff/",
+
 
   APPROVE_EXPENSE_URL: "/api/version_0/expense/approve-expense/",
   REJECT_EXPENSE_URL: "/api/version_0/expense/reject-expense/",
@@ -44,6 +47,12 @@ export const URLS = {
   GET_TRAVEL_URL: "/api/version_0/expense/request_travel/",
   DELETE_TRAVEL_URL: "/api/version_0/expense/request_travel_details/",
   UPDATE_TRAVEL_URL: "/api/version_0/expense/request_travel_details/",
+
+  GET_ALL_USER_URL:  "/api/v2/getalluser/",
+  ADD_ALL_USER_URL: "/api/v2/userrole/",
+
+
+  
 
   // ========================================================================================
 

@@ -38,6 +38,32 @@ export const RootReducer = (state = initialState, action) => {
         registerDetails: action.result,
       };
 
+    case API_CONSTANTS.GET_USER_ROLE:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_USER_ROLE_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getuserrole: action.result,
+      };
+
+    case API_CONSTANTS.GET_STAFF_LIST:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_STAFF_LIST_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getstafflist: action.result,
+      };
+
     case API_CONSTANTS.ADD_REPORT:
       return {
         ...state,
@@ -97,21 +123,20 @@ export const RootReducer = (state = initialState, action) => {
         deleteReportSuccess: false,
       };
 
-      case API_CONSTANTS.VIEW_REPORT:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.VIEW_REPORT_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          reportDetails: action.result,
-        };
+    case API_CONSTANTS.VIEW_REPORT:
+      return {
+        ...state,
+        loding: true,
+      };
 
-        
-      case API_CONSTANTS.APPROVE_REPORT:
+    case API_CONSTANTS.VIEW_REPORT_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        reportDetails: action.result,
+      };
+
+    case API_CONSTANTS.APPROVE_REPORT:
       return {
         ...state,
         loding: true,
@@ -137,32 +162,31 @@ export const RootReducer = (state = initialState, action) => {
         rejectReportSuccess: action.result,
       };
 
-      case API_CONSTANTS.APPROVE_EXPENSE:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.APPROVE_EXPENSE_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          approveExpenseSuccess: action.result,
-        };
-  
-      case API_CONSTANTS.REJECT_EXPENSE:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.REJECT_EXPENSE_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          rejectExpenseSuccess: action.result,
-        };
+    case API_CONSTANTS.APPROVE_EXPENSE:
+      return {
+        ...state,
+        loding: true,
+      };
 
+    case API_CONSTANTS.APPROVE_EXPENSE_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        approveExpenseSuccess: action.result,
+      };
+
+    case API_CONSTANTS.REJECT_EXPENSE:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.REJECT_EXPENSE_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        rejectExpenseSuccess: action.result,
+      };
 
     case API_CONSTANTS.ADD_CATEGORY:
       return {
@@ -500,6 +524,31 @@ export const RootReducer = (state = initialState, action) => {
         ...state,
         loding: false,
         updateTravelResult: action.result,
+      };
+    case API_CONSTANTS.ADD_ALL_USER:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.ADD_ALL_USER_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        addAllUserresult: action.result,
+      };
+
+    case API_CONSTANTS.GET_ALL_USER:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_ALL_USER_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getAllUserSuccess: action.result,
       };
 
     // ====================================================================

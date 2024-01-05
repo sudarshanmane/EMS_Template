@@ -30,6 +30,8 @@ const ExpenseReport = () => {
   const [selectedDate2, setSelectedDate2] = useState(new Date());
   const [viewReportData, setViewReportData] = useState(null);
   const [isAddFormVisible, setIsAddFormVisible] = useState(false);
+  const [isApproveFormVisible, setIsApproveFormVisible] = useState(false);
+  const [isRejectFormVisible, setIsRejectFormVisible] = useState(false);
   const [editReportData, setEditReportData] = useState(null);
   const [deleteReportData, setDeleteReportData] = useState(null);
   const [isEditFormVisible, setIsEditFormVisible] = useState(false);
@@ -251,7 +253,7 @@ const ExpenseReport = () => {
             <i className="material-icons">more_vert</i>
           </Link>
           <div className="dropdown-menu dropdown-menu-right">
-            <Link
+           <Link
               to={`/home/viewReport/${record.id}`}
               className="dropdown-item"
               onClick={() => viewReport(record)}
@@ -412,7 +414,7 @@ const ExpenseReport = () => {
                 <button
                   type="button"
                   className="close"
-                  data-bs-dismiss="modal"
+                  data-bs-dismiss="modal" 
                   aria-label="Close"
                 >
                   <span aria-hidden="true">×</span>
@@ -503,7 +505,6 @@ const ExpenseReport = () => {
             </div>
           </div>
         </div>
-
         {/* /Add Expense Modal */}
 
         {/* Edit Expense Modal */}
