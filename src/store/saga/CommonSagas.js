@@ -65,6 +65,27 @@ function* getReportList(action) {
   }
 }
 
+function* getApprovedReportList(action) {
+  try {
+    let result = yield call(Method.getData, action);
+    if (
+      result.status === 202 ||
+      result.status === 201 ||
+      result.status === 200
+    ) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
 function* addReportsubmit(action) {
   try {
     let result = yield call(Method.postData, action);
@@ -116,6 +137,28 @@ function* deleteReport(action) {
     yield call(errorSaga, "Something went wrong!");
   }
 }
+
+function* getReport(action) {
+  try {
+    let result = yield call(Method.getData, action);
+    if (
+      result.status === 202 ||
+      result.status === 201 ||
+      result.status === 200
+    ) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
 function* approveReport(action) {
   try {
     let result = yield call(Method.putData, action);
@@ -134,6 +177,40 @@ function* approveReport(action) {
 }
 
 function* rejectReport(action) {
+  try {
+    let result = yield call(Method.putData, action);
+    if (result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "Something went wrong!");
+  }
+}
+
+function* approveExpense(action) {
+  try {
+    let result = yield call(Method.putData, action);
+    if (result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* rejectExpense(action) {
   try {
     let result = yield call(Method.putData, action);
     if (result.status === 200) {
@@ -2005,11 +2082,15 @@ export {
   UserLoginGenerator,
   UserRegisterGenerator,
   getReportList,
+  getApprovedReportList,
   addReportsubmit,
   updateReport,
   deleteReport,
+  getReport,
   approveReport,
   rejectReport,
+  approveExpense,
+  rejectExpense,
 
   getAddCategoryList,
   categoryPanelList,

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Table } from "antd";
@@ -13,8 +13,6 @@ import {
   deleteReportAction,
   addReport,
   updateReportAction,
-  approveReport,
-  rejectReport,
 } from "../../store/Action/Actions";
 import { URLS } from "../../Globals/URLS";
 import Offcanvas from "../../Entryfile/offcanvance";
@@ -39,9 +37,7 @@ const ExpenseReport = () => {
   const [isEditFormVisible, setIsEditFormVisible] = useState(false);
   const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] =
     useState(false);
-  const [rejectReportData, setRejectReportData] = useState(null);
-  const [approveReportData, setApproveReportData] = useState(null);
-
+  const navigate = useNavigate();
   const url = URLS.GET_REPORT_LIST_URL;
 
   const handleDateChange1 = (date) => {
@@ -49,10 +45,6 @@ const ExpenseReport = () => {
   };
   const handleDateChange2 = (date) => {
     setSelectedDate2(date);
-  };
-  const handleView = (record) => {
-    setViewReportData(record);
-    setIsAddFormVisible(false);
   };
 
   const formatDate = (date) => {
@@ -68,6 +60,7 @@ const ExpenseReport = () => {
   const viewReport = (record) => {
     setViewReportData(record);
     setIsAddFormVisible(false);
+    navigate("/home/viewReport", { state: record });
   };
 
   const onEdit = (record) => {
@@ -108,51 +101,6 @@ const ExpenseReport = () => {
     handleSubmit: handleUpdate,
     setValue,
   } = useForm({});
-
-  const {
-    handleSubmit: handleReject,
-    // setValue,
-    // formState: { errors },
-  } = useForm({});
-
-  const Approve = (record) => {
-    setIsApproveFormVisible(true);
-    setApproveReportData(record);
-  };
-
-  const onApproveReport = (values) => {
-    dispatch(approveReport({ id: approveReportData.id, payload: values  }));
-  };
-
-  const Reject = (record) => {
-    setIsRejectFormVisible(true);
-    setRejectReportData(record);
-  };
-
-  const onRejectReport = (values) => {
-    dispatch(rejectReport({ id: rejectReportData.id, payload: values }));
-  };
-  
-
-  const approveReportSelector = useSelector(
-    (state) => state.approveReportSuccess
-  );
-  useEffect(() => {
-    if (approveReportSelector) {
-      dispatch(approveReport({ payload: {}, URL: url }));
-    }
-    setIsApproveFormVisible(false);
-  }, [approveReportSelector]);
-
-  const rejectReportSelector = useSelector(
-    (state) => state.rejectReportSuccess
-  );
-  useEffect(() => {
-    if (rejectReportSelector) {
-      dispatch(rejectReport({ payload: {}, URL: url }));
-    }
-    setIsRejectFormVisible(false);
-  }, [rejectReportSelector]);
 
   function getPageDetails(url) {
     dispatch(getReportList({ payload: {}, URL: url }));
@@ -311,13 +259,9 @@ const ExpenseReport = () => {
           </Link>
           <div className="dropdown-menu dropdown-menu-right">
             <Link
+              to={`/home/viewReport/${record.id}`}
               className="dropdown-item"
-              to="#"
-              data-bs-toggle="modal"
-              data-bs-target="#view_report"
-              onClick={() => {
-                viewReport(record);
-              }}
+              onClick={() => viewReport(record)}
             >
               <i className="fa fa-eye m-r-5" /> View
             </Link>
@@ -567,132 +511,6 @@ const ExpenseReport = () => {
           </div>
         </div>
         {/* /Add Expense Modal */}
-
-        {/* View Expense Modal */}
-        <div id="view_report" className="modal custom-modal fade" role="dialog">
-          <div
-            className="modal-dialog modal-dialog-centered modal-md"
-            role="document"
-          >
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">View Expense Report</h5>
-                <button
-                  type="button"
-                  className="close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">×</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                {viewReportData && (
-                  <div>
-                    <p>Report No: {viewReportData.report_number}</p>
-                    <p>Description: {viewReportData.description}</p>
-                    <p>Start Date: {viewReportData.start_date}</p>
-                    <p>End Date: {viewReportData.end_date}</p>
-                  </div>
-                )}
-                <div className="col-auto float-end ms-auto">
-                  <button
-                    className="btn btn-primary submit-btn"
-                    data-bs-dismiss="modal"
-                    onClick={() => Approve(record)}
-                  >
-                    Approve
-                  </button>
-
-                  <button
-                    className="btn btn-primary submit-btn"
-                    data-bs-dismiss="modal"
-                    onClick={() => Reject(record)}
-                  >
-                    Reject
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* /View Expense Modal */}
-        
-        {/* Approve Modal */}
-        <div
-          id="approve-report"
-          className="modal custom-modal fade"
-          role="dialog"
-        >
-          <div
-            className="modal-dialog modal-dialog-centered modal-md"
-            role="document"
-          >
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Remark</h5>
-                <button
-                  type="button"
-                  className="close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">×</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                <form onSubmit={handleApprove(onApproveReport)}>
-                  <div className="submit-section">
-                    <button
-                      className="btn btn-primary submit-btn"
-                      data-bs-dismiss="modal"
-                    >
-                      Approve
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* /Approve Modal */}
-        {/* Reject Modal */} 
-        <div
-          id="reject-report"
-          className="modal custom-modal fade"
-          role="dialog"
-        >
-          <div
-            className="modal-dialog modal-dialog-centered modal-md"
-            role="document"
-          >
-            <div className="modal-content">
-              <div className="modal-header">
-                <button
-                  type="button"
-                  className="close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">×</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                <form onSubmit={handleReject(onRejectReport)}>
-                  <div className="submit-section">
-                    <button
-                      className="btn btn-primary submit-btn"
-                      data-bs-dismiss="modal"
-                    >
-                      Reject
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* /Reject Modal */}
 
         {/* Edit Expense Modal */}
         <div id="edit_report" className="modal custom-modal fade" role="dialog">

@@ -37,6 +37,16 @@ function getReportList(payload) {
   };
 }
 
+function getApprovedReportList(payload) {
+  return {
+    type: API_CONSTANTS.GET_APPROVED_REPORT_LIST,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
+
 function updateReportAction(payload) {
   return {
     type: API_CONSTANTS.UPDATE_REPORT,
@@ -60,6 +70,15 @@ function setDeleteReportFalse(payload) {
   };
 }
 
+function getReportDetails(payload) {
+  return {
+    type: API_CONSTANTS.VIEW_REPORT,
+    payload: payload.payload,
+    URL: URLS.VIEW_REPORT_BY_ID_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
 function approveReport(payload) {
   return {
     type: API_CONSTANTS.APPROVE_REPORT,
@@ -74,6 +93,24 @@ function rejectReport(payload) {
     type: API_CONSTANTS.REJECT_REPORT,
     payload: payload.payload,
     URL: URLS.REJECT_REPORT_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+function approveExpense(payload) {
+  return {
+    type: API_CONSTANTS.APPROVE_EXPENSE,
+    payload: payload.payload,
+    URL: URLS.APPROVE_EXPENSE_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+function rejectExpense(payload) {
+  return {
+    type: API_CONSTANTS.REJECT_EXPENSE,
+    payload: payload.payload,
+    URL: URLS.REJECT_EXPENSE_URL + payload.id + "/",
     contentType: contentType.json,
   };
 }
@@ -309,6 +346,7 @@ function updateTravel(payload) {
   return {
     type: API_CONSTANTS.UPDATE_TRAVEL,
     payload: payload.payload,
+    URL: URLS.UPDATE_TRAVEL_URL + payload.id + "/",
     URL: URLS.UPDATE_TRAVEL_URL + payload.id + "/",
     contentType: contentType.json,
   };
@@ -1082,8 +1120,11 @@ export {
   updateReportAction,
   deleteReportAction,
   setDeleteReportFalse,
+  getReportDetails,
   approveReport,
   rejectReport,
+  approveExpense,
+  rejectExpense,
   addCategoryAction,
   getCategoryPanelAction,
   updateCategorypanle,
@@ -1180,6 +1221,7 @@ export {
   setDeleteUserFalse,
   deleteExternalAccountCodeAction,
   getReportList,
+  getApprovedReportList,
   setDeleteExternalAccountCodeFalse,
   exportExpenseTypeAction,
   exportExpenseItemSetupAction,
