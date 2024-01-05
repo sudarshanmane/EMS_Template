@@ -9,11 +9,13 @@ import {
   Upload,
   Select,
   Checkbox,
+  message,
 } from "antd";
 import { AlignCenterOutlined, InboxOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getItemListonItemization,
+  getTotalForDistance,
   updateexpensepanel,
 } from "../../store/Action/Actions";
 import { addExpense } from "../../store/Action/Actions";
@@ -125,6 +127,49 @@ const Addexpense = ({ initialData }) => {
 
   const toggleView = () => {
     setShowInvoiceView(!showInvoiceView);
+  };
+
+  const [selectedOption, setSelectedOption] = useState("Distance traveled");
+  const [odometerDistance, setOdometerDistance] = useState({
+    start: 0,
+    end: 0,
+  });
+
+  useEffect(() => {
+    if (
+      odometerDistance &&
+      odometerDistance.start > 0 &&
+      odometerDistance.end > 0
+    ) {
+      if (odometerDistance.start > odometerDistance.end) {
+        // let id = setInterval
+      } else {
+        let id = setInterval(() => {
+          clearInterval(id);
+          let distance = odometerDistance.end - odometerDistance.start;
+          parseFloat(distance) &&
+            dispatch(getTotalForDistance({ distance: parseFloat(distance) }));
+        }, 700);
+      }
+    }
+  }, [odometerDistance]);
+
+  const mileageDistanceTraveledSelector = useSelector(
+    (state) => state.mileageDistanceTraveled
+  );
+
+  // calculate total for distance traveled
+  function getTotalForDistanceTraveled(e) {
+    let id = setInterval(() => {
+      clearInterval(id);
+      let distance = e.target.value;
+      parseFloat(distance) &&
+        dispatch(getTotalForDistance({ distance: parseFloat(distance) }));
+    }, 700);
+  }
+
+  const handleRadioChange = (e) => {
+    setSelectedOption(e.target.value);
   };
 
   return (
@@ -261,6 +306,7 @@ const Addexpense = ({ initialData }) => {
                                 />
                               </div>
                             </div>
+
                             <div className="input-block row">
                               <label
                                 className="col-lg-3 col-form-label"
@@ -343,12 +389,17 @@ const Addexpense = ({ initialData }) => {
                                   type="radio"
                                   name="flexRadioDefault"
                                   id="flexRadioDefault1"
+                                  onChange={handleRadioChange}
+                                  value="Distance traveled"
+                                  checked={
+                                    selectedOption === "Distance traveled"
+                                  }
                                 />
                                 <label
                                   className="form-check-label"
                                   for="flexRadioDefault1"
                                 >
-                                  Distance travelled
+                                  Distance traveled
                                 </label>
                               </div>
                               <div className="form-check">
@@ -357,8 +408,13 @@ const Addexpense = ({ initialData }) => {
                                   type="radio"
                                   name="flexRadioDefault"
                                   id="flexRadioDefault2"
-                                  checked
+                                  value="Odometer reading"
+                                  checked={
+                                    selectedOption === "Odometer reading"
+                                  }
+                                  onChange={handleRadioChange}
                                 />
+
                                 <label
                                   className="form-check-label"
                                   for="flexRadioDefault2"
@@ -375,18 +431,80 @@ const Addexpense = ({ initialData }) => {
                                 Distance
                               </label>
                               <div className="input-group mb-3">
-                                <input
-                                  type="number"
-                                  className="form-control"
-                                  aria-label="Recipient's username"
-                                  aria-describedby="basic-addon2"
-                                />
-                                <span
-                                  className="input-group-text"
-                                  id="basic-addon2"
-                                >
-                                  Mile(s)
-                                </span>
+                                {selectedOption === "Distance traveled" && (
+                                  <>
+                                    <input
+                                      min={0}
+                                      type="number"
+                                      className="form-control"
+                                      aria-label="Recipient's username"
+                                      aria-describedby="basic-addon2"
+                                      onInput={getTotalForDistanceTraveled}
+                                    />
+
+                                    <span
+                                      className="input-group-text"
+                                      id="basic-addon2"
+                                    >
+                                      Mile(s)
+                                    </span>
+                                  </>
+                                )}
+                                {selectedOption === "Odometer reading" && (
+                                  <>
+                                    <span
+                                      className="input-group-text"
+                                      id="basic-addon2"
+                                    >
+                                      Start
+                                    </span>
+                                    <input
+                                      type="number"
+                                      min={0}
+                                      className="form-control"
+                                      aria-label="Recipient's username"
+                                      aria-describedby="basic-addon2"
+                                      onInput={(e) =>
+                                        setOdometerDistance({
+                                          ...odometerDistance,
+                                          start: e.target.value,
+                                        })
+                                      }
+                                    />
+                                    <span
+                                      className="input-group-text"
+                                      id="basic-addon2"
+                                    >
+                                      Mile(s)
+                                    </span>
+                                    <span style={{ width: "50px" }}></span>
+                                    <span
+                                      className="input-group-text"
+                                      id="basic-addon2"
+                                    >
+                                      End
+                                    </span>
+                                    <input
+                                      type="number"
+                                      min={0}
+                                      className="form-control"
+                                      aria-label="Recipient's username"
+                                      aria-describedby="basic-addon2"
+                                      onInput={(e) =>
+                                        setOdometerDistance({
+                                          ...odometerDistance,
+                                          end: e.target.value,
+                                        })
+                                      }
+                                    />
+                                    <span
+                                      className="input-group-text"
+                                      id="basic-addon2"
+                                    >
+                                      Mile(s)
+                                    </span>
+                                  </>
+                                )}
                               </div>
                             </div>
                             <div className="input-block row">
@@ -408,6 +526,13 @@ const Addexpense = ({ initialData }) => {
                                   className="form-control"
                                   aria-describedby="basic-addon1"
                                   readOnly
+                                  value={
+                                    mileageDistanceTraveledSelector?.data
+                                      ?.calculatedAmount
+                                      ? mileageDistanceTraveledSelector?.data
+                                          ?.calculatedAmount
+                                      : 0
+                                  }
                                 />
                               </div>
                             </div>

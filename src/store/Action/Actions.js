@@ -107,7 +107,6 @@ function getExpensePolicy(payload) {
   };
 }
 
-
 function updateExpensePolicy(payload) {
   return {
     type: API_CONSTANTS.UPDATE_EXPENSE_POLICY,
@@ -124,10 +123,6 @@ function deleteExpensePolicy(payload) {
     contentType: contentType.json,
   };
 }
-
-
-
-
 
 function addMileage(payload) {
   return {
@@ -198,7 +193,6 @@ function approveCard(payload) {
   };
 }
 
-
 // function getExpensePolicy(payload) {
 //   return {
 //     type: API_CONSTANTS.GET_EXPENSE_POLICY,
@@ -216,7 +210,6 @@ function rejectCard(payload) {
     contentType: contentType.json,
   };
 }
-
 
 function createVendor(payload) {
   return {
@@ -236,7 +229,6 @@ function getVendor(payload) {
   };
 }
 
-
 function deleteVendor(payload) {
   return {
     type: API_CONSTANTS.DELETE_VENDOR,
@@ -249,11 +241,10 @@ function updateVendor(payload) {
   return {
     type: API_CONSTANTS.UPDATE_VENDOR,
     payload: payload.payload,
-    URL: URLS.UPDATE_VENDOR_URL+ payload.id + "/",
+    URL: URLS.UPDATE_VENDOR_URL + payload.id + "/",
     contentType: contentType.json,
   };
 }
-
 
 function createTravel(payload) {
   return {
@@ -263,7 +254,6 @@ function createTravel(payload) {
     contentType: contentType.json,
   };
 }
-
 
 function getTravel(payload) {
   return {
@@ -282,16 +272,14 @@ function deleteTravel(payload) {
   };
 }
 
-
 function updateTravel(payload) {
   return {
     type: API_CONSTANTS.UPDATE_TRAVEL,
     payload: payload.payload,
-    URL: URLS.UPDATE_TRAVEL_URL+ payload.id + "/",
+    URL: URLS.UPDATE_TRAVEL_URL + payload.id + "/",
     contentType: contentType.json,
   };
 }
-
 
 // ================================================================================
 
@@ -1076,7 +1064,17 @@ function getCategoryListBulkExpense() {
   };
 }
 
+function getTotalForDistance(payload) {
+  return {
+    type: API_CONSTANTS.GET_DISTANCE_FOR_TOTAL,
+    payload,
+    URL: URLS.GET_AMOUNT_FROM_DISTANCE_TRAVELED,
+    contentType: contentType.json,
+  };
+}
+
 export {
+  getTotalForDistance,
   getCategoryListBulkExpense,
   setAddBulkExpenseReport,
   addBulkExpenseReport,
@@ -1088,14 +1086,11 @@ export {
   getCategoryPanelAction,
   updateCategorypanle,
   deleteCategorypanelAction,
-
   createCategoryItem,
-  
   addExpensePolicy,
   getExpensePolicy,
   updateExpensePolicy,
   deleteExpensePolicy,
-
   addMileage,
   getMileage,
   fetchCategory,
@@ -1109,7 +1104,6 @@ export {
   getVendor,
   deleteVendor,
   updateVendor,
-
   createTravel,
   getTravel,
   deleteTravel,

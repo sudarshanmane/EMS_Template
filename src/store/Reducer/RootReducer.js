@@ -1515,6 +1515,19 @@ export const RootReducer = (state = initialState, action) => {
       };
     }
 
+    case API_CONSTANTS.GET_DISTANCE_FOR_TOTAL: {
+      return {
+        ...state,
+      };
+    }
+
+    case API_CONSTANTS.GET_DISTANCE_FOR_TOTAL_SUCCESS: {
+      return {
+        ...state,
+        mileageDistanceTraveled: action.result,
+      };
+    }
+
     case API_CONSTANTS.GET_CATEGORY_LIST_BULK_EXPENSE_SUCCESS: {
       return {
         ...state,
