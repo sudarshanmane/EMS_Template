@@ -32,6 +32,8 @@ const ExpenseReport = () => {
   const [selectedDate2, setSelectedDate2] = useState(new Date());
   const [viewReportData, setViewReportData] = useState(null);
   const [isAddFormVisible, setIsAddFormVisible] = useState(false);
+  const [isApproveFormVisible, setIsApproveFormVisible] = useState(false);
+  const [isRejectFormVisible, setIsRejectFormVisible] = useState(false);
   const [editReportData, setEditReportData] = useState(null);
   const [deleteReportData, setDeleteReportData] = useState(null);
   const [isEditFormVisible, setIsEditFormVisible] = useState(false);
@@ -97,28 +99,60 @@ const ExpenseReport = () => {
   } = useForm({});
 
   const {
+    register: approveregister,
+    handleSubmit: handleApprove,
+  } = useForm({});
+
+  const {
     register: updateregister,
     handleSubmit: handleUpdate,
     setValue,
   } = useForm({});
 
   const {
-    handleSubmit: handleRejectReport,
+    handleSubmit: handleReject,
     // setValue,
     // formState: { errors },
   } = useForm({});
 
-  const { 
-     handleSubmit: handleApproveReport 
-    } = useForm({});
+  const Approve = (record) => {
+    setIsApproveFormVisible(true);
+    setApproveReportData(record);
+  };
 
-  const onApproveReport = () => {
-    dispatch(approveReport({ id: approveReportData.id }));
+  const onApproveReport = (values) => {
+    dispatch(approveReport({ id: approveReportData.id, payload: values  }));
+  };
+
+  const Reject = (record) => {
+    setIsRejectFormVisible(true);
+    setRejectReportData(record);
   };
 
   const onRejectReport = (values) => {
     dispatch(rejectReport({ id: rejectReportData.id, payload: values }));
   };
+  
+
+  const approveReportSelector = useSelector(
+    (state) => state.approveReportSuccess
+  );
+  useEffect(() => {
+    if (approveReportSelector) {
+      dispatch(approveReport({ payload: {}, URL: url }));
+    }
+    setIsApproveFormVisible(false);
+  }, [approveReportSelector]);
+
+  const rejectReportSelector = useSelector(
+    (state) => state.rejectReportSuccess
+  );
+  useEffect(() => {
+    if (rejectReportSelector) {
+      dispatch(rejectReport({ payload: {}, URL: url }));
+    }
+    setIsRejectFormVisible(false);
+  }, [rejectReportSelector]);
 
   function getPageDetails(url) {
     dispatch(getReportList({ payload: {}, URL: url }));
@@ -441,7 +475,7 @@ const ExpenseReport = () => {
                 <button
                   type="button"
                   className="close"
-                  data-bs-dismiss="modal"
+                  data-bs-dismiss="modal" 
                   aria-label="Close"
                 >
                   <span aria-hidden="true">×</span>
@@ -532,8 +566,8 @@ const ExpenseReport = () => {
             </div>
           </div>
         </div>
-
         {/* /Add Expense Modal */}
+
         {/* View Expense Modal */}
         <div id="view_report" className="modal custom-modal fade" role="dialog">
           <div
@@ -565,7 +599,7 @@ const ExpenseReport = () => {
                   <button
                     className="btn btn-primary submit-btn"
                     data-bs-dismiss="modal"
-                    // {...register(" ")}
+                    onClick={() => Approve(record)}
                   >
                     Approve
                   </button>
@@ -573,6 +607,7 @@ const ExpenseReport = () => {
                   <button
                     className="btn btn-primary submit-btn"
                     data-bs-dismiss="modal"
+                    onClick={() => Reject(record)}
                   >
                     Reject
                   </button>
@@ -582,6 +617,7 @@ const ExpenseReport = () => {
           </div>
         </div>
         {/* /View Expense Modal */}
+        
         {/* Approve Modal */}
         <div
           id="approve-report"
@@ -605,7 +641,7 @@ const ExpenseReport = () => {
                 </button>
               </div>
               <div className="modal-body">
-                <form onSubmit={handleApproveReport(onApproveReport)}>
+                <form onSubmit={handleApprove(onApproveReport)}>
                   <div className="submit-section">
                     <button
                       className="btn btn-primary submit-btn"
@@ -620,7 +656,7 @@ const ExpenseReport = () => {
           </div>
         </div>
         {/* /Approve Modal */}
-        {/* Reject Modal */}
+        {/* Reject Modal */} 
         <div
           id="reject-report"
           className="modal custom-modal fade"
@@ -642,7 +678,7 @@ const ExpenseReport = () => {
                 </button>
               </div>
               <div className="modal-body">
-                <form onSubmit={handleRejectReport(onRejectReport)}>
+                <form onSubmit={handleReject(onRejectReport)}>
                   <div className="submit-section">
                     <button
                       className="btn btn-primary submit-btn"

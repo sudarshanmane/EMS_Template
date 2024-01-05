@@ -2,6 +2,8 @@ import { takeEvery } from "redux-saga/effects";
 import { API_CONSTANTS } from "../../Globals/APIConstants";
 
 import {
+  UserLoginGenerator,
+  UserRegisterGenerator,
   addReportsubmit,
   getReportList,
   updateReport,
@@ -17,8 +19,6 @@ import {
   updateExpensePolicy,
   deleteExpensePolicy,
   getExpensePolicy,
-
-
   getMileage,
   fetchCategory,
   addMileage,
@@ -32,14 +32,11 @@ import {
   getVendor,
   deleteVendor,
   updateVendor,
-
   createTravel,
   getTravel,
   deleteTravel,
- 
+
   // =======================================
-  UserLoginGenerator,
-  UserRegisterGenerator,
   Updateuserprofile,
   addExpenseItem,
   addExpenseType,
@@ -115,13 +112,14 @@ import {
   exportCompanypanel,
   createCategoryItem,
   updateTravel,
-
-
-  
- 
+  getAllUser,
+  addAllUser,
 } from "./CommonSagas";
 
 export function* RootSaga() {
+  yield takeEvery(API_CONSTANTS.USER_LOGIN, UserLoginGenerator);
+  yield takeEvery(API_CONSTANTS.USER_REGISTER, UserRegisterGenerator);
+
   yield takeEvery(API_CONSTANTS.ADD_REPORT, addReportsubmit);
   yield takeEvery(API_CONSTANTS.GET_REPORT_LIST, getReportList);
   yield takeEvery(API_CONSTANTS.UPDATE_REPORT, updateReport);
@@ -135,14 +133,8 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.GET_CATEGORYLIST_PANEL, categoryPanelList);
   yield takeEvery(API_CONSTANTS.UPDATE_CATEGORY_PANEL, updateCategoryPanel);
   yield takeEvery(API_CONSTANTS.DELETE_CATEGORY_PANEL, deleteCategory);
-
-  
-  // **************************** 
   yield takeEvery(API_CONSTANTS.CREATE_CATEGORY_ITEM, createCategoryItem);
 
-  // **********************
-
-  
   yield takeEvery(API_CONSTANTS.ADD_EXPENSE_POLICY, addExpensePolicy);
   yield takeEvery(API_CONSTANTS.GET_EXPENSE_POLICY, getExpensePolicy);
   yield takeEvery(API_CONSTANTS.UPDATE_EXPENSE_POLICY, updateExpensePolicy);
@@ -159,26 +151,21 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.APPROVE_CARD, approveCard);
   yield takeEvery(API_CONSTANTS.REJECT_CARD, rejectCard);
 
-
   yield takeEvery(API_CONSTANTS.CREATE_VENDOR, createVendor);
   yield takeEvery(API_CONSTANTS.GET_VENDOR, getVendor);
   yield takeEvery(API_CONSTANTS.DELETE_VENDOR, deleteVendor);
   yield takeEvery(API_CONSTANTS.UPDATE_VENDOR, updateVendor);
-
 
   yield takeEvery(API_CONSTANTS.CREATE_TRAVEL, createTravel);
   yield takeEvery(API_CONSTANTS.GATE_TRAVEL, getTravel);
   yield takeEvery(API_CONSTANTS.DELETE_TRAVEL, deleteTravel);
   yield takeEvery(API_CONSTANTS.UPDATE_TRAVEL, updateTravel);
 
-
-
-
-
+  yield takeEvery(API_CONSTANTS.GET_ALL_USER, getAllUser);
+  yield takeEvery(API_CONSTANTS.ADD_ALL_USER, addAllUser);
 
   // ============================================================
-  yield takeEvery(API_CONSTANTS.USER_LOGIN, UserLoginGenerator);
-  yield takeEvery(API_CONSTANTS.USER_REGISTER, UserRegisterGenerator);
+
   yield takeEvery(API_CONSTANTS.ADD_EXPENSE_TYPE_SETUP, addExpenseType);
   yield takeEvery(API_CONSTANTS.UPDATE_USER_PROFILE, Updateuserprofile);
   yield takeEvery(API_CONSTANTS.ADD_EXPENSE_ITEM_SETUP, addExpenseItem);

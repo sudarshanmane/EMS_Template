@@ -92,23 +92,14 @@ const Sidebar = () => {
                     <li>
                       <Link
                         className={
-                          pathname.includes("role-add") ? "active" : ""
+                          pathname.includes("all-user") ? "active" : ""
                         }
-                        to="/home/role-add"
+                        to="/home/alluser"
                       >
-                        Role
+                        All User
                       </Link>
                     </li>
-                    <li>
-                      <Link
-                        className={
-                          pathname.includes("userpanel") ? "active" : ""
-                        }
-                        to="/home/rolespermission"
-                      >
-                        Permissions
-                      </Link>
-                    </li>
+                  
                   </ul>
                 ) : (
                   ""
@@ -376,7 +367,7 @@ const Sidebar = () => {
                     <li>
                       <Link
                         className={
-                          pathname.includes("profile/employee-") ? "active" : ""
+                          pathname.includes("employee-") ? "active" : ""
                         }
                         to="/home/employee-profile"
                       >

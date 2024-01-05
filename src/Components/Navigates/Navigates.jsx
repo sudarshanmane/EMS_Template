@@ -11,6 +11,7 @@ import CardApproval from "../../_components/panels/CardApproval";
 import ClientProfile from "../../MainPage/Pages/Profile/clientprofile";
 import EmployeeProfile from "../../MainPage/Pages/Profile/employeeprofile";
 import ExpenseReportPanel from "../../_components/panels/ExpenseReportPanel";
+import AllUserPanel from "../../_components/panels/AllUserPanel";
 import Mileage from "../../_components/screens/Mileage";
 import Expenses from "../../_components/screens/Expenses";
 import ReimbursmentRecord from "../../_components/screens/ReimbursmentRecord";
@@ -20,6 +21,8 @@ import ExpensePolicies from "../../_components/panels/ExpensePolicies";
 import Loginpage from "../../initialpage/loginpage";
 import ChangePassword from "../../MainPage/Administration/Settings/changepassword";
 import RolePermisson from "../../MainPage/Administration/Settings/rolespermission";
+import Registrationpage from "../../initialpage/RegistrationPage";
+
 
 const Navigates = () => {
   return (
@@ -33,6 +36,7 @@ const Navigates = () => {
         <Route path="/home" element={<PrivateRoute></PrivateRoute>}>
           <Route path="applyforcard" element={<Card></Card>}></Route>
           <Route path="addexpense" element={<Addexpense></Addexpense>}></Route>
+        
           <Route
             path="expensepanel"
             element={<ExpensePanel></ExpensePanel>}
@@ -60,6 +64,10 @@ const Navigates = () => {
           <Route
             path="Reports"
             element={<ExpenseReportPanel></ExpenseReportPanel>}
+          ></Route>
+            <Route
+            path="alluser"
+            element={<AllUserPanel></AllUserPanel>}
           ></Route>
           <Route
             path="cardapproval"
@@ -93,6 +101,10 @@ const Navigates = () => {
           ></Route>
         </Route>
         <Route path="/login" element={<Loginpage></Loginpage>}></Route>
+        <Route
+          path="/register"
+          element={<Registrationpage></Registrationpage>}
+        ></Route>
       </Routes>
     </BrowserRouter>
   );

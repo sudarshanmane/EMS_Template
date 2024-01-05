@@ -2,6 +2,24 @@ import { API_CONSTANTS } from "../../Globals/APIConstants";
 import { contentType } from "../../Globals/ContentType";
 import { URLS } from "../../Globals/URLS";
 
+function userLogin(payload) {
+  return {
+    type: API_CONSTANTS.USER_LOGIN,
+    payload,
+    URL: URLS.USER_LOGIN_URL,
+    contentType: contentType.json,
+  };
+}
+
+function userRegister(payload) {
+  return {
+    type: API_CONSTANTS.USER_REGISTER,
+    payload,
+    URL: URLS.USER_REGISTER_URL,
+    contentType: contentType.json,
+  };
+}
+
 function addReport(payload) {
   return {
     type: API_CONSTANTS.ADD_REPORT,
@@ -50,7 +68,7 @@ function approveReport(payload) {
     contentType: contentType.json,
   };
 }
- 
+
 function rejectReport(payload) {
   return {
     type: API_CONSTANTS.REJECT_REPORT,
@@ -95,7 +113,6 @@ function deleteCategorypanelAction(payload) {
   };
 }
 
-// *********************
 function createCategoryItem(payload) {
   return {
     type: API_CONSTANTS.CREATE_CATEGORY_ITEM,
@@ -104,8 +121,6 @@ function createCategoryItem(payload) {
     contentType: contentType.json,
   };
 }
-
-// *******************
 
 function addExpensePolicy(payload) {
   return {
@@ -125,7 +140,6 @@ function getExpensePolicy(payload) {
   };
 }
 
-
 function updateExpensePolicy(payload) {
   return {
     type: API_CONSTANTS.UPDATE_EXPENSE_POLICY,
@@ -142,10 +156,6 @@ function deleteExpensePolicy(payload) {
     contentType: contentType.json,
   };
 }
-
-
-
-
 
 function addMileage(payload) {
   return {
@@ -210,12 +220,11 @@ function getCard(payload) {
 function approveCard(payload) {
   return {
     type: API_CONSTANTS.APPROVE_CARD,
-    payload: payload.payload,
+    payload: payload.payload, 
     URL: URLS.APPROVE_CARD_URL + payload.id + "/",
     contentType: contentType.json,
   };
 }
-
 
 // function getExpensePolicy(payload) {
 //   return {
@@ -235,7 +244,6 @@ function rejectCard(payload) {
   };
 }
 
-
 function createVendor(payload) {
   return {
     type: API_CONSTANTS.CREATE_VENDOR,
@@ -254,7 +262,6 @@ function getVendor(payload) {
   };
 }
 
-
 function deleteVendor(payload) {
   return {
     type: API_CONSTANTS.DELETE_VENDOR,
@@ -267,11 +274,10 @@ function updateVendor(payload) {
   return {
     type: API_CONSTANTS.UPDATE_VENDOR,
     payload: payload.payload,
-    URL: URLS.UPDATE_VENDOR_URL+ payload.id + "/",
+    URL: URLS.UPDATE_VENDOR_URL + payload.id + "/",
     contentType: contentType.json,
   };
 }
-
 
 function createTravel(payload) {
   return {
@@ -281,7 +287,6 @@ function createTravel(payload) {
     contentType: contentType.json,
   };
 }
-
 
 function getTravel(payload) {
   return {
@@ -300,35 +305,34 @@ function deleteTravel(payload) {
   };
 }
 
-
 function updateTravel(payload) {
   return {
     type: API_CONSTANTS.UPDATE_TRAVEL,
     payload: payload.payload,
-    URL: URLS.UPDATE_TRAVEL_URL+ payload.id + "/",
+    URL: URLS.UPDATE_TRAVEL_URL + payload.id + "/",
     contentType: contentType.json,
   };
 }
 
+function addAllUser(payload) {
+  return {
+    type: API_CONSTANTS.ADD_ALL_USER,
+    payload,
+    URL: URLS.ADD_ALL_USER_URL,
+    contentType: contentType.json,
+  };
+}
+
+function getAllUser(payload) {
+  return {
+    type: API_CONSTANTS.GET_ALL_USER,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
 
 // ================================================================================
-
-function userLogin(payload) {
-  return {
-    type: API_CONSTANTS.USER_LOGIN,
-    payload,
-    URL: URLS.USER_LOGIN_URL,
-    contentType: contentType.json,
-  };
-}
-function userRegister(payload) {
-  return {
-    type: API_CONSTANTS.USER_REGISTER,
-    payload,
-    URL: URLS.USER_REGISTER_URL,
-    contentType: contentType.json,
-  };
-}
 
 function addExpenseItemSetup(payload) {
   return {
@@ -1072,25 +1076,23 @@ function exportCompanyPanelAction(payload) {
 }
 
 export {
+  userLogin,
+  userRegister,
   addReport,
   updateReportAction,
   deleteReportAction,
   setDeleteReportFalse,
   approveReport,
   rejectReport,
-
   addCategoryAction,
   getCategoryPanelAction,
   updateCategorypanle,
   deleteCategorypanelAction,
-
   createCategoryItem,
-  
   addExpensePolicy,
   getExpensePolicy,
   updateExpensePolicy,
   deleteExpensePolicy,
-
   addMileage,
   getMileage,
   fetchCategory,
@@ -1104,15 +1106,14 @@ export {
   getVendor,
   deleteVendor,
   updateVendor,
-
   createTravel,
   getTravel,
   deleteTravel,
   updateTravel,
+  getAllUser,
+  addAllUser,
 
   // ===========================================================
-  userLogin,
-  userRegister,
   addExpenseItemSetup,
   getAccountingCodeAction,
   addExpenseTypeSetup,

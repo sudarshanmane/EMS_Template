@@ -232,8 +232,8 @@ const Header = (props) => {
             {/* <span>{ProfileName ? ` ${ProfileName}` : "Admin"}</span> */}
           </Link>
           <div className="dropdown-menu dropdown-menu-end">
-            <Link className="dropdown-item" to="/home/ProfileForm">
-              Update Profile
+            <Link className="dropdown-item" to="/home/employee-profile">
+              Profile
             </Link>
             <Link className="dropdown-item" to="/home/changepassword">
               Change Password
@@ -256,7 +256,7 @@ const Header = (props) => {
           <i className="fa fa-ellipsis-v" />
         </Link>
         <div className="dropdown-menu dropdown-menu-end dropdown-menu-right">
-          <Link className="dropdown-item" to="/home/ProfileForm">
+          <Link className="dropdown-item" to="/home/employee-profile">
             Update Profile
           </Link>
           <Link className="dropdown-item" to="/home/changepassword">

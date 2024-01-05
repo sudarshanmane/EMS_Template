@@ -76,7 +76,7 @@ const Permissions = () => {
           </Form.Item>
 
           <Form.Item
-            label="Permission Group"
+            label=" Group"
             name="permissionGroup"
             rules={[
               {
