@@ -44,6 +44,22 @@ export const Method = {
       console.log(error);
     }
   },
+
+  async patchData(action) {
+    try {
+      const response = http.patch(action.URL, action.payload, {
+        headers: {
+          "Content-Type": action.contentType,
+          Authorization: `Token ${getToken() ? getToken() : ""}`,
+        },
+      });
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+
   async deleteData(action) {
     try {
       const response = http.delete(action.URL, {

@@ -27,7 +27,6 @@ const Employeeslist = () => {
     pageSize: 10, // Set your default page size
     current: 1,
   });
-  const roleurl = URLS.GET_USER_ROLE_URL;
   const staffurl = URLS.GET_STAFF_LIST_URL;
 
   const handleDateChange1 = (date) => {

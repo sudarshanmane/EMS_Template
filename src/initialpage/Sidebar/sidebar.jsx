@@ -327,7 +327,7 @@ const Sidebar = () => {
                         Mileage{" "}
                       </Link>
                     </li>
-                    <li>
+                    {/* <li>
                       <Link
                         className={
                           pathname.includes("expenses-") ? "active" : ""
@@ -337,7 +337,7 @@ const Sidebar = () => {
                         {" "}
                         Expenses{" "}
                       </Link>
-                    </li>
+                    </li> */}
                     <li>
                       <Link
                         className={

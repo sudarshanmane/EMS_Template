@@ -89,7 +89,7 @@ const CardApproval = () => {
   const cardSelector = useSelector((state) => state.getCardSuccess);
   useEffect(() => {
     if (cardSelector) {
-      const allCards = cardSelector.map((element) => ({
+      const allCards = cardSelector?.map((element) => ({
         id: element.id,
         full_name: element.full_name,
         mobile_no: element.mobile_no,

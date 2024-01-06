@@ -4,12 +4,11 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Button } from "react-bootstrap";
 import { Form, Input } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-
+import { addEducationAction } from "../../../store/Action/Actions";
 
 export default function educationform({ nextcall, userId }) {
   const dispatch = useDispatch();
 
- 
   const edu_type = useSelector(
     (state) => state.educationtype?.educationtypeData
   );
@@ -30,11 +29,11 @@ export default function educationform({ nextcall, userId }) {
     setFormDates(updatedDates);
   };
 
-  const onFinish = (values) => {
-    console.log("rohit", values?.users);
+  const addPersonalInformationSelector = useSelector((state) => state.addeducation);
 
+  const onFinish = (values) => {
+    dispatch(addEducationAction(values));
     values?.users?.forEach((user, index) => {
-      console.log("individual data", user);
       const formData = new FormData();
 
       // Append fields to formData
@@ -54,7 +53,6 @@ export default function educationform({ nextcall, userId }) {
       formData.append("percentage", user.percentage || "");
       formData.append("college_name", user.college_name || "");
 
-    
       console.log("end form submit");
     });
   };
@@ -69,7 +67,6 @@ export default function educationform({ nextcall, userId }) {
     return `${year}-${month}-${day}`;
   };
 
- 
   console.log("id", userId);
 
   return (
@@ -388,29 +385,31 @@ export default function educationform({ nextcall, userId }) {
                                             type="date"
                                             format="yyyy-MM-dd"
                                           /> */}
-                                           <div className="date-picker-container">
-                              <span
-                                className="calendar-icon"
-                                onClick={() =>
-                                  console.log("Calendar icon clicked")
-                                }
-                              >
-                                <i class="fa-regular fa-calendar"></i>
-                              </span>
-                                          <DatePicker
-                                            selected={
-                                              formDates[index]?.joiningDate
-                                            }
-                                            onChange={(date) =>
-                                              handleJoiningDateChange(
-                                                date,
-                                                index
-                                              )
-                                            }
-                                            className="form-control datetimepicker"
-                                            type="date"
-                                            format="yyyy-MM-dd"
-                                          />
+                                          <div className="date-picker-container">
+                                            <span
+                                              className="calendar-icon"
+                                              onClick={() =>
+                                                console.log(
+                                                  "Calendar icon clicked"
+                                                )
+                                              }
+                                            >
+                                              <i class="fa-regular fa-calendar"></i>
+                                            </span>
+                                            <DatePicker
+                                              selected={
+                                                formDates[index]?.joiningDate
+                                              }
+                                              onChange={(date) =>
+                                                handleJoiningDateChange(
+                                                  date,
+                                                  index
+                                                )
+                                              }
+                                              className="form-control datetimepicker"
+                                              type="date"
+                                              format="yyyy-MM-dd"
+                                            />
                                           </div>
                                         </Form.Item>
                                       </div>
@@ -446,29 +445,31 @@ export default function educationform({ nextcall, userId }) {
                                             type="date"
                                             format="yyyy-MM-dd"
                                           /> */}
-                                           <div className="date-picker-container">
-                              <span
-                                className="calendar-icon"
-                                onClick={() =>
-                                  console.log("Calendar icon clicked")
-                                }
-                              >
-                                <i class="fa-regular fa-calendar"></i>
-                              </span>
-                                          <DatePicker
-                                            selected={
-                                              formDates[index]?.passoutDate
-                                            }
-                                            onChange={(date) =>
-                                              handlePassoutDateChange(
-                                                date,
-                                                index
-                                              )
-                                            }
-                                            className="form-control datetimepicker"
-                                            type="date"
-                                            format="yyyy-MM-dd"
-                                          />
+                                          <div className="date-picker-container">
+                                            <span
+                                              className="calendar-icon"
+                                              onClick={() =>
+                                                console.log(
+                                                  "Calendar icon clicked"
+                                                )
+                                              }
+                                            >
+                                              <i class="fa-regular fa-calendar"></i>
+                                            </span>
+                                            <DatePicker
+                                              selected={
+                                                formDates[index]?.passoutDate
+                                              }
+                                              onChange={(date) =>
+                                                handlePassoutDateChange(
+                                                  date,
+                                                  index
+                                                )
+                                              }
+                                              className="form-control datetimepicker"
+                                              type="date"
+                                              format="yyyy-MM-dd"
+                                            />
                                           </div>
                                         </Form.Item>
                                       </div>

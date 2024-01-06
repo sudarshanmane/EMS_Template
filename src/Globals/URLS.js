@@ -1,9 +1,17 @@
 export const URLS = {
   BASE_URL_EXPORT: "http://127.0.0.1:8001",
   USER_LOGIN_URL: "/users/api/v2/login_web/",
-  USER_REGISTER_URL: "/userregister/",
-  GET_USER_ROLE_URL: "/users/api/v2/getcurrentuserrole/",
+  USER_REGISTER_URL: "/users/api/v2/userregister/",
+  GET_CURRENT_ROLE_URL: "/users/api/v2/getcurrentuserrole/",
+  GET_CURRENT_USER_URL: "/users/api/v2/getalluser/",
   GET_STAFF_LIST_URL: "/users/api/v2/getallstaff/",
+  ADD_SALARY_URL: "/userhrms/api/v2/salaryrevision/",
+  ADD_CERTIFICATION_URL: "/userhrms/api/v2/certificate/",
+  ADD_USER_SETTING_URL: "/userhrms/api/v2/usersettings/",
+  ADD_PERSONAL_INFORMATION_URL: "/userhrms/api/v2/UserPersonalInformationpost/",
+  ADD_EDUCATION_URL: "/userhrms/api/v2/usersettings/",
+  ADD_EXPERIENCE_URL: "/userhrms/api/v2/usersettings/",
+  CHANGE_PASSWORD_URL: "/users/api/v2/changepassword/",
 
 
   APPROVE_EXPENSE_URL: "/api/version_0/expense/approve-expense/",
@@ -74,7 +82,6 @@ export const URLS = {
   EXTERNAL_ACCOUNT_CODE_PANEL_URL: "/expense/externalaccount-code-list/",
   UPDATE_ABOUTUS_URL: "/users/about_us/",
   UPDATE_CONTACTUS_URL: "/users/contact_us/",
-  UPDATE_PASSWORD_URL: "/users/change-password/",
   GET_COMPANY_LIST_URL: "/users/company-list/",
   DELETE_COMPANY_LIST_URL: "/authentication/delete_company/",
   UPDATE_COMPANY_LIST_URL: "/authentication/update_company/",

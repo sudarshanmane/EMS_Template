@@ -40,7 +40,7 @@ const Header = (props) => {
       {/* Logo */}
       <div className="header-left">
         <Link to="/app/main/dashboard" className="logo">
-          <img src={headerlogo} width={40} height={40} alt="" />
+          <img src={headerlogo} width={"100%"}  alt="" />
         </Link>
       </div>
       {/* /Logo */}
@@ -232,7 +232,7 @@ const Header = (props) => {
             {/* <span>{ProfileName ? ` ${ProfileName}` : "Admin"}</span> */}
           </Link>
           <div className="dropdown-menu dropdown-menu-end">
-            <Link className="dropdown-item" to="/home/employee-profile">
+            <Link className="dropdown-item" to="/home/selfProfile">
               Profile
             </Link>
             <Link className="dropdown-item" to="/home/changepassword">

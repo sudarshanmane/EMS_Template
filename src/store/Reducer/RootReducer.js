@@ -25,6 +25,19 @@ export const RootReducer = (state = initialState, action) => {
         loginDetails: action.result,
       };
 
+      case API_CONSTANTS.CHANGE_PASSWORD:
+        return {
+          ...state,
+          loding: true,
+        };
+  
+      case API_CONSTANTS.CHANGE_PASSWORD_SUCCESS:
+        return {
+          ...state,
+          loding: false,
+          changepassword: action.result,
+        };
+
     case API_CONSTANTS.USER_REGISTER:
       return {
         ...state,
@@ -38,18 +51,31 @@ export const RootReducer = (state = initialState, action) => {
         registerDetails: action.result,
       };
 
-    case API_CONSTANTS.GET_USER_ROLE:
+    case API_CONSTANTS.GET_CURRENT_ROLE:
       return {
         ...state,
         loding: true,
       };
 
-    case API_CONSTANTS.GET_USER_ROLE_SUCCESS:
+    case API_CONSTANTS.GET_CURRENT_ROLE_SUCCESS:
       return {
         ...state,
         loding: false,
-        getuserrole: action.result,
+        getcurrentrole: action.result,
       };
+
+      case API_CONSTANTS.GET_CURRENT_USER:
+        return {
+          ...state,
+          loding: true,
+        };
+  
+      case API_CONSTANTS.GET_CURRENT_USER_SUCCESS:
+        return {
+          ...state,
+          loding: false,
+          getcurrentuser: action.result,
+        };
 
     case API_CONSTANTS.GET_STAFF_LIST:
       return {
@@ -62,6 +88,84 @@ export const RootReducer = (state = initialState, action) => {
         ...state,
         loding: false,
         getstafflist: action.result,
+      };
+
+    case API_CONSTANTS.ADD_SALARY:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.ADD_SALARY_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        addsalary: action.result,
+      };
+
+    case API_CONSTANTS.ADD_CERTIFICATION:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.ADD_CERTIFICATION_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        addcertification: action.result,
+      };
+
+    case API_CONSTANTS.ADD_PERSONAL_INFORMATION:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.ADD_PERSONAL_INFORMATION_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        addpersonalinformation: action.result,
+      };
+
+    case API_CONSTANTS.ADD_USER_SETTING:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.ADD_USER_SETTING_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        addusersetting: action.result,
+      };
+
+    case API_CONSTANTS.ADD_EDUCATION:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.ADD_EDUCATION_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        addeducation: action.result,
+      };
+
+    case API_CONSTANTS.ADD_EXPERIENCE:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.ADD_EXPERIENCE_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        addexperience: action.result,
       };
 
     case API_CONSTANTS.ADD_REPORT:
@@ -815,18 +919,6 @@ export const RootReducer = (state = initialState, action) => {
         contactUsPage: action.result,
       };
 
-    case API_CONSTANTS.UPDATE_PASSWORD:
-      return {
-        ...state,
-        loding: true,
-      };
-
-    case API_CONSTANTS.UPDATE_PASSWORD_SUCCESS:
-      return {
-        ...state,
-        loding: false,
-        changepassword: action.result,
-      };
 
     case API_CONSTANTS.GET_COMPANY_LIST:
       return {

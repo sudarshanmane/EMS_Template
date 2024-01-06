@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { Form } from "antd";
 import { useDispatch, useSelector } from "react-redux";
+import { addExperienceAction } from "../../../store/Action/Actions";
 
 export default function experience({ nextcall, userId }) {
   const dispatch = useDispatch();
@@ -9,10 +10,12 @@ export default function experience({ nextcall, userId }) {
   const [selectedFile, setSelectedFile] = useState(null);
   const [salaryFile, setSalaryFile] = useState(null);
 
-  
-  const onFinish = (values) => {
-    console.log("Received values of form:", values);
+  const addPersonalInformationSelector = useSelector(
+    (state) => state.addexperience
+  );
 
+  const onFinish = (values) => {
+    dispatch(addExperienceAction(values));
     values?.users?.forEach((user, index) => {
       console.log("individual data", user);
       const formData = new FormData();
@@ -26,14 +29,9 @@ export default function experience({ nextcall, userId }) {
       formData.append("salary_slip", salaryFile);
       formData.append("comments", user.comments || "");
       formData.append("year_of_experience", user.year_of_experience || "");
-
-     
     });
   };
 
-  
-
-  
   return (
     <>
       {" "}
@@ -48,7 +46,6 @@ export default function experience({ nextcall, userId }) {
                 name="dynamic_form_nest_item"
                 onFinish={onFinish}
                 encType="multipart/form-data"
-                
                 autoComplete="off"
               >
                 <Form.List name="users" initialValue={[{}]}>

@@ -3,9 +3,14 @@ import { API_CONSTANTS } from "../../Globals/APIConstants";
 
 import {
   UserLoginGenerator,
+  ChangePassword,
   UserRegisterGenerator,
-  getRole,
+  getCurrentRole,
+  getCurrentUser,
   getStaff,
+  addCertification,
+  addUserSetting,
+  addPersonalInformation,
   addReportsubmit,
   getReportList,
   updateReport,
@@ -17,7 +22,7 @@ import {
   deleteCategory,
   approveReport,
   rejectReport,
-
+  addSalaryRevision,
   addExpensePolicy,
   updateExpensePolicy,
   deleteExpensePolicy,
@@ -60,7 +65,7 @@ import {
   ContactUs,
   AboutUsPage,
   ContactUsPage,
-  ChangePassword,
+  
   GetCompanyList,
   UpdateCompanyList,
   getAddUserPanel,
@@ -119,13 +124,24 @@ import {
   addAllUser,
   rejectExpense,
   approveExpense,
+  addEducation,
+  addExperience,
 } from "./CommonSagas";
 
 export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.USER_LOGIN, UserLoginGenerator);
+  yield takeEvery(API_CONSTANTS.CHANGE_PASSWORD, ChangePassword);
   yield takeEvery(API_CONSTANTS.USER_REGISTER, UserRegisterGenerator);
-  yield takeEvery(API_CONSTANTS.GET_USER_ROLE, getRole);
+  yield takeEvery(API_CONSTANTS.GET_CURRENT_ROLE, getCurrentRole);
+  yield takeEvery(API_CONSTANTS.GET_CURRENT_USER, getCurrentUser);
   yield takeEvery(API_CONSTANTS.GET_STAFF_LIST, getStaff);
+  yield takeEvery(API_CONSTANTS.ADD_SALARY, addSalaryRevision);
+  yield takeEvery(API_CONSTANTS.ADD_CERTIFICATION, addCertification);
+  yield takeEvery(API_CONSTANTS.ADD_USER_SETTING, addUserSetting);
+  yield takeEvery(API_CONSTANTS.ADD_PERSONAL_INFORMATION, addPersonalInformation);
+  yield takeEvery(API_CONSTANTS.ADD_EDUCATION, addEducation);
+  yield takeEvery(API_CONSTANTS.ADD_EXPERIENCE, addExperience);
+
 
   yield takeEvery(API_CONSTANTS.ADD_REPORT, addReportsubmit);
   yield takeEvery(API_CONSTANTS.GET_REPORT_LIST, getReportList);
@@ -204,7 +220,6 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.UPDATE_CONTACTUS, ContactUs);
   yield takeEvery(API_CONSTANTS.GET_ABOUTUS, AboutUsPage);
   yield takeEvery(API_CONSTANTS.GET_CONTACTUS, ContactUsPage);
-  yield takeEvery(API_CONSTANTS.UPDATE_PASSWORD, ChangePassword);
   yield takeEvery(API_CONSTANTS.GET_COMPANY_LIST, GetCompanyList);
   yield takeEvery(API_CONSTANTS.UPDATE_COMPANY_LIST, UpdateCompanyList);
   yield takeEvery(API_CONSTANTS.GET_USER_PANEL, getAddUserPanel);

@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { format } from "date-fns";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup.js";
 import * as Yup from "yup";
-// import { addpersonalinfoData } from "../../store/personalinfo";
+import { addPersonalInformationAction } from "../../../store/Action/Actions";
 
 const stepSchema = Yup.object().shape({
   gender: Yup.string().required("Gender is required"),
@@ -50,8 +50,6 @@ export default function PersonalInformation({ nextcall, userId }) {
 
   const dispatch = useDispatch();
 
-  console.log("id", userId);
-
  
   const options = [
     { value: "A+", label: "A+" },
@@ -77,14 +75,10 @@ export default function PersonalInformation({ nextcall, userId }) {
     { value: "unmarried", label: "Unmarried" },
   ];
 
-  //submit the data
-  const onSubmit = (data) => {
-    const formDataWithUserId = {
-      ...data,
-      user_id: userId,
-    };
-    
-    console.log("on submit function", formDataWithUserId);
+  const addPersonalInformationSelector = useSelector((state) => state.addpersonalinformation);
+
+  const onSubmit = (values) => {
+   dispatch(addPersonalInformationAction(values))
   };
 
   useEffect(() => {
@@ -102,7 +96,7 @@ export default function PersonalInformation({ nextcall, userId }) {
               <h4 className="card-title mb-0">Personal Information</h4>
             </div>
             <div className="card-body">
-              {/* <form action="#"> */}
+             
               <form
                 onSubmit={handleSubmit(onSubmit)}
                 encType="multipart/form-data"
@@ -165,7 +159,7 @@ export default function PersonalInformation({ nextcall, userId }) {
                       <div className="col-md-9">
                         <input
                           type="text"
-                          //   placeholder="First Name"
+                        
                           className="form-control"
                           {...register("father_name")}
                         />
@@ -481,7 +475,7 @@ export default function PersonalInformation({ nextcall, userId }) {
                   variant="primary"
                   type="submit"
                   style={{ float: "right" }}
-                  // onClick={handleNextFunction}
+          
                 >
                   Save
                 </Button>

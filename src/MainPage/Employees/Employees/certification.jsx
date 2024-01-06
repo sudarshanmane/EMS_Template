@@ -4,19 +4,13 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Button } from "react-bootstrap";
 import { Form } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-// import { addcertificateData } from "../../store/certificate";
+import { addCertificationAction } from "../../../store/Action/Actions";
 
 export default function certification({ nextcall, userId }) {
   const dispatch = useDispatch();
 
-  // const token = useSelector((state) => state.userSlice.token);
-  // const certificate_submit_id = useSelector(
-  //   (state) => state.certificate?.newData?.id
-  // );
-  
   const [selectedDate, setSelectedDate] = useState(null);
 
-  //date foramt
   const formatDate = (date) => {
     if (!date) return null;
 
@@ -30,37 +24,14 @@ export default function certification({ nextcall, userId }) {
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
-  // console.log("selectedDate", selectedDate);
 
-  // submit data
+  const addcertificationSelector = useSelector(
+    (state) => state.addcertification
+  );
+
   const onFinish = (values) => {
-    console.log("Received values of form:", values?.users);
-    const formData = new FormData();
-
-    formData.append("user_id", userId);
-    formData.append("course_name", values?.users.course_name);
-
-    // Format the certification_date
-    formData.append("certification_date", formatDate(selectedDate));
-
-    // Append the certification document as a file
-    if (values?.users.certification) {
-      formData.append(
-        "certification",
-        values?.users.certification[0]?.originFileObj
-      );
-    }
-
-    console.log("form data on submit", formData);
-
-    // dispatch(addcertificateData(token, formData));
+    dispatch(addCertificationAction(values));
   };
-
-  // useEffect(() => {
-  //   if (certificate_submit_id) {
-  //     nextcall();
-  //   }
-  // }, [certificate_submit_id]);
 
   return (
     <>
@@ -76,9 +47,6 @@ export default function certification({ nextcall, userId }) {
                 name="dynamic_form_nest_item"
                 onFinish={onFinish}
                 encType="multipart/form-data"
-                // style={{
-                //   maxWidth: 600,
-                // }}
                 autoComplete="off"
               >
                 <Form.List name="users" initialValue={[{}]}>
@@ -160,59 +128,6 @@ export default function certification({ nextcall, userId }) {
                                                   type="file"
                                                   className="form-control"
                                                 />
-                                              </Form.Item>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-
-                                      <div className="row">
-                                        <div className="col-sm-6">
-                                          <div className="input-block row">
-                                            <label className="col-form-label col-md-3">
-                                              Certification Date{" "}
-                                              <span className="text-danger">
-                                                *
-                                              </span>
-                                            </label>
-                                            <div className="col-md-9">
-                                              <Form.Item
-                                                {...restField}
-                                                name={[
-                                                  name,
-                                                  "certification_date",
-                                                ]}
-                                                fieldKey={[
-                                                  fieldKey,
-                                                  "certification_date",
-                                                ]}
-                                                rules={[
-                                                  {
-                                                    required: true,
-                                                    message:
-                                                      "Please select certification date",
-                                                  },
-                                                ]}
-                                              >
-                                                 <div className="date-picker-container">
-                              <span
-                                className="calendar-icon"
-                                onClick={() =>
-                                  console.log("Calendar icon clicked")
-                                }
-                              >
-                                <i class="fa-regular fa-calendar"></i>
-                              </span>
-                                                <DatePicker
-                                                  selected={selectedDate}
-                                                  onChange={(date) =>
-                                                    handleDateChange(date)
-                                                  }
-                                                  className="form-control datetimepicker"
-                                                  type="date"
-                                                  format="yyyy-MM-dd"
-                                                />
-                                                </div>
                                               </Form.Item>
                                             </div>
                                           </div>

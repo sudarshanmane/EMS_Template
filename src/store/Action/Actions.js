@@ -11,18 +11,36 @@ function userLogin(payload) {
   };
 }
 
+function changePassword(payload) {
+  return {
+    type: API_CONSTANTS.CHANGE_PASSWORD,
+    payload,
+    URL: URLS.CHANGE_PASSWORD_URL,
+    contentType: contentType.json,
+  };
+}
+
 function userRegister(payload) {
   return {
     type: API_CONSTANTS.USER_REGISTER,
     payload,
     URL: URLS.USER_REGISTER_URL,
+    contentType: contentType.form,
+  };
+}
+
+function getCurrentRole(payload) {
+  return {
+    type: API_CONSTANTS.GET_CURRENT_ROLE,
+    payload: payload.payload,
+    URL: payload.URL,
     contentType: contentType.json,
   };
 }
 
-function getUserRole(payload) {
+function getCurrentUser(payload) {
   return {
-    type: API_CONSTANTS.GET_USER_ROLE,
+    type: API_CONSTANTS.GET_CURRENT_USER,
     payload: payload.payload,
     URL: payload.URL,
     contentType: contentType.json,
@@ -35,6 +53,61 @@ function getAllStaff(payload) {
     payload: payload.payload,
     URL: payload.URL,
     contentType: contentType.json,
+  };
+}
+
+function addSalary(payload) {
+  return {
+    type: API_CONSTANTS.ADD_SALARY,
+    payload,
+    URL: URLS.ADD_SALARY_URL,
+    contentType: contentType.form,
+  };
+}
+
+
+function addCertificationAction(payload) {
+  return {
+    type: API_CONSTANTS.ADD_CERTIFICATION,
+    payload,
+    URL: URLS.ADD_CERTIFICATION_URL,
+    contentType: contentType.form,
+  };
+}
+
+function addUserSettingAction(payload) {
+  return {
+    type: API_CONSTANTS.ADD_USER_SETTING,
+    payload,
+    URL: URLS.ADD_USER_SETTING_URL,
+    contentType: contentType.json,
+  };
+}
+
+function addPersonalInformationAction(payload) {
+  return {
+    type: API_CONSTANTS.ADD_PERSONAL_INFORMATION,
+    payload,
+    URL: URLS.ADD_PERSONAL_INFORMATION_URL,
+    contentType: contentType.json,
+  };
+}
+
+function addEducationAction(payload) {
+  return {
+    type: API_CONSTANTS.ADD_EDUCATION,
+    payload,
+    URL: URLS.ADD_EDUCATION_URL,
+    contentType: contentType.form,
+  };
+}
+
+function addExperienceAction(payload) {
+  return {
+    type: API_CONSTANTS.ADD_EXPERIENCE,
+    payload,
+    URL: URLS.ADD_EXPERIENCE_URL,
+    contentType: contentType.form,
   };
 }
 
@@ -95,7 +168,6 @@ function approveReport(payload) {
     contentType: contentType.json,
   };
 }
-
 
 function rejectReport(payload) {
   return {
@@ -266,7 +338,7 @@ function getCard(payload) {
 function approveCard(payload) {
   return {
     type: API_CONSTANTS.APPROVE_CARD,
-    payload: payload.payload, 
+    payload: payload.payload,
     URL: URLS.APPROVE_CARD_URL + payload.id + "/",
     contentType: contentType.json,
   };
@@ -543,14 +615,7 @@ function contactUsPage(payload) {
   };
 }
 
-function changePassword(payload) {
-  return {
-    type: API_CONSTANTS.UPDATE_PASSWORD,
-    payload,
-    URL: URLS.UPDATE_PASSWORD_URL,
-    contentType: contentType.json,
-  };
-}
+
 function getCompanyList(payload) {
   return {
     type: API_CONSTANTS.GET_COMPANY_LIST,
@@ -1106,9 +1171,17 @@ function exportCompanyPanelAction(payload) {
 
 export {
   userLogin,
+  changePassword,
   userRegister,
-  getUserRole,
+  getCurrentRole,
+  getCurrentUser,
   getAllStaff,
+  addSalary,
+  addCertificationAction,
+  addUserSettingAction,
+  addPersonalInformationAction,
+  addEducationAction,
+  addExperienceAction,
   addReport,
   updateReportAction,
   deleteReportAction,
@@ -1144,7 +1217,6 @@ export {
   getTravel,
   deleteTravel,
   updateTravel,
- 
 
   // ===========================================================
   addExpenseItemSetup,
@@ -1167,7 +1239,6 @@ export {
   aboutUsPage,
   contactUsPage,
   contactUs,
-  changePassword,
   getCompanyList,
   updateCompanyList,
   getExpenseItemSetupPanelAction,

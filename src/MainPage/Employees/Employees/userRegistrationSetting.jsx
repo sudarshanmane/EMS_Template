@@ -6,11 +6,9 @@ import * as Yup from "yup";
 import { Select } from "antd";
 import { Controller, useForm } from "react-hook-form";
 
-
 const stepSchema = Yup.object().shape({
   shift_policy: Yup.string().required("Shift policy is Required"),
   weekly_off: Yup.string().required(" Weekly off is Required"),
- 
 });
 
 export default function UserRegistrationSetting({ nextcall, userId }) {
@@ -28,39 +26,11 @@ export default function UserRegistrationSetting({ nextcall, userId }) {
 
   const dispatch = useDispatch();
 
-  const onSubmit = (data) => {
-    const leaveAcceptAccessValues = data?.leave_accept_access?.map(
-      (option) => option.value
-    );
-    const compOffAccessValues = data?.comp_off_access?.map(
-      (option) => option.value
-    );
-    const attendanceReconciliationValues =
-      data?.attendance_reconciliation_accept_access?.map(
-        (option) => option.value
-      );
-    const outstationAcceptAccessValues = data?.outstation_accept_access?.map(
-      (option) => option.value
-    );
-    setValue();
+  const addSettingSelector = useSelector((state) => state.addusersetting);
 
-    // Log the extracted values
-    setValue("leave_accept_access", leaveAcceptAccessValues);
-    setValue("comp_off_access", compOffAccessValues);
-    setValue(
-      "attendance_reconciliation_accept_access",
-      attendanceReconciliationValues
-    );
-    setValue("outstation_accept_access", outstationAcceptAccessValues);
-    setValue("user_id", userId);
-
-
-   
+  const onSubmit = (addSettingSelector) => {
+    dispatch(addUserSettingAction(addSettingSelector));
   };
-
- 
-
- 
 
   return (
     <>

@@ -31,6 +31,8 @@ import Salary from "../../MainPage/Employees/Employees/salary";
 import UserRegistrationSetting from "../../MainPage/Employees/Employees/userRegistrationSetting";
 import UserRegistration from "../../MainPage/Employees/Employees/userRegistration";
 import PersonalInformation from "../../MainPage/Employees/Employees/PersonalInformation";
+import SelfProfile from "../../MainPage/Pages/Profile/selfprofile";
+import SelfProfileHead from "../../MainPage/Pages/Profile/selfprofilehead";
 
 
 
@@ -55,6 +57,9 @@ const Navigates = () => {
           <Route path="userRegistrationSetting" element={<UserRegistrationSetting></UserRegistrationSetting>}></Route>
           <Route path="userRegistration" element={<UserRegistration></UserRegistration>}></Route>
           <Route path="PersonalInformation" element={<PersonalInformation></PersonalInformation>}></Route>
+          <Route path="selfProfile" element={<SelfProfile></SelfProfile>}></Route>
+          <Route path="selfprofilehead" element={<SelfProfileHead></SelfProfileHead>}></Route>
+
 
 
 

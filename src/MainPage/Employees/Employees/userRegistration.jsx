@@ -31,9 +31,6 @@ const stepSchema = Yup.object().shape({
   branch: Yup.string().required("Select Branch"),
   password: Yup.string().required("Password is required"),
   conf_pass: Yup.string().required("Confirm the Password"),
-  // profile_image: Yup.string().required("Choose Profile Image"),
-  // face_match_image1: Yup.string().required("Choose Face Match Image"),
-  //.matches(/^[0-9]{12}$/, "Phone number is not valid"),
   profile_image: Yup.mixed()
     .test("fileSize", "Profile Image size is too large", (value) => {
       if (!value) return true; // No file selected, let it pass
@@ -161,13 +158,18 @@ export default function UserRegistration({ nextcall, setUserId }) {
     { label: "+235 (Chad)", value: "+235" },
   ];
 
+  const userRegisterSelector = useSelector((state) => state.registerDetails);
+
+  useEffect(() => {
+    
+  }, [userRegisterSelector]);
+
   const onSubmit = (data) => {
-    // console.log("file", file);
-    // console.log("file2", file2);
+    dispatch(addReport(data));
     let formData = new FormData();
     if (data?.user_role_permissions?.length > 1) {
       data?.user_role_permissions.forEach((element) => {
-        console.log("first", element);
+       
         formData.append("user_role_permissions", element);
       });
     } else {
@@ -196,15 +198,6 @@ export default function UserRegistration({ nextcall, setUserId }) {
   
   };
 
- 
-  useEffect(() => {
-    console.log("in empty use effect of user registration");
-    reset();
-   
-  }, []);
-
-  
-
   const imageFormDataConverter = (e) => {
     setFile(e.target.files[0]);
   };
@@ -227,7 +220,6 @@ export default function UserRegistration({ nextcall, setUserId }) {
                 onSubmit={handleSubmit(onSubmit)}
                 encType="multipart/form-data"
               >
-                {/* <form onSubmit={handleSubmit(onSubmit)}> */}
                 <div className="row">
                   <div className="col-sm-6">
                     <div className="input-block ">
@@ -237,7 +229,6 @@ export default function UserRegistration({ nextcall, setUserId }) {
                       <div className="">
                         <input
                           type="text"
-                          //   placeholder="First Name"
                           className="form-control"
                           {...register("first_name")}
                         />
@@ -350,7 +341,6 @@ export default function UserRegistration({ nextcall, setUserId }) {
                       <div className="col-md-3">
                         <select
                           className="form-control"
-                          // defaultValue={+91}
                           {...register("country_code")}
                         >
                           {countryCodes?.map((dep) => {
@@ -411,25 +401,7 @@ export default function UserRegistration({ nextcall, setUserId }) {
                         Birthdate <span className="text-danger">*</span>
                       </label>
                       <div className="">
-                        {/* <Controller
-                          control={control}
-                          name="date_of_birth"
-                          render={({ field }) => (
-                            <DatePicker
-                              selected={field.value}
-                              onChange={(date) => field.onChange(date)}
-                              // onChange={(date) =>
-                              //   field.onChange(format(date, "yyyy-MM-dd"))
-                              // }
-                              // onChange={(date) =>
-                              //   field.onChange(date.toISOString().split("T")[0])
-                              // }
-                              className="form-control datetimepicker"
-                              // type="date"
-                              dateFormat="yyyy-MM-dd"
-                            />
-                          )}
-                        /> */}
+                      
                         <Controller
                           control={control}
                           name="date_of_birth"
@@ -728,7 +700,7 @@ export default function UserRegistration({ nextcall, setUserId }) {
                   type="submit"
                  
                 >
-                  {/* {buttonText} */}
+                 
                   Save
                 </Button>
               </form>

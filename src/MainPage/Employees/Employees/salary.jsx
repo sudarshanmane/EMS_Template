@@ -7,6 +7,7 @@ import { Controller, useForm } from "react-hook-form";
 import { format } from "date-fns";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup.js";
 import * as Yup from "yup";
+import { addSalary } from "../../../store/Action/Actions";
 
 const stepSchema = Yup.object().shape({
   new_gross_salary: Yup.string().required("Gross salary is required"),
@@ -18,12 +19,10 @@ export default function salary({ nextcall, userId }) {
   const {
     register,
     handleSubmit,
-    setValue,
     control,
     reset,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(stepSchema),
   });
 
   const dispatch = useDispatch();
@@ -33,18 +32,26 @@ export default function salary({ nextcall, userId }) {
     setFile2(e.target.files[0]);
   };
 
-  const onSubmit = (data) => {
-    console.log("salary data on submit", data);
-    let formData = new FormData();
+  const addsalarySelector = useSelector((state) => state.addsalary);
+  useEffect(() => {
+    if (addsalarySelector) {
+      reset();
+    }
+  }, [addsalarySelector]);
 
-    formData.append("user_id", userId);
-    formData.append("new_gross_salary", data.new_gross_salary);
-    formData.append("revision_date", data.revision_date);
+
+  const onSubmit = (values) => {
+    const formData = new FormData();
     formData.append("revision_document", file2);
-
-    console.log("form data on submit", formData);
+    for (const key in values) {
+      if (key == "revision_document") {
+      } else {
+        formData.append(key, values[key]);
+      }
+    }
+    dispatch(addSalary(formData));
   };
-
+  
   return (
     <>
       {" "}
