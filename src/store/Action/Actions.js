@@ -97,6 +97,15 @@ function rejectReport(payload) {
   };
 }
 
+function reimbursementRecord(payload) {
+  return {
+    type: API_CONSTANTS.GET_REIMBURSMENT_RECORD,
+    payload: payload.payload,
+    URL: URLS.GET_REIMBURSMENT_RECORD_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
 function approveExpense(payload) {
   return {
     type: API_CONSTANTS.APPROVE_EXPENSE,
@@ -1123,6 +1132,7 @@ export {
   getReportDetails,
   approveReport,
   rejectReport,
+  reimbursementRecord,
   approveExpense,
   rejectExpense,
   addCategoryAction,

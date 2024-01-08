@@ -121,6 +121,8 @@ import {
   approveExpense,
   getAllUser,
   addAllUser,
+
+  reimbursementRecord,
 } from "./CommonSagas";
 
 export function* RootSaga() {
@@ -137,6 +139,8 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.REJECT_REPORT, rejectReport);
   yield takeEvery(API_CONSTANTS.APPROVE_EXPENSE, approveExpense);
   yield takeEvery(API_CONSTANTS.REJECT_EXPENSE, rejectExpense);
+
+  yield takeEvery(API_CONSTANTS.GET_REIMBURSMENT_RECORD, reimbursementRecord);
 
 
   yield takeEvery(API_CONSTANTS.ADD_CATEGORY, getAddCategoryList);

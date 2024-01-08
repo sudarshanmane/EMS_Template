@@ -51,7 +51,6 @@ const ExpenseApprovals = () => {
     return format(date, "yyyy-MM-dd");
   };
 
-
   const onSubmit = (values) => {
     dispatch(addReport(values));
   };
@@ -62,10 +61,6 @@ const ExpenseApprovals = () => {
     navigate("/home/viewReportApproved", { state: record });
   };
 
- 
-
-
-
   const {
     register,
     handleSubmit,
@@ -73,10 +68,9 @@ const ExpenseApprovals = () => {
     formState: { errors },
   } = useForm({});
 
-  const {
-    register: approveregister,
-    handleSubmit: handleApprove,
-  } = useForm({});
+  const { register: approveregister, handleSubmit: handleApprove } = useForm(
+    {}
+  );
 
   const {
     register: updateregister,
@@ -100,7 +94,9 @@ const ExpenseApprovals = () => {
     fetchReportData(url);
   }, []);
 
-  const reportPanelSelector = useSelector((state) => state.getapprovedreportlist);
+  const reportPanelSelector = useSelector(
+    (state) => state.getapprovedreportlist
+  );
 
   useEffect(() => {
     if (reportPanelSelector) {
@@ -126,9 +122,6 @@ const ExpenseApprovals = () => {
     setIsAddFormVisible(false);
   }, [addreportPanelSelector]);
 
-
-
-
   const columns = [
     {
       title: "Report No",
@@ -138,7 +131,6 @@ const ExpenseApprovals = () => {
       title: "Description",
       dataIndex: "description",
       render: (text) => <span> {text}</span>,
-      // render: (text) => <strong>{text}</strong>,
       sorter: (a, b) => a.description.length - b.description.length,
     },
     {
@@ -251,9 +243,7 @@ const ExpenseApprovals = () => {
                   <li className="breadcrumb-item active"> Reports </li>
                 </ul>
               </div>
-              <div className="col-auto float-end ms-auto">
-              
-              </div>
+              <div className="col-auto float-end ms-auto"></div>
             </div>
           </div>
           {/* /Page Header */}
@@ -341,14 +331,14 @@ const ExpenseApprovals = () => {
         </div>
 
         {/* Add Expense Modal */}
-        
+
         {/* /Add Expense Modal */}
 
         {/* Edit Expense Modal */}
-      
+
         {/* /Edit Expense Modal */}
         {/* Delete Category Modal */}
-       
+
         {/* Delete Expense Modal */}
       </div>
 

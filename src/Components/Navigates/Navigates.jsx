@@ -5,7 +5,7 @@ import Card from "../../_components/screens/Card";
 import Addexpense from "../../_components/screens/Addexpense";
 import ExpensePanel from "../../_components/panels/ExpensePanel";
 import ExpenseApprovals from "../../_components/panels/ExpenseApprovals";
-import ReimbursmentRecord from "../../_components/panels/ReimbursmentRecord";
+// import ReimbursmentRecord from "../../_components/panels/ReimbursmentRecord";
 import CategoryTypePanel from "../../_components/panels/CategoryTypePanel";
 import Expenseapprovedpanel from "../../_components/panels/Expenseapprovedpanel";
 import ExpenseApprovalManager from "../../_components/panels/ExpenseApprovalManager";
@@ -42,6 +42,7 @@ const Navigates = () => {
           <Route path="applyforcard" element={<Card></Card>}></Route>
           <Route path="/home/viewReport/:id" element={<ViewReport />} />
           <Route path="/home/viewReportApproved/:id" element={<ViewReportApproved/>}></Route>
+          {/* <Route path="/home/ReimbursmentRecord/" element={<ReimbursmentRecord/>}></Route> */}
          
           <Route path="addexpense" element={<Addexpense></Addexpense>}></Route>
         
@@ -77,10 +78,10 @@ const Navigates = () => {
             path="ExpenseApprovals"
             element={<ExpenseApprovals></ExpenseApprovals>}
           ></Route>
-          <Route
+          {/* <Route
             path="ReimbursmentRecord"
             element={<ReimbursmentRecord></ReimbursmentRecord>}
-          ></Route>
+          ></Route> */}
             <Route
             path="alluser"
             element={<AllUserPanel></AllUserPanel>}

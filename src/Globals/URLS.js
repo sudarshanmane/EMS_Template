@@ -14,6 +14,8 @@ export const URLS = {
   VIEW_REPORT_URL: "/api/version_0/expense/expensereport/",
   VIEW_REPORT_BY_ID_URL: "/api/version_0/expense/expensereport/",
 
+  GET_REIMBURSMENT_RECORD_URL:"/api/version_0/expense/reimbursement/",
+
   ADD_CATEGORY_URL: "/api/version_0/expense/expensecategory/",
   GET_CATEGORY_PANEL_URL: "/api/version_0/expense/expensecategory/",
   UPDATE_CATEGORY_PANEL_URL: "/api/version_0/expense/expensecategory/",

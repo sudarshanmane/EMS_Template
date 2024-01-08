@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
-  approveExpense,
-  approveReport,
   getReportDetails,
+  reimbursementRecord,
   rejectExpense,
   rejectReport,
 } from "../../store/Action/Actions";
@@ -16,6 +15,8 @@ import {
   itemRender,
 } from "../../MainPage/paginationfunction";
 import { URLS } from "../../Globals/URLS";
+import DatePicker from "react-datepicker";
+
 
 const ViewReportApproved = () => {
   const [rejectReportData, setRejectReportData] = useState(null);
@@ -24,17 +25,28 @@ const ViewReportApproved = () => {
   const [allExpenses, setAllExpenses] = useState([]);
   const [selectedReceiptUrl, setSelectedReceiptUrl] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
+  const [selectedDate2, setSelectedDate2] = useState(new Date());
+  const [isAddFormVisible, setIsAddFormVisible] = useState(false);
+
+
   const { id } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const url = URLS.VIEW_REPORT_URL;
   const [tablePagination, setTablePagination] = useState({
     pageSize: 10,
     current: 1,
   });
 
+  const handleDateChange2 = (date) => {
+    setSelectedDate2(date);
+  };
+
+  const getValuesUrl = URLS.APPROVE_REPORT_URL;
   const {
     register: registerReport,
     handleSubmit: handleRejectReport,
+    handleSubmit: handleReimbursRecord,
     setValue: ReportSetValue,
     formState: { errors },
   } = useForm({});
@@ -46,8 +58,14 @@ const ViewReportApproved = () => {
     formState,
   } = useForm({});
 
-  const onApproveReport = () => {
-    dispatch(approveReport({ id: id }));
+  const onReimbursRecord = () => {
+    dispatch()
+  };
+  const [selectedValue, setSelectedValue] = useState("");
+
+  const handleSelectionChange = (event) => {
+    const selectedOptionValue = event.target.value;
+    setSelectedValue(selectedOptionValue);
   };
 
   const onRejectReport = (values) => {
@@ -60,10 +78,6 @@ const ViewReportApproved = () => {
     ReportSetValue("remark", remark);
   };
 
-  const onApproveExpense = () => {
-    dispatch(approveExpense({ id: id }));
-  };
-
   const onRejectExpense = (values) => {
     dispatch(rejectExpense({ id: id, payload: values }));
   };
@@ -74,6 +88,7 @@ const ViewReportApproved = () => {
     ExpenseSetValue("remark", record.remark);
   };
 
+
   const reportDetailsSelector = useSelector((state) => state.reportDetails);
   useEffect(() => {
     if (reportDetailsSelector) {
@@ -83,6 +98,10 @@ const ViewReportApproved = () => {
         expense_bill: element.expense_bill,
         category: element.category,
         amount: element.amount,
+        submitter: element.submitter,
+        status: element.status,
+        reimbursable_amount: element.reimbursable_amount,
+        approver: element.approver,
       }));
 
       setAllExpenses(allExpenses);
@@ -113,6 +132,38 @@ const ViewReportApproved = () => {
     dispatch(getReportDetails({ id }));
   }, []);
 
+  const onSubmit = async (values) => {
+    await dispatch(addMileage(values));
+    dispatch(reimbursementRecord({ payload: {}, URL: url }));
+    setIsAddFormVisible(false);
+  };
+
+  function getPageDetails(url) {
+    dispatch(reimbursementRecord({ payload: {}, URL: url }));
+  }
+
+  useEffect(() => {
+    getPageDetails(url);
+  }, []);
+  
+  function fetchReimburseData(url) {
+    dispatch(reimbursementRecord({ payload: {}, URL: url }));
+  }
+
+  useEffect(() => {
+    fetchReimburseData(url);
+  }, []);
+
+  const getReimbursementSelector = useSelector((state) => state.reimbursementRecordSuccess);
+
+  useEffect(() => {
+    if (getReimbursementSelector) {
+      dispatch(reimbursementRecord({ payload: {}, URL: url }));
+      setIsAddFormVisible(false);
+    }
+  }, [getReimbursementSelector]);
+
+  
   const handleViewReceipt = (record) => {
     setSelectedReceiptUrl(record || "");
     setModalVisible(true);
@@ -198,7 +249,7 @@ const ViewReportApproved = () => {
       <div className="page-wrapper">
         <div className="content container-fluid">
           <div>
-            <Link className="btn add-btn" to="/home/Reports">
+            <Link className="btn add-btn" to="/home/ExpenseApprovals">
               <i className="fa fa-right" /> Back
             </Link>
           </div>
@@ -216,20 +267,32 @@ const ViewReportApproved = () => {
                           {reportDetailsSelector && (
                             <>
                               <p>
-                                Report No:
+                                Report No:- &nbsp;
                                 {reportDetailsSelector.report_number}
                               </p>
                               <p>
-                                Description:
+                                Description:- &nbsp;
                                 {reportDetailsSelector.description}
                               </p>
                               <p>
-                                Start Date:
+                                Start Date:- &nbsp;
                                 {reportDetailsSelector.start_date}
                               </p>
                               <p>
-                                End Date:
+                                End Date:- &nbsp;
                                 {reportDetailsSelector.end_date}
+                              </p>
+                              <p>
+                                Employee :- &nbsp;
+                                {`${reportDetailsSelector?.submitter.id} - ${reportDetailsSelector?.submitter.first_name} ${reportDetailsSelector?.submitter.last_name}`}
+                              </p>
+                              <p>
+                                Status:- &nbsp;
+                                {reportDetailsSelector.status}
+                              </p>
+                              <p>
+                                Reimbursable Amount:- &nbsp;
+                                {reportDetailsSelector.reimbursable_amount}
                               </p>
                             </>
                           )}
@@ -239,13 +302,13 @@ const ViewReportApproved = () => {
 
                     <div className="col-auto float-start ms-auto">
                       <Link
-                        to="#"
                         className="btn add-btn"
+                        to="#"
                         data-bs-toggle="modal"
-                        data-bs-target="#approveReport"
-                        onClick={() => onApproveReport()}
+                        data-bs-target="#reimbursement-record"
+                        onClick={() => onReimbursRecord()}
                       >
-                        <i className="fa fa-right" /> Reimbursment Record
+                        <i className="fa fa-right" /> Record Reimbursment
                       </Link>
                     </div>
                     <div className="col-auto float-end ms-auto">
@@ -343,6 +406,128 @@ const ViewReportApproved = () => {
             </div>
           </div>
           {/* {/ {/ /Reject Modal /} /} */}
+
+          {/* {/ {/ Reimbursment Record Modal  /}  /} */}
+          <div
+            id="reimbursement-record"
+            className="modal custom-modal fade"
+            role="dialog"
+          >
+            <div
+              className="modal-dialog modal-dialog-centered modal-lg"
+              role="document"
+            >
+              <div className="modal-content">
+                <div className="modal-body">
+                  <div className="card flex-fill">
+                    <div className="card-header">
+                      <h4 className="card-title mb-0">Record</h4>
+                    </div>
+                    <div className="card-body">
+                      <form onSubmit={handleReimbursRecord(onReimbursRecord)}>
+                        <div className="input-block row">
+                          <label className="col-lg-3 col-form-label">
+                            <h4>Reimbursement Amount</h4>
+                          </label>
+                          <div className="col-lg-9">
+                            <input
+                              type="text"
+                              value={
+                                reportDetailsSelector?.reimbursable_amount || ""
+                              }
+                              className="form-control"
+                              readOnly
+                            />
+                          </div>
+                        </div>
+                        <div className="input-block row">
+                          <label className="col-lg-3 col-form-label">
+                            <h4>Paid To</h4>
+                          </label>
+                          <div className="col-lg-9">
+                            <input
+                              type="text"
+                              value={`${reportDetailsSelector?.submitter.id} - ${reportDetailsSelector?.submitter.first_name} ${reportDetailsSelector?.submitter.last_name}`}
+                              className="form-control"
+                              readOnly
+                            />
+                          </div>
+                        </div>
+                        <div className="input-block row">
+                          <label className="col-lg-3 col-form-label">
+                            <h4>Reimburse On</h4>
+                          </label>
+                          {/* <div className="input-block form-focus select-focus"> */}
+                          <div className="col-lg-9">
+                            <DatePicker
+                              selected={selectedDate2}
+                              onChange={handleDateChange2}
+                              className="form-control floating datetimepicker"
+                              type="date"
+                            />
+                          </div>
+
+                          {/* </div> */}
+                        </div>
+                        <div className="input-block row">
+                          <label className="col-lg-3 col-form-label">
+                            <h4> Paid Through</h4>
+                          </label>
+                          <div className="col-lg-9">
+                            <select
+                              className="form-control"
+                              value={selectedValue}
+                              onChange={handleSelectionChange}
+                            >
+                              <option value="">Cash</option>
+                              <option value="">Online</option>
+                              {/* Other options */}
+                            </select>
+                          </div>
+                        </div>
+                        <div className="input-block row">
+                          <label className="col-lg-3 col-form-label">
+                            <h4>Notes</h4>
+                          </label>
+                          <div className="col-lg-9">
+                            <textarea
+                              rows={4}
+                              cols={5}
+                              className="form-control"
+                              placeholder="Enter message"
+                              defaultValue={""}
+                            />
+                          </div>
+                        </div>
+                        <div className="input-block row">
+                          <label className="col-lg-3 col-form-label">
+                            <h4> Ref#</h4>
+                          </label>
+                          <div className="col-lg-9">
+                            <input type="text" className="form-control" />
+                          </div>
+                        </div>
+                        <div className="text-end">
+                          <button type="submit" className="btn btn-success">
+                            <h4>Record Reimbursment</h4>
+                          </button>
+                          <button
+                            type="button"
+                            className="btn  btn-light"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                          >
+                            <h4>Cancel</h4>
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* {/ {/ /Reimbursment Record Modal /} /} */}
 
           {/* {/ {/ Reject Expense Modal /}  /} */}
           <div
