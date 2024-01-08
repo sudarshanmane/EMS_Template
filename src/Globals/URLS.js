@@ -2,6 +2,12 @@ export const URLS = {
   BASE_URL_EXPORT: "http://127.0.0.1:8001",
   USER_LOGIN_URL: "/users/api/v2/login_web/",
   USER_REGISTER_URL: "/users/api/v2/userregister/",
+  GET_DEPARTMENT_LIST_URL: "/users/api/v2/departmentlist/",
+  GET_DESIGNATION_LIST_URL: "/users/api/v2/designationlist/",
+  GET_EMPLOYMENT_TYPE_LIST_URL: "/users/api/v2/employementtypelist/",
+  GET_BRANCH_LIST_URL: "/company/api/v2/branch/",
+  GET_USERROLE_PERMISSION_URL: "/users/api/v2/userrolepermissionlist",
+
   GET_CURRENT_ROLE_URL: "/users/api/v2/getcurrentuserrole/",
   GET_CURRENT_USER_URL: "/users/api/v2/getalluser/",
   GET_STAFF_LIST_URL: "/users/api/v2/getallstaff/",
@@ -20,7 +26,8 @@ export const URLS = {
   REJECT_REPORT_URL: "/api/version_0/expense/reject-report/",
   ADD_REPORT_URL: "/api/version_0/expense/expensereport/",
   GET_REPORT_LIST_URL: "/api/version_0/expense/expensereport/",
-  UPDATE_REPORT: "/api/version_0/expense/expensereport/",
+  UPDATE_REPORT: "/api/version_0/expense/update_expensereport/",
+  DELETE_REPORT: "/api/version_0/expense/update_expensereport/",
   VIEW_REPORT_URL: "/api/version_0/expense/expensereport/",
   VIEW_REPORT_BY_ID_URL: "/api/version_0/expense/expensereport/",
 

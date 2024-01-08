@@ -9727,3 +9727,7 @@ th.width-64 {
   border-color: #FF7437;
   border-style: none;
 }
+.h-42{
+  height: 42px;
+}
+.h-42 .ant-select-selector{ height:42px !important}

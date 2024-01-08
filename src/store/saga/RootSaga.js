@@ -8,6 +8,13 @@ import {
   getCurrentRole,
   getCurrentUser,
   getStaff,
+  addExperience,
+  getDepartment,
+  getDesignation,
+  getBranch,
+  getUserRolePermission,
+  getEmploymentType,
+  addEducation,
   addCertification,
   addUserSetting,
   addPersonalInformation,
@@ -55,7 +62,6 @@ import {
   getItemNameList,
   itemizationsubmit,
   AddExpesnesubmit,
-
   getManagerList,
   addRole,
   getAccountingCodeList,
@@ -65,7 +71,6 @@ import {
   ContactUs,
   AboutUsPage,
   ContactUsPage,
-  
   GetCompanyList,
   UpdateCompanyList,
   getAddUserPanel,
@@ -124,8 +129,6 @@ import {
   addAllUser,
   rejectExpense,
   approveExpense,
-  addEducation,
-  addExperience,
 } from "./CommonSagas";
 
 export function* RootSaga() {
@@ -135,13 +138,20 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.GET_CURRENT_ROLE, getCurrentRole);
   yield takeEvery(API_CONSTANTS.GET_CURRENT_USER, getCurrentUser);
   yield takeEvery(API_CONSTANTS.GET_STAFF_LIST, getStaff);
+  yield takeEvery(API_CONSTANTS.GET_EMPLOYMENT_TYPE_LIST, getEmploymentType);
+  yield takeEvery(API_CONSTANTS.GET_DEPARTMENT_LIST, getDepartment);
+  yield takeEvery(API_CONSTANTS.GET_DESIGNATION_LIST, getDesignation);
+  yield takeEvery(API_CONSTANTS.GET_BRANCH_LIST, getBranch);
+  yield takeEvery(API_CONSTANTS.GET_USERROLE_PERMISSION, getUserRolePermission);
   yield takeEvery(API_CONSTANTS.ADD_SALARY, addSalaryRevision);
   yield takeEvery(API_CONSTANTS.ADD_CERTIFICATION, addCertification);
   yield takeEvery(API_CONSTANTS.ADD_USER_SETTING, addUserSetting);
-  yield takeEvery(API_CONSTANTS.ADD_PERSONAL_INFORMATION, addPersonalInformation);
+  yield takeEvery(
+    API_CONSTANTS.ADD_PERSONAL_INFORMATION,
+    addPersonalInformation
+  );
   yield takeEvery(API_CONSTANTS.ADD_EDUCATION, addEducation);
   yield takeEvery(API_CONSTANTS.ADD_EXPERIENCE, addExperience);
-
 
   yield takeEvery(API_CONSTANTS.ADD_REPORT, addReportsubmit);
   yield takeEvery(API_CONSTANTS.GET_REPORT_LIST, getReportList);
@@ -153,7 +163,6 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.APPROVE_EXPENSE, approveExpense);
   yield takeEvery(API_CONSTANTS.REJECT_EXPENSE, rejectExpense);
 
-
   yield takeEvery(API_CONSTANTS.ADD_CATEGORY, getAddCategoryList);
   yield takeEvery(API_CONSTANTS.GET_CATEGORYLIST_PANEL, categoryPanelList);
   yield takeEvery(API_CONSTANTS.UPDATE_CATEGORY_PANEL, updateCategoryPanel);
@@ -164,7 +173,7 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.GET_EXPENSE_POLICY, getExpensePolicy);
   yield takeEvery(API_CONSTANTS.UPDATE_EXPENSE_POLICY, updateExpensePolicy);
   yield takeEvery(API_CONSTANTS.DELETE_EXPENSE_POLICY, deleteExpensePolicy);
- 
+
   yield takeEvery(API_CONSTANTS.ADD_MILEAGE, addMileage);
   yield takeEvery(API_CONSTANTS.GET_MILEAGE, getMileage);
   yield takeEvery(API_CONSTANTS.FETCH_CATEGORY, fetchCategory);
@@ -201,7 +210,6 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.GET_ACCOUNTING_CODE, getAccountingCodeList);
   yield takeEvery(API_CONSTANTS.ADD_EXTERNAL_ACCOUNT_CODE, addExternalcodeType);
   yield takeEvery(API_CONSTANTS.ADD_USER, addUser);
-  yield takeEvery(API_CONSTANTS.GET_ROLE, getRole);
   yield takeEvery(API_CONSTANTS.ADD_ROLE, addRole);
 
   yield takeEvery(API_CONSTANTS.ACCOUNTING_CODE_SUBMIT, accountingCodeSubmit);
@@ -371,4 +379,3 @@ export function* RootSaga() {
   );
   yield takeEvery(API_CONSTANTS.EXPORT_COMPANY_PANEL, exportCompanypanel);
 }
-                                    

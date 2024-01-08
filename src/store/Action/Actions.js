@@ -56,6 +56,47 @@ function getAllStaff(payload) {
   };
 }
 
+function getDepartmentAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_DEPARTMENT_LIST,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+function getDesignationAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_DESIGNATION_LIST,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+function getBranchAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_BRANCH_LIST,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+function getEmploymentTypeAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_EMPLOYMENT_TYPE_LIST,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+function getUserRolePermissionAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_USERROLE_PERMISSION,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
 function addSalary(payload) {
   return {
     type: API_CONSTANTS.ADD_SALARY,
@@ -1176,6 +1217,11 @@ export {
   getCurrentRole,
   getCurrentUser,
   getAllStaff,
+  getDepartmentAction,
+  getDesignationAction,
+  getBranchAction,
+  getEmploymentTypeAction,
+  getUserRolePermissionAction,
   addSalary,
   addCertificationAction,
   addUserSettingAction,

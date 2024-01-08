@@ -9,44 +9,61 @@ import { yupResolver } from "@hookform/resolvers/yup/dist/yup.js";
 import * as Yup from "yup";
 
 import { Select } from "antd";
-
+import { URLS } from "../../../Globals/URLS";
+import {
+  addPersonalInformationAction,
+  addUserAction,
+  getBranchAction,
+  getDepartmentAction,
+  getDesignationAction,
+  getEmploymentTypeAction,
+  getUserRolePermissionAction,
+  userRegister,
+} from "../../../store/Action/Actions";
+import PersonalInformation from "./PersonalInformation";
 
 const stepSchema = Yup.object().shape({
-  first_name: Yup.string().required(" First Name is Required"),
-  middle_name: Yup.string().required(" Middle Name is Required"),
-  last_name: Yup.string().required(" Last Name is Required"),
-  email: Yup.string().email("Email is not valid").required("Email is required"),
-  correspondance_address: Yup.string().required("Address is required"),
-  permanent_address: Yup.string().required("Permanent Address is required"),
-  mobile_no: Yup.string().required(" Mobile Number is Required"),
-  alt_mobile: Yup.string().required(" Alternate Number is required"),
+  // first_name: Yup.string().required(" First Name is Required"),
+  // middle_name: Yup.string().required(" Middle Name is Required"),
+  // last_name: Yup.string().required(" Last Name is Required"),
+  // email: Yup.string().email("Email is not valid").required("Email is required"),
+  // correspondance_address: Yup.string().required("Address is required"),
+  // permanent_address: Yup.string().required("Permanent Address is required"),
+  // mobile_no: Yup.string().required(" Mobile Number is Required"),
+  // alt_mobile: Yup.string().required(" Alternate Number is required"),
   date_of_birth: Yup.string().required("Birthdate is required"),
-  emp_id: Yup.string().required("Employee Id is required"),
-  department: Yup.string().required("Select Department"),
-  designation: Yup.string().required("Select Designation"),
-  employment_type: Yup.string().required("Select Employment Type"),
-  user_role_permissions: Yup.array()
-    .of(Yup.string())
-    .required("Select User Role"),
-  branch: Yup.string().required("Select Branch"),
-  password: Yup.string().required("Password is required"),
-  conf_pass: Yup.string().required("Confirm the Password"),
-  profile_image: Yup.mixed()
-    .test("fileSize", "Profile Image size is too large", (value) => {
-      if (!value) return true; // No file selected, let it pass
-      return value.size <= 1024 * 1024 * 2; // 2 MB limit, adjust as needed
-    })
-    .required("Choose Profile Image"),
+  // emp_id: Yup.string().required("Employee Id is required"),
+  // department: Yup.string().required("Select Department"),
+  // designation: Yup.string().required("Select Designation"),
+  // employment_type: Yup.string().required("Select Employment Type"),
+  // user_role_permissions: Yup.array()
+  //   .of(Yup.string())
+  //   .required("Select User Role"),
+  // // branch: Yup.string().required("Select Branch"),
+  // password: Yup.string().required("Password is required"),
+  // conf_pass: Yup.string().required("Confirm the Password"),
+  // profile_image: Yup.mixed()
+  //   .test("fileSize", "Profile Image size is too large", (value) => {
+  //     if (!value) return true; // No file selected, let it pass
+  //     return value.size <= 1024 * 1024 * 2; // 2 MB limit, adjust as needed
+  //   })
+  // .required("Choose Profile Image"),
 
-  face_match_image1: Yup.mixed()
-    .test("fileSize", "Face Match Image size is too large", (value) => {
-      if (!value) return true; // No file selected, let it pass
-      return value.size <= 1024 * 1024 * 2; // 2 MB limit, adjust as needed
-    })
-    .required("Choose Face Match Image"),
+  // face_match_image1: Yup.mixed()
+  //   .test("fileSize", "Face Match Image size is too large", (value) => {
+  //     if (!value) return true; // No file selected, let it pass
+  //     return value.size <= 1024 * 1024 * 2; // 2 MB limit, adjust as needed
+  //   })
+  //   .required("Choose Face Match Image"),
 });
 
 export default function UserRegistration({ nextcall, setUserId }) {
+  const getDepartmenturl = URLS.GET_DEPARTMENT_LIST_URL;
+  const getDesignationurl = URLS.GET_DESIGNATION_LIST_URL;
+  const getBranchurl = URLS.GET_BRANCH_LIST_URL;
+  const getEmploymentTypeurl = URLS.GET_EMPLOYMENT_TYPE_LIST_URL;
+  const getUserRolePermissionurl = URLS.GET_USERROLE_PERMISSION_URL;
+
   const {
     register,
     handleSubmit,
@@ -56,16 +73,105 @@ export default function UserRegistration({ nextcall, setUserId }) {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(stepSchema),
-
   });
 
   const dispatch = useDispatch();
-  
+  const [registrationSuccessful, setRegistrationSuccessful] = useState(false);
   const [multiDrop, setMultiDrop] = useState([]);
   const [file, setFile] = useState();
   const [file2, setFile2] = useState();
 
-  
+  useEffect(() => {
+    fetchPageDetails(getDepartmenturl);
+    fetchDepartmentData(getDepartmenturl);
+
+    fetchPageDetails(getDesignationurl);
+    fetchDesignationData(getDesignationurl);
+
+    fetchPageDetails(getBranchurl);
+    fetchBranchData(getBranchurl);
+
+    fetchPageDetails(getEmploymentTypeurl);
+    fetchEmploymentTypeData(getEmploymentTypeurl);
+
+    fetchPageDetails(getUserRolePermissionurl);
+    fetchUserRolePermissionData(getUserRolePermissionurl);
+  }, []);
+
+  const departmentSelector = useSelector((state) => state.getdepartment);
+
+  function fetchPageDetails(getDepartmenturl) {
+    dispatch(getDepartmentAction({ payload: {}, URL: getDepartmenturl }));
+  }
+
+  function fetchDepartmentData(getDepartmenturl) {
+    dispatch(getDepartmentAction({ payload: {}, URL: getDepartmenturl }));
+  }
+
+  const designationSelector = useSelector((state) => state.getdesignation);
+
+  function fetchPageDetails(getDesignationurl) {
+    dispatch(getDesignationAction({ payload: {}, URL: getDesignationurl }));
+  }
+
+  function fetchDesignationData(getDesignationurl) {
+    dispatch(getDesignationAction({ payload: {}, URL: getDesignationurl }));
+  }
+
+  const branchSelector = useSelector((state) => state.getbranchlist);
+  console.log("Branch Selector:", branchSelector);
+  function fetchPageDetails(getBranchurl) {
+    dispatch(getBranchAction({ payload: {}, URL: getBranchurl }));
+  }
+
+  function fetchBranchData(getBranchurl) {
+    dispatch(getBranchAction({ payload: {}, URL: getBranchurl }));
+  }
+
+  const EmploymentTypeSelector = useSelector(
+    (state) => state.getemploymenttype
+  );
+
+  function fetchPageDetails(getEmploymentTypeurl) {
+    dispatch(
+      getEmploymentTypeAction({ payload: {}, URL: getEmploymentTypeurl })
+    );
+  }
+
+  function fetchEmploymentTypeData(getEmploymentTypeurl) {
+    dispatch(
+      getEmploymentTypeAction({ payload: {}, URL: getEmploymentTypeurl })
+    );
+  }
+
+  const UserRolePermissionSelector = useSelector(
+    (state) => state.getuserrolepermission
+  );
+
+  function fetchPageDetails(getUserRolePermissionurl) {
+    dispatch(
+      getUserRolePermissionAction({
+        payload: {},
+        URL: getUserRolePermissionurl,
+      })
+    );
+  }
+
+  function fetchUserRolePermissionData(getUserRolePermissionurl) {
+    dispatch(
+      getUserRolePermissionAction({
+        payload: {},
+        URL: getUserRolePermissionurl,
+      })
+    );
+  }
+
+  const userOptions = Array.isArray(UserRolePermissionSelector)
+    ? UserRolePermissionSelector.map((user) => ({
+        value: user.id,
+        label: user.user_role,
+      }))
+    : [];
 
   const countryCodes = [
     { label: "+91 (India)", value: "+91" },
@@ -160,16 +266,12 @@ export default function UserRegistration({ nextcall, setUserId }) {
 
   const userRegisterSelector = useSelector((state) => state.registerDetails);
 
-  useEffect(() => {
-    
-  }, [userRegisterSelector]);
-
   const onSubmit = (data) => {
-    dispatch(addReport(data));
+    const formattedDate = format(new Date(data?.date_of_birth), "yyyy-MM-dd");
+
     let formData = new FormData();
     if (data?.user_role_permissions?.length > 1) {
       data?.user_role_permissions.forEach((element) => {
-       
         formData.append("user_role_permissions", element);
       });
     } else {
@@ -185,7 +287,7 @@ export default function UserRegistration({ nextcall, setUserId }) {
     formData.append("mobile_no", data.mobile_no);
     formData.append("alt_countryCode", data.alt_countryCode);
     formData.append("alt_mobile", data.alt_mobile);
-    formData.append("date_of_birth", data.date_of_birth);
+    formData.append("date_of_birth", formattedDate);
     formData.append("emp_id", data.emp_id);
     formData.append("department", data.department);
     formData.append("designation", data.designation);
@@ -195,14 +297,14 @@ export default function UserRegistration({ nextcall, setUserId }) {
     formData.append("conf_pass", data.conf_pass);
     formData.append("profile_image", file);
     formData.append("face_match_image1", file2);
-  
+    dispatch(userRegister(formData));
+    setRegistrationSuccessful(true);
   };
 
   const imageFormDataConverter = (e) => {
     setFile(e.target.files[0]);
   };
   const imageFormDataConverter2 = (e) => {
-   
     setFile2(e.target.files[0]);
   };
 
@@ -216,6 +318,9 @@ export default function UserRegistration({ nextcall, setUserId }) {
               <h4 className="card-title mb-0">User Registration</h4>
             </div>
             <div className="card-body">
+            {registrationSuccessful ? (
+        <PersonalInformation />
+      ) : (
               <form
                 onSubmit={handleSubmit(onSubmit)}
                 encType="multipart/form-data"
@@ -401,8 +506,7 @@ export default function UserRegistration({ nextcall, setUserId }) {
                         Birthdate <span className="text-danger">*</span>
                       </label>
                       <div className="">
-                      
-                        <Controller
+                        {/* <Controller
                           control={control}
                           name="date_of_birth"
                           render={({ field }) => (
@@ -420,11 +524,38 @@ export default function UserRegistration({ nextcall, setUserId }) {
                                 selected={
                                   field.value ? new Date(field.value) : null
                                 }
+                                // selected={field.value}
+                                // onChange={(date) => field.onChange(date)}
                                 onChange={(date) =>
                                   field.onChange(
                                     date ? format(date, "dd-MM-yyyy") : ""
                                   )
                                 }
+                                className="form-control datetimepicker"
+                                dateFormat="dd-MM-yyyy"
+                                placeholderText="dd-mm-yyyy"
+                              />
+                            </div>
+                          )}
+                        /> */}
+                        <Controller
+                          control={control}
+                          name="date_of_birth"
+                          render={({ field }) => (
+                            <div className="date-picker-container">
+                              <span
+                                className="calendar-icon"
+                                onClick={() =>
+                                  console.log("Calendar icon clicked")
+                                }
+                              >
+                                <i className="fa-regular fa-calendar"></i>
+                              </span>
+                              <DatePicker
+                                selected={
+                                  field.value ? new Date(field.value) : null
+                                }
+                                onChange={(date) => field.onChange(date)}
                                 className="form-control datetimepicker"
                                 dateFormat="dd-MM-yyyy"
                                 placeholderText="dd-mm-yyyy"
@@ -469,7 +600,11 @@ export default function UserRegistration({ nextcall, setUserId }) {
                           {...register("department")}
                         >
                           <option value="">Select Department</option>
-                         
+                          {departmentSelector?.map((data) => {
+                            return (
+                              <option value={data.id}>{data.department}</option>
+                            );
+                          })}
                         </select>
                         <div className="text-danger">
                           {errors.department?.message}
@@ -488,7 +623,13 @@ export default function UserRegistration({ nextcall, setUserId }) {
                           {...register("designation")}
                         >
                           <option value="">Select Desingation</option>
-                          
+                          {designationSelector?.map((data) => {
+                            return (
+                              <option value={data.id}>
+                                {data.designation}
+                              </option>
+                            );
+                          })}
                         </select>
                         <div className="text-danger">
                           {errors.designation?.message}
@@ -509,7 +650,13 @@ export default function UserRegistration({ nextcall, setUserId }) {
                           {...register("employment_type")}
                         >
                           <option value="">Select Employment Type</option>
-                          
+                          {EmploymentTypeSelector?.map((data) => {
+                            return (
+                              <option value={data.id}>
+                                {data.employment_type}
+                              </option>
+                            );
+                          })}
                         </select>
                         <div className="text-danger">
                           {errors.employment_type?.message}
@@ -532,20 +679,28 @@ export default function UserRegistration({ nextcall, setUserId }) {
                           control={control}
                           render={({ field }) => (
                             <Select
-                              mode="multiple"
-                              allowClear
-                              style={{
-                                width: "100%",
+                              id="dropdown"
+                              className="d-block h-42"
+                              options={userOptions}
+                              isMulti={true}
+                              isSearchable={true}
+                              placeholder="Search options..."
+                              value={userOptions.filter(
+                                (option) =>
+                                  field.value &&
+                                  field.value.includes(option.value)
+                              )}
+                              onChange={(selectedOption) => {
+                                const selectedValues = selectedOption
+                                  ? [selectedOption]
+                                  : [];
+
+                                field.onChange(selectedValues);
                               }}
-                              value={field.value}
-                              onChange={(value) => field.onChange(value)}
-                              options={multiDrop.map((item) => ({
-                                value: item.id,
-                                label: item.user_role,
-                              }))}
                             />
                           )}
                         />
+
                         <div className="text-danger">
                           {errors.user_role_permissions?.message}
                         </div>
@@ -566,7 +721,11 @@ export default function UserRegistration({ nextcall, setUserId }) {
                           {...register("branch")}
                         >
                           <option value="">Select Branch</option>
-                          
+                          {branchSelector.map((data) => {
+                            return (
+                              <option value={data.id}>{data.branch}</option>
+                            );
+                          })}
                         </select>{" "}
                         <div className="text-danger">
                           {errors.branch?.message}
@@ -615,9 +774,8 @@ export default function UserRegistration({ nextcall, setUserId }) {
                       <label className="col-form-label " id="profile_image">
                         Profile Image <span className="text-danger">*</span>
                       </label>
-                     
+
                       <div className="">
-                       
                         <Controller
                           name="profile_image"
                           control={control}
@@ -658,7 +816,7 @@ export default function UserRegistration({ nextcall, setUserId }) {
                       <label className="col-form-label " id="face_match_image1">
                         Face Match Image <span className="text-danger">*</span>
                       </label>
-                    
+
                       <div className="">
                         <Controller
                           name="face_match_image1"
@@ -698,12 +856,11 @@ export default function UserRegistration({ nextcall, setUserId }) {
                   style={{ float: "right" }}
                   variant="primary"
                   type="submit"
-                 
                 >
-                 
                   Save
                 </Button>
               </form>
+               )}
             </div>
           </div>
         </div>

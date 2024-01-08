@@ -8,6 +8,7 @@ const initialState = {
   email: "",
   mobile: "",
   changePasswordError: null,
+  getbranchlist: [],
 };
 
 export const RootReducer = (state = initialState, action) => {
@@ -25,18 +26,18 @@ export const RootReducer = (state = initialState, action) => {
         loginDetails: action.result,
       };
 
-      case API_CONSTANTS.CHANGE_PASSWORD:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.CHANGE_PASSWORD_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          changepassword: action.result,
-        };
+    case API_CONSTANTS.CHANGE_PASSWORD:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.CHANGE_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        changepassword: action.result,
+      };
 
     case API_CONSTANTS.USER_REGISTER:
       return {
@@ -64,18 +65,18 @@ export const RootReducer = (state = initialState, action) => {
         getcurrentrole: action.result,
       };
 
-      case API_CONSTANTS.GET_CURRENT_USER:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.GET_CURRENT_USER_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          getcurrentuser: action.result,
-        };
+    case API_CONSTANTS.GET_CURRENT_USER:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_CURRENT_USER_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getcurrentuser: action.result,
+      };
 
     case API_CONSTANTS.GET_STAFF_LIST:
       return {
@@ -88,6 +89,74 @@ export const RootReducer = (state = initialState, action) => {
         ...state,
         loding: false,
         getstafflist: action.result,
+      };
+
+    case API_CONSTANTS.GET_DEPARTMENT_LIST:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_DEPARTMENT_LIST_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getdepartment: action.result,
+      };
+
+    case API_CONSTANTS.GET_DESIGNATION_LIST:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_DESIGNATION_LIST_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getdesignation: action.result,
+      };
+
+    case API_CONSTANTS.GET_BRANCH_LIST:
+      return {
+        ...state,
+        loding: true,
+      };
+
+
+      case API_CONSTANTS.GET_BRANCH_LIST_SUCCESS:
+        console.log('Action Payload:', action.result);
+        console.log('Current Branch List State:', state.getbranchlist);
+        return {
+          ...state,
+          loading: false,
+          getbranchlist: action.result,
+        };
+      
+    case API_CONSTANTS.GET_EMPLOYMENT_TYPE_LIST:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_EMPLOYMENT_TYPE_LIST_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getemploymenttype: action.result,
+      };
+
+    case API_CONSTANTS.GET_USERROLE_PERMISSION:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_USERROLE_PERMISSION_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getuserrolepermission: action.result,
       };
 
     case API_CONSTANTS.ADD_SALARY:
@@ -918,7 +987,6 @@ export const RootReducer = (state = initialState, action) => {
         loding: false,
         contactUsPage: action.result,
       };
-
 
     case API_CONSTANTS.GET_COMPANY_LIST:
       return {
