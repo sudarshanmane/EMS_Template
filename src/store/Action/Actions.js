@@ -169,6 +169,16 @@ function getReportList(payload) {
   };
 }
 
+function getExpenseList(payload) {
+  console.log("actionnnnnnnnnnnnn",payload);
+  return {
+    type: API_CONSTANTS.GET_EXPENSE_LIST,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
 function updateReportAction(payload) {
   return {
     type: API_CONSTANTS.UPDATE_REPORT,
@@ -718,14 +728,6 @@ function getaccountingcodePanelAction(payload) {
   };
 }
 
-function getexpensePanelListAction(payload) {
-  return {
-    type: API_CONSTANTS.GET_EXPENSELIST_PANEL,
-    payload,
-    URL: payload.URL,
-    contentType: contentType.form,
-  };
-}
 
 function applyCardAction(payload) {
   return {
@@ -1233,6 +1235,7 @@ export {
   deleteReportAction,
   setDeleteReportFalse,
   getReportDetails,
+  getExpenseList,
   approveReport,
   rejectReport,
   approveExpense,
@@ -1291,7 +1294,6 @@ export {
   addUserPanelAction,
   getPanelItemization,
   getaccountingcodePanelAction,
-  getexpensePanelListAction,
   applyCardAction,
   searchExpenseTypeAction,
   searchExternalAccountCodeAction,

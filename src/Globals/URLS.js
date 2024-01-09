@@ -26,6 +26,7 @@ export const URLS = {
   REJECT_REPORT_URL: "/api/version_0/expense/reject-report/",
   ADD_REPORT_URL: "/api/version_0/expense/expensereport/",
   GET_REPORT_LIST_URL: "/api/version_0/expense/expensereport/",
+  GET_EXPENSE_LIST_URL: "/api/version_0/expense/create_expense/",
   UPDATE_REPORT: "/api/version_0/expense/update_expensereport/",
   DELETE_REPORT: "/api/version_0/expense/update_expensereport/",
   VIEW_REPORT_URL: "/api/version_0/expense/expensereport/",

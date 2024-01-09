@@ -8,10 +8,11 @@ const initialState = {
   email: "",
   mobile: "",
   changePasswordError: null,
-  getbranchlist: [],
+  // getbranchlist: [],
 };
 
 export const RootReducer = (state = initialState, action) => {
+  console.log(action.type, action.result);
   switch (action.type) {
     case API_CONSTANTS.USER_LOGIN:
       return {
@@ -123,16 +124,13 @@ export const RootReducer = (state = initialState, action) => {
         loding: true,
       };
 
+    case API_CONSTANTS.GET_BRANCH_LIST_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getbranchlist: action.result,
+      };
 
-      case API_CONSTANTS.GET_BRANCH_LIST_SUCCESS:
-        console.log('Action Payload:', action.result);
-        console.log('Current Branch List State:', state.getbranchlist);
-        return {
-          ...state,
-          loading: false,
-          getbranchlist: action.result,
-        };
-      
     case API_CONSTANTS.GET_EMPLOYMENT_TYPE_LIST:
       return {
         ...state,
@@ -262,6 +260,19 @@ export const RootReducer = (state = initialState, action) => {
         loding: false,
         getreportlist: action.result,
       };
+
+      case API_CONSTANTS.GET_EXPENSE_LIST:
+        return {
+          ...state,
+          loding: true,
+        };
+  
+      case API_CONSTANTS.GET_EXPENSE_LIST_SUCCESS:
+        return {
+          ...state,
+          loding: false,
+          getexpenselist: action.result,
+        };
 
     case API_CONSTANTS.UPDATE_REPORT:
       return {
@@ -1166,7 +1177,7 @@ export const RootReducer = (state = initialState, action) => {
     case API_CONSTANTS.EXPENSE_APPROVED_PPANEL_MANGER_SUCCESS:
       return {
         ...state,
-        loading: false,
+        loding: false,
         expenseapprovedpanelResult: action.result, // Update with fetched data
       };
 

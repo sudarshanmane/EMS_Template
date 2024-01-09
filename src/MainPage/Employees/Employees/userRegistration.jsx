@@ -11,8 +11,6 @@ import * as Yup from "yup";
 import { Select } from "antd";
 import { URLS } from "../../../Globals/URLS";
 import {
-  addPersonalInformationAction,
-  addUserAction,
   getBranchAction,
   getDepartmentAction,
   getDesignationAction,
@@ -23,38 +21,38 @@ import {
 import PersonalInformation from "./PersonalInformation";
 
 const stepSchema = Yup.object().shape({
-  // first_name: Yup.string().required(" First Name is Required"),
-  // middle_name: Yup.string().required(" Middle Name is Required"),
-  // last_name: Yup.string().required(" Last Name is Required"),
-  // email: Yup.string().email("Email is not valid").required("Email is required"),
-  // correspondance_address: Yup.string().required("Address is required"),
-  // permanent_address: Yup.string().required("Permanent Address is required"),
-  // mobile_no: Yup.string().required(" Mobile Number is Required"),
-  // alt_mobile: Yup.string().required(" Alternate Number is required"),
+  first_name: Yup.string().required(" First Name is Required"),
+  middle_name: Yup.string().required(" Middle Name is Required"),
+  last_name: Yup.string().required(" Last Name is Required"),
+  email: Yup.string().email("Email is not valid").required("Email is required"),
+  correspondance_address: Yup.string().required("Address is required"),
+  permanent_address: Yup.string().required("Permanent Address is required"),
+  mobile_no: Yup.string().required(" Mobile Number is Required"),
+  alt_mobile: Yup.string().required(" Alternate Number is required"),
   date_of_birth: Yup.string().required("Birthdate is required"),
-  // emp_id: Yup.string().required("Employee Id is required"),
-  // department: Yup.string().required("Select Department"),
-  // designation: Yup.string().required("Select Designation"),
-  // employment_type: Yup.string().required("Select Employment Type"),
-  // user_role_permissions: Yup.array()
-  //   .of(Yup.string())
-  //   .required("Select User Role"),
-  // // branch: Yup.string().required("Select Branch"),
-  // password: Yup.string().required("Password is required"),
-  // conf_pass: Yup.string().required("Confirm the Password"),
-  // profile_image: Yup.mixed()
-  //   .test("fileSize", "Profile Image size is too large", (value) => {
-  //     if (!value) return true; // No file selected, let it pass
-  //     return value.size <= 1024 * 1024 * 2; // 2 MB limit, adjust as needed
-  //   })
-  // .required("Choose Profile Image"),
+  emp_id: Yup.string().required("Employee Id is required"),
+  department: Yup.string().required("Select Department"),
+  designation: Yup.string().required("Select Designation"),
+  employment_type: Yup.string().required("Select Employment Type"),
+  user_role_permissions: Yup.array()
+    .of(Yup.string())
+    .required("Select User Role"),
+  branch: Yup.string().required("Select Branch"),
+  password: Yup.string().required("Password is required"),
+  conf_pass: Yup.string().required("Confirm the Password"),
+  profile_image: Yup.mixed()
+    .test("fileSize", "Profile Image size is too large", (value) => {
+      if (!value) return true; // No file selected, let it pass
+      return value.size <= 1024 * 1024 * 2; // 2 MB limit, adjust as needed
+    })
+    .required("Choose Profile Image"),
 
-  // face_match_image1: Yup.mixed()
-  //   .test("fileSize", "Face Match Image size is too large", (value) => {
-  //     if (!value) return true; // No file selected, let it pass
-  //     return value.size <= 1024 * 1024 * 2; // 2 MB limit, adjust as needed
-  //   })
-  //   .required("Choose Face Match Image"),
+  face_match_image1: Yup.mixed()
+    .test("fileSize", "Face Match Image size is too large", (value) => {
+      if (!value) return true; // No file selected, let it pass
+      return value.size <= 1024 * 1024 * 2; // 2 MB limit, adjust as needed
+    })
+    .required("Choose Face Match Image"),
 });
 
 export default function UserRegistration({ nextcall, setUserId }) {
@@ -119,7 +117,6 @@ export default function UserRegistration({ nextcall, setUserId }) {
   }
 
   const branchSelector = useSelector((state) => state.getbranchlist);
-  console.log("Branch Selector:", branchSelector);
   function fetchPageDetails(getBranchurl) {
     dispatch(getBranchAction({ payload: {}, URL: getBranchurl }));
   }
@@ -268,7 +265,6 @@ export default function UserRegistration({ nextcall, setUserId }) {
 
   const onSubmit = (data) => {
     const formattedDate = format(new Date(data?.date_of_birth), "yyyy-MM-dd");
-
     let formData = new FormData();
     if (data?.user_role_permissions?.length > 1) {
       data?.user_role_permissions.forEach((element) => {
@@ -318,549 +314,525 @@ export default function UserRegistration({ nextcall, setUserId }) {
               <h4 className="card-title mb-0">User Registration</h4>
             </div>
             <div className="card-body">
-            {registrationSuccessful ? (
-        <PersonalInformation />
-      ) : (
-              <form
-                onSubmit={handleSubmit(onSubmit)}
-                encType="multipart/form-data"
-              >
-                <div className="row">
-                  <div className="col-sm-6">
-                    <div className="input-block ">
-                      <label className="col-form-label " id="first_name">
-                        First Name <span className="text-danger">*</span>
-                      </label>
-                      <div className="">
-                        <input
-                          type="text"
-                          className="form-control"
-                          {...register("first_name")}
-                        />
-                        <div className="text-danger">
-                          {errors.first_name?.message}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-sm-6">
-                    <div className="input-block ">
-                      <label className="col-form-label " id="middle_name">
-                        Middle Name <span className="text-danger">*</span>
-                      </label>
-                      <div className="">
-                        <input
-                          type="text"
-                          className="form-control"
-                          {...register("middle_name")}
-                        />
-                        <div className="text-danger">
-                          {errors.middle_name?.message}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="row">
-                  <div className="col-sm-6">
-                    <div className="input-block ">
-                      <label className="col-form-label " id="last_name">
-                        Last Name <span className="text-danger">*</span>
-                      </label>
-                      <div className="">
-                        <input
-                          type="text"
-                          className="form-control"
-                          {...register("last_name")}
-                        />
-                        <div className="text-danger">
-                          {errors.last_name?.message}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-sm-6">
-                    <div className="input-block ">
-                      <label className="col-form-label " id="email">
-                        Email <span className="text-danger">*</span>
-                      </label>
-                      <div className="">
-                        <input
-                          type="text"
-                          className="form-control"
-                          {...register("email")}
-                        />
-                        <div className="text-danger">
-                          {errors.email?.message}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-6">
-                    <div className="input-block ">
-                      <label
-                        className="col-form-label "
-                        id="correspondance_address"
-                      >
-                        Address <span className="text-danger">*</span>
-                      </label>
-                      <div className="">
-                        <input
-                          type="text"
-                          className="form-control"
-                          {...register("correspondance_address")}
-                        />
-                        <div className="text-danger">
-                          {errors.correspondance_address?.message}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-md-6">
-                    <div className="input-block row">
-                      <label className="col-form-label " id="permanent_address">
-                        Permanent Address <span className="text-danger">*</span>
-                      </label>
-                      <div className="">
-                        <input
-                          type="text"
-                          className="form-control"
-                          {...register("permanent_address")}
-                        />
-                        <div className="text-danger">
-                          {errors.permanent_address?.message}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-sm-6">
-                    <div className="input-block row">
-                      <label className="col-form-label " id="mobile_no">
-                        Mobile No <span className="text-danger">*</span>
-                      </label>
-                      <div className="col-md-3">
-                        <select
-                          className="form-control"
-                          {...register("country_code")}
-                        >
-                          {countryCodes?.map((dep) => {
-                            return (
-                              <option value={dep.value}>{dep.label}</option>
-                            );
-                          })}
-                        </select>
-                      </div>
-                      <div className="col-md-9">
-                        <input
-                          type="text"
-                          className="form-control"
-                          {...register("mobile_no")}
-                        />
-                        <div className="text-danger">
-                          {errors.mobile_no?.message}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-sm-6">
-                    <div className="input-block row">
-                      <label className="col-form-label " id="alt_mobile">
-                        Alternative Mobile No
-                        <span className="text-danger">*</span>
-                      </label>
-                      <div className="col-md-3">
-                        <select
-                          className="form-control"
-                          {...register("alt_countryCode")}
-                        >
-                          {countryCodes?.map((dep) => {
-                            return (
-                              <option value={dep.value}>{dep.label}</option>
-                            );
-                          })}
-                        </select>
-                      </div>
-                      <div className="col-md-9">
-                        <input
-                          type="text"
-                          className="form-control"
-                          {...register("alt_mobile")}
-                        />
-                        <div className="text-danger">
-                          {errors.alt_mobile?.message}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="row">
-                  <div className="col-sm-6">
-                    <div className="input-block ">
-                      <label className="col-form-label " id="date_of_birth">
-                        Birthdate <span className="text-danger">*</span>
-                      </label>
-                      <div className="">
-                        {/* <Controller
-                          control={control}
-                          name="date_of_birth"
-                          render={({ field }) => (
-                            <div className="date-picker-container">
-                              <span
-                                className="calendar-icon"
-                                onClick={() =>
-                                  console.log("Calendar icon clicked")
-                                }
-                              >
-                                <i class="fa-regular fa-calendar"></i>
-                              </span>
-                              <DatePicker
-                                type="date"
-                                selected={
-                                  field.value ? new Date(field.value) : null
-                                }
-                                // selected={field.value}
-                                // onChange={(date) => field.onChange(date)}
-                                onChange={(date) =>
-                                  field.onChange(
-                                    date ? format(date, "dd-MM-yyyy") : ""
-                                  )
-                                }
-                                className="form-control datetimepicker"
-                                dateFormat="dd-MM-yyyy"
-                                placeholderText="dd-mm-yyyy"
-                              />
-                            </div>
-                          )}
-                        /> */}
-                        <Controller
-                          control={control}
-                          name="date_of_birth"
-                          render={({ field }) => (
-                            <div className="date-picker-container">
-                              <span
-                                className="calendar-icon"
-                                onClick={() =>
-                                  console.log("Calendar icon clicked")
-                                }
-                              >
-                                <i className="fa-regular fa-calendar"></i>
-                              </span>
-                              <DatePicker
-                                selected={
-                                  field.value ? new Date(field.value) : null
-                                }
-                                onChange={(date) => field.onChange(date)}
-                                className="form-control datetimepicker"
-                                dateFormat="dd-MM-yyyy"
-                                placeholderText="dd-mm-yyyy"
-                              />
-                            </div>
-                          )}
-                        />
-
-                        <div className="text-danger">
-                          {errors.date_of_birth?.message}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-sm-6">
-                    <div className="input-block ">
-                      <label className="col-form-label " id="emp_id">
-                        Employee Id <span className="text-danger">*</span>
-                      </label>
-                      <div className="">
-                        <input
-                          type="text"
-                          className="form-control"
-                          {...register("emp_id")}
-                        />
-                        <div className="text-danger">
-                          {errors.emp_id?.message}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-sm-6">
-                    <div className="input-block ">
-                      <label className="col-form-label " id="department">
-                        Department <span className="text-danger">*</span>
-                      </label>
-                      <div className="">
-                        <select
-                          className="form-control"
-                          {...register("department")}
-                        >
-                          <option value="">Select Department</option>
-                          {departmentSelector?.map((data) => {
-                            return (
-                              <option value={data.id}>{data.department}</option>
-                            );
-                          })}
-                        </select>
-                        <div className="text-danger">
-                          {errors.department?.message}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-sm-6">
-                    <div className="input-block ">
-                      <label className="col-form-label " id="designation">
-                        Desingation <span className="text-danger">*</span>
-                      </label>
-                      <div className="">
-                        <select
-                          className="form-control"
-                          {...register("designation")}
-                        >
-                          <option value="">Select Desingation</option>
-                          {designationSelector?.map((data) => {
-                            return (
-                              <option value={data.id}>
-                                {data.designation}
-                              </option>
-                            );
-                          })}
-                        </select>
-                        <div className="text-danger">
-                          {errors.designation?.message}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-sm-6">
-                    <div className="input-block ">
-                      <label className="col-form-label" id="employment_type">
-                        Employment Type <span className="text-danger">*</span>
-                      </label>
-                      <div className="">
-                        <select
-                          className="form-control"
-                          {...register("employment_type")}
-                        >
-                          <option value="">Select Employment Type</option>
-                          {EmploymentTypeSelector?.map((data) => {
-                            return (
-                              <option value={data.id}>
-                                {data.employment_type}
-                              </option>
-                            );
-                          })}
-                        </select>
-                        <div className="text-danger">
-                          {errors.employment_type?.message}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-sm-6">
-                    <div className="input-block ">
-                      <label
-                        className="col-form-label"
-                        id="user_role_permissions"
-                      >
-                        User Role Permission{" "}
-                        <span className="text-danger">*</span>
-                      </label>
-                      <div className="">
-                        <Controller
-                          name="user_role_permissions"
-                          control={control}
-                          render={({ field }) => (
-                            <Select
-                              id="dropdown"
-                              className="d-block h-42"
-                              options={userOptions}
-                              isMulti={true}
-                              isSearchable={true}
-                              placeholder="Search options..."
-                              value={userOptions.filter(
-                                (option) =>
-                                  field.value &&
-                                  field.value.includes(option.value)
-                              )}
-                              onChange={(selectedOption) => {
-                                const selectedValues = selectedOption
-                                  ? [selectedOption]
-                                  : [];
-
-                                field.onChange(selectedValues);
-                              }}
-                            />
-                          )}
-                        />
-
-                        <div className="text-danger">
-                          {errors.user_role_permissions?.message}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="row">
-                  <div className="col-sm-6">
-                    <div className="input-block ">
-                      <label className="col-form-label " id="branch">
-                        Branch <span className="text-danger">*</span>
-                      </label>
-                      <div className="">
-                        <select
-                          className="form-control"
-                          {...register("branch")}
-                        >
-                          <option value="">Select Branch</option>
-                          {branchSelector.map((data) => {
-                            return (
-                              <option value={data.id}>{data.branch}</option>
-                            );
-                          })}
-                        </select>{" "}
-                        <div className="text-danger">
-                          {errors.branch?.message}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-sm-6">
-                    <div className="input-block ">
-                      <label className="col-form-label" id="password">
-                        Password <span className="text-danger">*</span>
-                      </label>
-                      <div className="">
-                        <input
-                          type="password"
-                          className="form-control"
-                          {...register("password")}
-                        />{" "}
-                        <div className="text-danger">
-                          {errors.password?.message}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-sm-6">
-                    <div className="input-block ">
-                      <label className="col-form-label " id="conf_pass">
-                        Confirm Password <span className="text-danger">*</span>
-                      </label>
-                      <div className="">
-                        <input
-                          type="password"
-                          className="form-control"
-                          {...register("conf_pass")}
-                        />
-                        <div className="text-danger">
-                          {errors.conf_pass?.message}
-                        </div>
-                      </div>
-                    </div>
-                  </div>{" "}
-                  <div className="col-sm-6">
-                    <div className="input-block ">
-                      <label className="col-form-label " id="profile_image">
-                        Profile Image <span className="text-danger">*</span>
-                      </label>
-
-                      <div className="">
-                        <Controller
-                          name="profile_image"
-                          control={control}
-                          rules={{
-                            validate: (value) =>
-                              Yup.mixed()
-                                .test(
-                                  "fileSize",
-                                  "Profile Image size is too large",
-                                  (v) => v?.size <= 1024 * 1024 * 2
-                                )
-                                .required("Choose Profile Image")
-                                .isValidSync(value),
-                          }}
-                          render={({ field }) => (
-                            <>
-                              <input
-                                type="file"
-                                className="form-control"
-                                onChange={(e) => {
-                                  field.onChange(e.target.files[0]);
-                                  imageFormDataConverter(e);
-                                }}
-                              />
-                              <div className="text-danger">
-                                {errors.profile_image?.message}
-                              </div>
-                            </>
-                          )}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-sm-6">
-                    <div className="input-block ">
-                      <label className="col-form-label " id="face_match_image1">
-                        Face Match Image <span className="text-danger">*</span>
-                      </label>
-
-                      <div className="">
-                        <Controller
-                          name="face_match_image1"
-                          control={control}
-                          rules={{
-                            validate: (value) =>
-                              Yup.mixed()
-                                .test(
-                                  "fileSize",
-                                  "Face Match Image size is too large",
-                                  (v) => v?.size <= 1024 * 1024 * 2
-                                )
-                                .required("Choose Face Match Image")
-                                .isValidSync(value),
-                          }}
-                          render={({ field }) => (
-                            <>
-                              <input
-                                type="file"
-                                className="form-control"
-                                onChange={(e) => {
-                                  field.onChange(e.target.files[0]);
-                                  imageFormDataConverter2(e);
-                                }}
-                              />
-                              <div className="text-danger">
-                                {errors.face_match_image1?.message}
-                              </div>
-                            </>
-                          )}
-                        />
-                      </div>
-                    </div>
-                  </div>{" "}
-                </div>
-                <Button
-                  style={{ float: "right" }}
-                  variant="primary"
-                  type="submit"
+              {registrationSuccessful ? (
+                <PersonalInformation />
+              ) : (
+                <form
+                  onSubmit={handleSubmit(onSubmit)}
+                  encType="multipart/form-data"
                 >
-                  Save
-                </Button>
-              </form>
-               )}
+                  <div className="row">
+                    <div className="col-sm-6">
+                      <div className="input-block ">
+                        <label className="col-form-label " id="first_name">
+                          First Name <span className="text-danger">*</span>
+                        </label>
+                        <div className="">
+                          <input
+                            type="text"
+                            className="form-control"
+                            {...register("first_name")}
+                          />
+                          <div className="text-danger">
+                            {errors.first_name?.message}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-sm-6">
+                      <div className="input-block ">
+                        <label className="col-form-label " id="middle_name">
+                          Middle Name <span className="text-danger">*</span>
+                        </label>
+                        <div className="">
+                          <input
+                            type="text"
+                            className="form-control"
+                            {...register("middle_name")}
+                          />
+                          <div className="text-danger">
+                            {errors.middle_name?.message}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="col-sm-6">
+                      <div className="input-block ">
+                        <label className="col-form-label " id="last_name">
+                          Last Name <span className="text-danger">*</span>
+                        </label>
+                        <div className="">
+                          <input
+                            type="text"
+                            className="form-control"
+                            {...register("last_name")}
+                          />
+                          <div className="text-danger">
+                            {errors.last_name?.message}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-sm-6">
+                      <div className="input-block ">
+                        <label className="col-form-label " id="email">
+                          Email <span className="text-danger">*</span>
+                        </label>
+                        <div className="">
+                          <input
+                            type="text"
+                            className="form-control"
+                            {...register("email")}
+                          />
+                          <div className="text-danger">
+                            {errors.email?.message}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-6">
+                      <div className="input-block ">
+                        <label
+                          className="col-form-label "
+                          id="correspondance_address"
+                        >
+                          Address <span className="text-danger">*</span>
+                        </label>
+                        <div className="">
+                          <input
+                            type="text"
+                            className="form-control"
+                            {...register("correspondance_address")}
+                          />
+                          <div className="text-danger">
+                            {errors.correspondance_address?.message}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div className="input-block row">
+                        <label
+                          className="col-form-label "
+                          id="permanent_address"
+                        >
+                          Permanent Address{" "}
+                          <span className="text-danger">*</span>
+                        </label>
+                        <div className="">
+                          <input
+                            type="text"
+                            className="form-control"
+                            {...register("permanent_address")}
+                          />
+                          <div className="text-danger">
+                            {errors.permanent_address?.message}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-sm-6">
+                      <div className="input-block row">
+                        <label className="col-form-label " id="mobile_no">
+                          Mobile No <span className="text-danger">*</span>
+                        </label>
+                        <div className="col-md-3">
+                          <select
+                            className="form-control"
+                            {...register("country_code")}
+                          >
+                            {countryCodes?.map((dep) => {
+                              return (
+                                <option value={dep.value}>{dep.label}</option>
+                              );
+                            })}
+                          </select>
+                        </div>
+                        <div className="col-md-9">
+                          <input
+                            type="text"
+                            className="form-control"
+                            {...register("mobile_no")}
+                          />
+                          <div className="text-danger">
+                            {errors.mobile_no?.message}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-sm-6">
+                      <div className="input-block row">
+                        <label className="col-form-label " id="alt_mobile">
+                          Alternative Mobile No
+                          <span className="text-danger">*</span>
+                        </label>
+                        <div className="col-md-3">
+                          <select
+                            className="form-control"
+                            {...register("alt_countryCode")}
+                          >
+                            {countryCodes?.map((dep) => {
+                              return (
+                                <option value={dep.value}>{dep.label}</option>
+                              );
+                            })}
+                          </select>
+                        </div>
+                        <div className="col-md-9">
+                          <input
+                            type="text"
+                            className="form-control"
+                            {...register("alt_mobile")}
+                          />
+                          <div className="text-danger">
+                            {errors.alt_mobile?.message}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="col-sm-6">
+                      <div className="input-block ">
+                        <label className="col-form-label " id="date_of_birth">
+                          Birthdate <span className="text-danger">*</span>
+                        </label>
+                        <div className="">
+                        
+                          <Controller
+                            control={control}
+                            name="date_of_birth"
+                            render={({ field }) => (
+                              <div className="date-picker-container">
+                                <span
+                                  className="calendar-icon"
+                                  onClick={() =>
+                                    console.log("Calendar icon clicked")
+                                  }
+                                >
+                                  <i className="fa-regular fa-calendar"></i>
+                                </span>
+                                <DatePicker
+                                  selected={
+                                    field.value ? new Date(field.value) : null
+                                  }
+                                  onChange={(date) => field.onChange(date)}
+                                  className="form-control datetimepicker"
+                                  dateFormat="dd-MM-yyyy"
+                                  placeholderText="dd-mm-yyyy"
+                                />
+                              </div>
+                            )}
+                          />
+
+                          <div className="text-danger">
+                            {errors.date_of_birth?.message}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-sm-6">
+                      <div className="input-block ">
+                        <label className="col-form-label " id="emp_id">
+                          Employee Id <span className="text-danger">*</span>
+                        </label>
+                        <div className="">
+                          <input
+                            type="text"
+                            className="form-control"
+                            {...register("emp_id")}
+                          />
+                          <div className="text-danger">
+                            {errors.emp_id?.message}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-sm-6">
+                      <div className="input-block ">
+                        <label className="col-form-label " id="department">
+                          Department <span className="text-danger">*</span>
+                        </label>
+                        <div className="">
+                          <select
+                            className="form-control"
+                            {...register("department")}
+                          >
+                            <option value="">Select Department</option>
+                            {departmentSelector?.map((data) => {
+                              return (
+                                <option value={data.id}>
+                                  {data.department}
+                                </option>
+                              );
+                            })}
+                          </select>
+                          <div className="text-danger">
+                            {errors.department?.message}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-sm-6">
+                      <div className="input-block ">
+                        <label className="col-form-label " id="designation">
+                          Desingation <span className="text-danger">*</span>
+                        </label>
+                        <div className="">
+                          <select
+                            className="form-control"
+                            {...register("designation")}
+                          >
+                            <option value="">Select Desingation</option>
+                            {designationSelector?.map((data) => {
+                              return (
+                                <option value={data.id}>
+                                  {data.designation}
+                                </option>
+                              );
+                            })}
+                          </select>
+                          <div className="text-danger">
+                            {errors.designation?.message}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-sm-6">
+                      <div className="input-block ">
+                        <label className="col-form-label" id="employment_type">
+                          Employment Type <span className="text-danger">*</span>
+                        </label>
+                        <div className="">
+                          <select
+                            className="form-control"
+                            {...register("employment_type")}
+                          >
+                            <option value="">Select Employment Type</option>
+                            {EmploymentTypeSelector?.map((data) => {
+                              return (
+                                <option value={data.id}>
+                                  {data.employment_type}
+                                </option>
+                              );
+                            })}
+                          </select>
+                          <div className="text-danger">
+                            {errors.employment_type?.message}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-sm-6">
+                      <div className="input-block ">
+                        <label
+                          className="col-form-label"
+                          id="user_role_permissions"
+                        >
+                          User Role Permission{" "}
+                          <span className="text-danger">*</span>
+                        </label>
+                        <div className="">
+                          <Controller
+                            name="user_role_permissions"
+                            control={control}
+                            render={({ field }) => (
+                              <Select
+                                id="dropdown"
+                                className="d-block h-42"
+                                options={userOptions}
+                                mode="multiple"
+                                placeholder="Search options..."
+                                onChange={(selectedOptions) => {
+                                  const selectedValues = selectedOptions?.map(
+                                    (option) => option.value
+                                  );
+                                  field.onChange(selectedValues);
+                                }}
+                              />
+                            )}
+                          />
+
+                          <div className="text-danger">
+                            {errors.user_role_permissions?.message}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="col-sm-6">
+                      <div className="input-block ">
+                        <label className="col-form-label " id="branch">
+                          Branch <span className="text-danger">*</span>
+                        </label>
+                        <div className="">
+                          <select
+                            className="form-control"
+                            {...register("branch")}
+                          >
+                            <option value="">Select Branch</option>
+                            {branchSelector &&
+                              branchSelector.map((data) => {
+                                return (
+                                  <option value={data.id}>
+                                    {data.branch_name}
+                                  </option>
+                                );
+                              })}
+                          </select>
+                          <div className="text-danger">
+                            {errors.branch?.message}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-sm-6">
+                      <div className="input-block ">
+                        <label className="col-form-label" id="password">
+                          Password <span className="text-danger">*</span>
+                        </label>
+                        <div className="">
+                          <input
+                            type="password"
+                            className="form-control"
+                            {...register("password")}
+                          />{" "}
+                          <div className="text-danger">
+                            {errors.password?.message}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-sm-6">
+                      <div className="input-block ">
+                        <label className="col-form-label " id="conf_pass">
+                          Confirm Password{" "}
+                          <span className="text-danger">*</span>
+                        </label>
+                        <div className="">
+                          <input
+                            type="password"
+                            className="form-control"
+                            {...register("conf_pass")}
+                          />
+                          <div className="text-danger">
+                            {errors.conf_pass?.message}
+                          </div>
+                        </div>
+                      </div>
+                    </div>{" "}
+                    <div className="col-sm-6">
+                      <div className="input-block ">
+                        <label className="col-form-label " id="profile_image">
+                          Profile Image <span className="text-danger">*</span>
+                        </label>
+
+                        <div className="">
+                          <Controller
+                            name="profile_image"
+                            control={control}
+                            rules={{
+                              validate: (value) =>
+                                Yup.mixed()
+                                  .test(
+                                    "fileSize",
+                                    "Profile Image size is too large",
+                                    (v) => v?.size <= 1024 * 1024 * 2
+                                  )
+                                  .required("Choose Profile Image")
+                                  .isValidSync(value),
+                            }}
+                            render={({ field }) => (
+                              <>
+                                <input
+                                  type="file"
+                                  className="form-control"
+                                  onChange={(e) => {
+                                    field.onChange(e.target.files[0]);
+                                    imageFormDataConverter(e);
+                                  }}
+                                />
+                                <div className="text-danger">
+                                  {errors.profile_image?.message}
+                                </div>
+                              </>
+                            )}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-sm-6">
+                      <div className="input-block ">
+                        <label
+                          className="col-form-label "
+                          id="face_match_image1"
+                        >
+                          Face Match Image{" "}
+                          <span className="text-danger">*</span>
+                        </label>
+
+                        <div className="">
+                          <Controller
+                            name="face_match_image1"
+                            control={control}
+                            rules={{
+                              validate: (value) =>
+                                Yup.mixed()
+                                  .test(
+                                    "fileSize",
+                                    "Face Match Image size is too large",
+                                    (v) => v?.size <= 1024 * 1024 * 2
+                                  )
+                                  .required("Choose Face Match Image")
+                                  .isValidSync(value),
+                            }}
+                            render={({ field }) => (
+                              <>
+                                <input
+                                  type="file"
+                                  className="form-control"
+                                  onChange={(e) => {
+                                    field.onChange(e.target.files[0]);
+                                    imageFormDataConverter2(e);
+                                  }}
+                                />
+                                <div className="text-danger">
+                                  {errors.face_match_image1?.message}
+                                </div>
+                              </>
+                            )}
+                          />
+                        </div>
+                      </div>
+                    </div>{" "}
+                  </div>
+                  <Button
+                    style={{ float: "right" }}
+                    variant="primary"
+                    type="submit"
+                  >
+                    Save
+                  </Button>
+                </form>
+              )}
             </div>
           </div>
         </div>

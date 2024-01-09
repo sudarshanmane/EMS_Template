@@ -103,7 +103,6 @@ function* getCurrentUser(action) {
   }
 }
 
-
 function* getStaff(action) {
   try {
     let result = yield call(Method.getData, action);
@@ -230,7 +229,6 @@ function* getEmploymentType(action) {
   }
 }
 
-
 function* addSalaryRevision(action) {
   try {
     let result = yield call(Method.postData, action);
@@ -339,8 +337,28 @@ function* addExperience(action) {
   }
 }
 
-
 function* getReportList(action) {
+  try {
+    let result = yield call(Method.getData, action);
+    if (
+      result.status === 202 ||
+      result.status === 201 ||
+      result.status === 200
+    ) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* getExpenseList(action) {
   try {
     let result = yield call(Method.getData, action);
     if (
@@ -502,8 +520,6 @@ function* rejectExpense(action) {
   }
 }
 
-
-
 function* categoryPanelList(action) {
   try {
     console.log("actionaction", action);
@@ -631,7 +647,6 @@ function* getExpensePolicy(action) {
     yield call(errorSaga, "The credentials you entered are incorrect!");
   }
 }
-
 
 function* updateExpensePolicy(action) {
   try {
@@ -1328,7 +1343,6 @@ function* addRole(action) {
   }
 }
 
-
 function* getExpenseTypePanel(action) {
   try {
     let result = yield call(Method.getData, action);
@@ -1464,7 +1478,6 @@ function* ContactUsPage(action) {
     yield call(errorSaga, "The credentials you entered are incorrect!");
   }
 }
-
 
 function* accountingCodePanel(action) {
   try {
@@ -2336,6 +2349,7 @@ export {
   getCurrentRole,
   getCurrentUser,
   getReportList,
+  getExpenseList,
   addReportsubmit,
   updateReport,
   deleteReport,

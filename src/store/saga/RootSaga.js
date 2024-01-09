@@ -20,6 +20,7 @@ import {
   addPersonalInformation,
   addReportsubmit,
   getReportList,
+  getExpenseList,
   updateReport,
   deleteReport,
   getReport,
@@ -141,7 +142,7 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.GET_EMPLOYMENT_TYPE_LIST, getEmploymentType);
   yield takeEvery(API_CONSTANTS.GET_DEPARTMENT_LIST, getDepartment);
   yield takeEvery(API_CONSTANTS.GET_DESIGNATION_LIST, getDesignation);
-  yield takeEvery(API_CONSTANTS.GET_BRANCH_LIST, getBranch);
+  yield takeEvery(API_CONSTANTS.GET_BRANCH_LIST, getCommonGenerator);
   yield takeEvery(API_CONSTANTS.GET_USERROLE_PERMISSION, getUserRolePermission);
   yield takeEvery(API_CONSTANTS.ADD_SALARY, addSalaryRevision);
   yield takeEvery(API_CONSTANTS.ADD_CERTIFICATION, addCertification);
@@ -155,6 +156,7 @@ export function* RootSaga() {
 
   yield takeEvery(API_CONSTANTS.ADD_REPORT, addReportsubmit);
   yield takeEvery(API_CONSTANTS.GET_REPORT_LIST, getReportList);
+  yield takeEvery(API_CONSTANTS.GET_EXPENSE_LIST, getExpenseList);
   yield takeEvery(API_CONSTANTS.UPDATE_REPORT, updateReport);
   yield takeEvery(API_CONSTANTS.DELETE_REPORT, deleteReport);
   yield takeEvery(API_CONSTANTS.VIEW_REPORT, getReport);
