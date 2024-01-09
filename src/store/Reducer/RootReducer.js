@@ -8,9 +8,11 @@ const initialState = {
   email: "",
   mobile: "",
   changePasswordError: null,
+  // getbranchlist: [],
 };
 
 export const RootReducer = (state = initialState, action) => {
+  console.log(action.type, action.result);
   switch (action.type) {
     case API_CONSTANTS.USER_LOGIN:
       return {
@@ -25,6 +27,19 @@ export const RootReducer = (state = initialState, action) => {
         loginDetails: action.result,
       };
 
+    case API_CONSTANTS.CHANGE_PASSWORD:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.CHANGE_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        changepassword: action.result,
+      };
+
     case API_CONSTANTS.USER_REGISTER:
       return {
         ...state,
@@ -36,6 +51,188 @@ export const RootReducer = (state = initialState, action) => {
         ...state,
         loding: false,
         registerDetails: action.result,
+      };
+
+    case API_CONSTANTS.GET_CURRENT_ROLE:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_CURRENT_ROLE_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getcurrentrole: action.result,
+      };
+
+    case API_CONSTANTS.GET_CURRENT_USER:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_CURRENT_USER_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getcurrentuser: action.result,
+      };
+
+    case API_CONSTANTS.GET_STAFF_LIST:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_STAFF_LIST_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getstafflist: action.result,
+      };
+
+    case API_CONSTANTS.GET_DEPARTMENT_LIST:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_DEPARTMENT_LIST_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getdepartment: action.result,
+      };
+
+    case API_CONSTANTS.GET_DESIGNATION_LIST:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_DESIGNATION_LIST_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getdesignation: action.result,
+      };
+
+    case API_CONSTANTS.GET_BRANCH_LIST:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_BRANCH_LIST_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getbranchlist: action.result,
+      };
+
+    case API_CONSTANTS.GET_EMPLOYMENT_TYPE_LIST:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_EMPLOYMENT_TYPE_LIST_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getemploymenttype: action.result,
+      };
+
+    case API_CONSTANTS.GET_USERROLE_PERMISSION:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_USERROLE_PERMISSION_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getuserrolepermission: action.result,
+      };
+
+    case API_CONSTANTS.ADD_SALARY:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.ADD_SALARY_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        addsalary: action.result,
+      };
+
+    case API_CONSTANTS.ADD_CERTIFICATION:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.ADD_CERTIFICATION_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        addcertification: action.result,
+      };
+
+    case API_CONSTANTS.ADD_PERSONAL_INFORMATION:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.ADD_PERSONAL_INFORMATION_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        addpersonalinformation: action.result,
+      };
+
+    case API_CONSTANTS.ADD_USER_SETTING:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.ADD_USER_SETTING_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        addusersetting: action.result,
+      };
+
+    case API_CONSTANTS.ADD_EDUCATION:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.ADD_EDUCATION_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        addeducation: action.result,
+      };
+
+    case API_CONSTANTS.ADD_EXPERIENCE:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.ADD_EXPERIENCE_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        addexperience: action.result,
       };
 
     case API_CONSTANTS.ADD_REPORT:
@@ -63,6 +260,19 @@ export const RootReducer = (state = initialState, action) => {
         loding: false,
         getreportlist: action.result,
       };
+
+      case API_CONSTANTS.GET_EXPENSE_LIST:
+        return {
+          ...state,
+          loding: true,
+        };
+  
+      case API_CONSTANTS.GET_EXPENSE_LIST_SUCCESS:
+        return {
+          ...state,
+          loding: false,
+          getexpenselist: action.result,
+        };
       
       case API_CONSTANTS.GET_APPROVED_REPORT_LIST:
         return {
@@ -190,6 +400,31 @@ export const RootReducer = (state = initialState, action) => {
           loding: false,
           rejectExpenseSuccess: action.result,
         };
+    case API_CONSTANTS.APPROVE_EXPENSE:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.APPROVE_EXPENSE_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        approveExpenseSuccess: action.result,
+      };
+
+    case API_CONSTANTS.REJECT_EXPENSE:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.REJECT_EXPENSE_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        rejectExpenseSuccess: action.result,
+      };
 
 
     case API_CONSTANTS.ADD_CATEGORY:
@@ -819,19 +1054,6 @@ export const RootReducer = (state = initialState, action) => {
         contactUsPage: action.result,
       };
 
-    case API_CONSTANTS.UPDATE_PASSWORD:
-      return {
-        ...state,
-        loding: true,
-      };
-
-    case API_CONSTANTS.UPDATE_PASSWORD_SUCCESS:
-      return {
-        ...state,
-        loding: false,
-        changepassword: action.result,
-      };
-
     case API_CONSTANTS.GET_COMPANY_LIST:
       return {
         ...state,
@@ -1010,7 +1232,7 @@ export const RootReducer = (state = initialState, action) => {
     case API_CONSTANTS.EXPENSE_APPROVED_PPANEL_MANGER_SUCCESS:
       return {
         ...state,
-        loading: false,
+        loding: false,
         expenseapprovedpanelResult: action.result, // Update with fetched data
       };
 

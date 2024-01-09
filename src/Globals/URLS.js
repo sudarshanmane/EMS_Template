@@ -1,7 +1,25 @@
 export const URLS = {
-  BASE_URL_EXPORT: "http://127.0.0.1:8001",
+  BASE_URL_EXPORT: "http://192.168.1.219:8001/",
+  
   USER_LOGIN_URL: "/users/api/v2/login_web/",
-  USER_REGISTER_URL: "/userregister/",
+  USER_REGISTER_URL: "/users/api/v2/userregister/",
+  GET_DEPARTMENT_LIST_URL: "/users/api/v2/departmentlist/",
+  GET_DESIGNATION_LIST_URL: "/users/api/v2/designationlist/",
+  GET_EMPLOYMENT_TYPE_LIST_URL: "/users/api/v2/employementtypelist/",
+  GET_BRANCH_LIST_URL: "/company/api/v2/branch/",
+  GET_USERROLE_PERMISSION_URL: "/users/api/v2/userrolepermissionlist",
+
+  GET_CURRENT_ROLE_URL: "/users/api/v2/getcurrentuserrole/",
+  GET_CURRENT_USER_URL: "/users/api/v2/getalluser/",
+  GET_STAFF_LIST_URL: "/users/api/v2/getallstaff/",
+  ADD_SALARY_URL: "/userhrms/api/v2/salaryrevision/",
+  ADD_CERTIFICATION_URL: "/userhrms/api/v2/certificate/",
+  ADD_USER_SETTING_URL: "/userhrms/api/v2/usersettings/",
+  ADD_PERSONAL_INFORMATION_URL: "/userhrms/api/v2/UserPersonalInformationpost/",
+  ADD_EDUCATION_URL: "/userhrms/api/v2/usersettings/",
+  ADD_EXPERIENCE_URL: "/userhrms/api/v2/usersettings/",
+  CHANGE_PASSWORD_URL: "/users/api/v2/changepassword/",
+
 
   APPROVE_EXPENSE_URL: "/api/version_0/expense/approve-expense/",
   REJECT_EXPENSE_URL: "/api/version_0/expense/reject-expense/",
@@ -11,6 +29,9 @@ export const URLS = {
   GET_REPORT_LIST_URL: "/api/version_0/expense/expensereport/",
   GET_APPROVED_REPORT_LIST_URL: "/api/version_0/expense/getreportsforapproval/",
   UPDATE_REPORT: "/api/version_0/expense/expensereport/",
+  GET_EXPENSE_LIST_URL: "/api/version_0/expense/create_expense/",
+  UPDATE_REPORT: "/api/version_0/expense/update_expensereport/",
+  DELETE_REPORT: "/api/version_0/expense/update_expensereport/",
   VIEW_REPORT_URL: "/api/version_0/expense/expensereport/",
   VIEW_REPORT_BY_ID_URL: "/api/version_0/expense/expensereport/",
 
@@ -75,7 +96,6 @@ export const URLS = {
   EXTERNAL_ACCOUNT_CODE_PANEL_URL: "/expense/externalaccount-code-list/",
   UPDATE_ABOUTUS_URL: "/users/about_us/",
   UPDATE_CONTACTUS_URL: "/users/contact_us/",
-  UPDATE_PASSWORD_URL: "/users/change-password/",
   GET_COMPANY_LIST_URL: "/users/company-list/",
   DELETE_COMPANY_LIST_URL: "/authentication/delete_company/",
   UPDATE_COMPANY_LIST_URL: "/authentication/update_company/",

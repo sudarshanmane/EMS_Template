@@ -109,7 +109,7 @@ const naviagte = useNavigate();
   useEffect(() => {
     if (reportDetailsSelector) {
       const allExpenses = reportDetailsSelector?.expenses?.map((element) => ({
-        id: element.id,
+        id: element?.id && element?.id,
         expense_date: element.expense_date,
         expense_bill: element.expense_bill,
         category: element.category,
@@ -133,20 +133,22 @@ const naviagte = useNavigate();
     }
   }, [approveReportSelector]);
 
-  const rejectReportSelector = useSelector(
-    (state) => state.rejectReportSuccess
-  );
+  // const rejectReportSelector = useSelector(
+  //   (state) => state.rejectReportSuccess
+  // );
+
+  // useEffect(() => {
+  //   if (rejectReportSelector) {
+  //     dispatch(rejectReport({ payload: {}, URL: url }));
+  //   }
+  //   setIsRejectFormVisible(false);
+  // }, [rejectReportSelector]);
 
   useEffect(() => {
-    if (rejectReportSelector) {
-      dispatch(rejectReport({ payload: {}, URL: url }));
-    }
-    setIsRejectFormVisible(false);
-  }, [rejectReportSelector]);
-
-  useEffect(() => {
+   if(id){
     dispatch(getReportDetails({ id }));
-  }, []);
+   }
+  }, [id]);
 
   const handleViewReceipt = (record) => {
     setSelectedReceiptUrl(record || "");
@@ -256,23 +258,23 @@ const naviagte = useNavigate();
                             <>
                               <p>
                                 Report No:- &nbsp;
-                                {reportDetailsSelector.report_number}
+                                {reportDetailsSelector?.report_number}
                               </p>
                               <p>
                                 Description:- &nbsp;
-                                {reportDetailsSelector.description}
+                                {reportDetailsSelector?.description}
                               </p>
                               <p>
                                 Start Date:- &nbsp;
-                                {reportDetailsSelector.start_date}
+                                {reportDetailsSelector?.start_date}
                               </p>
                               <p>
                                 End Date:- &nbsp;
-                                {reportDetailsSelector.end_date}
+                                {reportDetailsSelector?.end_date}
                               </p>
                               <p>
                                 Employee :- &nbsp;
-                                {`${reportDetailsSelector?.submitter.id} - ${reportDetailsSelector?.submitter.first_name} ${reportDetailsSelector?.submitter.last_name}`}
+                                {`${reportDetailsSelector?.submitter?.id} - ${reportDetailsSelector?.submitter?.first_name} ${reportDetailsSelector?.submitter?.last_name}`}
                               </p>
                               <p>
                                 Status:- &nbsp;
@@ -436,7 +438,7 @@ const naviagte = useNavigate();
                           <div className="col-lg-9">
                             <input
                               type="text"
-                              value={`${reportDetailsSelector?.submitter.id} - ${reportDetailsSelector?.submitter.first_name} ${reportDetailsSelector?.submitter.last_name}`}
+                              value={`${reportDetailsSelector?.submitter?.id} - ${reportDetailsSelector?.submitter?.first_name} ${reportDetailsSelector?.submitter?.last_name}`}
                               className="form-control"
                               readOnly
                               {...registerReimbursRecord("first_name")}

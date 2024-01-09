@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link, useNavigate } from "react-router-dom";
-import { Applogo } from "../Entryfile/imagepath.jsx";
+import { Applogo, headerlogo } from "../Entryfile/imagepath.jsx";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
@@ -70,7 +70,11 @@ const Loginpage = (props) => {
             {/* Account Logo */}
             <div className="account-logo">
               <Link to="/app/main/dashboard">
-                <img src={Applogo} alt="Dreamguy's Technologies" />
+                <img
+                  src={headerlogo}
+                  alt="Dreamguy's Technologies"
+                  style={{ marginTop: "30px", width: "300px" }}
+                />
               </Link>
             </div>
             {/* /Account Logo */}

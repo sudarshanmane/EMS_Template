@@ -30,13 +30,6 @@ const ExpenseApprovals = () => {
   const [selectedDate2, setSelectedDate2] = useState(new Date());
   const [viewReportData, setViewReportData] = useState(null);
   const [isAddFormVisible, setIsAddFormVisible] = useState(false);
-  const [isApproveFormVisible, setIsApproveFormVisible] = useState(false);
-  const [isRejectFormVisible, setIsRejectFormVisible] = useState(false);
-  const [editReportData, setEditReportData] = useState(null);
-  const [deleteReportData, setDeleteReportData] = useState(null);
-  const [isEditFormVisible, setIsEditFormVisible] = useState(false);
-  const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] =
-    useState(false);
   const navigate = useNavigate();
   const url = URLS.GET_APPROVED_REPORT_LIST_URL;
 
@@ -199,8 +192,8 @@ const ExpenseApprovals = () => {
     },
     {
       title: "Action",
-      render: (record) => (
-        <div className="dropdown dropdown-action text-end">
+      render: (record) =>{
+        return <div className="dropdown dropdown-action text-end">
           <Link
             to="#"
             className="action-icon dropdown-toggle"
@@ -218,8 +211,7 @@ const ExpenseApprovals = () => {
               <i className="fa fa-eye m-r-5" /> View
             </Link>
           </div>
-        </div>
-      ),
+        </div>}
     },
   ];
 

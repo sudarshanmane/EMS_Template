@@ -90,22 +90,26 @@ const Sidebar = () => {
                     }}
                   >
                     <li>
-                      <Link
-                        className={
-                          pathname.includes("all-user") ? "active" : ""
-                        }
-                        to="/home/alluser"
-                      >
-                        All User
-                      </Link>
-                    </li>
+                        <Link
+                          className={
+                            pathname.includes("employeeslist")
+                              ? "active"
+                              : pathname.includes("employees-list")
+                              ? "active"
+                              : ""
+                          }
+                          to="/home/employeeslist"
+                        >
+                          All Users
+                        </Link>
+                      </li>
                   
                   </ul>
                 ) : (
                   ""
                 )}
               </li>
-              <li className="submenu">
+              {/* <li className="submenu">
                 <Link
                   to="#"
                   className={isSideMenu == "company" ? "subdrop" : ""}
@@ -135,7 +139,7 @@ const Sidebar = () => {
                 ) : (
                   ""
                 )}
-              </li>
+              </li> */}
 
               <li className="submenu">
                 <Link
@@ -335,7 +339,7 @@ const Sidebar = () => {
                         Mileage{" "}
                       </Link>
                     </li>
-                    <li>
+                    {/* <li>
                       <Link
                         className={
                           pathname.includes("expenses-") ? "active" : ""
@@ -345,7 +349,7 @@ const Sidebar = () => {
                         {" "}
                         Expenses{" "}
                       </Link>
-                    </li>
+                    </li> */}
                     <li>
                       <Link
                         className={
