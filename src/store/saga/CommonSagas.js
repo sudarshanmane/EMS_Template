@@ -10,7 +10,355 @@ function* errorSaga(mes) {
   message.error(mes);
 }
 
+function* UserLoginGenerator(action) {
+  try {
+    let result = yield call(Method.postData, action);
+    if (result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* ChangePassword(action) {
+  try {
+    let result = yield call(Method.patchData, action);
+    if (result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* UserRegisterGenerator(action) {
+  try {
+    let result = yield call(Method.postData, action);
+    if (result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* getCurrentRole(action) {
+  try {
+    let result = yield call(Method.getData, action);
+    if (
+      result.status === 202 ||
+      result.status === 201 ||
+      result.status === 200
+    ) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* getCurrentUser(action) {
+  try {
+    let result = yield call(Method.getData, action);
+    if (
+      result.status === 202 ||
+      result.status === 201 ||
+      result.status === 200
+    ) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* getStaff(action) {
+  try {
+    let result = yield call(Method.getData, action);
+    if (
+      result.status === 202 ||
+      result.status === 201 ||
+      result.status === 200
+    ) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* getDepartment(action) {
+  try {
+    let result = yield call(Method.getData, action);
+    if (
+      result.status === 202 ||
+      result.status === 201 ||
+      result.status === 200
+    ) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* getDesignation(action) {
+  try {
+    let result = yield call(Method.getData, action);
+    if (
+      result.status === 202 ||
+      result.status === 201 ||
+      result.status === 200
+    ) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* getBranch(action) {
+  try {
+    let result = yield call(Method.getData, action);
+    if (
+      result.status === 202 ||
+      result.status === 201 ||
+      result.status === 200
+    ) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* getUserRolePermission(action) {
+  try {
+    let result = yield call(Method.getData, action);
+    if (
+      result.status === 202 ||
+      result.status === 201 ||
+      result.status === 200
+    ) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* getEmploymentType(action) {
+  try {
+    let result = yield call(Method.getData, action);
+    if (
+      result.status === 202 ||
+      result.status === 201 ||
+      result.status === 200
+    ) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* addSalaryRevision(action) {
+  try {
+    let result = yield call(Method.postData, action);
+    if (result.status === 201 || result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    console.error("Saga error:", error);
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* addCertification(action) {
+  try {
+    let result = yield call(Method.postData, action);
+    if (result.status === 201 || result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    console.error("Saga error:", error);
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* addUserSetting(action) {
+  try {
+    let result = yield call(Method.postData, action);
+    if (result.status === 201 || result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    console.error("Saga error:", error);
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* addPersonalInformation(action) {
+  try {
+    let result = yield call(Method.postData, action);
+    if (result.status === 201 || result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    console.error("Saga error:", error);
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* addEducation(action) {
+  try {
+    let result = yield call(Method.postData, action);
+    if (result.status === 201 || result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    console.error("Saga error:", error);
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* addExperience(action) {
+  try {
+    let result = yield call(Method.postData, action);
+    if (result.status === 201 || result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    console.error("Saga error:", error);
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
 function* getReportList(action) {
+  try {
+    let result = yield call(Method.getData, action);
+    if (
+      result.status === 202 ||
+      result.status === 201 ||
+      result.status === 200
+    ) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* getExpenseList(action) {
   try {
     let result = yield call(Method.getData, action);
     if (
@@ -74,6 +422,95 @@ function* deleteReport(action) {
         type: `${action.type}_SUCCESS`,
         status: "ok",
         result: "Deleted Successfully",
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "Something went wrong!");
+  }
+}
+
+function* getReport(action) {
+  try {
+    let result = yield call(Method.getData, action);
+    if (
+      result.status === 202 ||
+      result.status === 201 ||
+      result.status === 200
+    ) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* approveReport(action) {
+  try {
+    let result = yield call(Method.putData, action);
+    if (result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* rejectReport(action) {
+  try {
+    let result = yield call(Method.putData, action);
+    if (result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "Something went wrong!");
+  }
+}
+
+function* approveExpense(action) {
+  try {
+    let result = yield call(Method.putData, action);
+    if (result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* rejectExpense(action) {
+  try {
+    let result = yield call(Method.putData, action);
+    if (result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
       });
     } else {
       yield call(failSaga, "Server Down!");
@@ -154,8 +591,6 @@ function* deleteCategory(action) {
   }
 }
 
-// ****************
-
 function* createCategoryItem(action) {
   try {
     let result = yield call(Method.postData, action);
@@ -173,8 +608,6 @@ function* createCategoryItem(action) {
     yield call(errorSaga, "The credentials you entered are incorrect!");
   }
 }
-
-// ***************
 
 function* addExpensePolicy(action) {
   try {
@@ -215,8 +648,6 @@ function* getExpensePolicy(action) {
   }
 }
 
-
-
 function* updateExpensePolicy(action) {
   try {
     let result = yield call(Method.putData, action);
@@ -250,10 +681,6 @@ function* deleteExpensePolicy(action) {
     yield call(errorSaga, "Something went wrong!");
   }
 }
-
-
-
-
 
 function* getMileage(action) {
   try {
@@ -422,7 +849,6 @@ function* rejectCard(action) {
   }
 }
 
-
 function* getVendor(action) {
   try {
     let result = yield call(Method.getData, action);
@@ -462,7 +888,6 @@ function* createVendor(action) {
   }
 }
 
-
 function* deleteVendor(action) {
   try {
     let result = yield call(Method.deleteData, action);
@@ -479,8 +904,6 @@ function* deleteVendor(action) {
     yield call(errorSaga, "Something went wrong!");
   }
 }
-
-
 
 function* updateVendor(action) {
   try {
@@ -538,7 +961,6 @@ function* getTravel(action) {
   }
 }
 
-
 function* deleteTravel(action) {
   try {
     let result = yield call(Method.deleteData, action);
@@ -573,43 +995,46 @@ function* updateTravel(action) {
   }
 }
 
+function* addAllUser(action) {
+  try {
+    let result = yield call(Method.postData, action);
+    if (result.status === 201 || result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    console.error("Saga error:", error);
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
 
+function* getAllUser(action) {
+  try {
+    let result = yield call(Method.getData, action);
+    if (
+      result.status === 202 ||
+      result.status === 201 ||
+      result.status === 200
+    ) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
 
 // =====================================================================================
-function* UserLoginGenerator(action) {
-  try {
-    let result = yield call(Method.postData, action);
-    if (result.status === 202) {
-      yield put({
-        type: `${action.type}_SUCCESS`,
-        status: "ok",
-        result: result.data,
-      });
-    } else {
-      yield call(failSaga, "Server Down!");
-    }
-  } catch (error) {
-    yield call(errorSaga, "The credentials you entered are incorrect!");
-  }
-}
-
-function* UserRegisterGenerator(action) {
-  try {
-    let result = yield call(Method.postData, action);
-    console.log("resultresultresultresult", result);
-    if (result.status === 200) {
-      yield put({
-        type: `${action.type}_SUCCESS`,
-        status: "ok",
-        result: result.data,
-      });
-    } else {
-      yield call(failSaga, "Server Down!");
-    }
-  } catch (error) {
-    yield call(errorSaga, "The credentials you entered are incorrect!");
-  }
-}
 
 function* getCommonGenerator(action) {
   try {
@@ -918,27 +1343,6 @@ function* addRole(action) {
   }
 }
 
-function* getRole(action) {
-  try {
-    let result = yield call(Method.getData, action);
-    if (
-      result.status === 202 ||
-      result.status === 201 ||
-      result.status === 200
-    ) {
-      yield put({
-        type: `${action.type}_SUCCESS`,
-        status: "ok",
-        result: result.data,
-      });
-    } else {
-      yield call(failSaga, "Server Down!");
-    }
-  } catch (error) {
-    yield call(errorSaga, "The credentials you entered are incorrect!");
-  }
-}
-
 function* getExpenseTypePanel(action) {
   try {
     let result = yield call(Method.getData, action);
@@ -1075,22 +1479,6 @@ function* ContactUsPage(action) {
   }
 }
 
-function* ChangePassword(action) {
-  try {
-    let result = yield call(Method.postData, action);
-    if (result.status === 200) {
-      yield put({
-        type: `${action.type}_SUCCESS`,
-        status: "ok",
-        result: result.data,
-      });
-    } else {
-      yield call(failSaga, "Server Down!");
-    }
-  } catch (error) {
-    yield call(errorSaga, "The credentials you entered are incorrect!");
-  }
-}
 function* accountingCodePanel(action) {
   try {
     let result = yield call(Method.getData, action);
@@ -1942,22 +2330,42 @@ function* exportCompanypanel(action) {
 }
 
 export {
+  UserLoginGenerator,
+  UserRegisterGenerator,
+  getStaff,
+  getEmploymentType,
+  getBranch,
+  getDepartment,
+  getDesignation,
+  getUserRolePermission,
+  addSalaryRevision,
+  addCertification,
+  addUserSetting,
+  addPersonalInformation,
+  addEducation,
+  addExperience,
+  getCurrentRole,
+  getCurrentUser,
   getReportList,
+  getExpenseList,
   addReportsubmit,
   updateReport,
   deleteReport,
+  getReport,
+  approveReport,
+  rejectReport,
+  approveExpense,
+  rejectExpense,
+  ChangePassword,
   getAddCategoryList,
   categoryPanelList,
   updateCategoryPanel,
   deleteCategory,
-
   createCategoryItem,
-
   addExpensePolicy,
   getExpensePolicy,
   updateExpensePolicy,
   deleteExpensePolicy,
-
   getMileage,
   fetchCategory,
   addMileage,
@@ -1971,16 +2379,14 @@ export {
   createVendor,
   deleteVendor,
   updateVendor,
-
-
   createTravel,
   getTravel,
   deleteTravel,
   updateTravel,
+  getAllUser,
+  addAllUser,
   // =========================================
   approvedExpensemanager,
-  UserLoginGenerator,
-  UserRegisterGenerator,
   addExpenseItem,
   addExpenseType,
   addExternalcodeType,
@@ -1992,7 +2398,6 @@ export {
   accountingCodeSubmit,
   Updateuserprofile,
   getCommonGenerator,
-  getRole,
   getAccountingCodeList,
   itemizationsubmit,
   AddExpesnesubmit,
@@ -2002,7 +2407,6 @@ export {
   ContactUs,
   AboutUsPage,
   ContactUsPage,
-  ChangePassword,
   itemizationPanel,
   accountingCodePanel,
   expensePanelList,

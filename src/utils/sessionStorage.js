@@ -1,5 +1,5 @@
 export const getToken = () => {
-  return JSON.parse(localStorage.getItem("userDetails"));
+  return JSON.parse(localStorage.getItem("userDetails"))?.token;
 };
 
 export const setUser = (userObject) => {

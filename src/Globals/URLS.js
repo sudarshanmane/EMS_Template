@@ -1,49 +1,77 @@
 export const URLS = {
-  BASE_URL_EXPORT: "http://192.168.1.219:8001/",
-  ADD_REPORT_URL: "/expense/expensereport/",
-  GET_REPORT_LIST_URL: "/expense/expensereport/",
-  UPDATE_REPORT: "/expense/expensereport/",
+  BASE_URL_EXPORT: "http://127.0.0.1:8001",
+  USER_LOGIN_URL: "/users/api/v2/login_web/",
+  USER_REGISTER_URL: "/users/api/v2/userregister/",
+  GET_DEPARTMENT_LIST_URL: "/users/api/v2/departmentlist/",
+  GET_DESIGNATION_LIST_URL: "/users/api/v2/designationlist/",
+  GET_EMPLOYMENT_TYPE_LIST_URL: "/users/api/v2/employementtypelist/",
+  GET_BRANCH_LIST_URL: "/company/api/v2/branch/",
+  GET_USERROLE_PERMISSION_URL: "/users/api/v2/userrolepermissionlist",
 
-  ADD_CATEGORY_URL: "/expense/expensecategory/",
-  GET_CATEGORY_PANEL_URL: "/expense/expensecategory/",
-  UPDATE_CATEGORY_PANEL_URL: "/expense/expensecategory/",
-  DELETE_CATEGORY_PANEL_URL: "/expense/expensecategory/",
+  GET_CURRENT_ROLE_URL: "/users/api/v2/getcurrentuserrole/",
+  GET_CURRENT_USER_URL: "/users/api/v2/getalluser/",
+  GET_STAFF_LIST_URL: "/users/api/v2/getallstaff/",
+  ADD_SALARY_URL: "/userhrms/api/v2/salaryrevision/",
+  ADD_CERTIFICATION_URL: "/userhrms/api/v2/certificate/",
+  ADD_USER_SETTING_URL: "/userhrms/api/v2/usersettings/",
+  ADD_PERSONAL_INFORMATION_URL: "/userhrms/api/v2/UserPersonalInformationpost/",
+  ADD_EDUCATION_URL: "/userhrms/api/v2/usersettings/",
+  ADD_EXPERIENCE_URL: "/userhrms/api/v2/usersettings/",
+  CHANGE_PASSWORD_URL: "/users/api/v2/changepassword/",
 
-  // ******************
 
-  CREATE_CATEGORY_ITEM_URL: "/expense/expensecategoryitem/",
+  APPROVE_EXPENSE_URL: "/api/version_0/expense/approve-expense/",
+  REJECT_EXPENSE_URL: "/api/version_0/expense/reject-expense/",
+  APPROVE_REPORT_URL: "/api/version_0/expense/approve-report/",
+  REJECT_REPORT_URL: "/api/version_0/expense/reject-report/",
+  ADD_REPORT_URL: "/api/version_0/expense/expensereport/",
+  GET_REPORT_LIST_URL: "/api/version_0/expense/expensereport/",
+  GET_EXPENSE_LIST_URL: "/api/version_0/expense/create_expense/",
+  UPDATE_REPORT: "/api/version_0/expense/update_expensereport/",
+  DELETE_REPORT: "/api/version_0/expense/update_expensereport/",
+  VIEW_REPORT_URL: "/api/version_0/expense/expensereport/",
+  VIEW_REPORT_BY_ID_URL: "/api/version_0/expense/expensereport/",
 
-  // *********************
+  ADD_CATEGORY_URL: "/api/version_0/expense/expensecategory/",
+  GET_CATEGORY_PANEL_URL: "/api/version_0/expense/expensecategory/",
+  UPDATE_CATEGORY_PANEL_URL: "/api/version_0/expense/expensecategory/",
+  DELETE_CATEGORY_PANEL_URL: "/api/version_0/expense/expensecategory/",
+  CREATE_CATEGORY_ITEM_URL: "/api/version_0/expense/expensecategoryitem/",
 
-  ADD_EXPENSE_POLICY_URL: "/expense/expensepolicy/",
-  GET_EXPENSE_POLICY_URL: "/expense/expensepolicy/",
-  UPDATE_EXPENSE_POLICY_URL: "/expense/expensepolicy/",
-  DELETE_EXPENSE_POLICY_URL: "/expense/expensepolicy/",
+  ADD_EXPENSE_POLICY_URL: "/api/version_0/expense/expensepolicy/",
+  GET_EXPENSE_POLICY_URL: "/api/version_0/expense/expensepolicy/",
+  UPDATE_EXPENSE_POLICY_URL: "/api/version_0/expense/expensepolicy/",
+  DELETE_EXPENSE_POLICY_URL: "/api/version_0/expense/expensepolicy/",
 
-  ADD_MILEAGE_URL: "/expense/expensemileage/",
-  GET_MILEAGE_URL: "/expense/expensemileage/",
-  FETCH_CATEGORY_URL: "/expense/get_categories/",
-  UPDATE_MILEAGE_URL: "/expense/expensemileage/",
-  DELETE_MILEAGE_URL: "/expense/expensemileage/",
+  ADD_MILEAGE_URL: "/api/version_0/expense/expensemileage/",
+  GET_MILEAGE_URL: "/api/version_0/expense/expensemileage/",
+  FETCH_CATEGORY_URL: "/api/version_0/expense/get_categories/",
+  UPDATE_MILEAGE_URL: "/api/version_0/expense/expensemileage/",
+  DELETE_MILEAGE_URL: "/api/version_0/expense/expensemileage/",
 
-  APPLY_CARD_URL: "/card/card/",
-  GET_CARD_URL: "/card/get_cards/",
-  REJECT_CARD_URL: "/card/reject_card/",
-  APPROVE_CARD_URL: "/card/reject_card/",
+  APPLY_CARD_URL: "/api/version_0/card/card/",
+  GET_CARD_URL: "/api/version_0/card/get_cards/",
+  REJECT_CARD_URL: "/api/version_0/card/reject_card/",
+  APPROVE_CARD_URL: "/api/version_0/card/reject_card/",
 
-  CREATE_VENDOR_URL: "/expense/register_vendor/",
-  GET_VENDOR_URL: "/expense/register_vendor/",
-  DELETE_VENDOR_URL: "/expense/vendor_payment/",
-  UPDATE_VENDOR_URL: "/expense/vendor_payment/",
+  CREATE_VENDOR_URL: "/api/version_0/expense/register_vendor/",
+  GET_VENDOR_URL: "/api/version_0/expense/register_vendor/",
+  DELETE_VENDOR_URL: "/api/version_0/expense/vendor_payment/",
+  UPDATE_VENDOR_URL: "/api/version_0/expense/vendor_payment/",
 
-  CREATE_TRAVEL_URL: "/expense/request_travel/",
-  GET_TRAVEL_URL: "/expense/request_travel/",
-  DELETE_TRAVEL_URL: "/expense/request_travel_details/",
-  UPDATE_TRAVEL_URL: "/expense/request_travel_details/",
+  CREATE_TRAVEL_URL: "/api/version_0/expense/request_travel/",
+  GET_TRAVEL_URL: "/api/version_0/expense/request_travel/",
+  DELETE_TRAVEL_URL: "/api/version_0/expense/request_travel_details/",
+  UPDATE_TRAVEL_URL: "/api/version_0/expense/request_travel_details/",
+
+  GET_ALL_USER_URL:  "/api/v2/getalluser/",
+  ADD_ALL_USER_URL: "/api/v2/userrole/",
+
+
+  
 
   // ========================================================================================
-  USER_LOGIN_URL: "/users/admin-login/",
-  USER_REGISTER_URL: "/authentication/register/",
+
   GET_AGENCY_LIST_URL: "/document/agency-list/",
   EXPENSE_ITEM_SETUP_URL: "/expense/expenseitemsetup/",
   UPDATE_EXPENSE_ITEM_SETUP_URL: "/expense/expenseitemsetup/",
@@ -62,7 +90,6 @@ export const URLS = {
   EXTERNAL_ACCOUNT_CODE_PANEL_URL: "/expense/externalaccount-code-list/",
   UPDATE_ABOUTUS_URL: "/users/about_us/",
   UPDATE_CONTACTUS_URL: "/users/contact_us/",
-  UPDATE_PASSWORD_URL: "/users/change-password/",
   GET_COMPANY_LIST_URL: "/users/company-list/",
   DELETE_COMPANY_LIST_URL: "/authentication/delete_company/",
   UPDATE_COMPANY_LIST_URL: "/authentication/update_company/",
@@ -100,8 +127,4 @@ export const URLS = {
   MANAGER_CARD_REJECT_LIST_URL: "/expense/rejected_expense-list-manager/",
   MANAGER_CARD_HOLD_LIST_URL: "/expense/hold_expense-list-manager/",
   OWN_EXPENSE_APPROVE_URL: "/expense/approval_expense/",
-
-  // ---------------------------- SUDARSHAN ---------------------------
-  ADD_BULK_EXPENSE_REPORT_URL: "/expense/create-bulk-expenses/",
-  GET_AMOUNT_FROM_DISTANCE_TRAVELED: "/expense/calculate_mileage_amount/",
 };

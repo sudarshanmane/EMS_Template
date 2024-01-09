@@ -125,7 +125,7 @@ const Editclient = () => {
                   <table className="table table-striped custom-table">
                     <thead>
                       <tr>
-                        <th>Module Permission</th>
+                        <th>Module </th>
                         <th className="text-center">Read</th>
                         <th className="text-center">Write</th>
                         <th className="text-center">Create</th>
