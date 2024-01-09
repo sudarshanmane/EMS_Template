@@ -97,11 +97,11 @@ function rejectReport(payload) {
   };
 }
 
-function reimbursementRecord(payload) {
+function addreimbursementRecord(payload) {
   return {
-    type: API_CONSTANTS.GET_REIMBURSMENT_RECORD,
-    payload: payload.payload,
-    URL: URLS.GET_REIMBURSMENT_RECORD_URL + payload.id + "/",
+    type: API_CONSTANTS.ADD_REIMBURSMENT_RECORD,
+    payload,
+    URL: URLS.ADD_REIMBURSMENT_RECORD_URL,
     contentType: contentType.json,
   };
 }
@@ -211,6 +211,7 @@ function addMileage(payload) {
     contentType: contentType.json,
   };
 }
+
 function getMileage(payload) {
   return {
     type: API_CONSTANTS.GET_MILEAGE,
@@ -1132,7 +1133,7 @@ export {
   getReportDetails,
   approveReport,
   rejectReport,
-  reimbursementRecord,
+  addreimbursementRecord,
   approveExpense,
   rejectExpense,
   addCategoryAction,

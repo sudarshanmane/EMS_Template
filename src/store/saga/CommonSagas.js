@@ -227,14 +227,12 @@ function* rejectExpense(action) {
   }
 }
 
-function* reimbursementRecord(action) {
+
+function* addreimbursementRecord(action) {
+  console.log("comman sagaaaaaaaaaaa",action);
   try {
-    let result = yield call(Method.getData, action);
-    if (
-      result.status === 202 ||
-      result.status === 201 ||
-      result.status === 200
-    ) {
+    let result = yield call(Method.postData, action);
+    if (result.status === 201 || result.status === 200) {
       yield put({
         type: `${action.type}_SUCCESS`,
         status: "ok",
@@ -244,11 +242,10 @@ function* reimbursementRecord(action) {
       yield call(failSaga, "Server Down!");
     }
   } catch (error) {
+    console.error("Saga error:", error);
     yield call(errorSaga, "The credentials you entered are incorrect!");
   }
 }
-
-
 
 function* categoryPanelList(action) {
   try {
@@ -2112,7 +2109,7 @@ export {
   rejectReport,
   approveExpense,
   rejectExpense,
-  reimbursementRecord,
+  addreimbursementRecord,
 
   getAddCategoryList,
   categoryPanelList,

@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
+  addreimbursementRecord,
   getReportDetails,
-  reimbursementRecord,
   rejectExpense,
   rejectReport,
 } from "../../store/Action/Actions";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { Modal, Space, Table } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
 import {
@@ -16,6 +16,7 @@ import {
 } from "../../MainPage/paginationfunction";
 import { URLS } from "../../Globals/URLS";
 import DatePicker from "react-datepicker";
+import { format } from "date-fns";
 
 
 const ViewReportApproved = () => {
@@ -27,7 +28,7 @@ const ViewReportApproved = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedDate2, setSelectedDate2] = useState(new Date());
   const [isAddFormVisible, setIsAddFormVisible] = useState(false);
-
+  const [selectedValue, setSelectedValue] = useState("");
 
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -42,11 +43,18 @@ const ViewReportApproved = () => {
     setSelectedDate2(date);
   };
 
-  const getValuesUrl = URLS.APPROVE_REPORT_URL;
+  const formatDate = (date) => {
+    return format(date, "yyyy-MM-dd");
+  };
+
+  const DefaultUnit_drop = [
+    { value: "cash", label: "Cash" },
+    { value: "online", label: "Online" },
+  ];
+
   const {
     register: registerReport,
     handleSubmit: handleRejectReport,
-    handleSubmit: handleReimbursRecord,
     setValue: ReportSetValue,
     formState: { errors },
   } = useForm({});
@@ -58,10 +66,19 @@ const ViewReportApproved = () => {
     formState,
   } = useForm({});
 
-  const onReimbursRecord = () => {
-    dispatch()
+  const {
+    register: registerReimbursRecord,
+    handleSubmit: handleReimbursRecord,
+    setValue,
+    control,
+  } = useForm({});
+
+const naviagte = useNavigate(); 
+
+  const onReimbursRecord = (values) => {
+    dispatch(addreimbursementRecord({ payload: values }));
+    naviagte("/home/ExpenseApprovals")
   };
-  const [selectedValue, setSelectedValue] = useState("");
 
   const handleSelectionChange = (event) => {
     const selectedOptionValue = event.target.value;
@@ -87,7 +104,6 @@ const ViewReportApproved = () => {
     setRejectExpenseData(record);
     ExpenseSetValue("remark", record.remark);
   };
-
 
   const reportDetailsSelector = useSelector((state) => state.reportDetails);
   useEffect(() => {
@@ -132,42 +148,14 @@ const ViewReportApproved = () => {
     dispatch(getReportDetails({ id }));
   }, []);
 
-  const onSubmit = async (values) => {
-    await dispatch(addMileage(values));
-    dispatch(reimbursementRecord({ payload: {}, URL: url }));
-    setIsAddFormVisible(false);
-  };
-
-  function getPageDetails(url) {
-    dispatch(reimbursementRecord({ payload: {}, URL: url }));
-  }
-
-  useEffect(() => {
-    getPageDetails(url);
-  }, []);
-  
-  function fetchReimburseData(url) {
-    dispatch(reimbursementRecord({ payload: {}, URL: url }));
-  }
-
-  useEffect(() => {
-    fetchReimburseData(url);
-  }, []);
-
-  const getReimbursementSelector = useSelector((state) => state.reimbursementRecordSuccess);
-
-  useEffect(() => {
-    if (getReimbursementSelector) {
-      dispatch(reimbursementRecord({ payload: {}, URL: url }));
-      setIsAddFormVisible(false);
-    }
-  }, [getReimbursementSelector]);
-
-  
   const handleViewReceipt = (record) => {
     setSelectedReceiptUrl(record || "");
     setModalVisible(true);
   };
+
+
+  const addReibursmentSelector = useSelector((state) => state.addreimbursmentresult);
+  console.log("addReibursmentSelectoraddReibursmentSelectoraddReibursmentSelector",addReibursmentSelector);
 
   const columns = [
     {
@@ -306,7 +294,7 @@ const ViewReportApproved = () => {
                         to="#"
                         data-bs-toggle="modal"
                         data-bs-target="#reimbursement-record"
-                        onClick={() => onReimbursRecord()}
+                        // onClick={() => onReimbursRecord()}
                       >
                         <i className="fa fa-right" /> Record Reimbursment
                       </Link>
@@ -437,8 +425,9 @@ const ViewReportApproved = () => {
                               }
                               className="form-control"
                               readOnly
+                              {...registerReimbursRecord("reimbursed_amount")}
                             />
-                          </div>
+                          </div>  
                         </div>
                         <div className="input-block row">
                           <label className="col-lg-3 col-form-label">
@@ -450,6 +439,7 @@ const ViewReportApproved = () => {
                               value={`${reportDetailsSelector?.submitter.id} - ${reportDetailsSelector?.submitter.first_name} ${reportDetailsSelector?.submitter.last_name}`}
                               className="form-control"
                               readOnly
+                              {...registerReimbursRecord("first_name")}
                             />
                           </div>
                         </div>
@@ -457,32 +447,46 @@ const ViewReportApproved = () => {
                           <label className="col-lg-3 col-form-label">
                             <h4>Reimburse On</h4>
                           </label>
-                          {/* <div className="input-block form-focus select-focus"> */}
                           <div className="col-lg-9">
-                            <DatePicker
-                              selected={selectedDate2}
-                              onChange={handleDateChange2}
-                              className="form-control floating datetimepicker"
-                              type="date"
-                            />
+                          <Controller
+                        control={control}
+                        name="reimbursed_on"
+                        render={({ field }) => (
+                          <DatePicker
+                            selected={
+                              field.value ? new Date(field.value) : null
+                            }
+                            onChange={(date) => {
+                              const formattedDate = formatDate(date);
+                              field.onChange(formattedDate);
+                              setValue("reimbursed_on", formattedDate);
+                            }}
+                            dateFormat="yyyy-MM-dd"
+                            className="form-control"
+                          />
+                        )}
+                      />
                           </div>
-
-                          {/* </div> */}
                         </div>
                         <div className="input-block row">
                           <label className="col-lg-3 col-form-label">
                             <h4> Paid Through</h4>
                           </label>
                           <div className="col-lg-9">
-                            <select
-                              className="form-control"
-                              value={selectedValue}
-                              onChange={handleSelectionChange}
-                            >
-                              <option value="">Cash</option>
-                              <option value="">Online</option>
-                              {/* Other options */}
-                            </select>
+                          <div className="input-block">
+                        <label>Default Unit</label>
+                        <select
+                          className="form-control"
+                          {...registerReimbursRecord("paid_through")}
+                        >
+                          <option value="">Select </option>
+                          {DefaultUnit_drop?.map((data) => {
+                            return (
+                              <option value={data.value}>{data.label}</option>
+                            );
+                          })}
+                        </select>
+                      </div>
                           </div>
                         </div>
                         <div className="input-block row">
@@ -496,17 +500,11 @@ const ViewReportApproved = () => {
                               className="form-control"
                               placeholder="Enter message"
                               defaultValue={""}
+                              {...registerReimbursRecord("notes")}
                             />
                           </div>
                         </div>
-                        <div className="input-block row">
-                          <label className="col-lg-3 col-form-label">
-                            <h4> Ref#</h4>
-                          </label>
-                          <div className="col-lg-9">
-                            <input type="text" className="form-control" />
-                          </div>
-                        </div>
+
                         <div className="text-end">
                           <button type="submit" className="btn btn-success">
                             <h4>Record Reimbursment</h4>
