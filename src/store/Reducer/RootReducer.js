@@ -361,6 +361,20 @@ export const RootReducer = (state = initialState, action) => {
         };
 
 
+      case API_CONSTANTS.REJECT_REPORT_BY_ACCOUNT:
+        return {
+          ...state,
+          loding: true,
+        };
+  
+      case API_CONSTANTS.REJECT_REPORT_BY_ACCOUNT_SUCCESS:
+        return {
+          ...state,
+          loding: false,
+          rejectReportAccountSuccess: action.result,
+        };
+
+        
       case API_CONSTANTS.APPROVE_REPORT:
       return {
         ...state,
@@ -594,6 +608,19 @@ export const RootReducer = (state = initialState, action) => {
         loding: false,
         fetchCategorySuccess: action.result,
       };
+
+      case API_CONSTANTS.FETCH_REPORT:
+        return {
+          ...state,
+          loding: true,
+        };
+  
+      case API_CONSTANTS.FETCH_REPORT_SUCCESS:
+        return {
+          ...state,
+          loding: false,
+          fetchReportSuccess: action.result,
+        };
 
       case API_CONSTANTS.FETCH_REPORT:
         return {

@@ -249,11 +249,21 @@ function rejectReport(payload) {
   };
 }
 
+
 function addreimbursementRecord(payload) {
   return {
     type: API_CONSTANTS.ADD_REIMBURSMENT_RECORD,
     payload,
     URL: URLS.ADD_REIMBURSMENT_RECORD_URL,
+    contentType: contentType.json,
+  };
+}
+
+function rejectReportByAccount(payload) {
+  return {
+    type: API_CONSTANTS.REJECT_REPORT_BY_ACCOUNT,
+    payload: payload.payload,
+    URL: URLS.REJECT_REPORT_BY_ACCOUNT_URL + payload.id + "/",
     contentType: contentType.json,
   };
 }
@@ -1297,6 +1307,7 @@ export {
   approveReport,
   rejectReport,
   addreimbursementRecord,
+  rejectReportByAccount,
   approveExpense,
   rejectExpense,
   addCategoryAction,

@@ -37,6 +37,7 @@ export const URLS = {
   VIEW_REPORT_BY_ID_URL: "/api/version_0/expense/expensereport/",
   FETCH_REPORT_URL: "/api/version_0/expense/fetch_report/",
   ADD_REIMBURSMENT_RECORD_URL: "/api/version_0/expense/reimbursement/",
+  REJECT_REPORT_BY_ACCOUNT_URL: "/api/version_0/expense/reject_exp_by_account/",
 
 
   ADD_CATEGORY_URL: "/api/version_0/expense/expensecategory/",
