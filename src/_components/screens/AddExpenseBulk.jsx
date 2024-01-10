@@ -113,7 +113,6 @@ const AddExpenseBulk = () => {
     <div>
       <Form
         form={form}
-        name="dynamic_form_nest_item"
         onFinish={onFinish}
         layout="vertical"
         autoComplete="off"
@@ -128,12 +127,12 @@ const AddExpenseBulk = () => {
           <Form.Item
             name={"category"}
             label="Category"
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: "Category is required!",
-            //   },
-            // ]}
+            rules={[
+              {
+                required: true,
+                message: "Category is required!",
+              },
+            ]}
           >
             <Select
               showSearch
@@ -145,24 +144,24 @@ const AddExpenseBulk = () => {
           <Form.Item
             name={"desc"}
             label="Description"
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: "Description is required!",
-            //   },
-            // ]}
+            rules={[
+              {
+                required: true,
+                message: "Description is required!",
+              },
+            ]}
           >
             <Input size="large" placeholder="Description" />
           </Form.Item>
           <Form.Item
             name={"amount"}
             label="Amount"
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: "Amount is required!",
-            //   },
-            // ]}
+            rules={[
+              {
+                required: true,
+                message: "Amount is required!",
+              },
+            ]}
           >
             <InputNumber
               size="large"
@@ -175,29 +174,33 @@ const AddExpenseBulk = () => {
             label="Claim Reimbursement"
             valuePropName="checked"
           >
-            <Checkbox size="large" placeholder="Claim Reimbursement" />
+            <Checkbox
+              size="large"
+              placeholder="Claim Reimbursement"
+              valuePropName="checked"
+            />
           </Form.Item>
           <Form.Item
             name={"expense_date"}
             label="Expense Date"
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: "Expense Date is required!",
-            //   },
-            // ]}
+            rules={[
+              {
+                required: true,
+                message: "Expense Date is required!",
+              },
+            ]}
           >
             <DatePicker size="large" placeholder="Select Date" />
           </Form.Item>
           <Form.Item
             name={"expense_bill"}
             label="Expense Bill"
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: "Expense Bill is required!",
-            //   },
-            // ]}
+            rules={[
+              {
+                required: true,
+                message: "Expense Bill is required!",
+              },
+            ]}
           >
             <input
               type="file"

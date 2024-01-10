@@ -12,7 +12,6 @@ const initialState = {
 };
 
 export const RootReducer = (state = initialState, action) => {
-  console.log(action.type, action.result);
   switch (action.type) {
     case API_CONSTANTS.USER_LOGIN:
       return {
@@ -261,18 +260,18 @@ export const RootReducer = (state = initialState, action) => {
         getreportlist: action.result,
       };
 
-      case API_CONSTANTS.GET_EXPENSE_LIST:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.GET_EXPENSE_LIST_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          getexpenselist: action.result,
-        };
+    case API_CONSTANTS.GET_EXPENSE_LIST:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_EXPENSE_LIST_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getexpenselist: action.result,
+      };
 
     case API_CONSTANTS.UPDATE_REPORT:
       return {
@@ -1819,6 +1818,21 @@ export const RootReducer = (state = initialState, action) => {
         ...state,
         loding: false,
         addBulkExpenseCategoryList: action.result,
+      };
+    }
+
+    case API_CONSTANTS.POST_MILEAGE_DETAILS: {
+      return {
+        ...state,
+        loding: true,
+      };
+    }
+
+    case API_CONSTANTS.POST_MILEAGE_DETAILS_SUCCESS: {
+      return {
+        ...state,
+        loding: false,
+        postMileageResult: action.result,
       };
     }
 

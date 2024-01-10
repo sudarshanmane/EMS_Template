@@ -106,7 +106,6 @@ function addSalary(payload) {
   };
 }
 
-
 function addCertificationAction(payload) {
   return {
     type: API_CONSTANTS.ADD_CERTIFICATION,
@@ -170,7 +169,7 @@ function getReportList(payload) {
 }
 
 function getExpenseList(payload) {
-  console.log("actionnnnnnnnnnnnn",payload);
+  console.log("actionnnnnnnnnnnnn", payload);
   return {
     type: API_CONSTANTS.GET_EXPENSE_LIST,
     payload: payload.payload,
@@ -665,7 +664,6 @@ function contactUsPage(payload) {
   };
 }
 
-
 function getCompanyList(payload) {
   return {
     type: API_CONSTANTS.GET_COMPANY_LIST,
@@ -726,7 +724,6 @@ function getaccountingcodePanelAction(payload) {
     contentType: contentType.json,
   };
 }
-
 
 function applyCardAction(payload) {
   return {
@@ -1230,7 +1227,7 @@ function getCategoryListBulkExpense() {
   return {
     type: API_CONSTANTS.GET_CATEGORY_LIST_BULK_EXPENSE,
     URL: URLS.GET_CATEGORY_PANEL_URL,
-    contentType: contentType.json,
+    contentType: contentType.form,
   };
 }
 
@@ -1243,7 +1240,17 @@ function getTotalForDistance(payload) {
   };
 }
 
+function postMileage(payload) {
+  return {
+    type: API_CONSTANTS.POST_MILEAGE_DETAILS,
+    payload,
+    URL: URLS.CREATE_EXPENSE_COMMON_URL,
+    contentType: contentType.form,
+  };
+}
+
 export {
+  postMileage,
   getTotalForDistance,
   getCategoryListBulkExpense,
   setAddBulkExpenseReport,

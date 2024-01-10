@@ -19,7 +19,6 @@ export const URLS = {
   ADD_EXPERIENCE_URL: "/userhrms/api/v2/usersettings/",
   CHANGE_PASSWORD_URL: "/users/api/v2/changepassword/",
 
-
   APPROVE_EXPENSE_URL: "/api/version_0/expense/approve-expense/",
   REJECT_EXPENSE_URL: "/api/version_0/expense/reject-expense/",
   APPROVE_REPORT_URL: "/api/version_0/expense/approve-report/",
@@ -64,11 +63,8 @@ export const URLS = {
   DELETE_TRAVEL_URL: "/api/version_0/expense/request_travel_details/",
   UPDATE_TRAVEL_URL: "/api/version_0/expense/request_travel_details/",
 
-  GET_ALL_USER_URL:  "/api/v2/getalluser/",
+  GET_ALL_USER_URL: "/api/v2/getalluser/",
   ADD_ALL_USER_URL: "/api/v2/userrole/",
-
-
-  
 
   // ========================================================================================
 
@@ -127,4 +123,10 @@ export const URLS = {
   MANAGER_CARD_REJECT_LIST_URL: "/expense/rejected_expense-list-manager/",
   MANAGER_CARD_HOLD_LIST_URL: "/expense/hold_expense-list-manager/",
   OWN_EXPENSE_APPROVE_URL: "/expense/approval_expense/",
+
+  // =========================
+  ADD_BULK_EXPENSE_REPORT_URL: "/api/version_0/expense/create-bulk-expenses/",
+  CREATE_EXPENSE_COMMON_URL: "/api/version_0/expense/create_expense/",
+  GET_AMOUNT_FROM_DISTANCE_TRAVELED:
+    "/api/version_0/expense/calculate_mileage_amount/",
 };

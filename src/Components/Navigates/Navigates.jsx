@@ -3,7 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import PrivateRoute from "../Screens/Login/PrivateRoute";
 import Card from "../../_components/screens/Card";
 import Addexpense from "../../_components/screens/Addexpense";
-import ExpensePanel from "../../_components/panels/ExpensePanel";
+// import ExpensePanel from "../../_components/panels/ExpensePanel";
 import CategoryTypePanel from "../../_components/panels/CategoryTypePanel";
 import Expenseapprovedpanel from "../../_components/panels/Expenseapprovedpanel";
 import ExpenseApprovalManager from "../../_components/panels/ExpenseApprovalManager";
@@ -23,7 +23,7 @@ import RolePermisson from "../../MainPage/Administration/Settings/rolespermissio
 import Registrationpage from "../../initialpage/RegistrationPage";
 import ViewReport from "../../_components/panels/ViewReport";
 import Employeeslist from "../../MainPage/Employees/Employees/employeeslist";
-import Addemployees from "../../MainPage/Employees/Employees/addemployee"; 
+import Addemployees from "../../MainPage/Employees/Employees/addemployee";
 import Certification from "../../MainPage/Employees/Employees/certification";
 import Educationform from "../../MainPage/Employees/Employees/educationform";
 import Experience from "../../MainPage/Employees/Employees/experience";
@@ -34,42 +34,58 @@ import PersonalInformation from "../../MainPage/Employees/Employees/PersonalInfo
 import SelfProfile from "../../MainPage/Pages/Profile/selfprofile";
 import SelfProfileHead from "../../MainPage/Pages/Profile/selfprofilehead";
 
-
-
 const Navigates = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route
-         
           path="/"
-         
           element={<Navigate to="/home/addexpense"></Navigate>}
-        
         ></Route>
 
         <Route path="/home" element={<PrivateRoute></PrivateRoute>}>
           <Route path="applyforcard" element={<Card></Card>}></Route>
           <Route path="/home/viewReport/:id" element={<ViewReport />} />
           <Route path="addexpense" element={<Addexpense></Addexpense>}></Route>
-          <Route path="addemployee" element={<Addemployees></Addemployees>}></Route>
-          <Route path="certification" element={<Certification></Certification>}></Route>
-          <Route path="educationform" element={<Educationform></Educationform>}></Route>
+          <Route
+            path="addemployee"
+            element={<Addemployees></Addemployees>}
+          ></Route>
+          <Route
+            path="certification"
+            element={<Certification></Certification>}
+          ></Route>
+          <Route
+            path="educationform"
+            element={<Educationform></Educationform>}
+          ></Route>
           <Route path="experience" element={<Experience></Experience>}></Route>
           <Route path="salary" element={<Salary></Salary>}></Route>
-          <Route path="userRegistrationSetting" element={<UserRegistrationSetting></UserRegistrationSetting>}></Route>
-          <Route path="userRegistration" element={<UserRegistration></UserRegistration>}></Route>
-          <Route path="PersonalInformation" element={<PersonalInformation></PersonalInformation>}></Route>
-          <Route path="selfProfile" element={<SelfProfile></SelfProfile>}></Route>
-          <Route path="selfprofilehead" element={<SelfProfileHead></SelfProfileHead>}></Route>
-
-
-
-
           <Route
+            path="userRegistrationSetting"
+            element={<UserRegistrationSetting></UserRegistrationSetting>}
+          ></Route>
+          <Route
+            path="userRegistration"
+            element={<UserRegistration></UserRegistration>}
+          ></Route>
+          <Route
+            path="PersonalInformation"
+            element={<PersonalInformation></PersonalInformation>}
+          ></Route>
+          <Route
+            path="selfProfile"
+            element={<SelfProfile></SelfProfile>}
+          ></Route>
+          <Route
+            path="selfprofilehead"
+            element={<SelfProfileHead></SelfProfileHead>}
+          ></Route>
+
+          {/* <Route
             path="expensepanel"
             element={<ExpensePanel></ExpensePanel>}
-          ></Route>
+          ></Route> */}
           <Route
             path="expensecategorypanel"
             element={<CategoryTypePanel></CategoryTypePanel>}
@@ -94,7 +110,7 @@ const Navigates = () => {
             path="Reports"
             element={<ExpenseReportPanel></ExpenseReportPanel>}
           ></Route>
-            <Route
+          <Route
             path="employeeslist"
             element={<Employeeslist></Employeeslist>}
           ></Route>
