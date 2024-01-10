@@ -229,7 +229,7 @@ const Sidebar = () => {
                     toggleSidebar(isSideMenu == "reports" ? "" : "reports")
                   }
                 >
-                  <i className="la la-file-text" /> <span> Reports </span>{" "}
+                  <i className="la la-file-text" /> <span>Expense Reports </span>{" "}
                   <span className="menu-arrow" />
                 </Link>
                 {isSideMenu == "reports" ? (
@@ -242,7 +242,7 @@ const Sidebar = () => {
                         to="/home/Reports"
                       >
                         {" "}
-                        Expense Report{" "}
+                        All Reports{" "}
                       </Link>
                     </li>
                     <li>

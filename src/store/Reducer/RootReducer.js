@@ -341,14 +341,26 @@ export const RootReducer = (state = initialState, action) => {
       };
 
     case API_CONSTANTS.ADD_REIMBURSMENT_RECORD_SUCCESS:
-      console.log("RootReducerrrrrrrrrrrr",action.result);
       return {
         ...state,
         loding: false,
         addreimbursmentresult: action.result,
       };
 
-        
+      case API_CONSTANTS.ADD_SELECTED_REPORT:
+        return {
+          ...state,
+          loding: true,
+        };
+  
+      case API_CONSTANTS.ADD_SELECTED_REPORT_SUCCESS:
+        return {
+          ...state,
+          loding: false,
+          addSelectedReportSuccess: action.result,
+        };
+
+
       case API_CONSTANTS.APPROVE_REPORT:
       return {
         ...state,
@@ -582,6 +594,19 @@ export const RootReducer = (state = initialState, action) => {
         loding: false,
         fetchCategorySuccess: action.result,
       };
+
+      case API_CONSTANTS.FETCH_REPORT:
+        return {
+          ...state,
+          loding: true,
+        };
+  
+      case API_CONSTANTS.FETCH_REPORT_SUCCESS:
+        return {
+          ...state,
+          loding: false,
+          fetchReportSuccess: action.result,
+        };
 
     case API_CONSTANTS.UPDATE_MILEAGE:
       return {

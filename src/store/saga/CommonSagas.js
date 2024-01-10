@@ -400,6 +400,24 @@ function* getExpenseList(action) {
   }
 }
 
+function* addSelectedReport(action) {
+  try {
+    let result = yield call(Method.putData, action);
+    if (result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+
 function* addReportsubmit(action) {
   try {
     let result = yield call(Method.postData, action);
@@ -745,6 +763,27 @@ function* getMileage(action) {
 }
 
 function* fetchCategory(action) {
+  try {
+    let result = yield call(Method.getData, action);
+    if (
+      result.status === 202 ||
+      result.status === 201 ||
+      result.status === 200
+    ) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* fetchReport(action) {
   try {
     let result = yield call(Method.getData, action);
     if (
@@ -2393,6 +2432,7 @@ export {
   getApprovedReportList,
   getExpenseList,
   addReportsubmit,
+  addSelectedReport,
   updateReport,
   deleteReport,
   getReport,
@@ -2414,6 +2454,7 @@ export {
   deleteExpensePolicy,
   getMileage,
   fetchCategory,
+  fetchReport,
   addMileage,
   updateMileage,
   deleteMileage,

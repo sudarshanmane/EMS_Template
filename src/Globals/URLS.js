@@ -26,6 +26,7 @@ export const URLS = {
   APPROVE_REPORT_URL: "/api/version_0/expense/approve-report/",
   REJECT_REPORT_URL: "/api/version_0/expense/reject-report/",
   ADD_REPORT_URL: "/api/version_0/expense/expensereport/",
+  ADD_SELECTED_REPORT_URL: "/api/version_0/expense/modify_expense/",
   GET_REPORT_LIST_URL: "/api/version_0/expense/expensereport/",
   GET_APPROVED_REPORT_LIST_URL: "/api/version_0/expense/getreportsforapproval/",
   UPDATE_REPORT: "/api/version_0/expense/expensereport/",
@@ -34,7 +35,7 @@ export const URLS = {
   DELETE_REPORT: "/api/version_0/expense/update_expensereport/",
   VIEW_REPORT_URL: "/api/version_0/expense/expensereport/",
   VIEW_REPORT_BY_ID_URL: "/api/version_0/expense/expensereport/",
-
+  FETCH_REPORT_URL: "/api/version_0/expense/fetch_report/",
   ADD_REIMBURSMENT_RECORD_URL: "/api/version_0/expense/reimbursement/",
 
 

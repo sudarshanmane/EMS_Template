@@ -160,6 +160,17 @@ function addReport(payload) {
     contentType: contentType.json,
   };
 }
+
+function addSelectedReport(payload) {
+  return {
+    type: API_CONSTANTS.ADD_SELECTED_REPORT,
+    payload: payload.payload,
+    URL: URLS.ADD_SELECTED_REPORT_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+
 function getReportList(payload) {
   return {
     type: API_CONSTANTS.GET_REPORT_LIST,
@@ -180,7 +191,6 @@ function getApprovedReportList(payload) {
 
 
 function getExpenseList(payload) {
-  console.log("actionnnnnnnnnnnnn",payload);
   return {
     type: API_CONSTANTS.GET_EXPENSE_LIST,
     payload: payload.payload,
@@ -366,6 +376,15 @@ function getMileage(payload) {
 function fetchCategory(payload) {
   return {
     type: API_CONSTANTS.FETCH_CATEGORY,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
+function fetchReport(payload) {
+  return {
+    type: API_CONSTANTS.FETCH_REPORT,
     payload: payload.payload,
     URL: payload.URL,
     contentType: contentType.json,
@@ -1269,6 +1288,7 @@ export {
   addEducationAction,
   addExperienceAction,
   addReport,
+  addSelectedReport,
   updateReportAction,
   deleteReportAction,
   setDeleteReportFalse,
@@ -1291,6 +1311,7 @@ export {
   addMileage,
   getMileage,
   fetchCategory,
+  fetchReport,
   updateMileage,
   deleteMileage,
   applyCard,

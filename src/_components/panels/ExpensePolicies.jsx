@@ -36,6 +36,7 @@ const ExpensePolicies = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({});
 
@@ -110,6 +111,7 @@ const ExpensePolicies = () => {
   useEffect(() => {
     if (addExpenseSelector) {
       dispatch(getExpensePolicy({ payload: {}, URL: url }));
+      reset();
     }
     setIsAddFormVisible(false);
   }, [addExpenseSelector]);
@@ -176,27 +178,6 @@ const ExpensePolicies = () => {
       dataIndex: "card_limit",
       sorter: (a, b) => a.end_date.length - b.end_date.length,
     },
-    // {
-    //   title: "Make Description Mandatory",
-    //   dataIndex: "make_description_mandotary",
-    //   sorter: (a, b) => a.end_date.length - b.end_date.length,
-    // },
-
-    // {
-    //   title: " Allow Uncategorized Expenses To Be The Part Of Expense Report",
-    //   dataIndex: "allow_uncategorized_expe_to_be_part_of_expense_report",
-    //   sorter: (a, b) => a.end_date.length - b.end_date.length,
-    // },
-    // {
-    //   title: "Make Expense Reimbursable By Default",
-    //   dataIndex: "make_expense_reimbursable_by_default",
-    //   sorter: (a, b) => a.end_date.length - b.end_date.length,
-    // },
-    // {
-    //   title: "Expense Expiry period",
-    //   dataIndex: "expense_expiry_period",
-    //   sorter: (a, b) => a.end_date.length - b.end_date.length,
-    // },
 
     {
       title: "Action",
