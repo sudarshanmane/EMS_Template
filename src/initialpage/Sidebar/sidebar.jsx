@@ -90,20 +90,19 @@ const Sidebar = () => {
                     }}
                   >
                     <li>
-                        <Link
-                          className={
-                            pathname.includes("employeeslist")
-                              ? "active"
-                              : pathname.includes("employees-list")
-                              ? "active"
-                              : ""
-                          }
-                          to="/home/employeeslist"
-                        >
-                          All Users
-                        </Link>
-                      </li>
-                  
+                      <Link
+                        className={
+                          pathname.includes("employeeslist")
+                            ? "active"
+                            : pathname.includes("employees-list")
+                            ? "active"
+                            : ""
+                        }
+                        to="/home/employeeslist"
+                      >
+                        All Users
+                      </Link>
+                    </li>
                   </ul>
                 ) : (
                   ""
@@ -159,7 +158,7 @@ const Sidebar = () => {
                         className={
                           pathname.includes("add-expense") ? "active" : ""
                         }
-                        to="/home/expensepanel"
+                        to="/home/addexpense"
                       >
                         Add Expense{" "}
                       </Link>
@@ -256,7 +255,6 @@ const Sidebar = () => {
                         Expense Approvals{" "}
                       </Link>
                     </li>
-                    
                   </ul>
                 ) : (
                   ""
