@@ -100,6 +100,7 @@ const ExpenseApprovals = () => {
           description: element.description,
           start_date: element.start_date,
           end_date: element.end_date,
+          status: element.status,
         };
       });
       setAllReportList(allReportList);
@@ -146,49 +147,6 @@ const ExpenseApprovals = () => {
     {
       title: "Status",
       dataIndex: "status",
-      render: (text) => (
-        <div className="dropdown action-label text-center">
-          <Link
-            className="btn btn-white btn-sm btn-rounded dropdown-toggle"
-            to="#"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <i
-              className={
-                text === "New"
-                  ? "far fa-dot-circle text-purple"
-                  : text === "Pending"
-                  ? "far fa-dot-circle text-info"
-                  : text === "Approved"
-                  ? "far fa-dot-circle text-success"
-                  : "far fa-dot-circle text-danger"
-              }
-            />{" "}
-            {text}
-          </Link>
-          <div className="dropdown-menu dropdown-menu-right">
-            <Link className="dropdown-item" to="#">
-              <i className="far fa-dot-circle text-purple" /> New
-            </Link>
-            <Link className="dropdown-item" to="#">
-              <i className="far fa-dot-circle text-info" /> Pending
-            </Link>
-            <Link
-              className="dropdown-item"
-              to="#"
-              data-bs-toggle="modal"
-              data-bs-target="#approve_leave"
-            >
-              <i className="far fa-dot-circle text-success" /> Approved
-            </Link>
-            <Link className="dropdown-item" to="#">
-              <i className="far fa-dot-circle text-danger" /> Declined
-            </Link>
-          </div>
-        </div>
-      ),
-      sorter: (a, b) => a.status.length - b.status.length,
     },
     {
       title: "Action",

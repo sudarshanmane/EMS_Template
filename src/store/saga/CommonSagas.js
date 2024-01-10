@@ -546,6 +546,7 @@ function* addreimbursementRecord(action) {
   console.log("comman sagaaaaaaaaaaa",action);
   try {
     let result = yield call(Method.postData, action);
+    console.log("resultresultresultresultresultresult", result);
     if (result.status === 201 || result.status === 200) {
       yield put({
         type: `${action.type}_SUCCESS`,
@@ -558,6 +559,23 @@ function* addreimbursementRecord(action) {
   } catch (error) {
     console.error("Saga error:", error);
     yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* rejectReportByAccount(action) {
+  try {
+    let result = yield call(Method.putData, action);
+    if (result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "Something went wrong!");
   }
 }
 
@@ -2401,6 +2419,7 @@ export {
   approveExpense,
   rejectExpense,
   addreimbursementRecord,
+  rejectReportByAccount,
 
   ChangePassword,
   getAddCategoryList,

@@ -56,6 +56,7 @@ import {
   getTravel,
   deleteTravel,
   addreimbursementRecord,
+  rejectReportByAccount,
 
 
   // =======================================
@@ -173,6 +174,7 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.APPROVE_EXPENSE, approveExpense);
   yield takeEvery(API_CONSTANTS.REJECT_EXPENSE, rejectExpense);
   yield takeEvery(API_CONSTANTS.ADD_REIMBURSMENT_RECORD, addreimbursementRecord);
+  yield takeEvery(API_CONSTANTS.REJECT_REPORT_BY_ACCOUNT, rejectReportByAccount);
 
   yield takeEvery(API_CONSTANTS.ADD_CATEGORY, getAddCategoryList);
   yield takeEvery(API_CONSTANTS.GET_CATEGORYLIST_PANEL, categoryPanelList);
