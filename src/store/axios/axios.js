@@ -1,4 +1,4 @@
-import { getUser } from "../../utils/sessionStorage";
+import { getToken, getUser } from "../../utils/sessionStorage";
 import { http } from "./http";
 
 export const Method = {
@@ -8,8 +8,10 @@ export const Method = {
       const response = await http.post(action.URL, action.payload, {
         headers: {
           "Content-Type": action.contentType,
+          Authorization: `Token ${getToken() ? getToken() : ""}`,
         },
       });
+
       return response;
     } catch (error) {
       console.log(error);
@@ -21,6 +23,7 @@ export const Method = {
       const response = await http.get(action.URL, {
         headers: {
           "Content-Type": action.contentType,
+          Authorization: `Token ${getToken() ? getToken() : ""}`,
         },
       });
       return response;
@@ -34,6 +37,7 @@ export const Method = {
       const response = http.put(action.URL, action.payload, {
         headers: {
           "Content-Type": action.contentType,
+          Authorization: `Token ${getToken() ? getToken() : ""}`,
         },
       });
       return response;
@@ -42,11 +46,27 @@ export const Method = {
     }
   },
 
+  async patchData(action) {
+    try {
+      const response = http.patch(action.URL, action.payload, {
+        headers: {
+          "Content-Type": action.contentType,
+          Authorization: `Token ${getToken() ? getToken() : ""}`,
+        },
+      });
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+
   async deleteData(action) {
     try {
       const response = http.delete(action.URL, {
         headers: {
           "Content-Type": action.contentType,
+          Authorization: `Token ${getToken() ? getToken() : ""}`,
         },
       });
       return response;

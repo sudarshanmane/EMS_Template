@@ -15,13 +15,26 @@ import Mileage from "../../_components/screens/Mileage";
 import Expenses from "../../_components/screens/Expenses";
 import ReimbursmentRecord from "../../_components/screens/ReimbursmentRecord";
 import TravelRequestPannel from "../../_components/panels/TravelRequestPannel";
-import Travels from "../../_components/screens/Travels";
 import VendorPannel from "../../_components/panels/VendorPannel";
-import Vendors from "../../_components/screens/Vendors";
 import ExpensePolicies from "../../_components/panels/ExpensePolicies";
 import Loginpage from "../../initialpage/loginpage";
 import ChangePassword from "../../MainPage/Administration/Settings/changepassword";
 import RolePermisson from "../../MainPage/Administration/Settings/rolespermission";
+import Registrationpage from "../../initialpage/RegistrationPage";
+import ViewReport from "../../_components/panels/ViewReport";
+import Employeeslist from "../../MainPage/Employees/Employees/employeeslist";
+import Addemployees from "../../MainPage/Employees/Employees/addemployee"; 
+import Certification from "../../MainPage/Employees/Employees/certification";
+import Educationform from "../../MainPage/Employees/Employees/educationform";
+import Experience from "../../MainPage/Employees/Employees/experience";
+import Salary from "../../MainPage/Employees/Employees/salary";
+import UserRegistrationSetting from "../../MainPage/Employees/Employees/userRegistrationSetting";
+import UserRegistration from "../../MainPage/Employees/Employees/userRegistration";
+import PersonalInformation from "../../MainPage/Employees/Employees/PersonalInformation";
+import SelfProfile from "../../MainPage/Pages/Profile/selfprofile";
+import SelfProfileHead from "../../MainPage/Pages/Profile/selfprofilehead";
+
+
 
 const Navigates = () => {
   return (
@@ -37,7 +50,22 @@ const Navigates = () => {
 
         <Route path="/home" element={<PrivateRoute></PrivateRoute>}>
           <Route path="applyforcard" element={<Card></Card>}></Route>
+          <Route path="/home/viewReport/:id" element={<ViewReport />} />
           <Route path="addexpense" element={<Addexpense></Addexpense>}></Route>
+          <Route path="addemployee" element={<Addemployees></Addemployees>}></Route>
+          <Route path="certification" element={<Certification></Certification>}></Route>
+          <Route path="educationform" element={<Educationform></Educationform>}></Route>
+          <Route path="experience" element={<Experience></Experience>}></Route>
+          <Route path="salary" element={<Salary></Salary>}></Route>
+          <Route path="userRegistrationSetting" element={<UserRegistrationSetting></UserRegistrationSetting>}></Route>
+          <Route path="userRegistration" element={<UserRegistration></UserRegistration>}></Route>
+          <Route path="PersonalInformation" element={<PersonalInformation></PersonalInformation>}></Route>
+          <Route path="selfProfile" element={<SelfProfile></SelfProfile>}></Route>
+          <Route path="selfprofilehead" element={<SelfProfileHead></SelfProfileHead>}></Route>
+
+
+
+
           <Route
             path="expensepanel"
             element={<ExpensePanel></ExpensePanel>}
@@ -66,6 +94,10 @@ const Navigates = () => {
             path="Reports"
             element={<ExpenseReportPanel></ExpenseReportPanel>}
           ></Route>
+            <Route
+            path="employeeslist"
+            element={<Employeeslist></Employeeslist>}
+          ></Route>
           <Route
             path="cardapproval"
             element={<CardApproval></CardApproval>}
@@ -84,12 +116,10 @@ const Navigates = () => {
             path="TravelRequestPannel"
             element={<TravelRequestPannel></TravelRequestPannel>}
           ></Route>
-          <Route path="Travels" element={<Travels></Travels>}></Route>
           <Route
             path="VendorPannel"
             element={<VendorPannel></VendorPannel>}
           ></Route>
-          <Route path="Vendors" element={<Vendors></Vendors>}></Route>
           <Route
             path="changepassword"
             element={<ChangePassword></ChangePassword>}
@@ -100,6 +130,10 @@ const Navigates = () => {
           ></Route>
         </Route>
         <Route path="/login" element={<Loginpage></Loginpage>}></Route>
+        <Route
+          path="/register"
+          element={<Registrationpage></Registrationpage>}
+        ></Route>
       </Routes>
     </BrowserRouter>
   );

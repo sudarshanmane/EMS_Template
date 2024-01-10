@@ -83,7 +83,6 @@ const Sidebar = () => {
                   <span className="menu-arrow" />
                 </Link>
 
-                
                 {isSideMenu == "user" ? (
                   <ul
                     style={{
@@ -91,31 +90,26 @@ const Sidebar = () => {
                     }}
                   >
                     <li>
-                      <Link
-                        className={
-                          pathname.includes("role-add") ? "active" : ""
-                        }
-                        to="/home/role-add"
-                      >
-                       Role
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className={
-                          pathname.includes("userpanel") ? "active" : ""
-                        }
-                        to="/home/rolespermission"
-                      >
-                        Permissions
-                      </Link>
-                    </li>
+                        <Link
+                          className={
+                            pathname.includes("employeeslist")
+                              ? "active"
+                              : pathname.includes("employees-list")
+                              ? "active"
+                              : ""
+                          }
+                          to="/home/employeeslist"
+                        >
+                          All Users
+                        </Link>
+                      </li>
+                  
                   </ul>
                 ) : (
                   ""
                 )}
               </li>
-              <li className="submenu">
+              {/* <li className="submenu">
                 <Link
                   to="#"
                   className={isSideMenu == "company" ? "subdrop" : ""}
@@ -145,7 +139,7 @@ const Sidebar = () => {
                 ) : (
                   ""
                 )}
-              </li>
+              </li> */}
 
               <li className="submenu">
                 <Link
@@ -173,7 +167,9 @@ const Sidebar = () => {
                     <li>
                       <Link
                         className={
-                          pathname.includes("expenseapprovemanager") ? "active" : ""
+                          pathname.includes("expenseapprovemanager")
+                            ? "active"
+                            : ""
                         }
                         to="/home/expenseapprovalbyfinancemanager"
                       >
@@ -255,36 +251,40 @@ const Sidebar = () => {
                 )}
               </li>
 
-
               <li className="submenu">
                 <Link
                   to="/home/TravelRequestPannel"
-                  className={isSideMenu == "TravelRequestPannel" ? "subdrop" : ""}
+                  className={
+                    isSideMenu == "TravelRequestPannel" ? "subdrop" : ""
+                  }
                   onClick={() =>
-                    toggleSidebar(isSideMenu == "TravelRequestPannel" ? "" : "TravelRequestPannel")
+                    toggleSidebar(
+                      isSideMenu == "TravelRequestPannel"
+                        ? ""
+                        : "TravelRequestPannel"
+                    )
                   }
                 >
-                  <i className="la la-file-text" /> <span> Travels Request </span>{" "}
+                  <i className="la la-file-text" />{" "}
+                  <span> Travels Request </span>{" "}
                   {/* <span className="menu-arrow" /> */}
                 </Link>
-               
               </li>
-
-
 
               <li className="submenu">
                 <Link
                   to="/home/VendorPannel"
                   className={isSideMenu == "VendorPannel" ? "subdrop" : ""}
                   onClick={() =>
-                    toggleSidebar(isSideMenu == "VendorPannel" ? "" : "VendorPannel")
+                    toggleSidebar(
+                      isSideMenu == "VendorPannel" ? "" : "VendorPannel"
+                    )
                   }
                 >
                   <i className="la la-file-text" /> <span> Vendors </span>{" "}
                   {/* <span className="menu-arrow" /> */}
                 </Link>
-               
-              </li>  
+              </li>
 
               {/* ============================================== */}
 
@@ -327,7 +327,7 @@ const Sidebar = () => {
                         Mileage{" "}
                       </Link>
                     </li>
-                    <li>
+                    {/* <li>
                       <Link
                         className={
                           pathname.includes("expenses-") ? "active" : ""
@@ -337,7 +337,7 @@ const Sidebar = () => {
                         {" "}
                         Expenses{" "}
                       </Link>
-                    </li>
+                    </li> */}
                     <li>
                       <Link
                         className={
@@ -371,7 +371,7 @@ const Sidebar = () => {
                     <li>
                       <Link
                         className={
-                          pathname.includes("profile/employee-") ? "active" : ""
+                          pathname.includes("employee-") ? "active" : ""
                         }
                         to="/home/employee-profile"
                       >
@@ -745,7 +745,7 @@ const Sidebar = () => {
                 className="nav-link"
                 id="v-pills-performance-tab"
                 title="Performance"
-                data-bs-toggle="pill" 
+                data-bs-toggle="pill"
                 to="#v-pills-performance"
                 role="tab"
                 aria-controls="v-pills-performance"

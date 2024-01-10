@@ -45,7 +45,7 @@ const Addschedule = () => {
                         <option value="">Select</option>
                         <option value="">Development</option>
                         <option value={1}>Finance</option>
-                        <option value={2}>Finance and Management</option>
+                        <option value={2}>Finance and </option>
                         <option value={3}>Hr &amp; Finance</option>
                         <option value={4}>ITech</option>
                       </select>

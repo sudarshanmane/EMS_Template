@@ -51,6 +51,8 @@ function Card() {
   }, [applyCardSelector]);
 
   return (
+    <div className="page-wrapper">
+        <div className="content container-fluid">
     <div className="row">
       <div className="col-md-6">
         <div className="card">
@@ -235,6 +237,8 @@ function Card() {
           </div>
         </div>
       </div>
+    </div>
+    </div>
     </div>
   );
 }

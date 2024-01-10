@@ -121,7 +121,7 @@ const UserPermissions = () => {
             </Space>
           </Form.Item>
         </Form>
-      </div>
+      </div>  
 
       {handleGroupsValue !== "Select User/Group Permissions" &&
         handleGroupsValue !== "Select Permissions" && (

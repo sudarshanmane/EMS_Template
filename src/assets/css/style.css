@@ -2062,7 +2062,7 @@ input[type=file].form-control {
   padding: 0 20px;
   -webkit-transition: all 0.2s ease;
   -ms-transition: all 0.2s ease;
-  transition: all 0.2s ease;
+  transition: all 0.2s ease; background-color: #fff;
 }
 .header .header-left .logo {
   display: inline-block;
@@ -9727,3 +9727,7 @@ th.width-64 {
   border-color: #FF7437;
   border-style: none;
 }
+.h-42{
+  height: 42px;
+}
+.h-42 .ant-select-selector{ height:42px !important}

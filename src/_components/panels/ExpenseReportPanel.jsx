@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Table } from "antd";
@@ -30,12 +30,14 @@ const ExpenseReport = () => {
   const [selectedDate2, setSelectedDate2] = useState(new Date());
   const [viewReportData, setViewReportData] = useState(null);
   const [isAddFormVisible, setIsAddFormVisible] = useState(false);
+  const [isApproveFormVisible, setIsApproveFormVisible] = useState(false);
+  const [isRejectFormVisible, setIsRejectFormVisible] = useState(false);
   const [editReportData, setEditReportData] = useState(null);
   const [deleteReportData, setDeleteReportData] = useState(null);
   const [isEditFormVisible, setIsEditFormVisible] = useState(false);
   const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] =
     useState(false);
-
+  const navigate = useNavigate();
   const url = URLS.GET_REPORT_LIST_URL;
 
   const handleDateChange1 = (date) => {
@@ -44,28 +46,21 @@ const ExpenseReport = () => {
   const handleDateChange2 = (date) => {
     setSelectedDate2(date);
   };
-  const handleView = (record) => {
-    setViewReportData(record);
-    setIsAddFormVisible(false);
-  };
 
   const formatDate = (date) => {
     return format(date, "yyyy-MM-dd");
   };
 
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm({});
-
-  const { register: updateregister, handleSubmit: handleUpdate,  setValue,} = useForm({});
-
   const { handleSubmit: handleDelete } = useForm({});
 
   const onSubmit = (values) => {
     dispatch(addReport(values));
+  };
+
+  const viewReport = (record) => {
+    setViewReportData(record);
+    setIsAddFormVisible(false);
+    navigate("/home/viewReport", { state: record });
   };
 
   const onEdit = (record) => {
@@ -89,6 +84,18 @@ const ExpenseReport = () => {
       prevItems.filter((item) => item.id !== deletedReportId)
     );
   };
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({});
+
+  const {
+    register: updateregister,
+    handleSubmit: handleUpdate,
+    setValue,
+  } = useForm({});
 
   function getPageDetails(url) {
     dispatch(getReportList({ payload: {}, URL: url }));
@@ -246,6 +253,13 @@ const ExpenseReport = () => {
             <i className="material-icons">more_vert</i>
           </Link>
           <div className="dropdown-menu dropdown-menu-right">
+           <Link
+              to={`/home/viewReport/${record.id}`}
+              className="dropdown-item"
+              onClick={() => viewReport(record)}
+            >
+              <i className="fa fa-eye m-r-5" /> View
+            </Link>
             <Link
               className="dropdown-item"
               to="#"
@@ -387,7 +401,7 @@ const ExpenseReport = () => {
             </div>
           </div>
         </div>
-        
+
         {/* Add Expense Modal */}
         <div id="add_report" className="modal custom-modal fade" role="dialog">
           <div
@@ -400,7 +414,7 @@ const ExpenseReport = () => {
                 <button
                   type="button"
                   className="close"
-                  data-bs-dismiss="modal"
+                  data-bs-dismiss="modal" 
                   aria-label="Close"
                 >
                   <span aria-hidden="true">×</span>
@@ -491,7 +505,6 @@ const ExpenseReport = () => {
             </div>
           </div>
         </div>
-        
         {/* /Add Expense Modal */}
 
         {/* Edit Expense Modal */}
@@ -513,7 +526,7 @@ const ExpenseReport = () => {
                 </button>
               </div>
               <div className="modal-body">
-                <form onSubmit={handleUpdate(onUpdate)}>  
+                <form onSubmit={handleUpdate(onUpdate)}>
                   <div className="input-block">
                     <div className="col-md-12">
                       <div className="input-block">
