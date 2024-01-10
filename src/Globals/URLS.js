@@ -1,5 +1,6 @@
 export const URLS = {
-  BASE_URL_EXPORT: "http://127.0.0.1:8001",
+  BASE_URL_EXPORT: "http://192.168.1.219:8001/",
+  
   USER_LOGIN_URL: "/users/api/v2/login_web/",
   USER_REGISTER_URL: "/users/api/v2/userregister/",
   GET_DEPARTMENT_LIST_URL: "/users/api/v2/departmentlist/",
@@ -26,11 +27,16 @@ export const URLS = {
   REJECT_REPORT_URL: "/api/version_0/expense/reject-report/",
   ADD_REPORT_URL: "/api/version_0/expense/expensereport/",
   GET_REPORT_LIST_URL: "/api/version_0/expense/expensereport/",
+  GET_APPROVED_REPORT_LIST_URL: "/api/version_0/expense/getreportsforapproval/",
+  UPDATE_REPORT: "/api/version_0/expense/expensereport/",
   GET_EXPENSE_LIST_URL: "/api/version_0/expense/create_expense/",
   UPDATE_REPORT: "/api/version_0/expense/update_expensereport/",
   DELETE_REPORT: "/api/version_0/expense/update_expensereport/",
   VIEW_REPORT_URL: "/api/version_0/expense/expensereport/",
   VIEW_REPORT_BY_ID_URL: "/api/version_0/expense/expensereport/",
+
+  ADD_REIMBURSMENT_RECORD_URL: "/api/version_0/expense/reimbursement/",
+
 
   ADD_CATEGORY_URL: "/api/version_0/expense/expensecategory/",
   GET_CATEGORY_PANEL_URL: "/api/version_0/expense/expensecategory/",

@@ -273,6 +273,19 @@ export const RootReducer = (state = initialState, action) => {
           loding: false,
           getexpenselist: action.result,
         };
+      
+      case API_CONSTANTS.GET_APPROVED_REPORT_LIST:
+        return {
+          ...state,
+          loding: true,
+        };
+  
+      case API_CONSTANTS.GET_APPROVED_REPORT_LIST_SUCCESS:
+        return {
+          ...state,
+          loding: false,
+          getapprovedreportlist: action.result,
+        };
 
     case API_CONSTANTS.UPDATE_REPORT:
       return {
@@ -307,20 +320,36 @@ export const RootReducer = (state = initialState, action) => {
         deleteReportSuccess: false,
       };
 
-    case API_CONSTANTS.VIEW_REPORT:
+      case API_CONSTANTS.VIEW_REPORT:
+        return {
+          ...state,
+          loding: true,
+        };
+  
+      case API_CONSTANTS.VIEW_REPORT_SUCCESS:
+        return {
+          ...state,
+          loding: false,
+          reportDetails: action.result,
+        };
+
+          
+    case API_CONSTANTS.ADD_REIMBURSMENT_RECORD:
       return {
         ...state,
         loding: true,
       };
 
-    case API_CONSTANTS.VIEW_REPORT_SUCCESS:
+    case API_CONSTANTS.ADD_REIMBURSMENT_RECORD_SUCCESS:
+      console.log("RootReducerrrrrrrrrrrr",action.result);
       return {
         ...state,
         loding: false,
-        reportDetails: action.result,
+        addreimbursmentresult: action.result,
       };
 
-    case API_CONSTANTS.APPROVE_REPORT:
+        
+      case API_CONSTANTS.APPROVE_REPORT:
       return {
         ...state,
         loding: true,
@@ -346,6 +375,31 @@ export const RootReducer = (state = initialState, action) => {
         rejectReportSuccess: action.result,
       };
 
+      case API_CONSTANTS.APPROVE_EXPENSE:
+        return {
+          ...state,
+          loding: true,
+        };
+  
+      case API_CONSTANTS.APPROVE_EXPENSE_SUCCESS:
+        return {
+          ...state,
+          loding: false,
+          approveExpenseSuccess: action.result,
+        };
+  
+      case API_CONSTANTS.REJECT_EXPENSE:
+        return {
+          ...state,
+          loding: true,
+        };
+  
+      case API_CONSTANTS.REJECT_EXPENSE_SUCCESS:
+        return {
+          ...state,
+          loding: false,
+          rejectExpenseSuccess: action.result,
+        };
     case API_CONSTANTS.APPROVE_EXPENSE:
       return {
         ...state,
@@ -371,6 +425,7 @@ export const RootReducer = (state = initialState, action) => {
         loding: false,
         rejectExpenseSuccess: action.result,
       };
+
 
     case API_CONSTANTS.ADD_CATEGORY:
       return {
