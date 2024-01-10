@@ -35,6 +35,11 @@ const ExpensePanel = () => {
   const [selectedInvoice, setSelectedInvoice] = useState(null);
   const [viewCompanyData, setViewCompanyData] = useState(null);
 
+  const [tablePagination, setTablePagination] = useState({
+    pageSize: 10, // Set your default page size
+    current: 1,
+  });
+
   const handleViewInvoice = (attachment) => {
     setSelectedInvoice(attachment);
     setInvoiceModalVisible(true);
@@ -82,10 +87,8 @@ const ExpensePanel = () => {
       const allExpenseList = expensePanelSelector.map((element) => {
         return {
           id: element.id,
-          employee: element.employee?.username,
-          expense_name: element.expense_name.item_name,
-          description: element.description,
-          total_amt: element.total_amt,
+          desc: element.desc,
+          amount: element.amount,
           paid_by: element.paid_by,
           expense_date: element.expense_date,
           attachment: element.attachment,
@@ -137,31 +140,24 @@ const ExpensePanel = () => {
   const columns = [
     {
       title: "Sr No",
-      dataIndex: "srno",
-      key: "srno",
-    },
-    {
-      title: "Employee",
-      dataIndex: "employee",
-      key: "username",
-      sorter: (a, b) => a.name.length - b.name.length,
-    },
-    {
-      title: "Expense Name",
-      dataIndex: "expense_name",
-      key: "item_name",
-      sorter: (a, b) => a.name.length - b.name.length,
+      dataIndex: "id",
+      render: (text, record, index) => {
+        const { pageSize, current } = tablePagination;
+        return index + 1 + pageSize * (current - 1);
+      },
+      sorter: (a, b) => a.id.length - b.id.length,
+      width: "10%",
     },
     {
       title: "Description",
-      dataIndex: "description",
-      key: "description",
+      dataIndex: "desc",
+      key: "desc",
       sorter: (a, b) => a.name.length - b.name.length,
     },
     {
       title: "Total Amount",
-      dataIndex: "total_amt",
-      key: "total_amt",
+      dataIndex: "amount",
+      key: "amount",
       sorter: (a, b) => a.name.length - b.name.length,
     },
     {
@@ -359,8 +355,16 @@ const ExpensePanel = () => {
                         showTotal: (total, range) =>
                           `Showing ${range[0]} to ${range[1]} of ${total} entries`,
                         showSizeChanger: true,
-                        onShowSizeChange: onShowSizeChange,
-                        itemRender: itemRender,
+                       onShowSizeChange: (current, pageSize) => {
+                          setTablePagination({
+                            ...tablePagination,
+                            pageSize,
+                            current,
+                          });
+                        },
+                        onChange: (current) => {
+                          setTablePagination({ ...tablePagination, current });
+                        },
                       }}
                       style={{ overflowX: "auto" }}
                       columns={columns}

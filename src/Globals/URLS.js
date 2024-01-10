@@ -1,5 +1,6 @@
 export const URLS = {
-  BASE_URL_EXPORT: "http://127.0.0.1:8001",
+  BASE_URL_EXPORT: "http://192.168.1.219:8001/",
+  
   USER_LOGIN_URL: "/users/api/v2/login_web/",
   USER_REGISTER_URL: "/users/api/v2/userregister/",
   GET_DEPARTMENT_LIST_URL: "/users/api/v2/departmentlist/",
@@ -19,17 +20,23 @@ export const URLS = {
   ADD_EXPERIENCE_URL: "/userhrms/api/v2/usersettings/",
   CHANGE_PASSWORD_URL: "/users/api/v2/changepassword/",
 
+
   APPROVE_EXPENSE_URL: "/api/version_0/expense/approve-expense/",
   REJECT_EXPENSE_URL: "/api/version_0/expense/reject-expense/",
   APPROVE_REPORT_URL: "/api/version_0/expense/approve-report/",
   REJECT_REPORT_URL: "/api/version_0/expense/reject-report/",
   ADD_REPORT_URL: "/api/version_0/expense/expensereport/",
   GET_REPORT_LIST_URL: "/api/version_0/expense/expensereport/",
+  GET_APPROVED_REPORT_LIST_URL: "/api/version_0/expense/getreportsforapproval/",
+  UPDATE_REPORT: "/api/version_0/expense/expensereport/",
   GET_EXPENSE_LIST_URL: "/api/version_0/expense/create_expense/",
   UPDATE_REPORT: "/api/version_0/expense/update_expensereport/",
   DELETE_REPORT: "/api/version_0/expense/update_expensereport/",
   VIEW_REPORT_URL: "/api/version_0/expense/expensereport/",
   VIEW_REPORT_BY_ID_URL: "/api/version_0/expense/expensereport/",
+
+  ADD_REIMBURSMENT_RECORD_URL: "/api/version_0/expense/reimbursement/",
+
 
   ADD_CATEGORY_URL: "/api/version_0/expense/expensecategory/",
   GET_CATEGORY_PANEL_URL: "/api/version_0/expense/expensecategory/",
@@ -48,23 +55,23 @@ export const URLS = {
   UPDATE_MILEAGE_URL: "/api/version_0/expense/expensemileage/",
   DELETE_MILEAGE_URL: "/api/version_0/expense/expensemileage/",
 
-  APPLY_CARD_URL: "/api/version_0/card/card/",
-  GET_CARD_URL: "/api/version_0/card/get_cards/",
-  REJECT_CARD_URL: "/api/version_0/card/reject_card/",
-  APPROVE_CARD_URL: "/api/version_0/card/reject_card/",
+  APPLY_CARD_URL: "/card/card/",
+  GET_CARD_URL: "/card/get_cards/",
+  REJECT_CARD_URL: "/card/reject_card/",
+  APPROVE_CARD_URL: "/card/reject_card/",
 
-  CREATE_VENDOR_URL: "/api/version_0/expense/register_vendor/",
-  GET_VENDOR_URL: "/api/version_0/expense/register_vendor/",
-  DELETE_VENDOR_URL: "/api/version_0/expense/vendor_payment/",
-  UPDATE_VENDOR_URL: "/api/version_0/expense/vendor_payment/",
 
-  CREATE_TRAVEL_URL: "/api/version_0/expense/request_travel/",
-  GET_TRAVEL_URL: "/api/version_0/expense/request_travel/",
-  DELETE_TRAVEL_URL: "/api/version_0/expense/request_travel_details/",
-  UPDATE_TRAVEL_URL: "/api/version_0/expense/request_travel_details/",
+    CREATE_VENDOR_URL : "/expense/register_vendor/",
+    GET_VENDOR_URL: "/expense/register_vendor/",
+    DELETE_VENDOR_URL : "/expense/vendor_payment/",
+    UPDATE_VENDOR_URL :  "/expense/vendor_payment/",
 
-  GET_ALL_USER_URL: "/api/v2/getalluser/",
-  ADD_ALL_USER_URL: "/api/v2/userrole/",
+
+    CREATE_TRAVEL_URL: "/expense/request_travel/",
+    GET_TRAVEL_URL:  "/expense/request_travel/",
+    DELETE_TRAVEL_URL: "/expense/request_travel_details/",
+    UPDATE_TRAVEL_URL: "/expense/request_travel_details/",
+    
 
   // ========================================================================================
 

@@ -245,6 +245,18 @@ const Sidebar = () => {
                         Expense Report{" "}
                       </Link>
                     </li>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("expense-") ? "active" : ""
+                        }
+                        to="/home/ExpenseApprovals"
+                      >
+                        {" "}
+                        Expense Approvals{" "}
+                      </Link>
+                    </li>
+                    
                   </ul>
                 ) : (
                   ""

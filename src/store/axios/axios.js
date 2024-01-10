@@ -60,6 +60,7 @@ export const Method = {
     }
   },
 
+
   async deleteData(action) {
     try {
       const response = http.delete(action.URL, {

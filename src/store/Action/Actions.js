@@ -168,6 +168,16 @@ function getReportList(payload) {
   };
 }
 
+function getApprovedReportList(payload) {
+  return {
+    type: API_CONSTANTS.GET_APPROVED_REPORT_LIST,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
+
 function getExpenseList(payload) {
   console.log("actionnnnnnnnnnnnn", payload);
   return {
@@ -224,6 +234,15 @@ function rejectReport(payload) {
     type: API_CONSTANTS.REJECT_REPORT,
     payload: payload.payload,
     URL: URLS.REJECT_REPORT_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+function addreimbursementRecord(payload) {
+  return {
+    type: API_CONSTANTS.ADD_REIMBURSMENT_RECORD,
+    payload,
+    URL: URLS.ADD_REIMBURSMENT_RECORD_URL,
     contentType: contentType.json,
   };
 }
@@ -333,6 +352,7 @@ function addMileage(payload) {
     contentType: contentType.json,
   };
 }
+
 function getMileage(payload) {
   return {
     type: API_CONSTANTS.GET_MILEAGE,
@@ -478,6 +498,25 @@ function updateTravel(payload) {
     type: API_CONSTANTS.UPDATE_TRAVEL,
     payload: payload.payload,
     URL: URLS.UPDATE_TRAVEL_URL + payload.id + "/",
+    URL: URLS.UPDATE_TRAVEL_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+function addAllUser(payload) {
+  return {
+    type: API_CONSTANTS.ADD_ALL_USER,
+    payload,
+    URL: URLS.ADD_ALL_USER_URL,
+    contentType: contentType.json,
+  };
+}
+
+function getAllUser(payload) {
+  return {
+    type: API_CONSTANTS.GET_ALL_USER,
+    payload: payload.payload,
+    URL: payload.URL,
     contentType: contentType.json,
   };
 }
@@ -1280,6 +1319,7 @@ export {
   getExpenseList,
   approveReport,
   rejectReport,
+  addreimbursementRecord,
   approveExpense,
   rejectExpense,
   addCategoryAction,
@@ -1374,6 +1414,7 @@ export {
   setDeleteUserFalse,
   deleteExternalAccountCodeAction,
   getReportList,
+  getApprovedReportList,
   setDeleteExternalAccountCodeFalse,
   exportExpenseTypeAction,
   exportExpenseItemSetupAction,
