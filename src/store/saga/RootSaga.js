@@ -41,6 +41,7 @@ import {
   getExpensePolicy,
   getMileage,
   fetchCategory,
+  fetchReport,
   addMileage,
   updateMileage,
   deleteMileage,
@@ -56,6 +57,7 @@ import {
   getTravel,
   deleteTravel,
   addreimbursementRecord,
+  rejectReportByAccount,
 
 
   // =======================================
@@ -136,6 +138,7 @@ import {
   approveExpense,
   getAllUser,
   addAllUser,
+  addSelectedReport,
 
 } from "./CommonSagas";
 
@@ -162,6 +165,7 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.ADD_EXPERIENCE, addExperience);
 
   yield takeEvery(API_CONSTANTS.ADD_REPORT, addReportsubmit);
+  yield takeEvery(API_CONSTANTS.ADD_SELECTED_REPORT, addSelectedReport);
   yield takeEvery(API_CONSTANTS.GET_REPORT_LIST, getReportList);
   yield takeEvery(API_CONSTANTS.GET_APPROVED_REPORT_LIST, getApprovedReportList);
   yield takeEvery(API_CONSTANTS.GET_EXPENSE_LIST, getExpenseList);
@@ -173,6 +177,7 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.APPROVE_EXPENSE, approveExpense);
   yield takeEvery(API_CONSTANTS.REJECT_EXPENSE, rejectExpense);
   yield takeEvery(API_CONSTANTS.ADD_REIMBURSMENT_RECORD, addreimbursementRecord);
+  yield takeEvery(API_CONSTANTS.REJECT_REPORT_BY_ACCOUNT, rejectReportByAccount);
 
   yield takeEvery(API_CONSTANTS.ADD_CATEGORY, getAddCategoryList);
   yield takeEvery(API_CONSTANTS.GET_CATEGORYLIST_PANEL, categoryPanelList);
@@ -188,6 +193,7 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.ADD_MILEAGE, addMileage);
   yield takeEvery(API_CONSTANTS.GET_MILEAGE, getMileage);
   yield takeEvery(API_CONSTANTS.FETCH_CATEGORY, fetchCategory);
+  yield takeEvery(API_CONSTANTS.FETCH_REPORT, fetchReport);
   yield takeEvery(API_CONSTANTS.UPDATE_MILEAGE, updateMileage);
   yield takeEvery(API_CONSTANTS.DELETE_MILEAGE, deleteMileage);
 

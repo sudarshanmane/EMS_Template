@@ -11,7 +11,6 @@ export const Method = {
           Authorization: `Token ${getToken() ? getToken() : ""}`,
         },
       });
-
       return response;
     } catch (error) {
       console.log(error);

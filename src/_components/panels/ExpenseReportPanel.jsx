@@ -1,5 +1,5 @@
-/* eslint-disable no-undef */
-import React, { useEffect, useState } from "react";
+
+import React, { useEffect, useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
 import { Link, useNavigate } from "react-router-dom";
@@ -37,6 +37,22 @@ const ExpenseReport = () => {
     useState(false);
   const navigate = useNavigate();
   const url = URLS.GET_REPORT_LIST_URL;
+  const [selectedOption, setSelectedOption] = useState("allReports");
+  const filteredReportList = useMemo(() => {
+    if (selectedOption === "allReports") {
+      return allReportList;
+    } else if (selectedOption === "approved") {
+      return allReportList.filter((report) => report.status === "Approved");
+    } else if (selectedOption === "rejected") {
+      return allReportList.filter((report) => report.status === "Rejected");
+    } else if (selectedOption === "reimbursed") {
+      return allReportList.filter((report) => report.status === "Reimbursed");
+    }
+  }, [selectedOption, allReportList]);
+
+  const handleOptionClick = (option) => {
+    setSelectedOption(option);
+  };
 
   const handleDateChange1 = (date) => {
     setSelectedDate1(date);
@@ -86,6 +102,7 @@ const ExpenseReport = () => {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm({});
 
@@ -122,6 +139,7 @@ const ExpenseReport = () => {
           description: element.description,
           start_date: element.start_date,
           end_date: element.end_date,
+          status: element.status,
         };
       });
       setAllReportList(allReportList);
@@ -133,6 +151,7 @@ const ExpenseReport = () => {
   useEffect(() => {
     if (addreportPanelSelector) {
       dispatch(getReportList({ payload: {}, URL: url }));
+      reset();
     }
     setIsAddFormVisible(false);
   }, [addreportPanelSelector]);
@@ -194,48 +213,6 @@ const ExpenseReport = () => {
     {
       title: "Status",
       dataIndex: "status",
-      render: (text) => (
-        <div className="dropdown action-label text-center">
-          <Link
-            className="btn btn-white btn-sm btn-rounded dropdown-toggle"
-            to="#"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <i
-              className={
-                text === "New"
-                  ? "far fa-dot-circle text-purple"
-                  : text === "Pending"
-                  ? "far fa-dot-circle text-info"
-                  : text === "Approved"
-                  ? "far fa-dot-circle text-success"
-                  : "far fa-dot-circle text-danger"
-              }
-            />{" "}
-            {text}
-          </Link>
-          <div className="dropdown-menu dropdown-menu-right">
-            <Link className="dropdown-item" to="#">
-              <i className="far fa-dot-circle text-purple" /> New
-            </Link>
-            <Link className="dropdown-item" to="#">
-              <i className="far fa-dot-circle text-info" /> Pending
-            </Link>
-            <Link
-              className="dropdown-item"
-              to="#"
-              data-bs-toggle="modal"
-              data-bs-target="#approve_leave"
-            >
-              <i className="far fa-dot-circle text-success" /> Approved
-            </Link>
-            <Link className="dropdown-item" to="#">
-              <i className="far fa-dot-circle text-danger" /> Declined
-            </Link>
-          </div>
-        </div>
-      ),
       sorter: (a, b) => a.status.length - b.status.length,
     },
     {
@@ -251,7 +228,7 @@ const ExpenseReport = () => {
             <i className="material-icons">more_vert</i>
           </Link>
           <div className="dropdown-menu dropdown-menu-right">
-           <Link
+            <Link
               to={`/home/viewReport/${record.id}`}
               className="dropdown-item"
               onClick={() => viewReport(record)}
@@ -374,286 +351,407 @@ const ExpenseReport = () => {
             <div className="col-md-12">
               <div className="card mb-0">
                 <div className="card-header">
-                  <h4 className="card-title mb-0">Expense Reports</h4>
+                  <ul className="nav nav-tabs card-header-tabs">
+                    <li className="nav-item">
+                      <a
+                        className={`nav-link ${
+                          selectedOption === "allReports" && "active"
+                        }`}
+                        onClick={() => setSelectedOption("allReports")}
+                      >
+                        Drafted Reports
+                      </a>
+                    </li>
+                    <li className="nav-item">
+                      <a
+                        className={`nav-link ${
+                          selectedOption === "approved" && "active"
+                        }`}
+                        onClick={() => setSelectedOption("approved")}
+                      >
+                        Approved
+                      </a>
+                    </li>
+                    <li className="nav-item">
+                      <a
+                        className={`nav-link ${
+                          selectedOption === "rejected" && "active"
+                        }`}
+                        onClick={() => setSelectedOption("rejected")}
+                      >
+                        Rejected
+                      </a>
+                    </li>
+                    <li className="nav-item">
+                      <a
+                        className={`nav-link ${
+                          selectedOption === "reimbursed" && "active"
+                        }`}
+                        onClick={() => setSelectedOption("reimbursed")}
+                      >
+                        Reimbursed
+                      </a>
+                    </li>
+                  </ul>
                 </div>
                 <div className="card-body">
-                  <div className="table-responsive">
-                    <Table
-                      className="table-striped"
-                      pagination={{
-                        total: allReportList ? allReportList.length : 0,
-                        showTotal: (total, range) =>
-                          `Showing ${range[0]} to ${range[1]} of ${total} entries`,
-                        showSizeChanger: true,
-                        onShowSizeChange: onShowSizeChange,
-                        itemRender: itemRender,
-                      }}
-                      style={{ overflowX: "auto" }}
-                      columns={columns}
-                      dataSource={allReportList}
-                      rowKey={(record) => record.id}
-                    />
+                  <div className="tab-content">
+                    <div
+                      className={`tab-pane fade ${
+                        selectedOption === "allReports" && "show active"
+                      }`}
+                      id="allReports"
+                    >
+                      <Table
+                        className="table-striped"
+                        pagination={{
+                          total: allReportList ? allReportList.length : 0,
+                          showTotal: (total, range) =>
+                            `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+                          showSizeChanger: true,
+                          onShowSizeChange: onShowSizeChange,
+                          itemRender: itemRender,
+                        }}
+                        style={{ overflowX: "auto" }}
+                        columns={columns}
+                        dataSource={filteredReportList}
+                        rowKey={(record) => record.id}
+                      />
+                    </div>
+                    <div
+                      className={`tab-pane fade ${
+                        selectedOption === "approved" && "show active"
+                      }`}
+                      id="approved"
+                    >
+                      <Table
+                        className="table-striped"
+                        pagination={{
+                          total: allReportList ? allReportList.length : 0,
+                          showTotal: (total, range) =>
+                            `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+                          showSizeChanger: true,
+                          onShowSizeChange: onShowSizeChange,
+                          itemRender: itemRender,
+                        }}
+                        style={{ overflowX: "auto" }}
+                        columns={columns}
+                        dataSource={filteredReportList}
+                        rowKey={(record) => record.id}
+                      />
+                    </div>
+                    <div
+                      className={`tab-pane fade ${
+                        selectedOption === "rejected" && "show active"
+                      }`}
+                      id="rejected"
+                    >
+                      <Table
+                        className="table-striped"
+                        pagination={{
+                          total: allReportList ? allReportList.length : 0,
+                          showTotal: (total, range) =>
+                            `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+                          showSizeChanger: true,
+                          onShowSizeChange: onShowSizeChange,
+                          itemRender: itemRender,
+                        }}
+                        style={{ overflowX: "auto" }}
+                        columns={columns}
+                        dataSource={filteredReportList}
+                        rowKey={(record) => record.id}
+                      />
+                    </div>
+                    <div
+                      className={`tab-pane fade ${
+                        selectedOption === "reimbursed" && "show active"
+                      }`}
+                      id="reimbursed"
+                    >
+                      <Table
+                        className="table-striped"
+                        pagination={{
+                          total: allReportList ? allReportList.length : 0,
+                          showTotal: (total, range) =>
+                            `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+                          showSizeChanger: true,
+                          onShowSizeChange: onShowSizeChange,
+                          itemRender: itemRender,
+                        }}
+                        style={{ overflowX: "auto" }}
+                        columns={columns}
+                        dataSource={filteredReportList}
+                        rowKey={(record) => record.id}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Add Expense Modal */}
-        <div id="add_report" className="modal custom-modal fade" role="dialog">
+          {/* Add Expense Modal */}
           <div
-            className="modal-dialog modal-dialog-centered modal-md"
-            role="document"
+            id="add_report"
+            className="modal custom-modal fade"
+            role="dialog"
           >
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Add Expense Report</h5>
-                <button
-                  type="button"
-                  className="close"
-                  data-bs-dismiss="modal" 
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">×</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                <form onSubmit={handleSubmit(onSubmit)}>
-                  <div className="input-block">
-                    <div className="col-md-12">
-                      <div className="input-block">
-                        <label>Description</label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          {...register("description")}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="input-block">
-                    <label className="col-form-label" id="start_date">
-                      Start Date <span className="text-danger">*</span>
-                    </label>
-                    <div className="">
-                      <Controller
-                        control={control}
-                        name="start_date"
-                        render={({ field }) => (
-                          <DatePicker
-                            selected={
-                              field.value ? new Date(field.value) : null
-                            }
-                            onChange={(date) => {
-                              const formattedDate = formatDate(date);
-                              field.onChange(formattedDate);
-                              setValue("start_date", formattedDate);
-                            }}
-                            dateFormat="yyyy-MM-dd"
-                            className="form-control"
-                          />
-                        )}
-                      />
-                      <div className="text-danger">
-                        {errors.start_date?.message}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="input-block">
-                    <label className="col-form-label" id="end_date">
-                      End Date <span className="text-danger">*</span>
-                    </label>
-                    <div className="">
-                      <Controller
-                        control={control}
-                        name="end_date"
-                        render={({ field }) => (
-                          <DatePicker
-                            selected={
-                              field.value ? new Date(field.value) : null
-                            }
-                            onChange={(date) => {
-                              const formattedDate = formatDate(date);
-                              field.onChange(formattedDate);
-                              setValue("end_date", formattedDate);
-                            }}
-                            dateFormat="yyyy-MM-dd"
-                            className="form-control"
-                          />
-                        )}
-                      />
-                      <div className="text-danger">
-                        {errors.end_date?.message}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="submit-section">
-                    <button
-                      className="btn btn-primary submit-btn"
-                      data-bs-dismiss="modal"
-                    >
-                      Submit
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* /Add Expense Modal */}
-
-        {/* Edit Expense Modal */}
-        <div id="edit_report" className="modal custom-modal fade" role="dialog">
-          <div
-            className="modal-dialog modal-dialog-centered modal-md"
-            role="document"
-          >
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Update Expense Report</h5>
-                <button
-                  type="button"
-                  className="close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">×</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                <form onSubmit={handleUpdate(onUpdate)}>
-                  <div className="input-block">
-                    <div className="col-md-12">
-                      <div className="input-block">
-                        <label>Description</label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          {...updateregister("description")}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="input-block ">
-                    <label className="col-form-label " id="start_date">
-                      Start Date <span className="text-danger">*</span>
-                    </label>
-                    <div className="">
-                      <Controller
-                        control={control}
-                        name="start_date"
-                        render={({ field }) => (
-                          <DatePicker
-                            selected={
-                              field.value ? new Date(field.value) : null
-                            }
-                            onChange={(date) => {
-                              const formattedDate = formatDate(date);
-                              field.onChange(formattedDate);
-                              setValue("start_date", formattedDate);
-                            }}
-                            dateFormat="yyyy-MM-dd"
-                            className="form-control"
-                          />
-                        )}
-                      />
-                      <div className="text-danger">
-                        {errors.start_date?.message}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="input-block ">
-                    <label className="col-form-label " id="end_date">
-                      End Date <span className="text-danger">*</span>
-                    </label>
-                    <div className="">
-                      <Controller
-                        control={control}
-                        name="end_date"
-                        render={({ field }) => (
-                          <DatePicker
-                            selected={
-                              field.value ? new Date(field.value) : null
-                            }
-                            onChange={(date) => {
-                              const formattedDate = formatDate(date);
-                              field.onChange(formattedDate);
-                              setValue("end_date", formattedDate);
-                            }}
-                            dateFormat="yyyy-MM-dd"
-                            className="form-control"
-                          />
-                        )}
-                      />
-                      <div className="text-danger">
-                        {errors.end_date?.message}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="submit-section">
-                    <button
-                      className="btn btn-primary submit-btn"
-                      data-bs-dismiss="modal"
-                    >
-                      Submit
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* /Edit Expense Modal */}
-        {/* Delete Category Modal */}
-        <div
-          className="modal custom-modal fade"
-          id="delete_report"
-          role="dialog"
-        >
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-body">
-                <div className="form-header">
-                  <h3>Delete Report</h3>
-                  <p>Are you sure want to delete?</p>
+            <div
+              className="modal-dialog modal-dialog-centered modal-md"
+              role="document"
+            >
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">Add Expense Report</h5>
+                  <button
+                    type="button"
+                    className="close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">×</span>
+                  </button>
                 </div>
-                <div className="modal-btn delete-action">
-                  <div className="row">
-                    <div className="col-6">
-                      <Link
-                        to=""
-                        className="btn btn-primary continue-btn"
-                        onClick={handleDelete(onDelete)}
+                <div className="modal-body">
+                  <form onSubmit={handleSubmit(onSubmit)}>
+                    <div className="input-block">
+                      <div className="col-md-12">
+                        <div className="input-block">
+                          <label>Description</label>
+                          <input
+                            className="form-control"
+                            type="text"
+                            {...register("description")}
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="input-block">
+                      <label className="col-form-label" id="start_date">
+                        Start Date <span className="text-danger">*</span>
+                      </label>
+                      <div className="">
+                        <Controller
+                          control={control}
+                          name="start_date"
+                          render={({ field }) => (
+                            <DatePicker
+                              selected={
+                                field.value ? new Date(field.value) : null
+                              }
+                              onChange={(date) => {
+                                const formattedDate = formatDate(date);
+                                field.onChange(formattedDate);
+                                setValue("start_date", formattedDate);
+                              }}
+                              dateFormat="yyyy-MM-dd"
+                              className="form-control"
+                            />
+                          )}
+                        />
+                        <div className="text-danger">
+                          {errors.start_date?.message}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="input-block">
+                      <label className="col-form-label" id="end_date">
+                        End Date <span className="text-danger">*</span>
+                      </label>
+                      <div className="">
+                        <Controller
+                          control={control}
+                          name="end_date"
+                          render={({ field }) => (
+                            <DatePicker
+                              selected={
+                                field.value ? new Date(field.value) : null
+                              }
+                              onChange={(date) => {
+                                const formattedDate = formatDate(date);
+                                field.onChange(formattedDate);
+                                setValue("end_date", formattedDate);
+                              }}
+                              dateFormat="yyyy-MM-dd"
+                              className="form-control"
+                            />
+                          )}
+                        />
+                        <div className="text-danger">
+                          {errors.end_date?.message}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="submit-section">
+                      <button
+                        className="btn btn-primary submit-btn"
                         data-bs-dismiss="modal"
                       >
-                        Delete
-                      </Link>
+                        Submit
+                      </button>
                     </div>
-                    <div className="col-6">
-                      <Link
-                        to=""
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* /Add Expense Modal */}
+
+          {/* Edit Expense Modal */}
+          <div
+            id="edit_report"
+            className="modal custom-modal fade"
+            role="dialog"
+          >
+            <div
+              className="modal-dialog modal-dialog-centered modal-md"
+              role="document"
+            >
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">Update Expense Report</h5>
+                  <button
+                    type="button"
+                    className="close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <div className="modal-body">
+                  <form onSubmit={handleUpdate(onUpdate)}>
+                    <div className="input-block">
+                      <div className="col-md-12">
+                        <div className="input-block">
+                          <label>Description</label>
+                          <input
+                            className="form-control"
+                            type="text"
+                            {...updateregister("description")}
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="input-block ">
+                      <label className="col-form-label " id="start_date">
+                        Start Date <span className="text-danger">*</span>
+                      </label>
+                      <div className="">
+                        <Controller
+                          control={control}
+                          name="start_date"
+                          render={({ field }) => (
+                            <DatePicker
+                              selected={
+                                field.value ? new Date(field.value) : null
+                              }
+                              onChange={(date) => {
+                                const formattedDate = formatDate(date);
+                                field.onChange(formattedDate);
+                                setValue("start_date", formattedDate);
+                              }}
+                              dateFormat="yyyy-MM-dd"
+                              className="form-control"
+                            />
+                          )}
+                        />
+                        <div className="text-danger">
+                          {errors.start_date?.message}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="input-block ">
+                      <label className="col-form-label " id="end_date">
+                        End Date <span className="text-danger">*</span>
+                      </label>
+                      <div className="">
+                        <Controller
+                          control={control}
+                          name="end_date"
+                          render={({ field }) => (
+                            <DatePicker
+                              selected={
+                                field.value ? new Date(field.value) : null
+                              }
+                              onChange={(date) => {
+                                const formattedDate = formatDate(date);
+                                field.onChange(formattedDate);
+                                setValue("end_date", formattedDate);
+                              }}
+                              dateFormat="yyyy-MM-dd"
+                              className="form-control"
+                            />
+                          )}
+                        />
+                        <div className="text-danger">
+                          {errors.end_date?.message}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="submit-section">
+                      <button
+                        className="btn btn-primary submit-btn"
                         data-bs-dismiss="modal"
-                        className="btn btn-primary cancel-btn"
                       >
-                        Cancel
-                      </Link>
+                        Submit
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* /Edit Expense Modal */}
+          {/* Delete Category Modal */}
+          <div
+            className="modal custom-modal fade"
+            id="delete_report"
+            role="dialog"
+          >
+            <div className="modal-dialog modal-dialog-centered">
+              <div className="modal-content">
+                <div className="modal-body">
+                  <div className="form-header">
+                    <h3>Delete Report</h3>
+                    <p>Are you sure want to delete?</p>
+                  </div>
+                  <div className="modal-btn delete-action">
+                    <div className="row">
+                      <div className="col-6">
+                        <Link
+                          to=""
+                          className="btn btn-primary continue-btn"
+                          onClick={handleDelete(onDelete)}
+                          data-bs-dismiss="modal"
+                        >
+                          Delete
+                        </Link>
+                      </div>
+                      <div className="col-6">
+                        <Link
+                          to=""
+                          data-bs-dismiss="modal"
+                          className="btn btn-primary cancel-btn"
+                        >
+                          Cancel
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          {/* Delete Expense Modal */}
+          {/* /Page Content */}
         </div>
-        {/* Delete Expense Modal */}
       </div>
-
-      {/* /Page Content */}
 
       <Offcanvas />
     </>
