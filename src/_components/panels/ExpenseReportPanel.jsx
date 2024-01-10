@@ -30,8 +30,6 @@ const ExpenseReport = () => {
   const [selectedDate2, setSelectedDate2] = useState(new Date());
   const [viewReportData, setViewReportData] = useState(null);
   const [isAddFormVisible, setIsAddFormVisible] = useState(false);
-  const [isApproveFormVisible, setIsApproveFormVisible] = useState(false);
-  const [isRejectFormVisible, setIsRejectFormVisible] = useState(false);
   const [editReportData, setEditReportData] = useState(null);
   const [deleteReportData, setDeleteReportData] = useState(null);
   const [isEditFormVisible, setIsEditFormVisible] = useState(false);

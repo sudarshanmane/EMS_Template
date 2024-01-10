@@ -20,6 +20,10 @@ import {
   addPersonalInformation,
   addReportsubmit,
   getReportList,
+  getApprovedReportList,
+  
+
+  
   getExpenseList,
   updateReport,
   deleteReport,
@@ -51,6 +55,8 @@ import {
   createTravel,
   getTravel,
   deleteTravel,
+  addreimbursementRecord,
+
 
   // =======================================
   Updateuserprofile,
@@ -126,10 +132,11 @@ import {
   exportCompanypanel,
   createCategoryItem,
   updateTravel,
-  getAllUser,
-  addAllUser,
   rejectExpense,
   approveExpense,
+  getAllUser,
+  addAllUser,
+
 } from "./CommonSagas";
 
 export function* RootSaga() {
@@ -156,6 +163,7 @@ export function* RootSaga() {
 
   yield takeEvery(API_CONSTANTS.ADD_REPORT, addReportsubmit);
   yield takeEvery(API_CONSTANTS.GET_REPORT_LIST, getReportList);
+  yield takeEvery(API_CONSTANTS.GET_APPROVED_REPORT_LIST, getApprovedReportList);
   yield takeEvery(API_CONSTANTS.GET_EXPENSE_LIST, getExpenseList);
   yield takeEvery(API_CONSTANTS.UPDATE_REPORT, updateReport);
   yield takeEvery(API_CONSTANTS.DELETE_REPORT, deleteReport);
@@ -164,6 +172,7 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.REJECT_REPORT, rejectReport);
   yield takeEvery(API_CONSTANTS.APPROVE_EXPENSE, approveExpense);
   yield takeEvery(API_CONSTANTS.REJECT_EXPENSE, rejectExpense);
+  yield takeEvery(API_CONSTANTS.ADD_REIMBURSMENT_RECORD, addreimbursementRecord);
 
   yield takeEvery(API_CONSTANTS.ADD_CATEGORY, getAddCategoryList);
   yield takeEvery(API_CONSTANTS.GET_CATEGORYLIST_PANEL, categoryPanelList);

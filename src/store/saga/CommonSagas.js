@@ -358,6 +358,27 @@ function* getReportList(action) {
   }
 }
 
+function* getApprovedReportList(action) {
+  try {
+    let result = yield call(Method.getData, action);
+    if (
+      result.status === 202 ||
+      result.status === 201 ||
+      result.status === 200
+    ) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
 function* getExpenseList(action) {
   try {
     let result = yield call(Method.getData, action);
@@ -517,6 +538,26 @@ function* rejectExpense(action) {
     }
   } catch (error) {
     yield call(errorSaga, "Something went wrong!");
+  }
+}
+
+
+function* addreimbursementRecord(action) {
+  console.log("comman sagaaaaaaaaaaa",action);
+  try {
+    let result = yield call(Method.postData, action);
+    if (result.status === 201 || result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    console.error("Saga error:", error);
+    yield call(errorSaga, "The credentials you entered are incorrect!");
   }
 }
 
@@ -2349,6 +2390,7 @@ export {
   getCurrentRole,
   getCurrentUser,
   getReportList,
+  getApprovedReportList,
   getExpenseList,
   addReportsubmit,
   updateReport,
@@ -2358,6 +2400,8 @@ export {
   rejectReport,
   approveExpense,
   rejectExpense,
+  addreimbursementRecord,
+
   ChangePassword,
   getAddCategoryList,
   categoryPanelList,
