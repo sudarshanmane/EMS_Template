@@ -26,9 +26,6 @@
 // import ViewReport from "../../_components/panels/ViewReport";
 // import ViewReportApproved from "../../_components/panels/ViewReportApproved";
 
-
-
-
 // const Navigates = () => {
 //   return (
 //     <BrowserRouter>
@@ -43,9 +40,9 @@
 //           <Route path="/home/viewReport/:id" element={<ViewReport />} />
 //           <Route path="/home/viewReportApproved/:id" element={<ViewReportApproved/>}></Route>
 //           {/* <Route path="/home/ReimbursmentRecord/" element={<ReimbursmentRecord/>}></Route> */}
-         
+
 //           <Route path="addexpense" element={<Addexpense></Addexpense>}></Route>
-        
+
 //           <Route
 //             path="expensepanel"
 //             element={<ExpensePanel></ExpensePanel>}
@@ -96,8 +93,7 @@
 //           ></Route>
 //           <Route path="mileage" element={<Mileage></Mileage>}></Route>
 //           <Route path="expenses" element={<Expenses></Expenses>}></Route>
-      
-           
+
 //           <Route
 //             path="TravelRequestPannel"
 //             element={<TravelRequestPannel></TravelRequestPannel>}
@@ -162,8 +158,7 @@ import SelfProfile from "../../MainPage/Pages/Profile/selfprofile";
 import SelfProfileHead from "../../MainPage/Pages/Profile/selfprofilehead";
 import ExpenseApprovals from "../../_components/panels/ExpenseApprovals";
 import ViewReportApproved from "../../_components/panels/ViewReportApproved";
-
-
+import ExpensePanel from "./../../_components/panels/ExpensePanel";
 
 const Navigates = () => {
   return (
@@ -177,7 +172,10 @@ const Navigates = () => {
         <Route path="/home" element={<PrivateRoute></PrivateRoute>}>
           <Route path="applyforcard" element={<Card></Card>}></Route>
           <Route path="/home/viewReport/:id" element={<ViewReport />} />
-          <Route path="/home/viewReportApproved/:id" element={<ViewReportApproved/>}></Route>
+          <Route
+            path="/home/viewReportApproved/:id"
+            element={<ViewReportApproved />}
+          ></Route>
           <Route path="addexpense" element={<Addexpense></Addexpense>}></Route>
           <Route
             path="addemployee"
@@ -214,10 +212,10 @@ const Navigates = () => {
             element={<SelfProfileHead></SelfProfileHead>}
           ></Route>
 
-          {/* <Route
+          <Route
             path="expensepanel"
             element={<ExpensePanel></ExpensePanel>}
-          ></Route> */}
+          ></Route>
           <Route
             path="expensecategorypanel"
             element={<CategoryTypePanel></CategoryTypePanel>}
@@ -246,9 +244,8 @@ const Navigates = () => {
             path="ExpenseApprovals"
             element={<ExpenseApprovals></ExpenseApprovals>}
           ></Route>
-          
 
-            <Route
+          <Route
             path="employeeslist"
             element={<Employeeslist></Employeeslist>}
           ></Route>

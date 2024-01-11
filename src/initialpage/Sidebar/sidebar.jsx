@@ -158,7 +158,7 @@ const Sidebar = () => {
                         className={
                           pathname.includes("add-expense") ? "active" : ""
                         }
-                        to="/home/addexpense"
+                        to="/home/expensepanel"
                       >
                         Add Expense{" "}
                       </Link>
@@ -228,8 +228,8 @@ const Sidebar = () => {
                     toggleSidebar(isSideMenu == "reports" ? "" : "reports")
                   }
                 >
-                  <i className="la la-file-text" /> <span>Expense Reports </span>{" "}
-                  <span className="menu-arrow" />
+                  <i className="la la-file-text" />{" "}
+                  <span>Expense Reports </span> <span className="menu-arrow" />
                 </Link>
                 {isSideMenu == "reports" ? (
                   <ul>
