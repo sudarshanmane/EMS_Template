@@ -33,8 +33,14 @@ export const URLS = {
   GET_EXPENSE_LIST_URL: "/api/version_0/expense/create_expense/",
   UPDATE_REPORT: "/api/version_0/expense/update_expensereport/",
   DELETE_REPORT: "/api/version_0/expense/update_expensereport/",
+
   VIEW_REPORT_URL: "/api/version_0/expense/expensereport/",
   VIEW_REPORT_BY_ID_URL: "/api/version_0/expense/expensereport/",
+
+  VIEW_VENDOR_URL: "/api/version_0/expense/register_vendor/",
+  VIEW_VENDOR_BY_ID_URL: "/api/version_0/expense/register_vendor/",
+  
+
   FETCH_REPORT_URL: "/api/version_0/expense/fetch_report/",
   ADD_REIMBURSMENT_RECORD_URL: "/api/version_0/expense/reimbursement/",
   REJECT_REPORT_BY_ACCOUNT_URL: "/api/version_0/expense/reject_exp_by_account/",

@@ -491,6 +491,27 @@ function* getReport(action) {
   }
 }
 
+function* getVendorDetails(action) {
+  try {
+    let result = yield call(Method.getData, action);
+    if (
+      result.status === 202 ||
+      result.status === 201 ||
+      result.status === 200
+    ) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
 function* approveReport(action) {
   try {
     let result = yield call(Method.putData, action);
@@ -2454,6 +2475,7 @@ export {
   updateReport,
   deleteReport,
   getReport,
+  getVendorDetails,
   approveReport,
   rejectReport,
   approveExpense,

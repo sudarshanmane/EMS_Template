@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Table } from "antd";
-import { Link } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
 import { URLS } from "../../Globals/URLS";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
 
 import {
   deleteVendor,
@@ -23,15 +23,18 @@ const VendorPannel = () => {
   const dispatch = useDispatch();
   const [allVendor, setAllVendor] = useState([]);
   const [focused, setFocused] = useState(false);
-  const [selectedDate1, setSelectedDate1] = useState(null);
-  const [selectedDate2, setSelectedDate2] = useState(null);
   const [deleteVendorData, setDeleteVendorData] = useState(null);
   const [editVendorData, setEditVendorData] = useState(null);
   const [editRecordPaymentData, setRecordPaymentData] = useState(null);
   const [isAddFormVisible, setIsAddFormVisible] = useState(false);
   const [isEditFormVisible, setIsEditFormVisible] = useState(false);
+  const [viewVendorData, setViewVendorData] = useState(null);
+ 
+
+  
   const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] =
     useState(false);
+  const navigate = useNavigate();
   const [submittedValues, setSubmittedValues] = useState(null);
 
   const {
@@ -106,6 +109,13 @@ const VendorPannel = () => {
     setAllVendor((prevItems) =>
       prevItems.filter((item) => item.id !== deletedVendorId)
     );
+  };
+
+  
+  const viewVendor = (record) => {
+    setViewVendorData(record);
+    setIsAddFormVisible(false);
+    navigate("/home/VendorPannel", { state: record });
   };
 
   function getPageDetails(url) {
@@ -197,30 +207,19 @@ const VendorPannel = () => {
 
     {
       title: "FAX",
+      dataIndex: "fax",
+      key: "",
+      sorter: (a, b) => a.start_date.length - b.start_date.length,
+    },
+
+    {
+      title: "Web Site",
       dataIndex: "website",
       key: "",
       sorter: (a, b) => a.start_date.length - b.start_date.length,
     },
 
-    {
-      title: "Due Amount",
-      dataIndex: "due_amount",
-      key: "",
-      sorter: (a, b) => a.start_date.length - b.start_date.length,
-    },
-
-    {
-      title: "Paid Amount",
-      dataIndex: "paid_amount",
-      key: "",
-      sorter: (a, b) => a.start_date.length - b.start_date.length,
-    },
-    {
-      title: "Total Amount",
-      dataIndex: "amount",
-      key: "",
-      sorter: (a, b) => a.start_date.length - b.start_date.length,
-    },
+    
     {
       title: "Record Payment",
       // dataIndex: "payment",
@@ -257,6 +256,13 @@ const VendorPannel = () => {
             <i className="material-icons">more_vert</i>
           </Link>
           <div className="dropdown-menu dropdown-menu-right">
+          <Link
+              to={`/home/viewVendor/${record.id}`}
+              className="dropdown-item"
+              onClick={() => viewVendor(record)}
+            >
+              <i className="fa fa-eye m-r-5" /> View
+            </Link>
             <Link
               className="dropdown-item"
               to="#"

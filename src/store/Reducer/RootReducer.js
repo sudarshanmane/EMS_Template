@@ -333,6 +333,20 @@ export const RootReducer = (state = initialState, action) => {
           reportDetails: action.result,
         };
 
+          case API_CONSTANTS.VIEW_VENDOR:
+        return {
+          ...state,
+          loding: true,
+        };
+  
+      case API_CONSTANTS.VIEW_VENDOR_SUCCESS:
+        return {
+          ...state,
+          loding: false,
+          vendorDetails: action.result,
+        };
+
+
           
     case API_CONSTANTS.ADD_REIMBURSMENT_RECORD:
       return {

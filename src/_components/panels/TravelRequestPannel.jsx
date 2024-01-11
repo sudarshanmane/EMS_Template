@@ -126,6 +126,7 @@ const TravelRequestPannel = () => {
       const allTravel = getTravelSelector.map((element) => {
         return {
           id: element.id,
+          emp: element.emp,
           title: element.title,
           travel_purpose: element.travel_purpose,
           from_date: element.from_date,
@@ -162,9 +163,14 @@ const TravelRequestPannel = () => {
 
   const columns = [
     {
-      title: "Employee Name",
-      dataIndex: "",
-      key: "",
+      title: "Employee",
+      dataIndex: "emp",
+      key: "emp",
+      render: (emp) => (
+        <span>
+          {emp.id} - {emp.first_name} {emp.last_name}
+        </span>
+      ),
       sorter: (a, b) => a.start_date.length - b.start_date.length,
     },
     {
@@ -258,7 +264,7 @@ const TravelRequestPannel = () => {
                     data-bs-toggle="modal"
                     data-bs-target="#add_travel"
                   >
-                    <i className="fa fa-plus" /> Add Travels
+                    <i className="fa fa-plus" /> New Request
                   </Link>
                 </div>
               </div>
@@ -351,19 +357,6 @@ const TravelRequestPannel = () => {
               </div>
               <div className="modal-body">
                 <form onSubmit={handleSubmit(onSubmit)}>
-                  <div className="input-block">
-                    <div className="col-md-12">
-                      <div className="input-block">
-                        <label>Employee Name</label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          {...register(" ")}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
                   <div className="input-block">
                     <div className="col-md-12">
                       <div className="input-block">
@@ -498,19 +491,6 @@ const TravelRequestPannel = () => {
               </div>
               <div className="modal-body">
                 <form onSubmit={handleUpdate(onUpdate)}>
-                  <div className="input-block">
-                    <div className="col-md-12">
-                      <div className="input-block">
-                        <label>Employee Name</label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          {...updateregister(" ")}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
                   <div className="input-block">
                     <div className="col-md-12">
                       <div className="input-block">

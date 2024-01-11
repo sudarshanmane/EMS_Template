@@ -231,6 +231,16 @@ function getReportDetails(payload) {
   };
 }
 
+function getVendorData(payload) {
+  return {
+    type: API_CONSTANTS.VIEW_VENDOR,
+    payload: payload.payload,
+    URL: URLS.VIEW_VENDOR_BY_ID_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+
 function approveReport(payload) {
   return {
     type: API_CONSTANTS.APPROVE_REPORT,
@@ -1303,6 +1313,7 @@ export {
   deleteReportAction,
   setDeleteReportFalse,
   getReportDetails,
+  getVendorData,
   getExpenseList,
   approveReport,
   rejectReport,

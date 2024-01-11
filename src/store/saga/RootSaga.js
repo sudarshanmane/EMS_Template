@@ -28,6 +28,7 @@ import {
   updateReport,
   deleteReport,
   getReport,
+  getVendorDetails,
   getAddCategoryList,
   categoryPanelList,
   updateCategoryPanel,
@@ -171,7 +172,11 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.GET_EXPENSE_LIST, getExpenseList);
   yield takeEvery(API_CONSTANTS.UPDATE_REPORT, updateReport);
   yield takeEvery(API_CONSTANTS.DELETE_REPORT, deleteReport);
+
   yield takeEvery(API_CONSTANTS.VIEW_REPORT, getReport);
+
+  yield takeEvery(API_CONSTANTS.VIEW_VENDOR, getVendorDetails);
+
   yield takeEvery(API_CONSTANTS.APPROVE_REPORT, approveReport);
   yield takeEvery(API_CONSTANTS.REJECT_REPORT, rejectReport);
   yield takeEvery(API_CONSTANTS.APPROVE_EXPENSE, approveExpense);

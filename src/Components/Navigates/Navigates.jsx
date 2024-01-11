@@ -162,6 +162,7 @@ import SelfProfile from "../../MainPage/Pages/Profile/selfprofile";
 import SelfProfileHead from "../../MainPage/Pages/Profile/selfprofilehead";
 import ExpenseApprovals from "../../_components/panels/ExpenseApprovals";
 import ViewReportApproved from "../../_components/panels/ViewReportApproved";
+import ViewVendor from "../../_components/panels/ViewVendor";
 
 
 
@@ -178,6 +179,7 @@ const Navigates = () => {
           <Route path="applyforcard" element={<Card></Card>}></Route>
           <Route path="/home/viewReport/:id" element={<ViewReport />} />
           <Route path="/home/viewReportApproved/:id" element={<ViewReportApproved/>}></Route>
+          <Route path="/home/viewVendor/:id" element={<ViewVendor/>}></Route>
           <Route path="addexpense" element={<Addexpense></Addexpense>}></Route>
           <Route path="addemployee" element={<Addemployees></Addemployees>}></Route>
           <Route path="certification" element={<Certification></Certification>}></Route>
