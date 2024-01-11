@@ -98,6 +98,8 @@ const AddMileage = () => {
     }
   }, [mileageDistanceTraveledSelector]);
 
+  const [traveledDistance, setTraveledDistance] = useState(0);
+
   useEffect(() => {
     if (
       odometerDistance &&
@@ -106,10 +108,12 @@ const AddMileage = () => {
     ) {
       if (odometerDistance.start >= odometerDistance.end) {
         form.setFieldsValue({ amount: 0 });
+        setTraveledDistance(0);
       } else {
         let id = setInterval(() => {
           clearInterval(id);
           let distance = odometerDistance.end - odometerDistance.start;
+          setTraveledDistance(distance);
           parseFloat(distance) &&
             dispatch(getTotalForDistance({ distance: parseFloat(distance) }));
         }, 700);
@@ -211,40 +215,45 @@ const AddMileage = () => {
             </Form.Item>
           )}
 
-          <div style={{ display: "flex", gap: "20px" }}>
+          <div>
             {selectedOption === "Odometer reading" && (
               <>
-                <Form.Item label="Start Distance (Mile's)">
-                  <InputNumber
-                    addonBefore={"Start"}
-                    type="number"
-                    min={0}
-                    size="large"
-                    aria-label="Recipient's username"
-                    aria-describedby="basic-addon2"
-                    onInput={(e) =>
-                      setOdometerDistance({
-                        ...odometerDistance,
-                        start: e,
-                      })
-                    }
-                  />
-                </Form.Item>
-                <Form.Item label="End Distance (Mile's)">
-                  <InputNumber
-                    addonBefore={"End"}
-                    size="large"
-                    type="number"
-                    min={0}
-                    aria-label="Recipient's username"
-                    aria-describedby="basic-addon2"
-                    onInput={(e) =>
-                      setOdometerDistance({
-                        ...odometerDistance,
-                        end: e,
-                      })
-                    }
-                  />
+                <div style={{ display: "flex", gap: "20px" }}>
+                  <Form.Item label="Start Distance (Mile's)">
+                    <InputNumber
+                      addonBefore={"Start"}
+                      type="number"
+                      min={0}
+                      size="large"
+                      aria-label="Recipient's username"
+                      aria-describedby="basic-addon2"
+                      onInput={(e) =>
+                        setOdometerDistance({
+                          ...odometerDistance,
+                          start: e,
+                        })
+                      }
+                    />
+                  </Form.Item>
+                  <Form.Item label="End Distance (Mile's)">
+                    <InputNumber
+                      addonBefore={"End"}
+                      size="large"
+                      type="number"
+                      min={0}
+                      aria-label="Recipient's username"
+                      aria-describedby="basic-addon2"
+                      onInput={(e) =>
+                        setOdometerDistance({
+                          ...odometerDistance,
+                          end: e,
+                        })
+                      }
+                    />
+                  </Form.Item>
+                </div>
+                <Form.Item style={{ marginTop: "-20px" }}>
+                  Traveled Distance: {traveledDistance}
                 </Form.Item>
               </>
             )}
