@@ -45,6 +45,7 @@ const CategoryTypePanel = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({});
 
@@ -143,6 +144,7 @@ const CategoryTypePanel = () => {
   useEffect(() => {
     if (createCategoryItemSelector && submittedValues) {
       dispatch(createVendor(submittedValues));
+      reset();
       setSubmittedValues(null);
       setIsAddFormVisible(false);
     }
@@ -153,6 +155,7 @@ const CategoryTypePanel = () => {
   useEffect(() => {
     if (addCategorylSelector) {
       dispatch(getCategoryPanelAction({ payload: {}, URL: url }));
+      reset();
     }
     setIsAddFormVisible(false);
   }, [addCategorylSelector]);

@@ -53,6 +53,7 @@ const Mileage = () => {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm({});
 
@@ -149,6 +150,7 @@ const Mileage = () => {
   useEffect(() => {
     if (addMileageSelector) {
       dispatch(getMileage({ payload: {}, URL: url }));
+      reset();
       setIsAddFormVisible(false);
     }
   }, [addMileageSelector]);

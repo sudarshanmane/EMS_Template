@@ -45,6 +45,7 @@ const TravelRequestPannel = () => {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm({});
 
@@ -83,6 +84,7 @@ const TravelRequestPannel = () => {
       const createdTravel = createTravelSelector;
       if (createdTravel) {
         dispatch(getTravel({ payload: {}, URL: url }));
+        reset();
         setSubmittedValues(null);
       }
     }
@@ -586,7 +588,6 @@ const TravelRequestPannel = () => {
                             className="form-control"
                           />
                         )}
-                        
                       />
                       <div className="text-danger">
                         {errors.to_date?.message}
