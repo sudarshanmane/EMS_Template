@@ -8,7 +8,6 @@ const initialState = {
   email: "",
   mobile: "",
   changePasswordError: null,
-  // getbranchlist: [],
 };
 
 export const RootReducer = (state = initialState, action) => {

@@ -106,7 +106,6 @@ function addSalary(payload) {
   };
 }
 
-
 function addCertificationAction(payload) {
   return {
     type: API_CONSTANTS.ADD_CERTIFICATION,
@@ -128,7 +127,7 @@ function addUserSettingAction(payload) {
 function addPersonalInformationAction(payload) {
   return {
     type: API_CONSTANTS.ADD_PERSONAL_INFORMATION,
-    payload,
+    payload: payload,
     URL: URLS.ADD_PERSONAL_INFORMATION_URL,
     contentType: contentType.json,
   };
@@ -170,7 +169,6 @@ function addSelectedReport(payload) {
   };
 }
 
-
 function getReportList(payload) {
   return {
     type: API_CONSTANTS.GET_REPORT_LIST,
@@ -188,7 +186,6 @@ function getApprovedReportList(payload) {
     contentType: contentType.json,
   };
 }
-
 
 function getExpenseList(payload) {
   return {
@@ -248,7 +245,6 @@ function rejectReport(payload) {
     contentType: contentType.json,
   };
 }
-
 
 function addreimbursementRecord(payload) {
   return {
@@ -733,7 +729,6 @@ function contactUsPage(payload) {
   };
 }
 
-
 function getCompanyList(payload) {
   return {
     type: API_CONSTANTS.GET_COMPANY_LIST,
@@ -794,7 +789,6 @@ function getaccountingcodePanelAction(payload) {
     contentType: contentType.json,
   };
 }
-
 
 function applyCardAction(payload) {
   return {

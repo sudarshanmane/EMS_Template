@@ -47,7 +47,7 @@ function* ChangePassword(action) {
 function* UserRegisterGenerator(action) {
   try {
     let result = yield call(Method.postData, action);
-    if (result.status === 200) {
+    if (result.status === 201) {
       yield put({
         type: `${action.type}_SUCCESS`,
         status: "ok",
@@ -57,6 +57,10 @@ function* UserRegisterGenerator(action) {
       yield call(failSaga, "Server Down!");
     }
   } catch (error) {
+    // console.log(error);
+    // if (error.rsponse.data) {
+    //   message.info(error.response.data.email[0]);
+    // }
     yield call(errorSaga, "The credentials you entered are incorrect!");
   }
 }
@@ -417,7 +421,6 @@ function* addSelectedReport(action) {
   }
 }
 
-
 function* addReportsubmit(action) {
   try {
     let result = yield call(Method.postData, action);
@@ -559,9 +562,8 @@ function* rejectExpense(action) {
   }
 }
 
-
 function* addreimbursementRecord(action) {
-  console.log("comman sagaaaaaaaaaaa",action);
+  console.log("comman sagaaaaaaaaaaa", action);
   try {
     let result = yield call(Method.postData, action);
     console.log("resultresultresultresultresultresult", result);
@@ -2460,7 +2462,6 @@ export {
   rejectExpense,
   addreimbursementRecord,
   rejectReportByAccount,
-
   ChangePassword,
   getAddCategoryList,
   categoryPanelList,

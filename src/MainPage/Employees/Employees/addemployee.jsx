@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "../../../initialpage/Sidebar/sidebar";
 import Header from "../../../initialpage/Sidebar/header";
 import Offcanvas from "../../../Entryfile/offcanvance";
@@ -12,6 +12,7 @@ import {
   Badge,
   Button,
 } from "react-bootstrap";
+
 import { BsCheck } from "react-icons/bs";
 import Educationform from "./educationform";
 import Experience from "./experience";
@@ -20,6 +21,7 @@ import Certification from "./certification";
 import UserRegistrationSetting from "./userRegistrationSetting";
 import UserRegistration from "./userRegistration";
 import PersonalInformation from "./PersonalInformation";
+import { getUserRegistrationId } from "../../../utils/sessionStorage";
 
 const steps = [
   "User Registration",
@@ -35,7 +37,27 @@ const Addemployees = () => {
   const [menu, setMenu] = useState(false);
   const [userId, setUserId] = useState();
   const [currentStep, setCurrentStep] = useState(1);
+  console.log("getUserdd", getUserRegistrationId().id);
 
+  useEffect(() => {
+    console.log(
+      "getUserddeeeeeeeeeeeeeeeeeeeee",
+      getUserRegistrationId().id,
+      userId
+    );
+    if (!userId) {
+      if (getUserRegistrationId()) {
+        console.log("getUserdd", getUserRegistrationId().id);
+        setCurrentStep(1);
+      } else {
+        setUserId(getUserRegistrationId().id);
+      }
+    }
+  }, []); //
+
+  useEffect(() => {
+    console.log("userIduserIduserIduserId", userId);
+  }, []);
 
   const toggleMobileMenu = () => {
     setMenu(!menu);
@@ -66,7 +88,6 @@ const Addemployees = () => {
     alert("Form Submitted!");
     setCurrentStep(1);
   };
-
 
   return (
     <>
