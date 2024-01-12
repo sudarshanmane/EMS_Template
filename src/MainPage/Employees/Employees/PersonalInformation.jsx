@@ -81,7 +81,6 @@ export default function PersonalInformation({ nextcall, userId }) {
     (state) => state.addpersonalinformation
   );
   const per_info = useSelector((state) => state.personalinfo?.newData?.id);
-  console.log("objectobjectobjectobject", userId);
   const onSubmit = (data) => {
     const formDataWithUserId = {
       ...data,

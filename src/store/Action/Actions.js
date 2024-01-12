@@ -97,6 +97,23 @@ function getUserRolePermissionAction(payload) {
   };
 }
 
+function getShiftPolicyAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_SHIFT_POLICY_LIST,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+function getWeekOffAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_WEEK_OFF_LIST,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
 function addSalary(payload) {
   return {
     type: API_CONSTANTS.ADD_SALARY,
@@ -177,6 +194,16 @@ function getReportList(payload) {
     contentType: contentType.json,
   };
 }
+
+function getEducationList(payload) {
+  return {
+    type: API_CONSTANTS.GET_EDUCATION_LIST,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
 
 function getApprovedReportList(payload) {
   return {
@@ -1285,11 +1312,14 @@ export {
   getBranchAction,
   getEmploymentTypeAction,
   getUserRolePermissionAction,
+  getShiftPolicyAction,
+  getWeekOffAction,
   addSalary,
   addCertificationAction,
   addUserSettingAction,
   addPersonalInformationAction,
   addEducationAction,
+  getEducationList,
   addExperienceAction,
   addReport,
   addSelectedReport,

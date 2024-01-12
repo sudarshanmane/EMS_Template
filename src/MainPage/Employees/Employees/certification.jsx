@@ -7,22 +7,30 @@ import { useDispatch, useSelector } from "react-redux";
 import { addCertificationAction } from "../../../store/Action/Actions";
 
 export default function certification({ nextcall, userId }) {
+  const id = userId;
+  const [selectedDates, setSelectedDates] = useState([null]);
+  const [selectedFiles, setSelectedFiles] = useState([null]);
+
   const dispatch = useDispatch();
 
-  const [selectedDate, setSelectedDate] = useState(null);
+  const handleDateChange = (date, index) => {
+    const newDates = [...selectedDates];
+    newDates[index] = date;
+    setSelectedDates(newDates);
+  };
+
+  const handleFileChange = (file, index) => {
+    const newFiles = [...selectedFiles];
+    newFiles[index] = file;
+    setSelectedFiles(newFiles);
+  };
 
   const formatDate = (date) => {
     if (!date) return null;
-
     const year = date.getFullYear();
     const month = `0${date.getMonth() + 1}`.slice(-2);
     const day = `0${date.getDate()}`.slice(-2);
-
     return `${year}-${month}-${day}`;
-  };
-
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
   };
 
   const addcertificationSelector = useSelector(
@@ -30,8 +38,25 @@ export default function certification({ nextcall, userId }) {
   );
 
   const onFinish = (values) => {
-    dispatch(addCertificationAction(values));
+    values?.users?.forEach((user, index) => {
+      const formData = new FormData();
+      formData.append("user_id", id);
+      formData.append("certification", selectedFiles[index]);
+      formData.append("course_name", user.course_name || "");
+      formData.append("certification_date", formatDate(selectedDates[index]));
+      dispatch(addCertificationAction(formData));
+    });
   };
+
+  const certificate_info = useSelector(
+    (state) => state.certificateinfo?.newData?.id
+  );
+
+  useEffect(() => {
+    if (certificate_info) {
+      nextcall();
+    }
+  }, [certificate_info]);
 
   return (
     <>
@@ -101,32 +126,83 @@ export default function certification({ nextcall, userId }) {
                                           </div>
                                         </div>
                                         <div className="col-sm-6">
-                                          <div className="input-block row">
-                                            <label className="col-form-label col-md-3">
-                                              Certification documents{" "}
+                                    <div className="input-block">
+                                      <label className="col-form-label">
+                                        Certifications
+                                        <span className="text-danger">*</span>
+                                      </label>
+                                      <div>
+                                        <Form.Item
+                                          {...restField}
+                                          name={[name, "certification"]}
+                                          fieldKey={[
+                                            fieldKey,
+                                            "certification",
+                                          ]}
+                                          rules={[
+                                            {
+                                              required: true,
+                                              message:
+                                                "Please upload your certificates",
+                                            },
+                                          ]}
+                                        >
+                                          <input
+                                            type="file"
+                                            className="form-control"
+                                            onChange={(e) =>
+                                              handleFileChange(
+                                                e.target.files[0],
+                                                index
+                                              )
+                                            }
+                                          />
+                                        </Form.Item>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                        <div className="col-sm-6">
+                                          <div className="input-block">
+                                            <label className="col-form-label">
+                                              Certification Date{" "}
                                               <span className="text-danger">
                                                 *
                                               </span>
                                             </label>
-                                            <div className="col-md-9">
+                                            <div>
                                               <Form.Item
                                                 {...restField}
-                                                name={[name, "certification"]}
+                                                name={[
+                                                  name,
+                                                  "certification_date",
+                                                ]}
                                                 fieldKey={[
                                                   fieldKey,
-                                                  "certification",
+                                                  "certification_date",
                                                 ]}
                                                 rules={[
                                                   {
                                                     required: true,
                                                     message:
-                                                      "Please add certification documents",
+                                                      "Please select certification date",
                                                   },
                                                 ]}
                                               >
-                                                <input
-                                                  type="file"
-                                                  className="form-control"
+                                                <DatePicker
+                                                  selected={
+                                                    selectedDates[index]
+                                                  }
+                                                  onChange={(date) =>
+                                                    handleDateChange(
+                                                      date,
+                                                      index
+                                                    )
+                                                  }
+                                                  className="form-control datetimepicker"
+                                                  type="date"
+                                                  format="yyyy-MM-dd"
+                                                  placeholderText="dd-mm-yyyy"
                                                 />
                                               </Form.Item>
                                             </div>

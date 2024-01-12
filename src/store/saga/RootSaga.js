@@ -58,7 +58,8 @@ import {
   deleteTravel,
   addreimbursementRecord,
   rejectReportByAccount,
-
+  getShiftPolicy,
+  getWeekOff,
 
   // =======================================
   Updateuserprofile,
@@ -139,6 +140,9 @@ import {
   getAllUser,
   addAllUser,
   addSelectedReport,
+  getEducationList,
+  getDesignationList,
+  
 
 } from "./CommonSagas";
 
@@ -154,6 +158,8 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.GET_DESIGNATION_LIST, getDesignation);
   yield takeEvery(API_CONSTANTS.GET_BRANCH_LIST, getCommonGenerator);
   yield takeEvery(API_CONSTANTS.GET_USERROLE_PERMISSION, getUserRolePermission);
+  yield takeEvery(API_CONSTANTS.GET_SHIFT_POLICY_LIST, getShiftPolicy);
+  yield takeEvery(API_CONSTANTS.GET_WEEK_OFF_LIST, getWeekOff);
   yield takeEvery(API_CONSTANTS.ADD_SALARY, addSalaryRevision);
   yield takeEvery(API_CONSTANTS.ADD_CERTIFICATION, addCertification);
   yield takeEvery(API_CONSTANTS.ADD_USER_SETTING, addUserSetting);
@@ -161,9 +167,9 @@ export function* RootSaga() {
     API_CONSTANTS.ADD_PERSONAL_INFORMATION,
     addPersonalInformation
   );
+  yield takeEvery(API_CONSTANTS.GET_EDUCATION_LIST, getEducationList);
   yield takeEvery(API_CONSTANTS.ADD_EDUCATION, addEducation);
   yield takeEvery(API_CONSTANTS.ADD_EXPERIENCE, addExperience);
-
   yield takeEvery(API_CONSTANTS.ADD_REPORT, addReportsubmit);
   yield takeEvery(API_CONSTANTS.ADD_SELECTED_REPORT, addSelectedReport);
   yield takeEvery(API_CONSTANTS.GET_REPORT_LIST, getReportList);

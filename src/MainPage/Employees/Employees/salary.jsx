@@ -5,7 +5,6 @@ import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Controller, useForm } from "react-hook-form";
 import { format } from "date-fns";
-import { yupResolver } from "@hookform/resolvers/yup/dist/yup.js";
 import * as Yup from "yup";
 import { addSalary } from "../../../store/Action/Actions";
 
@@ -16,11 +15,12 @@ const stepSchema = Yup.object().shape({
 });
 
 export default function salary({ nextcall, userId }) {
+  const id = userId;
+
   const {
     register,
     handleSubmit,
     control,
-    reset,
     formState: { errors },
   } = useForm({
   });
@@ -33,15 +33,10 @@ export default function salary({ nextcall, userId }) {
   };
 
   const addsalarySelector = useSelector((state) => state.addsalary);
-  useEffect(() => {
-    if (addsalarySelector) {
-      reset();
-    }
-  }, [addsalarySelector]);
-
 
   const onSubmit = (values) => {
     const formData = new FormData();
+    formData.append("user_id", userId);
     formData.append("revision_document", file2);
     for (const key in values) {
       if (key == "revision_document") {
@@ -52,6 +47,14 @@ export default function salary({ nextcall, userId }) {
     dispatch(addSalary(formData));
   };
   
+  const salary_info = useSelector((state) => state.salaryinfo?.newData?.id);
+
+  useEffect(() => {
+    if (salary_info) {
+      nextcall();
+    }
+  }, [salary_info]);
+
   return (
     <>
       {" "}

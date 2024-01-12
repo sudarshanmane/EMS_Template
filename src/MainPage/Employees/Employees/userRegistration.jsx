@@ -79,6 +79,7 @@ export default function UserRegistration({ nextcall, setUserId }) {
   message.config({
     top: 70,
   });
+  
   useEffect(() => {
     fetchPageDetails(getDepartmenturl);
     fetchDepartmentData(getDepartmenturl);

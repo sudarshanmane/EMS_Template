@@ -5,6 +5,11 @@ import { yupResolver } from "@hookform/resolvers/yup/dist/yup.js";
 import * as Yup from "yup";
 import { Select } from "antd";
 import { Controller, useForm } from "react-hook-form";
+import { URLS } from "../../../Globals/URLS";
+import {
+  getShiftPolicyAction,
+  getWeekOffAction,
+} from "../../../store/Action/Actions";
 
 const stepSchema = Yup.object().shape({
   shift_policy: Yup.string().required("Shift policy is Required"),
@@ -12,6 +17,9 @@ const stepSchema = Yup.object().shape({
 });
 
 export default function UserRegistrationSetting({ nextcall, userId }) {
+  const id = userId;
+  const getShiftPolicyurl = URLS.GET_SHIFT_POLICY_URL;
+  const getWeekOffurl = URLS.GET_WEEK_OFF_URL;
   const {
     register,
     handleSubmit,
@@ -26,12 +34,48 @@ export default function UserRegistrationSetting({ nextcall, userId }) {
 
   const dispatch = useDispatch();
 
+  const shiftPolicySelector = useSelector((state) => state.shiftpolicy);
+  console.log("shiftPolicySelector",shiftPolicySelector)
+  function fetchPageDetails(getShiftPolicyurl) {
+    dispatch(getShiftPolicyAction({ payload: {}, URL: getShiftPolicyurl }));
+  }
+
+  useEffect(() => {
+    fetchPageDetails(getShiftPolicyurl);
+  }, []);
+
+  function fetchShiftPolicyData(getShiftPolicyurl) {
+    dispatch(getShiftPolicyAction({ payload: {}, URL: getShiftPolicyurl }));
+  }
+
+  useEffect(() => {
+    fetchShiftPolicyData(getShiftPolicyurl);
+  }, []);
+
+  const weekOffSelector = useSelector((state) => state.weekoff);
+  console.log("weekOffSelector",weekOffSelector)
+  function fetchPageDetails(getWeekOffurl) {
+    dispatch(getWeekOffAction({ payload: {}, URL: getWeekOffurl }));
+  }
+
+  useEffect(() => {
+    fetchPageDetails(getWeekOffurl);
+  }, []);
+
+  function fetchWeekOffData(getWeekOffurl) {
+    dispatch(getWeekOffAction({ payload: {}, URL: getWeekOffurl }));
+  }
+
+  useEffect(() => {
+    fetchWeekOffData(getWeekOffurl);
+  }, []);
+
   const addSettingSelector = useSelector((state) => state.addusersetting);
 
   const onSubmit = (addSettingSelector) => {
     dispatch(addUserSettingAction(addSettingSelector));
   };
-
+ 
   return (
     <>
       {" "}
@@ -47,22 +91,25 @@ export default function UserRegistrationSetting({ nextcall, userId }) {
                   <div className="col-sm-6">
                     <div className="input-block row">
                       <label className="col-form-label col-md-3">
-                        Shift Policy
+                        Shift Policy <span className="text-danger">*</span>
                       </label>
+
                       <div className="col-md-9">
                         <select
                           className="form-control"
                           {...register("shift_policy")}
                         >
-                          <option value=""> Select Shift Policy </option>
-                          {/* {shiftPolicy_dropdown?.map((data) => {
+                          <option value="">Select Shift Policy</option>
+                          {shiftPolicySelector?.map((data) => {
                             return (
-                              <option value={data.id}>{data.shift_code}</option>
+                              <option value={data.id}>
+                                {data.shift_policy}
+                              </option>
                             );
-                          })} */}
+                          })}
                         </select>
                         <div className="text-danger">
-                          {errors.shift_policy?.message}
+                          {errors.shiftPolicy?.message}
                         </div>
                       </div>
                     </div>
@@ -70,24 +117,23 @@ export default function UserRegistrationSetting({ nextcall, userId }) {
                   <div className="col-sm-6">
                     <div className="input-block row">
                       <label className="col-form-label col-md-3">
-                        Weekly Off
+                        Week Off <span className="text-danger">*</span>
                       </label>
+
                       <div className="col-md-9">
                         <select
                           className="form-control"
                           {...register("weekly_off")}
                         >
-                          <option value=""> Select Weekly Off </option>
-                          {/* {weekoff_dropdown?.map((data) => {
+                          <option value="">Select Week Off</option>
+                          {weekOffSelector?.map((data) => {
                             return (
-                              <option value={data.id}>
-                                {data.weekly_off_code}
-                              </option>
+                              <option value={data.id}>{data.weekly_off}</option>
                             );
-                          })} */}
+                          })}
                         </select>
                         <div className="text-danger">
-                          {errors.weekly_off?.message}
+                          {errors.weeklyOff?.message}
                         </div>
                       </div>
                     </div>

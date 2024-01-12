@@ -37,27 +37,16 @@ const Addemployees = () => {
   const [menu, setMenu] = useState(false);
   const [userId, setUserId] = useState();
   const [currentStep, setCurrentStep] = useState(1);
-  console.log("getUserdd", getUserRegistrationId().id);
 
   useEffect(() => {
-    console.log(
-      "getUserddeeeeeeeeeeeeeeeeeeeee",
-      getUserRegistrationId().id,
-      userId
-    );
     if (!userId) {
       if (getUserRegistrationId()) {
-        console.log("getUserdd", getUserRegistrationId().id);
         setCurrentStep(1);
-      } else {
         setUserId(getUserRegistrationId().id);
+      } else {
       }
     }
   }, []); //
-
-  useEffect(() => {
-    console.log("userIduserIduserIduserId", userId);
-  }, []);
 
   const toggleMobileMenu = () => {
     setMenu(!menu);
