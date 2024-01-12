@@ -241,6 +241,27 @@ function getVendorData(payload) {
 }
 
 
+function getVendorPayment(payload) {
+  return {
+    type: API_CONSTANTS.GET_VENDOR_PAYMENT,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
+
+function createVendorPyment(payload) {
+  return {
+    type: API_CONSTANTS.CREATE_VENDOR_PAYMENT,
+    payload,
+    URL: URLS.CREATE_VENDOR_PAYMENT_URL,
+    contentType: contentType.json,
+  };
+}
+
+
+
 function approveReport(payload) {
   return {
     type: API_CONSTANTS.APPROVE_REPORT,
@@ -258,7 +279,6 @@ function rejectReport(payload) {
     contentType: contentType.json,
   };
 }
-
 
 function addreimbursementRecord(payload) {
   return {
@@ -1314,6 +1334,8 @@ export {
   setDeleteReportFalse,
   getReportDetails,
   getVendorData,
+  getVendorPayment,
+  createVendorPyment,
   getExpenseList,
   approveReport,
   rejectReport,

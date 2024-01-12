@@ -12,6 +12,7 @@ import {
   itemRender,
 } from "../../MainPage/paginationfunction";
 import { formatDate } from "@fullcalendar/core";
+import { LogarithmicScale } from "chart.js";
 
 const ViewVendor = () => {
   const [allExpenses, setAllExpenses] = useState([]);
@@ -22,7 +23,7 @@ const ViewVendor = () => {
   const [editTravelData, setEditTravelData] = useState(null);
   const [allVendor, setAllVendor] = useState([]);
 
-//   const url = URLS.VIEW_VENDOR_URL;
+  const url = URLS.VIEW_VENDOR_URL;
 //   const [tablePagination, setTablePagination] = useState({
 //     pageSize: 10,
 //     current: 1,
@@ -39,11 +40,11 @@ const ViewVendor = () => {
   const onEdit = (record) => {
     setIsEditFormVisible(true);
     setEditTravelData(record);
-    setValue("date", record.date);
-    setValue("paid_amount", record.paid_amount);
-    setValue("due_amount", record.due_amount);
-    setValue("vendor_bill", record.vendor_bill);
-    setValue("amount", record.amount);
+    setValue("date", record?.date);
+    setValue("paid_amount", record?.paid_amount);
+    setValue("due_amount", record?.due_amount);
+    setValue("vendor_bill", record?.vendor_bill);
+    setValue("amount", record?.amount);
 
   };
 
@@ -55,17 +56,18 @@ const ViewVendor = () => {
   const getVendorSelector = useSelector((state) => state.vendorDetails);
   useEffect(() => {
     if (getVendorSelector) {
-      const allVendor = getVendorSelector?.expenses?.map((element) => ({
-        company_name: element.company_name,
-        telephone: element.telephone,
-        mail_id: element.mail_id,
-        website: element.website,
-        fax: element.fax,
-        paid_amount: element.vendorpayment?.paid_amount || 0,
-        vendorpayment: element.vendorpayment,
-      }));
-
-      setAllVendor(allVendor);
+      // console.log("getVendorSelectorgetVendorSelector",getVendorSelector);
+      //  getVendorSelector?.vendorpayment = getVendorSelector?.vendorpayment
+      // ?.map((element) => ({
+      //   id: element.id,
+      //   company_name: element.company_name,
+      //   telephone: element.telephone,
+      //   mail_id: element.mail_id,
+      //   website: element.website,
+      //   fax: element.fax,
+      //   vendorpayment: element.vendorpayment,
+      // }));
+      setAllVendor(getVendorSelector?.vendorpayment);
     }
   }, [getVendorSelector]);
 
@@ -76,9 +78,9 @@ const ViewVendor = () => {
   const columns = [
     {
       title: "Date",
-      dataIndex: "vendorpayment",
+      dataIndex: "date",
       key: "vendorpayment",
-      render: (vendorpayment) => <span>{vendorpayment.date}</span>,
+      
     //   sorter: (a, b) => a.start_date.length - b.start_date.length,
     },
     {
@@ -99,6 +101,9 @@ const ViewVendor = () => {
     {
       title: "Bill",
       dataIndex: "vendor_bill",
+      render: (record) =>  {
+        return record ? <a href={URLS.BASE_URL_EXPORT + record} target="_blank"><img style={{width:"30px"}} src={URLS.BASE_URL_EXPORT + record} alt="" /></a> : ""
+      },
     //   sorter: (a, b) => a.amount.length - b.amount.length,
     },
     {
@@ -130,7 +135,6 @@ const ViewVendor = () => {
   ];
 
   return (
-    <>
       <div className="page-wrapper">
         <div className="content container-fluid">
           <div>
@@ -349,7 +353,7 @@ const ViewVendor = () => {
                 <div className="card-body">
                   <div className="table-responsive">
                     <Table
-                      dataSource={allExpenses}
+                      dataSource={allVendor}
                       pagination={{
                         total: allExpenses.length,
                         showTotal: (total, range) =>
@@ -380,7 +384,6 @@ const ViewVendor = () => {
           {/* Payment Detials End */}
         </div>
       </div>
-    </>
   );
 };
 

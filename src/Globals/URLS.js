@@ -39,7 +39,8 @@ export const URLS = {
 
   VIEW_VENDOR_URL: "/api/version_0/expense/register_vendor/",
   VIEW_VENDOR_BY_ID_URL: "/api/version_0/expense/register_vendor/",
-  
+  GET_VENDOR_PAYMENT_URL: "/api/version_0/expense/vendor_payment/",
+  CREATE_VENDOR_PAYMENT_URL: "/api/version_0/expense/vendor_payment/",
 
   FETCH_REPORT_URL: "/api/version_0/expense/fetch_report/",
   ADD_REIMBURSMENT_RECORD_URL: "/api/version_0/expense/reimbursement/",

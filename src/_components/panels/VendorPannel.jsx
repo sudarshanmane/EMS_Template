@@ -7,6 +7,8 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 
 import {
+  createVendorPyment,
+  getVendorPayment,
   deleteVendor,
   getVendor,
   updateVendor,
@@ -19,8 +21,9 @@ import {
 import { icon } from "@fortawesome/fontawesome-svg-core";
 
 const VendorPannel = () => {
+  // const url = URLS.GET_VENDOR_PAYMENT_URL;
   const [url, setUrl] = useState(URLS.GET_VENDOR_URL);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); 
   const [allVendor, setAllVendor] = useState([]);
   const [focused, setFocused] = useState(false);
   const [deleteVendorData, setDeleteVendorData] = useState(null);
@@ -29,9 +32,8 @@ const VendorPannel = () => {
   const [isAddFormVisible, setIsAddFormVisible] = useState(false);
   const [isEditFormVisible, setIsEditFormVisible] = useState(false);
   const [viewVendorData, setViewVendorData] = useState(null);
- 
+  const [allVendorType, setAllVendorType] = useState([]);
 
-  
   const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] =
     useState(false);
   const navigate = useNavigate();
@@ -56,33 +58,71 @@ const VendorPannel = () => {
     formState: { errors },
   } = useForm({});
 
+  function getPageDetails(url) {
+    dispatch(getVendorPayment({ payload: {}, URL: url }));
+  }
+  useEffect(() => {
+    getPageDetails(url);
+  }, []);
+
+  useEffect(() => {
+    fetchvendordata(url);
+  }, []);
+
+  function fetchvendordata(url) {
+    dispatch(getVendorPayment({ payload: {}, URL: url }));
+  }
+  useEffect(() => {
+    getVendorPayment(url);
+  }, []);
+
+  const vendorSelector = useSelector((state) => state.getVendorPaymentResult);
+
+  useEffect(() => {
+    console.log("vendorSelector:", vendorSelector);
+
+    if (Array.isArray(vendorSelector)) {
+      const allVendorType = vendorSelector.map((element) => ({
+        id: element.id,
+        paid_amount: element.paid_amount,
+        due_amount: element.due_amount,
+        vendor_bill: element.vendor_bill,
+        amount: element.amount,
+        vendor: element.vendor,
+      }));
+
+      setAllVendorType(allVendorType);
+    }
+  }, [vendorSelector]);
+
   const DeleteVendor = (record) => {
     setDeleteVendorData(record);
   };
   const { handleSubmit: handleDelete } = useForm({});
+ const [selectedId, setSelectedId] =  useState();
 
   const onRecord = (record) => {
-    console.log("aaaaaaaaaaaa",record);
+    console.log("aaaaaaaaaaaa", record);
     if (record && record.company_name && record.telephone) {
       setRecordPaymentData(record);
-      setValueRecord("company_name", record.company_name); 
-      setValueRecord("telephone", record.telephone);
+      setSelectedId(record.id)
+      setValueRecord("company_name", record?.company_name);
+      setValueRecord("telephone", record?.telephone);
     } else {
       console.error("Invalid record or missing required fields");
       // Handle this situation accordingly
+
     }
   };
-  
-  
 
-  const onSubmit = async (values) => {
-    await dispatch(createVendor(values));
+  const onSubmit =  (values) => {
+    dispatch(createVendor(values));
     dispatch(getVendor({ payload: {}, URL: url }));
     setIsAddFormVisible(false);
   };
 
   const onEdit = (record) => {
-    console.log("bbbbbbbbbbb",record);
+    console.log("bbbbbbbbbbb", record);
     setIsEditFormVisible(true);
     setEditVendorData(record);
     setValue("company_name", record.company_name);
@@ -98,20 +138,24 @@ const VendorPannel = () => {
   };
 
   const onSubmitRecord = (values) => {
-    // dispatch(recordpayment({ id: editRecordPaymentData.id, payload: values }));
-    setIsEditFormVisible(false);
+   dispatch(createVendorPyment(values));
+    values["vendor"] = selectedId
+    console.log("valuesvalues", values);
+    setIsAddFormVisible(false);
+    // dispatch(getVendorPayment(values));
   };
 
   const onDelete = () => {
     const deletedVendorId = deleteVendorData.id;
     dispatch(deleteVendor({ id: deletedVendorId }));
     setIsDeleteConfirmationVisible(false);
+
     setAllVendor((prevItems) =>
       prevItems.filter((item) => item.id !== deletedVendorId)
     );
+
   };
 
-  
   const viewVendor = (record) => {
     setViewVendorData(record);
     setIsAddFormVisible(false);
@@ -219,7 +263,6 @@ const VendorPannel = () => {
       sorter: (a, b) => a.start_date.length - b.start_date.length,
     },
 
-    
     {
       title: "Record Payment",
       // dataIndex: "payment",
@@ -256,7 +299,7 @@ const VendorPannel = () => {
             <i className="material-icons">more_vert</i>
           </Link>
           <div className="dropdown-menu dropdown-menu-right">
-          <Link
+            <Link
               to={`/home/viewVendor/${record.id}`}
               className="dropdown-item"
               onClick={() => viewVendor(record)}
@@ -374,7 +417,6 @@ const VendorPannel = () => {
             </div>
           </div>
         </div>
-
         {/* Add vendor  */}
         <div id="add_vendor" className="modal custom-modal fade" role="dialog">
           <div
@@ -469,11 +511,8 @@ const VendorPannel = () => {
             </div>
           </div>
         </div>
-
         {/* /Add vendor Ends */}
-
         {/* Edit Expense Modal */}
-
         <div id="edit_vendor" className="modal custom-modal fade" role="dialog">
           <div
             className="modal-dialog modal-dialog-centered modal-md"
@@ -567,9 +606,7 @@ const VendorPannel = () => {
             </div>
           </div>
         </div>
-
         {/* /Edit Expense Modal */}
-
         {/* Delete Category Modal */}
         <div
           className="modal custom-modal fade"
@@ -610,8 +647,8 @@ const VendorPannel = () => {
             </div>
           </div>
         </div>
-        {/* Record Payment Modal  */}
 
+        {/* Record Payment Modal  */}
         <div
           id="make_payment"
           className="modal custom-modal fade"
@@ -642,6 +679,7 @@ const VendorPannel = () => {
                         <input
                           className="form-control"
                           type="text"
+                          disabled
                           {...recordpayment("company_name")}
                         />
                       </div>
@@ -653,6 +691,7 @@ const VendorPannel = () => {
                       <div className="input-block">
                         <label>Telephone</label>
                         <input
+                        disabled
                           className="form-control"
                           type="tel"
                           {...recordpayment("telephone")}
@@ -676,10 +715,34 @@ const VendorPannel = () => {
                   <div className="input-block">
                     <div className="col-md-12">
                       <div className="input-block">
+                        <label>Paid Amount</label>
+                        <input
+                          className="form-control"
+                          type="number"
+                          {...recordpayment("paid_amount")}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  {/* <div className="input-block">
+                    <div className="col-md-12">
+                      <div className="input-block">
+                        <label>Due Amount</label>
+                        <input
+                          className="form-control"
+                          type="number"
+                          {...recordpayment("due_amount")}
+                        />
+                      </div>
+                    </div>
+                  </div> */}
+                  <div className="input-block">
+                    <div className="col-md-12">
+                      <div className="input-block">
                         <label>Amount</label>
                         <input
                           className="form-control"
-                          type="tel"
+                          type="number"
                           {...recordpayment("amount")}
                         />
                       </div>

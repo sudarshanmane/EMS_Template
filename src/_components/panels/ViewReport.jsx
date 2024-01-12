@@ -83,7 +83,7 @@ const ViewReportPage = () => {
         expense_bill: element.expense_bill,
         category: element.category,
         amount: element.amount,
-      }));
+      }));  
 
       setAllExpenses(allExpenses);
     }
@@ -150,7 +150,7 @@ const ViewReportPage = () => {
       sorter: (a, b) => a.purchasefrom.length - b.purchasefrom.length,
     },
     {
-      title: "Amount  ",
+      title: "Amount",
       dataIndex: "amount",
       sorter: (a, b) => a.amount.length - b.amount.length,
     },
