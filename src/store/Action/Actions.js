@@ -169,7 +169,6 @@ function addSelectedReport(payload) {
   };
 }
 
-
 function getReportList(payload) {
   return {
     type: API_CONSTANTS.GET_REPORT_LIST,
@@ -187,7 +186,6 @@ function getApprovedReportList(payload) {
     contentType: contentType.json,
   };
 }
-
 
 function getExpenseList(payload) {
   return {
@@ -247,7 +245,6 @@ function rejectReport(payload) {
     contentType: contentType.json,
   };
 }
-
 
 function addreimbursementRecord(payload) {
   return {
@@ -1317,7 +1314,17 @@ function postMileage(payload) {
   };
 }
 
+function deleteExpenseAction(payload) {
+  return {
+    type: API_CONSTANTS.DELETE_EXPENSE,
+    payload,
+    URL: URLS.DELETE_EXPENSE_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
 export {
+  deleteExpenseAction,
   postMileage,
   getTotalForDistance,
   getCategoryListBulkExpense,

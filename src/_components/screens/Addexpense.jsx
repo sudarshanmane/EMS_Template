@@ -72,7 +72,6 @@ const Addexpense = () => {
                     <div className="tab-pane show active fade" id="expense">
                       <AddExpense></AddExpense>
                     </div>
-                    {/* {/ Tab 2: Attachment /} */}
                     <div className="tab-pane fade" id="mileage">
                       <AddMileage></AddMileage>
                     </div>

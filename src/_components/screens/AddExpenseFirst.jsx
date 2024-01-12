@@ -7,15 +7,20 @@ import {
   Checkbox,
   Input,
 } from "antd";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   getCategoryListBulkExpense,
   getTotalForDistance,
   postMileage,
 } from "../../store/Action/Actions";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import { ExpenseUpdatingContext } from "./ContextForUpdatingRecord";
+import { URLS } from "./../../Globals/URLS";
+import "antd/dist/antd.css";
 
 const AddExpense = () => {
+  const { record, setRecord } = useContext(ExpenseUpdatingContext);
   const [form] = Form.useForm();
 
   function getFullDate(vals) {
@@ -29,10 +34,10 @@ const AddExpense = () => {
   }
 
   const dispatch = useDispatch();
-  const [categoryList1, setCategoryList1] = useState([]);
+  const [categoryList1, setCategoryList1] = useState();
 
   function onFinish(values) {
-    values.date = getFullDate(values.date);
+    values.expense_date = getFullDate(values.expense_date);
     let formData = new FormData();
     for (const el in values) {
       if (el != "expense_bill") formData.append(el, values[el]);
@@ -43,6 +48,25 @@ const AddExpense = () => {
   }
 
   const [categoryList, setCategoryList] = useState([]);
+
+  if (record) {
+    console.log("recordrecordrecordrecord", record);
+  }
+  useEffect(() => {
+    if (record) {
+      form.setFieldsValue({
+        amount: record?.amount,
+        category: record?.category,
+        paid_by: record?.paid_by,
+        expense_date: record?.expense_date,
+        claim_reimbursement: record?.claim_reimbursement,
+        desc: record?.desc,
+      });
+    }
+    return () => {
+      setRecord(null);
+    };
+  }, [record]);
 
   useEffect(() => {
     dispatch(getCategoryListBulkExpense());
@@ -98,11 +122,19 @@ const AddExpense = () => {
   useEffect(() => {
     if (postMileageResult) {
       form.resetFields();
+      setRecord(null);
+      setCategoryList1([]);
     }
   }, [postMileageResult]);
 
+  let img = record?.expense_bill
+    ? URLS.BASE_URL_EXPORT + record?.expense_bill
+    : categoryList1 && categoryList1[0]
+    ? URL.createObjectURL(categoryList1[0])
+    : null;
+
   return (
-    <div className="col-6">
+    <div className={`col-6`}>
       <Form
         layout="vertical"
         form={form}
@@ -156,7 +188,7 @@ const AddExpense = () => {
           </Form.Item>
 
           <Form.Item
-            name={"date"}
+            name={"expense_date"}
             label="Expense Date"
             rules={[
               {
@@ -213,13 +245,27 @@ const AddExpense = () => {
           >
             <input
               type="file"
+              accept=".jpg, .jpeg, .png, .pdf"
               id="attachment"
               onChange={(e) => {
+                if (record) {
+                  record.expense_bill = null;
+                }
                 setCategoryList1([e.target.files[0]]);
               }}
               className="form-control"
             />
           </Form.Item>
+
+          {img && (
+            <>
+              <a href={img} target="_blank">
+                <div>Uploaded Document</div>
+                <img className="w-25 b-25" src={img} alt="" />
+              </a>
+            </>
+          )}
+
           <Form.Item className="flex-end">
             <div className="d-flex justify-content-end">
               <Button

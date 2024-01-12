@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import { Modal, Space, Table } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   addReport,
   addSelectedReport,
-  deleteExpensepanelAction,
+  deleteExpenseAction,
   fetchReport,
   getExpenseList,
 } from "../../store/Action/Actions";
@@ -15,6 +15,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Controller, useForm } from "react-hook-form";
 import { format } from "date-fns";
+import { ExpenseUpdatingContext } from "../screens/ContextForUpdatingRecord";
 
 const ExpensePanel = () => {
   const [allExpenseList, setAllExpense] = useState([]);
@@ -27,6 +28,8 @@ const ExpensePanel = () => {
   const fetchurl = URLS.FETCH_REPORT_URL;
   const [selectedOption, setSelectedOption] = useState("allReports");
   const dispatch = useDispatch();
+
+  const { setRecord, record } = useContext(ExpenseUpdatingContext);
 
   const [tablePagination, setTablePagination] = useState({
     pageSize: 10, // Set your default page size
@@ -43,6 +46,7 @@ const ExpensePanel = () => {
     setValue,
     formState: { errors },
   } = useForm({});
+
   const { handleSubmit: handleDelete } = useForm({});
 
   const [focused, setFocused] = useState(false);
@@ -73,30 +77,42 @@ const ExpensePanel = () => {
   const onAddReport = (data) => {
     dispatch(addReport(data));
     reset();
-
     setSelectedOption("allReports");
   };
 
   const onEdit = (record) => {
-    setIsEditFormVisible(true);
+    setRecord(record);
   };
 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (record) {
+      navigate("/home/addexpense");
+    }
+  }, [record]);
+
   const onUpdate = (values) => {
-    dispatch();
     setIsEditFormVisible(false);
   };
 
   const DeleteExpense = (record) => {
-    setDeleteExpenseData(record);
+    setDeleteExpenseData(record.id);
   };
 
   const onDelete = () => {
-    const deletedItemId = deleteItemData.id;
-    dispatch(deleteExpensepanelAction({ id: deletedItemId }));
-    setAllExpense((prevItems) =>
-      prevItems.filter((item) => item.id !== deletedItemId)
-    );
+    dispatch(deleteExpenseAction({ id: deleteItemData }));
   };
+
+  const expenseDeletedResultSelector = useSelector(
+    (state) => state.expenseDeletedResult
+  );
+
+  useEffect(() => {
+    if (expenseDeletedResultSelector) {
+      getPageDetails();
+    }
+  }, [expenseDeletedResultSelector]);
 
   const onAttach = (data) => {
     setEditReportData(data);
@@ -166,6 +182,7 @@ const ExpensePanel = () => {
   const updateExpensepanelResultSelector = useSelector(
     (state) => state.updateexpenseResult
   );
+
   useEffect(() => {
     if (updateExpensepanelResultSelector) {
       getPageDetails(url);
@@ -279,6 +296,7 @@ const ExpensePanel = () => {
       ),
     },
   ];
+
   return (
     <div className="page-wrapper">
       <div className="content container-fluid">
@@ -558,6 +576,7 @@ const ExpensePanel = () => {
           setModalVisible(false);
           setSelectedReceiptUrl("");
         }}
+        footer=""
       >
         {selectedReceiptUrl.expense_bill && (
           <div

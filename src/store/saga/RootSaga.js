@@ -21,9 +21,6 @@ import {
   addReportsubmit,
   getReportList,
   getApprovedReportList,
-  
-
-  
   getExpenseList,
   updateReport,
   deleteReport,
@@ -58,7 +55,6 @@ import {
   deleteTravel,
   addreimbursementRecord,
   rejectReportByAccount,
-
 
   // =======================================
   Updateuserprofile,
@@ -139,7 +135,6 @@ import {
   getAllUser,
   addAllUser,
   addSelectedReport,
-
 } from "./CommonSagas";
 
 export function* RootSaga() {
@@ -167,7 +162,10 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.ADD_REPORT, addReportsubmit);
   yield takeEvery(API_CONSTANTS.ADD_SELECTED_REPORT, addSelectedReport);
   yield takeEvery(API_CONSTANTS.GET_REPORT_LIST, getReportList);
-  yield takeEvery(API_CONSTANTS.GET_APPROVED_REPORT_LIST, getApprovedReportList);
+  yield takeEvery(
+    API_CONSTANTS.GET_APPROVED_REPORT_LIST,
+    getApprovedReportList
+  );
   yield takeEvery(API_CONSTANTS.GET_EXPENSE_LIST, getExpenseList);
   yield takeEvery(API_CONSTANTS.UPDATE_REPORT, updateReport);
   yield takeEvery(API_CONSTANTS.DELETE_REPORT, deleteReport);
@@ -176,8 +174,14 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.REJECT_REPORT, rejectReport);
   yield takeEvery(API_CONSTANTS.APPROVE_EXPENSE, approveExpense);
   yield takeEvery(API_CONSTANTS.REJECT_EXPENSE, rejectExpense);
-  yield takeEvery(API_CONSTANTS.ADD_REIMBURSMENT_RECORD, addreimbursementRecord);
-  yield takeEvery(API_CONSTANTS.REJECT_REPORT_BY_ACCOUNT, rejectReportByAccount);
+  yield takeEvery(
+    API_CONSTANTS.ADD_REIMBURSMENT_RECORD,
+    addreimbursementRecord
+  );
+  yield takeEvery(
+    API_CONSTANTS.REJECT_REPORT_BY_ACCOUNT,
+    rejectReportByAccount
+  );
 
   yield takeEvery(API_CONSTANTS.ADD_CATEGORY, getAddCategoryList);
   yield takeEvery(API_CONSTANTS.GET_CATEGORYLIST_PANEL, categoryPanelList);
@@ -228,4 +232,5 @@ export function* RootSaga() {
   );
   yield takeEvery(API_CONSTANTS.GET_DISTANCE_FOR_TOTAL, postCommonGenerator);
   yield takeEvery(API_CONSTANTS.POST_MILEAGE_DETAILS, postCommonGenerator);
+  yield takeEvery(API_CONSTANTS.DELETE_EXPENSE, commonDeleteRole);
 }

@@ -1,6 +1,6 @@
 export const URLS = {
   BASE_URL_EXPORT: "http://192.168.1.219:8001/",
-  
+
   USER_LOGIN_URL: "/users/api/v2/login_web/",
   USER_REGISTER_URL: "/users/api/v2/userregister/",
   GET_DEPARTMENT_LIST_URL: "/users/api/v2/departmentlist/",
@@ -20,7 +20,6 @@ export const URLS = {
   ADD_EXPERIENCE_URL: "/userhrms/api/v2/usersettings/",
   CHANGE_PASSWORD_URL: "/users/api/v2/changepassword/",
 
-
   APPROVE_EXPENSE_URL: "/api/version_0/expense/approve-expense/",
   REJECT_EXPENSE_URL: "/api/version_0/expense/reject-expense/",
   APPROVE_REPORT_URL: "/api/version_0/expense/approve-report/",
@@ -38,7 +37,6 @@ export const URLS = {
   FETCH_REPORT_URL: "/api/version_0/expense/fetch_report/",
   ADD_REIMBURSMENT_RECORD_URL: "/api/version_0/expense/reimbursement/",
   REJECT_REPORT_BY_ACCOUNT_URL: "/api/version_0/expense/reject_exp_by_account/",
-
 
   ADD_CATEGORY_URL: "/api/version_0/expense/expensecategory/",
   GET_CATEGORY_PANEL_URL: "/api/version_0/expense/expensecategory/",
@@ -62,18 +60,15 @@ export const URLS = {
   REJECT_CARD_URL: "/card/reject_card/",
   APPROVE_CARD_URL: "/card/reject_card/",
 
+  CREATE_VENDOR_URL: "/expense/register_vendor/",
+  GET_VENDOR_URL: "/expense/register_vendor/",
+  DELETE_VENDOR_URL: "/expense/vendor_payment/",
+  UPDATE_VENDOR_URL: "/expense/vendor_payment/",
 
-    CREATE_VENDOR_URL : "/expense/register_vendor/",
-    GET_VENDOR_URL: "/expense/register_vendor/",
-    DELETE_VENDOR_URL : "/expense/vendor_payment/",
-    UPDATE_VENDOR_URL :  "/expense/vendor_payment/",
-
-
-    CREATE_TRAVEL_URL: "/expense/request_travel/",
-    GET_TRAVEL_URL:  "/expense/request_travel/",
-    DELETE_TRAVEL_URL: "/expense/request_travel_details/",
-    UPDATE_TRAVEL_URL: "/expense/request_travel_details/",
-    
+  CREATE_TRAVEL_URL: "/expense/request_travel/",
+  GET_TRAVEL_URL: "/expense/request_travel/",
+  DELETE_TRAVEL_URL: "/expense/request_travel_details/",
+  UPDATE_TRAVEL_URL: "/expense/request_travel_details/",
 
   // ========================================================================================
 
@@ -133,9 +128,10 @@ export const URLS = {
   MANAGER_CARD_HOLD_LIST_URL: "/expense/hold_expense-list-manager/",
   OWN_EXPENSE_APPROVE_URL: "/expense/approval_expense/",
 
-  // =========================
+  // Sudarshan !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   ADD_BULK_EXPENSE_REPORT_URL: "/api/version_0/expense/create-bulk-expenses/",
   CREATE_EXPENSE_COMMON_URL: "/api/version_0/expense/create_expense/",
   GET_AMOUNT_FROM_DISTANCE_TRAVELED:
     "/api/version_0/expense/calculate_mileage_amount/",
+  DELETE_EXPENSE_URL: "/api/version_0/expense/modify_expense/",
 };

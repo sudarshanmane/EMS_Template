@@ -271,6 +271,7 @@ export const RootReducer = (state = initialState, action) => {
         ...state,
         loding: false,
         getexpenselist: action.result,
+        expenseDeletedResult: false,
       };
 
     case API_CONSTANTS.GET_APPROVED_REPORT_LIST:
@@ -345,35 +346,33 @@ export const RootReducer = (state = initialState, action) => {
         addreimbursmentresult: action.result,
       };
 
-      case API_CONSTANTS.ADD_SELECTED_REPORT:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.ADD_SELECTED_REPORT_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          addSelectedReportSuccess: action.result,
-        };
+    case API_CONSTANTS.ADD_SELECTED_REPORT:
+      return {
+        ...state,
+        loding: true,
+      };
 
+    case API_CONSTANTS.ADD_SELECTED_REPORT_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        addSelectedReportSuccess: action.result,
+      };
 
-      case API_CONSTANTS.REJECT_REPORT_BY_ACCOUNT:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.REJECT_REPORT_BY_ACCOUNT_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          rejectReportAccountSuccess: action.result,
-        };
+    case API_CONSTANTS.REJECT_REPORT_BY_ACCOUNT:
+      return {
+        ...state,
+        loding: true,
+      };
 
-        
-      case API_CONSTANTS.APPROVE_REPORT:
+    case API_CONSTANTS.REJECT_REPORT_BY_ACCOUNT_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        rejectReportAccountSuccess: action.result,
+      };
+
+    case API_CONSTANTS.APPROVE_REPORT:
       return {
         ...state,
         loding: true,
@@ -606,31 +605,31 @@ export const RootReducer = (state = initialState, action) => {
         fetchCategorySuccess: action.result,
       };
 
-      case API_CONSTANTS.FETCH_REPORT:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.FETCH_REPORT_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          fetchReportSuccess: action.result,
-        };
+    case API_CONSTANTS.FETCH_REPORT:
+      return {
+        ...state,
+        loding: true,
+      };
 
-      case API_CONSTANTS.FETCH_REPORT:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.FETCH_REPORT_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          fetchReportSuccess: action.result,
-        };
+    case API_CONSTANTS.FETCH_REPORT_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        fetchReportSuccess: action.result,
+      };
+
+    case API_CONSTANTS.FETCH_REPORT:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.FETCH_REPORT_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        fetchReportSuccess: action.result,
+      };
 
     case API_CONSTANTS.UPDATE_MILEAGE:
       return {
@@ -1938,6 +1937,21 @@ export const RootReducer = (state = initialState, action) => {
         ...state,
         loding: false,
         postMileageResult: action.result,
+      };
+    }
+
+    case API_CONSTANTS.DELETE_EXPENSE: {
+      return {
+        ...state,
+        loding: true,
+      };
+    }
+
+    case API_CONSTANTS.DELETE_EXPENSE_SUCCESS: {
+      return {
+        ...state,
+        loding: false,
+        expenseDeletedResult: action.result,
       };
     }
 
