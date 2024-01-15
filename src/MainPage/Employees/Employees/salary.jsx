@@ -32,7 +32,6 @@ export default function salary({ nextcall, userId }) {
     setFile2(e.target.files[0]);
   };
 
-  const addsalarySelector = useSelector((state) => state.addsalary);
 
   const onSubmit = (values) => {
     const formData = new FormData();
@@ -47,13 +46,13 @@ export default function salary({ nextcall, userId }) {
     dispatch(addSalary(formData));
   };
   
-  const salary_info = useSelector((state) => state.salaryinfo?.newData?.id);
+  const addsalarySelector = useSelector((state) => state.addsalary);
 
   useEffect(() => {
-    if (salary_info) {
+    if (addsalarySelector) {
       nextcall();
     }
-  }, [salary_info]);
+  }, [addsalarySelector]);
 
   return (
     <>

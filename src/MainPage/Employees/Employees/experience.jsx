@@ -22,9 +22,6 @@ export default function experience({ nextcall, userId }) {
     formState: { errors },
   } = useForm({});
 
-  const addPersonalInformationSelector = useSelector(
-    (state) => state.addexperience
-  );
 
   const designationListSelector = useSelector(
     (state) => state.getdesignation
@@ -62,13 +59,15 @@ export default function experience({ nextcall, userId }) {
     });
   };
 
-  const exp_info = useSelector((state) => state.experienceinfo?.newData?.id);
+  const addPersonalInformationSelector = useSelector(
+    (state) => state.addexperience
+  );
 
   useEffect(() => {
-    if (exp_info) {
+    if (addPersonalInformationSelector) {
       nextcall();
     }
-  }, [exp_info]);
+  }, [addPersonalInformationSelector]);
 
   return (
     <>

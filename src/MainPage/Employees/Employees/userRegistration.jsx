@@ -74,12 +74,11 @@ export default function UserRegistration({ nextcall, setUserId }) {
   const [registrationSuccessful, setRegistrationSuccessful] = useState(false);
   const [file, setFile] = useState();
   const [file2, setFile2] = useState();
-  const added_data = useSelector((state) => state.registerDetails?.newData?.id);
 
   message.config({
     top: 70,
   });
-  
+
   useEffect(() => {
     fetchPageDetails(getDepartmenturl);
     fetchDepartmentData(getDepartmenturl);
@@ -272,6 +271,15 @@ export default function UserRegistration({ nextcall, setUserId }) {
     }
   }, [userRegisterSelector]);
 
+  useEffect(() => {
+    if (userRegisterSelector) {
+      setUserId(userRegisterSelector);
+      nextcall();
+    }
+  }, [userRegisterSelector]);
+
+  console.log("userRegisterSelector", userRegisterSelector);
+
   const onSubmit = (data) => {
     const formattedDate = format(new Date(data?.date_of_birth), "yyyy-MM-dd");
     let formData = new FormData();
@@ -312,13 +320,6 @@ export default function UserRegistration({ nextcall, setUserId }) {
   const imageFormDataConverter2 = (e) => {
     setFile2(e.target.files[0]);
   };
-
-  useEffect(() => {
-    if (added_data) {
-      setUserId(added_data);
-      nextcall();
-    }
-  }, [added_data]);
 
   return (
     <>

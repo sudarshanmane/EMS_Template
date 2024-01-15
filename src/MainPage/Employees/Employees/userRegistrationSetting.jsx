@@ -92,7 +92,6 @@ export default function UserRegistrationSetting({ nextcall, userId }) {
     fetchAllDropdownData(getAllDropdownurl);
   }, []);
 
-  const addSettingSelector = useSelector((state) => state.addusersetting);
 
   const onSubmit = (data) => {
     console.log("submit data", data);
@@ -125,13 +124,13 @@ export default function UserRegistrationSetting({ nextcall, userId }) {
       label: user.full_name,
     })) || [];
 
-  const setting_info = useSelector((state) => state.settinginfo?.newData?.id);
+    const addSettingSelector = useSelector((state) => state.addusersetting);
 
   useEffect(() => {
-    if (setting_info) {
+    if (addSettingSelector) {
       nextcall();
     }
-  }, [setting_info]);
+  }, [addSettingSelector]);
 
   return (
     <>
