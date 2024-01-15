@@ -27,9 +27,6 @@ export default function EducationPost({ nextcall, userId }) {
     control,
     formState: { errors },
   } = useForm({});
- 
-  const edu_submit_id = useSelector((state) => state.education?.newData?.id);
-
 
   const educationListSelector = useSelector((state) => state.geteducationlist);
   function fetchPageDetails(getEducationListurl) {
@@ -100,6 +97,8 @@ export default function EducationPost({ nextcall, userId }) {
     const day = `0${date.getDate()}`.slice(-2);
     return `${year}-${month}-${day}`;
   };
+
+  const edu_submit_id = useSelector((state) => state.education?.newData?.id);
 
   useEffect(() => {
     if (edu_submit_id) {

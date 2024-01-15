@@ -105,9 +105,19 @@ function getShiftPolicyAction(payload) {
     contentType: contentType.json,
   };
 }
+
 function getWeekOffAction(payload) {
   return {
     type: API_CONSTANTS.GET_WEEK_OFF_LIST,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
+function getAllDropdownAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_ALL_DROPDOWN_LIST,
     payload: payload.payload,
     URL: payload.URL,
     contentType: contentType.json,
@@ -1314,6 +1324,7 @@ export {
   getUserRolePermissionAction,
   getShiftPolicyAction,
   getWeekOffAction,
+  getAllDropdownAction,
   addSalary,
   addCertificationAction,
   addUserSettingAction,

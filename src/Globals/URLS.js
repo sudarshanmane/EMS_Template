@@ -10,6 +10,7 @@ export const URLS = {
   GET_EDUCATION_LIST_URL: "/userhrms/api/v2/educationtypelist/",
   GET_SHIFT_POLICY_URL: "/company/api/v2/shiftPolicy/",
   GET_WEEK_OFF_URL: "/company/api/v2/weekoff/",
+  GET_ALL_DROPDOWN_URL: "/users/api/v2/getalluserlist/",
   GET_USERROLE_PERMISSION_URL: "/users/api/v2/userrolepermissionlist",
 
   GET_CURRENT_ROLE_URL: "/users/api/v2/getcurrentuserrole/",

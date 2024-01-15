@@ -48,9 +48,7 @@ export default function certification({ nextcall, userId }) {
     });
   };
 
-  const certificate_info = useSelector(
-    (state) => state.certificateinfo?.newData?.id
-  );
+  const certificate_info = useSelector((state) => state.certificateinfo?.newData?.id);
 
   useEffect(() => {
     if (certificate_info) {
@@ -86,7 +84,7 @@ export default function certification({ nextcall, userId }) {
                             }}
                             align="baseline"
                           >
-                            {console.log("key", key)}{" "}
+                         
                             <div className="row mt-4">
                               <div className="col-lg-12">
                                 <div className="card">
@@ -94,7 +92,7 @@ export default function certification({ nextcall, userId }) {
                                     <form action="#">
                                       <div className="row">
                                         <div className="col-sm-6">
-                                          <div className="input-block row">
+                                          <div className="input-block">
                                             <label className="col-form-label col-md-3">
                                               Course Name{" "}
                                               <span className="text-danger">

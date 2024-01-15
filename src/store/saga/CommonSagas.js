@@ -296,6 +296,27 @@ function* getWeekOff(action) {
   }
 }
 
+function* getAllDropdown(action) {
+  try {
+    let result = yield call(Method.getData, action);
+    if (
+      result.status === 202 ||
+      result.status === 201 ||
+      result.status === 200
+    ) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
 
 function* addSalaryRevision(action) {
   try {
@@ -2518,6 +2539,7 @@ export {
   getExpenseList,
   getShiftPolicy,
   getWeekOff,
+  getAllDropdown,
   addReportsubmit,
   addSelectedReport,
   updateReport,

@@ -136,13 +136,27 @@ export const RootReducer = (state = initialState, action) => {
         loding: true,
       };
 
-    case API_CONSTANTS.GET_WEEL_OFF_LIST_SUCCESS:
+    case API_CONSTANTS.GET_WEEK_OFF_LIST_SUCCESS:
       return {
         ...state,
         loding: false,
         weekoff: action.result,
       };
 
+      case API_CONSTANTS.GET_ALL_DROPDOWN_LIST:
+        return {
+          ...state,
+          loding: true,
+        };
+  
+      case API_CONSTANTS.GET_ALL_DROPDOWN_LIST_SUCCESS:
+        return {
+          ...state,
+          loding: false,
+          getalldropdown: action.result,
+        };
+
+        
     case API_CONSTANTS.GET_BRANCH_LIST:
       return {
         ...state,

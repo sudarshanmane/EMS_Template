@@ -142,6 +142,7 @@ import {
   addSelectedReport,
   getEducationList,
   getDesignationList,
+  getAllDropdown,
   
 
 } from "./CommonSagas";
@@ -160,6 +161,7 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.GET_USERROLE_PERMISSION, getUserRolePermission);
   yield takeEvery(API_CONSTANTS.GET_SHIFT_POLICY_LIST, getShiftPolicy);
   yield takeEvery(API_CONSTANTS.GET_WEEK_OFF_LIST, getWeekOff);
+  yield takeEvery(API_CONSTANTS.GET_ALL_DROPDOWN_LIST, getAllDropdown);
   yield takeEvery(API_CONSTANTS.ADD_SALARY, addSalaryRevision);
   yield takeEvery(API_CONSTANTS.ADD_CERTIFICATION, addCertification);
   yield takeEvery(API_CONSTANTS.ADD_USER_SETTING, addUserSetting);
