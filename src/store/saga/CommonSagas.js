@@ -514,7 +514,7 @@ function* getVendorDetails(action) {
 
 function* getVendorPayment(action) {
   try {
-    let result = yield call(Method.postData, action);
+    let result = yield call(Method.getData, action);
 
     if (result.status === 201) {
       yield put({
@@ -1030,7 +1030,7 @@ function* getVendor(action) {
 function* createVendor(action) {
   try {
     let result = yield call(Method.postData, action);
-    if (result.status === 201 || result.status === 200) {
+    if (result.status === 201) {
       yield put({
         type: `${action.type}_SUCCESS`,
         status: "ok",
@@ -1045,7 +1045,7 @@ function* createVendor(action) {
   }
 }
 
-function* deleteVendor(action) {
+function* deleteVendorTable(action) {
   try {
     let result = yield call(Method.deleteData, action);
     if (result.status === 204) {
@@ -1063,6 +1063,23 @@ function* deleteVendor(action) {
 }
 
 function* updateVendor(action) {
+  try {
+    let result = yield call(Method.putData, action);
+    if (result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* updateVendorTable(action) {
   try {
     let result = yield call(Method.putData, action);
     if (result.status === 200) {
@@ -2545,8 +2562,9 @@ export {
   rejectCard,
   getVendor,
   createVendor,
-  deleteVendor,
+  deleteVendorTable,
   updateVendor,
+  updateVendorTable,
   createTravel,
   getTravel,
   deleteTravel,

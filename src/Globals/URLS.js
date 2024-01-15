@@ -71,8 +71,12 @@ export const URLS = {
 
   CREATE_VENDOR_URL: "/api/version_0/expense/register_vendor/",
   GET_VENDOR_URL: "/api/version_0/expense/register_vendor/",
-  DELETE_VENDOR_URL: "/api/version_0/expense/vendor_payment/",
+
+  DELETE_VENDOR_TABLE_URL: "",
+  UPDATE_VENDOR_TABLE_URL: "",  
+
   UPDATE_VENDOR_URL: "/api/version_0/expense/vendor_payment/",
+
 
   CREATE_TRAVEL_URL: "/api/version_0/expense/request_travel/",
   GET_TRAVEL_URL: "/api/version_0/expense/request_travel/",

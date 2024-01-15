@@ -21,8 +21,7 @@ import {
 import { icon } from "@fortawesome/fontawesome-svg-core";
 
 const VendorPannel = () => {
-  // const url = URLS.GET_VENDOR_PAYMENT_URL;
-  const [url, setUrl] = useState(URLS.GET_VENDOR_URL);
+  const url = URLS.GET_VENDOR_URL;
   const dispatch = useDispatch(); 
   const [allVendor, setAllVendor] = useState([]);
   const [focused, setFocused] = useState(false);
@@ -102,7 +101,6 @@ const VendorPannel = () => {
  const [selectedId, setSelectedId] =  useState();
 
   const onRecord = (record) => {
-    console.log("aaaaaaaaaaaa", record);
     if (record && record.company_name && record.telephone) {
       setRecordPaymentData(record);
       setSelectedId(record.id)
@@ -110,58 +108,55 @@ const VendorPannel = () => {
       setValueRecord("telephone", record?.telephone);
     } else {
       console.error("Invalid record or missing required fields");
-      // Handle this situation accordingly
-
     }
   };
-
-  const onSubmit =  (values) => {
+  const onAddVendor =  (values) => {
     dispatch(createVendor(values));
-    dispatch(getVendor({ payload: {}, URL: url }));
     setIsAddFormVisible(false);
   };
 
   const onEdit = (record) => {
-    console.log("bbbbbbbbbbb", record);
     setIsEditFormVisible(true);
     setEditVendorData(record);
+    // setValue("id", record.id);
     setValue("company_name", record.company_name);
     setValue("telephone", record.telephone);
     setValue("mail_id", record.mail_id);
     setValue("website", record.website);
     setValue("fax", record.fax);
   };
-
   const onUpdate = (values) => {
-    dispatch(updateVendor({ id: editVendorData.id, payload: values }));
+    dispatch(updateVendorTable({ id: editVendorData.id, payload: values }));
     setIsEditFormVisible(false);
   };
+  const updatevendorSelector = useSelector((state) => state.updateVendorTable);
+  useEffect(() => {
+    if (updatevendorSelector) {
+      dispatch(getVendor({ payload: {}, URL: url }));
+    }
+    setIsAddFormVisible(false);
+  }, [updatevendorSelector]);
+
 
   const onSubmitRecord = (values) => {
    dispatch(createVendorPyment(values));
     values["vendor"] = selectedId
-    console.log("valuesvalues", values);
     setIsAddFormVisible(false);
-    // dispatch(getVendorPayment(values));
   };
-
   const onDelete = () => {
     const deletedVendorId = deleteVendorData.id;
-    dispatch(deleteVendor({ id: deletedVendorId }));
+    dispatch(deleteVendorTable({ id: deletedVendorId }));
     setIsDeleteConfirmationVisible(false);
 
     setAllVendor((prevItems) =>
       prevItems.filter((item) => item.id !== deletedVendorId)
     );
-
   };
-
   const viewVendor = (record) => {
     setViewVendorData(record);
     setIsAddFormVisible(false);
     navigate("/home/VendorPannel", { state: record });
   };
-
   function getPageDetails(url) {
     dispatch(getVendor({ payload: {}, URL: url }));
   }
@@ -209,14 +204,6 @@ const VendorPannel = () => {
       setIsAddFormVisible(false);
     }
   }, [createVendorSelector, submittedValues]);
-
-  const updatevendorSelector = useSelector((state) => state.updateVendorResult);
-  useEffect(() => {
-    if (updatevendorSelector) {
-      dispatch(getVendor({ payload: {}, URL: url }));
-    }
-    setIsAddFormVisible(false);
-  }, [updatevendorSelector]);
 
   const deleteVendorSelector = useSelector(
     (state) => state.deleteVendorSuccess
@@ -436,7 +423,7 @@ const VendorPannel = () => {
                 </button>
               </div>
               <div className="modal-body">
-                <form onSubmit={handleSubmit(onSubmit)}>
+                <form onSubmit={handleSubmit(onAddVendor)}>
                   <div className="input-block">
                     <div className="col-md-12">
                       <div className="input-block">

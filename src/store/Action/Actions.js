@@ -510,10 +510,10 @@ function getVendor(payload) {
   };
 }
 
-function deleteVendor(payload) {
+function deleteVendorTable(payload) {
   return {
-    type: API_CONSTANTS.DELETE_VENDOR,
-    URL: URLS.DELETE_VENDOR_URL + payload.id + "/",
+    type: API_CONSTANTS.DELETE_VENDOR_TABLE,
+    URL: URLS.DELETE_VENDOR_TABLE_URL + payload.id + "/",
     contentType: contentType.json,
   };
 }
@@ -526,6 +526,16 @@ function updateVendor(payload) {
     contentType: contentType.json,
   };
 }
+
+function updateVendorTable(payload) {
+  return {
+    type: API_CONSTANTS.UPDATE_VENDOR_TABLE,
+    payload: payload.payload,
+    URL: URLS.UPDATE_VENDOR_TABLE_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
 
 function createTravel(payload) {
   return {
@@ -557,7 +567,6 @@ function updateTravel(payload) {
   return {
     type: API_CONSTANTS.UPDATE_TRAVEL,
     payload: payload.payload,
-    URL: URLS.UPDATE_TRAVEL_URL + payload.id + "/",
     URL: URLS.UPDATE_TRAVEL_URL + payload.id + "/",
     contentType: contentType.json,
   };
@@ -1364,8 +1373,9 @@ export {
   rejectCard,
   createVendor,
   getVendor,
-  deleteVendor,
+  deleteVendorTable,
   updateVendor,
+  updateVendorTable,
   createTravel,
   getTravel,
   deleteTravel,

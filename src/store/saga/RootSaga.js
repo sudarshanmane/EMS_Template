@@ -54,8 +54,9 @@ import {
   rejectCard,
   createVendor,
   getVendor,
-  deleteVendor,
+  deleteVendorTable,
   updateVendor,
+  updateVendorTable,
   createTravel,
   getTravel,
   deleteTravel,
@@ -174,12 +175,9 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.GET_EXPENSE_LIST, getExpenseList);
   yield takeEvery(API_CONSTANTS.UPDATE_REPORT, updateReport);
   yield takeEvery(API_CONSTANTS.DELETE_REPORT, deleteReport);
-
   yield takeEvery(API_CONSTANTS.VIEW_REPORT, getReport);
 
-  yield takeEvery(API_CONSTANTS.VIEW_VENDOR, getVendorDetails);
-  yield takeEvery(API_CONSTANTS.GET_VENDOR_PAYMENT, getVendorPayment);
-  yield takeEvery(API_CONSTANTS.CREATE_VENDOR_PAYMENT, createVendorPayment);
+
 
   yield takeEvery(API_CONSTANTS.APPROVE_REPORT, approveReport);
   yield takeEvery(API_CONSTANTS.REJECT_REPORT, rejectReport);
@@ -211,10 +209,16 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.APPROVE_CARD, approveCard);
   yield takeEvery(API_CONSTANTS.REJECT_CARD, rejectCard);
 
+  yield takeEvery(API_CONSTANTS.VIEW_VENDOR, getVendorDetails);
+  yield takeEvery(API_CONSTANTS.GET_VENDOR_PAYMENT, getVendorPayment);
+  yield takeEvery(API_CONSTANTS.CREATE_VENDOR_PAYMENT, createVendorPayment);
+
   yield takeEvery(API_CONSTANTS.CREATE_VENDOR, createVendor);
   yield takeEvery(API_CONSTANTS.GET_VENDOR, getVendor);
-  yield takeEvery(API_CONSTANTS.DELETE_VENDOR, deleteVendor);
   yield takeEvery(API_CONSTANTS.UPDATE_VENDOR, updateVendor);
+  
+  yield takeEvery(API_CONSTANTS.DELETE_VENDOR, deleteVendorTable);
+  yield takeEvery(API_CONSTANTS.UPDATE_VENDOR, updateVendorTable);
 
   yield takeEvery(API_CONSTANTS.CREATE_TRAVEL, createTravel);
   yield takeEvery(API_CONSTANTS.GATE_TRAVEL, getTravel);

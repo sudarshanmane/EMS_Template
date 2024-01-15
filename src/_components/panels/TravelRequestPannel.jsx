@@ -66,19 +66,9 @@ const TravelRequestPannel = () => {
     setSubmittedValues(values);
     setIsAddFormVisible(false);
   };
-
-  const updatetravelSelector = useSelector((state) => state.updateTravelResult);
-  useEffect(() => {
-    if (updatetravelSelector) {
-      dispatch(getTravel({ payload: {}, URL: url }));
-    }
-    setIsAddFormVisible(false);
-  }, [updatetravelSelector]);
-
   const createTravelSelector = useSelector(
     (state) => state.createTravelSuccess
   );
-
   useEffect(() => {
     if (createTravelSelector && submittedValues) {
       const createdTravel = createTravelSelector;
@@ -90,6 +80,10 @@ const TravelRequestPannel = () => {
     }
   }, [createTravelSelector, submittedValues]);
 
+  const onUpdate = (values) => {
+    dispatch(updateTravel({ id: editTravelData.id, payload: values }));
+    setIsEditFormVisible(false);
+  };
   const onEdit = (record) => {
     setIsEditFormVisible(true);
     setEditTravelData(record);
@@ -99,27 +93,26 @@ const TravelRequestPannel = () => {
     setValue("to_date", record.to_date);
     setValue("estimated_budget", record.estimated_budget);
   };
+  const updatetravelSelector = useSelector((state) => state.updateTravelResult);
+  useEffect(() => {
+    if (updatetravelSelector) {
+      dispatch(getTravel({ payload: {}, URL: url }));
+    }
+    setIsAddFormVisible(false);
+  }, [updatetravelSelector]);
 
-  const onUpdate = (values) => {
-    dispatch(updateTravel({ id: editTravelData.id, payload: values }));
-    setIsEditFormVisible(false);
-  };
   function getPageDetails(url) {
     dispatch(getTravel({ payload: {}, URL: url }));
   }
-
   useEffect(() => {
     getPageDetails(url);
   }, []);
-
   function fetchPageDetials(url) {
     dispatch(getTravel({ payload: {}, URL: url }));
   }
-
   useEffect(() => {
     fetchPageDetials(url);
   }, []);
-
   const getTravelSelector = useSelector((state) => state.getTravelSuccess);
   useEffect(() => {
     if (getTravelSelector) {

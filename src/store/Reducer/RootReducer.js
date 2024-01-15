@@ -774,17 +774,17 @@ export const RootReducer = (state = initialState, action) => {
         getVendorSuccess: action.result,
       };
 
-    case API_CONSTANTS.DELETE_VENDOR:
+    case API_CONSTANTS.DELETE_VENDOR_TABLE:
       return {
         ...state,
         loding: true,
       };
 
-    case API_CONSTANTS.DELETE_VENDOR_SUCCESS:
+    case API_CONSTANTS.DELETE_VENDOR_TABLE_SUCCESS:
       return {
         ...state,
         loding: false,
-        deleteVendorSuccess: action.result,
+        deleteVendorTableSuccess: action.result,
       };
 
     case API_CONSTANTS.UPDATE_VENDOR:
@@ -799,7 +799,20 @@ export const RootReducer = (state = initialState, action) => {
         loding: false,
         updateVendorResult: action.result,
       };
-
+      
+      case API_CONSTANTS.UPDATE_VENDOR_TABLE:
+        return {
+          ...state,
+          loding: true,
+        };
+  
+      case API_CONSTANTS.UPDATE_VENDOR_TABLE_SUCCESS:
+        return {
+          ...state,
+          loding: false,
+          updateVendorTableResult: action.result,
+        };
+  
     case API_CONSTANTS.CREATE_TRAVEL:
       return {
         ...state,

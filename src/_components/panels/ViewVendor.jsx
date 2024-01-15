@@ -8,11 +8,10 @@ import { URLS } from "../../Globals/URLS";
 import { getVendorData } from "../../store/Action/Actions";
 
 import {
-  onShowSizeChange,
   itemRender,
 } from "../../MainPage/paginationfunction";
 import { formatDate } from "@fullcalendar/core";
-import { LogarithmicScale } from "chart.js";
+
 
 const ViewVendor = () => {
   const [allExpenses, setAllExpenses] = useState([]);
@@ -22,12 +21,9 @@ const ViewVendor = () => {
   const dispatch = useDispatch();
   const [editTravelData, setEditTravelData] = useState(null);
   const [allVendor, setAllVendor] = useState([]);
+  const [isAddFormVisible, setIsAddFormVisible] = useState(false);
+  const [isEditFormVisible, setIsEditFormVisible] = useState(false);
 
-  const url = URLS.VIEW_VENDOR_URL;
-//   const [tablePagination, setTablePagination] = useState({
-//     pageSize: 10,
-//     current: 1,
-//   });
 
   const {
     register: updateregister,
@@ -45,14 +41,21 @@ const ViewVendor = () => {
     setValue("due_amount", record?.due_amount);
     setValue("vendor_bill", record?.vendor_bill);
     setValue("amount", record?.amount);
-
   };
-
   const onUpdate = (values) => {
     dispatch(updateTravel({ id: editTravelData.id, payload: values }));
     setIsEditFormVisible(false);
   };
 
+  const updatetravelSelector = useSelector((state) => state.updateVendorResult);
+  useEffect(() => {
+    if (updatetravelSelector) {
+      dispatch(getTravel({ payload: {}, URL: url }));
+    }
+    setIsAddFormVisible(false);
+  }, [updatetravelSelector]);
+
+  
   const getVendorSelector = useSelector((state) => state.vendorDetails);
   useEffect(() => {
     if (getVendorSelector) {
@@ -80,23 +83,18 @@ const ViewVendor = () => {
       title: "Date",
       dataIndex: "date",
       key: "vendorpayment",
-      
-    //   sorter: (a, b) => a.start_date.length - b.start_date.length,
     },
     {
       title: "Paid Ammount",
       dataIndex: "paid_amount",
-    //   sorter: (a, b) => a.purchasefrom.length - b.purchasefrom.length,
     },
     {
       title: "Due Ammount",
       dataIndex: "due_amount",
-    //   sorter: (a, b) => a.purchasefrom.length - b.purchasefrom.length,
     },
     {
       title: "Amount",
       dataIndex: "amount",
-    //   sorter: (a, b) => a.amount.length - b.amount.length,
     },
     {
       title: "Bill",
@@ -104,7 +102,6 @@ const ViewVendor = () => {
       render: (record) =>  {
         return record ? <a href={URLS.BASE_URL_EXPORT + record} target="_blank"><img style={{width:"30px"}} src={URLS.BASE_URL_EXPORT + record} alt="" /></a> : ""
       },
-    //   sorter: (a, b) => a.amount.length - b.amount.length,
     },
     {
       title: "Action",
@@ -213,7 +210,7 @@ const ViewVendor = () => {
           </Modal>
 
           {/* Edit Vendor Payment Modal */}
-          {/* <div id="edit_travel" className="modal custom-modal fade" role="dialog">
+          <div id="edit_vendor" className="modal custom-modal fade" role="dialog">
           <div
             className="modal-dialog modal-dialog-centered modal-md"
             role="document"
@@ -340,7 +337,7 @@ const ViewVendor = () => {
               </div>
             </div>
           </div>
-        </div> */}
+        </div>
           {/* /Edit Vendor Payment Modal End */}
 
           {/* Payment Details  */}
