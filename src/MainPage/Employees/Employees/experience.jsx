@@ -2,35 +2,73 @@ import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { Form } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { addExperienceAction } from "../../../store/Action/Actions";
+import {
+  addExperienceAction,
+  getDesignationAction,
+} from "../../../store/Action/Actions";
+import { URLS } from "../../../Globals/URLS";
+import { useForm } from "react-hook-form";
 
 export default function experience({ nextcall, userId }) {
+  const id = userId;
   const dispatch = useDispatch();
-
+  const getDesignationListurl = URLS.GET_DESIGNATION_LIST_URL;
   const [selectedFile, setSelectedFile] = useState(null);
   const [salaryFile, setSalaryFile] = useState(null);
+
+  const {
+    register,
+    control,
+    formState: { errors },
+  } = useForm({});
 
   const addPersonalInformationSelector = useSelector(
     (state) => state.addexperience
   );
 
+  const designationListSelector = useSelector(
+    (state) => state.getdesignation
+  );
+
+  function fetchPageDetails(getDesignationListurl) {
+    dispatch(getDesignationAction({ payload: {}, URL: getDesignationListurl }));
+  }
+
+  useEffect(() => {
+    fetchPageDetails(getDesignationListurl);
+  }, []);
+
+  function fetchDesignationListData(getDesignationListurl) {
+    dispatch(getDesignationAction({ payload: {}, URL: getDesignationListurl }));
+  }
+
+  useEffect(() => {
+    fetchDesignationListData(getDesignationListurl);
+  }, []);
+
   const onFinish = (values) => {
-    dispatch(addExperienceAction(values));
+    
     values?.users?.forEach((user, index) => {
-      console.log("individual data", user);
       const formData = new FormData();
 
-      // Append fields to formData
       formData.append("user_id", userId);
       formData.append("company_name", user.company_name);
       formData.append("designation", user.designation);
-
       formData.append("relieving_letter", selectedFile);
       formData.append("salary_slip", salaryFile);
       formData.append("comments", user.comments || "");
       formData.append("year_of_experience", user.year_of_experience || "");
+      dispatch(addExperienceAction(formData));
     });
   };
+
+  const exp_info = useSelector((state) => state.experienceinfo?.newData?.id);
+
+  useEffect(() => {
+    if (exp_info) {
+      nextcall();
+    }
+  }, [exp_info]);
 
   return (
     <>
@@ -96,17 +134,44 @@ export default function experience({ nextcall, userId }) {
                                       </div>
                                     </div>
                                   </div>
-                                  <div className="col-sm-6">
+                                  {/* <div className="col-sm-6">
+                                    <div className="input-block row">
+                                      <label className="col-form-label col-md-3">
+                                        Designation{" "}
+                                        <span className="text-danger">*</span>
+                                      </label>
+
+                                      <div className="col-md-9">
+                                        <select
+                                          className="form-control"
+                                          {...register("designation")}
+                                        >
+                                          <option value="">
+                                            Select Designation
+                                          </option>
+                                          {designationListSelector?.map(
+                                            (data) => {
+                                              return (
+                                                <option value={data.id}>
+                                                  {data.designation}
+                                                </option>
+                                              );
+                                            }
+                                          )}
+                                        </select>
+                                        <div className="text-danger">
+                                          {errors.designation?.message}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div> */}
+                                   <div className="col-sm-6">
                                     <div className="input-block row">
                                       <label className="col-form-label col-md-3">
                                         Designation{" "}
                                         <span className="text-danger">*</span>
                                       </label>
                                       <div className="col-md-9">
-                                        {/* <input
-                                          type="text"
-                                          className="form-control"
-                                        /> */}
                                         <Form.Item
                                           {...restField}
                                           name={[name, "designation"]}
@@ -124,13 +189,13 @@ export default function experience({ nextcall, userId }) {
                                               {" "}
                                               Select Designation{" "}
                                             </option>
-                                            {/* {desigData?.map((data) => {
+                                            {designationListSelector?.map((data) => {
                                               return (
                                                 <option value={data?.id}>
                                                   {data?.designation}
                                                 </option>
                                               );
-                                            })} */}
+                                            })}
                                           </select>
                                         </Form.Item>
                                       </div>

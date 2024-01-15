@@ -97,6 +97,33 @@ function getUserRolePermissionAction(payload) {
   };
 }
 
+function getShiftPolicyAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_SHIFT_POLICY_LIST,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
+function getWeekOffAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_WEEK_OFF_LIST,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
+function getAllDropdownAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_ALL_DROPDOWN_LIST,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
 function addSalary(payload) {
   return {
     type: API_CONSTANTS.ADD_SALARY,
@@ -105,7 +132,6 @@ function addSalary(payload) {
     contentType: contentType.form,
   };
 }
-
 
 function addCertificationAction(payload) {
   return {
@@ -128,7 +154,7 @@ function addUserSettingAction(payload) {
 function addPersonalInformationAction(payload) {
   return {
     type: API_CONSTANTS.ADD_PERSONAL_INFORMATION,
-    payload,
+    payload: payload,
     URL: URLS.ADD_PERSONAL_INFORMATION_URL,
     contentType: contentType.json,
   };
@@ -170,7 +196,6 @@ function addSelectedReport(payload) {
   };
 }
 
-
 function getReportList(payload) {
   return {
     type: API_CONSTANTS.GET_REPORT_LIST,
@@ -180,6 +205,16 @@ function getReportList(payload) {
   };
 }
 
+function getEducationList(payload) {
+  return {
+    type: API_CONSTANTS.GET_EDUCATION_LIST,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
+
 function getApprovedReportList(payload) {
   return {
     type: API_CONSTANTS.GET_APPROVED_REPORT_LIST,
@@ -188,7 +223,6 @@ function getApprovedReportList(payload) {
     contentType: contentType.json,
   };
 }
-
 
 function getExpenseList(payload) {
   return {
@@ -510,13 +544,13 @@ function getVendor(payload) {
   };
 }
 
-function deleteVendorTable(payload) {
-  return {
-    type: API_CONSTANTS.DELETE_VENDOR_TABLE,
-    URL: URLS.DELETE_VENDOR_TABLE_URL + payload.id + "/",
-    contentType: contentType.json,
-  };
-}
+// function deleteVendorTable(payload) {
+//   return {
+//     type: API_CONSTANTS.DELETE_VENDOR_TABLE,
+//     URL: URLS.DELETE_VENDOR_TABLE_URL + payload.id + "/",
+//     contentType: contentType.json,
+//   };
+// }
 
 function updateVendor(payload) {
   return {
@@ -527,14 +561,14 @@ function updateVendor(payload) {
   };
 }
 
-function updateVendorTable(payload) {
-  return {
-    type: API_CONSTANTS.UPDATE_VENDOR_TABLE,
-    payload: payload.payload,
-    URL: URLS.UPDATE_VENDOR_TABLE_URL + payload.id + "/",
-    contentType: contentType.json,
-  };
-}
+// function updateVendorTable(payload) {
+//   return {
+//     type: API_CONSTANTS.UPDATE_VENDOR_TABLE,
+//     payload: payload.payload,
+//     URL: URLS.UPDATE_VENDOR_TABLE_URL + payload.id + "/",
+//     contentType: contentType.json,
+//   };
+// }
 
 
 function createTravel(payload) {
@@ -772,7 +806,6 @@ function contactUsPage(payload) {
   };
 }
 
-
 function getCompanyList(payload) {
   return {
     type: API_CONSTANTS.GET_COMPANY_LIST,
@@ -833,7 +866,6 @@ function getaccountingcodePanelAction(payload) {
     contentType: contentType.json,
   };
 }
-
 
 function applyCardAction(payload) {
   return {
@@ -1330,11 +1362,15 @@ export {
   getBranchAction,
   getEmploymentTypeAction,
   getUserRolePermissionAction,
+  getShiftPolicyAction,
+  getWeekOffAction,
+  getAllDropdownAction,
   addSalary,
   addCertificationAction,
   addUserSettingAction,
   addPersonalInformationAction,
   addEducationAction,
+  getEducationList,
   addExperienceAction,
   addReport,
   addSelectedReport,
@@ -1373,9 +1409,9 @@ export {
   rejectCard,
   createVendor,
   getVendor,
-  deleteVendorTable,
+  // deleteVendorTable,
   updateVendor,
-  updateVendorTable,
+  // updateVendorTable,
   createTravel,
   getTravel,
   deleteTravel,

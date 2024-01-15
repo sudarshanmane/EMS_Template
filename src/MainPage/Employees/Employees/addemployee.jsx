@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "../../../initialpage/Sidebar/sidebar";
 import Header from "../../../initialpage/Sidebar/header";
 import Offcanvas from "../../../Entryfile/offcanvance";
@@ -12,6 +12,7 @@ import {
   Badge,
   Button,
 } from "react-bootstrap";
+
 import { BsCheck } from "react-icons/bs";
 import Educationform from "./educationform";
 import Experience from "./experience";
@@ -20,6 +21,7 @@ import Certification from "./certification";
 import UserRegistrationSetting from "./userRegistrationSetting";
 import UserRegistration from "./userRegistration";
 import PersonalInformation from "./PersonalInformation";
+import { getUserRegistrationId } from "../../../utils/sessionStorage";
 
 const steps = [
   "User Registration",
@@ -36,6 +38,15 @@ const Addemployees = () => {
   const [userId, setUserId] = useState();
   const [currentStep, setCurrentStep] = useState(1);
 
+  useEffect(() => {
+    if (!userId) {
+      if (getUserRegistrationId()) {
+        setCurrentStep(1);
+        setUserId(getUserRegistrationId().id);
+      } else {
+      }
+    }
+  }, []); //
 
   const toggleMobileMenu = () => {
     setMenu(!menu);
@@ -66,7 +77,6 @@ const Addemployees = () => {
     alert("Form Submitted!");
     setCurrentStep(1);
   };
-
 
   return (
     <>

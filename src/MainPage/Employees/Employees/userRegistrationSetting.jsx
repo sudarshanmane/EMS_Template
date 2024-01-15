@@ -5,13 +5,25 @@ import { yupResolver } from "@hookform/resolvers/yup/dist/yup.js";
 import * as Yup from "yup";
 import { Select } from "antd";
 import { Controller, useForm } from "react-hook-form";
+import { URLS } from "../../../Globals/URLS";
+import {
+  addUserSettingAction,
+  getAllDropdownAction,
+  getShiftPolicyAction,
+  getWeekOffAction,
+} from "../../../store/Action/Actions";
 
 const stepSchema = Yup.object().shape({
-  shift_policy: Yup.string().required("Shift policy is Required"),
-  weekly_off: Yup.string().required(" Weekly off is Required"),
+  // shift_policy: Yup.string().required("Shift policy is Required"),
+  // weekly_off: Yup.string().required(" Weekly off is Required"),
 });
 
 export default function UserRegistrationSetting({ nextcall, userId }) {
+  const id = userId;
+  const getShiftPolicyurl = URLS.GET_SHIFT_POLICY_URL;
+  const getWeekOffurl = URLS.GET_WEEK_OFF_URL;
+  const getAllDropdownurl = URLS.GET_ALL_DROPDOWN_URL;
+
   const {
     register,
     handleSubmit,
@@ -26,11 +38,100 @@ export default function UserRegistrationSetting({ nextcall, userId }) {
 
   const dispatch = useDispatch();
 
+  const shiftPolicySelector = useSelector((state) => state.shiftpolicy);
+  console.log("shiftPolicySelector",shiftPolicySelector)
+  function fetchPageDetails(getShiftPolicyurl) {
+    dispatch(getShiftPolicyAction({ payload: {}, URL: getShiftPolicyurl }));
+  }
+
+  useEffect(() => {
+    fetchPageDetails(getShiftPolicyurl);
+  }, []);
+
+  function fetchShiftPolicyData(getShiftPolicyurl) {
+    dispatch(getShiftPolicyAction({ payload: {}, URL: getShiftPolicyurl }));
+  }
+
+  useEffect(() => {
+    fetchShiftPolicyData(getShiftPolicyurl);
+  }, []);
+
+  const weekOffSelector = useSelector((state) => state.weekoff);
+  console.log("weekOffSelector",weekOffSelector)
+
+  function fetchPageDetails(getWeekOffurl) {
+    dispatch(getWeekOffAction({ payload: {}, URL: getWeekOffurl }));
+  }
+
+  useEffect(() => {
+    fetchPageDetails(getWeekOffurl);
+  }, []);
+
+  function fetchWeekOffData(getWeekOffurl) {
+    dispatch(getWeekOffAction({ payload: {}, URL: getWeekOffurl }));
+  }
+
+  useEffect(() => {
+    fetchWeekOffData(getWeekOffurl);
+  }, []);
+
+  const allDropdownSelector = useSelector((state) => state.getalldropdown);
+  function fetchPageDetails(getAllDropdownurl) {
+    dispatch(getAllDropdownAction({ payload: {}, URL: getAllDropdownurl }));
+  }
+
+  useEffect(() => {
+    fetchPageDetails(getAllDropdownurl);
+  }, []);
+
+  function fetchAllDropdownData(getAllDropdownurl) {
+    dispatch(getAllDropdownAction({ payload: {}, URL: getAllDropdownurl }));
+  }
+
+  useEffect(() => {
+    fetchAllDropdownData(getAllDropdownurl);
+  }, []);
+
   const addSettingSelector = useSelector((state) => state.addusersetting);
 
-  const onSubmit = (addSettingSelector) => {
-    dispatch(addUserSettingAction(addSettingSelector));
+  const onSubmit = (data) => {
+    console.log("submit data", data);
+
+    const leaveAcceptAccessValues = data?.leave_accept_access?.map(
+      (option) => option
+    );
+    const compOffAccessValues = data?.comp_off_access?.map((option) => option);
+    const attendanceReconciliationValues =
+      data?.attendance_reconciliation_accept_access?.map((option) => option);
+    const outstationAcceptAccessValues = data?.outstation_accept_access?.map(
+      (option) => option
+    );
+
+    setValue("leave_accept_access", leaveAcceptAccessValues);
+    setValue("comp_off_access", compOffAccessValues);
+    setValue(
+      "attendance_reconciliation_accept_access",
+      attendanceReconciliationValues
+    );
+    setValue("outstation_accept_access", outstationAcceptAccessValues);
+    setValue("user_id", userId);
+
+    dispatch(addUserSettingAction(data));
   };
+
+  const userOptions =
+    allDropdownSelector?.data?.map((user) => ({
+      value: user.id,
+      label: user.full_name,
+    })) || [];
+
+  const setting_info = useSelector((state) => state.settinginfo?.newData?.id);
+
+  useEffect(() => {
+    if (setting_info) {
+      nextcall();
+    }
+  }, [setting_info]);
 
   return (
     <>
@@ -47,22 +148,26 @@ export default function UserRegistrationSetting({ nextcall, userId }) {
                   <div className="col-sm-6">
                     <div className="input-block row">
                       <label className="col-form-label col-md-3">
-                        Shift Policy
+                        Shift Policy{" "}
+                         <span className="text-danger">*</span>
                       </label>
+
                       <div className="col-md-9">
                         <select
                           className="form-control"
                           {...register("shift_policy")}
                         >
-                          <option value=""> Select Shift Policy </option>
-                          {/* {shiftPolicy_dropdown?.map((data) => {
+                          <option value="">Select Shift Policy</option>
+                          {shiftPolicySelector?.map((data) => {
                             return (
-                              <option value={data.id}>{data.shift_code}</option>
+                              <option value={data.id}>
+                                {data.shift_policy}
+                              </option>
                             );
-                          })} */}
+                          })}
                         </select>
                         <div className="text-danger">
-                          {errors.shift_policy?.message}
+                          {errors.shiftPolicy?.message}
                         </div>
                       </div>
                     </div>
@@ -70,24 +175,23 @@ export default function UserRegistrationSetting({ nextcall, userId }) {
                   <div className="col-sm-6">
                     <div className="input-block row">
                       <label className="col-form-label col-md-3">
-                        Weekly Off
+                        Week Off <span className="text-danger">*</span>
                       </label>
+
                       <div className="col-md-9">
                         <select
                           className="form-control"
                           {...register("weekly_off")}
                         >
-                          <option value=""> Select Weekly Off </option>
-                          {/* {weekoff_dropdown?.map((data) => {
+                          <option value="">Select Week Off</option>
+                          {weekOffSelector?.map((data) => {
                             return (
-                              <option value={data.id}>
-                                {data.weekly_off_code}
-                              </option>
+                              <option value={data.id}>{data.weekly_off}</option>
                             );
-                          })} */}
+                          })}
                         </select>
                         <div className="text-danger">
-                          {errors.weekly_off?.message}
+                          {errors.weeklyOff?.message}
                         </div>
                       </div>
                     </div>
@@ -107,16 +211,14 @@ export default function UserRegistrationSetting({ nextcall, userId }) {
                           render={({ field }) => (
                             <Select
                               id="dropdown"
-                              // options={userOptions}
-                              isMulti
+                              className="d-block h-42"
+                              options={userOptions}
+                              mode="multiple"
                               isSearchable={true}
                               placeholder="Search options..."
-                              // onChange={handleBranchChange}
                               value={field.value}
                               onChange={(value) => {
-                                // const selectedValues = value.map(
-                                //   (option) => option.value
-                                // );
+                                console.log("Leave value", value);
                                 field.onChange(value);
                               }}
                             />
@@ -140,13 +242,15 @@ export default function UserRegistrationSetting({ nextcall, userId }) {
                           render={({ field }) => (
                             <Select
                               id="dropdown"
-                              // options={userOptions}
-                              isMulti
+                              className="d-block h-42"
+                              options={userOptions}
+                              mode="multiple"
                               isSearchable={true}
                               placeholder="Search options..."
-                              // onChange={handleBranchChange}
                               value={field.value}
-                              onChange={(value) => field.onChange(value)}
+                              onChange={(value) => {
+                                field.onChange(value);
+                              }}
                             />
                           )}
                         />
@@ -171,13 +275,15 @@ export default function UserRegistrationSetting({ nextcall, userId }) {
                           render={({ field }) => (
                             <Select
                               id="dropdown"
-                              // options={userOptions}
-                              isMulti
+                              className="d-block h-42"
+                              options={userOptions}
+                              mode="multiple"
                               isSearchable={true}
                               placeholder="Search options..."
-                              // onChange={handleBranchChange}
                               value={field.value}
-                              onChange={(value) => field.onChange(value)}
+                              onChange={(value) => {
+                                field.onChange(value);
+                              }}
                             />
                           )}
                         />
@@ -202,13 +308,15 @@ export default function UserRegistrationSetting({ nextcall, userId }) {
                           render={({ field }) => (
                             <Select
                               id="dropdown"
-                              // options={userOptions}
-                              isMulti
+                              className="d-block h-42"
+                              options={userOptions}
+                              mode="multiple"
                               isSearchable={true}
                               placeholder="Search options..."
-                              // onChange={handleBranchChange}
                               value={field.value}
-                              onChange={(value) => field.onChange(value)}
+                              onChange={(value) => {
+                                field.onChange(value);
+                              }}
                             />
                           )}
                         />
@@ -602,70 +710,14 @@ export default function UserRegistrationSetting({ nextcall, userId }) {
                   <div className="col-sm-2">
                     <h4>Outstation</h4>
                   </div>
-
-                  <div className="col-sm-2">
-                    {/* <Controller
-                      name="is_hr_verify" // Provide a unique name for the field
-                      control={control}
-                      defaultValue={true} // Set the default value
-                      render={({ field }) => (
-                        <div className="onoffswitch">
-                          <input
-                            type="checkbox"
-                            className="onoffswitch-checkbox"
-                            id="is_hr_verify"
-                            defaultChecked
-                            {...field}
-                          />
-                          <label
-                            className="onoffswitch-label"
-                            htmlFor="is_hr_verify"
-                          >
-                            <span className="onoffswitch-inner" />
-                            <span className="onoffswitch-switch" />
-                          </label>
-                        </div>
-                      )}
-                    /> */}
-                  </div>
-                  <div className="col-sm-2">{/* <h4>Is Hr Verify</h4> */}</div>
-
-                  <div className="col-sm-2">
-                    {/* <Controller
-                      name="hr_rejection" // Provide a unique name for the field
-                      control={control}
-                      defaultValue={true} // Set the default value
-                      render={({ field }) => (
-                        <div className="onoffswitch">
-                          <input
-                            type="checkbox"
-                            className="onoffswitch-checkbox"
-                            id="hr_rejection"
-                            defaultChecked
-                            {...field}
-                          />
-                          <label
-                            className="onoffswitch-label"
-                            htmlFor="hr_rejection"
-                          >
-                            <span className="onoffswitch-inner" />
-                            <span className="onoffswitch-switch" />
-                          </label>
-                        </div>
-                      )}
-                    /> */}
-                  </div>
-                  <div className="col-sm-2">{/* <h4>Hr Rejection</h4> */}</div>
                 </div>
 
                 <Button
                   variant="primary"
                   type="submit"
                   style={{ float: "right" }}
-                  // onClick={handleNextFunction}
                 >
                   Save
-                  {/* {buttonText} */}
                 </Button>
               </form>
             </div>

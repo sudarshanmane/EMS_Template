@@ -8,6 +8,7 @@ import { format } from "date-fns";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup.js";
 import * as Yup from "yup";
 import { addPersonalInformationAction } from "../../../store/Action/Actions";
+import { getUserRegistrationId } from "../../../utils/sessionStorage";
 
 const stepSchema = Yup.object().shape({
   gender: Yup.string().required("Gender is required"),
@@ -45,12 +46,13 @@ export default function PersonalInformation({ nextcall, userId }) {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(stepSchema),
-   
   });
 
   const dispatch = useDispatch();
+  let newUserId = getUserRegistrationId().id;
 
- 
+  console.log("newUserIdnewUserIdnewUserId", newUserId);
+
   const options = [
     { value: "A+", label: "A+" },
     { value: "A-", label: "A-" },
@@ -75,17 +77,28 @@ export default function PersonalInformation({ nextcall, userId }) {
     { value: "unmarried", label: "Unmarried" },
   ];
 
-  const addPersonalInformationSelector = useSelector((state) => state.addpersonalinformation);
-
-  const onSubmit = (values) => {
-   dispatch(addPersonalInformationAction(values))
+  const addPersonalInformationSelector = useSelector(
+    (state) => state.addpersonalinformation
+  );
+  const per_info = useSelector((state) => state.personalinfo?.newData?.id);
+  const onSubmit = (data) => {
+    const formDataWithUserId = {
+      ...data,
+      user_id: newUserId,
+    };
+    dispatch(addPersonalInformationAction(formDataWithUserId));
   };
 
   useEffect(() => {
     reset();
   }, []);
 
- 
+  useEffect(() => {
+    if (per_info) {
+      nextcall();
+    }
+  }, [per_info]);
+
   return (
     <>
       {" "}
@@ -96,7 +109,6 @@ export default function PersonalInformation({ nextcall, userId }) {
               <h4 className="card-title mb-0">Personal Information</h4>
             </div>
             <div className="card-body">
-             
               <form
                 onSubmit={handleSubmit(onSubmit)}
                 encType="multipart/form-data"
@@ -159,7 +171,6 @@ export default function PersonalInformation({ nextcall, userId }) {
                       <div className="col-md-9">
                         <input
                           type="text"
-                        
                           className="form-control"
                           {...register("father_name")}
                         />
@@ -225,19 +236,18 @@ export default function PersonalInformation({ nextcall, userId }) {
                               >
                                 <i class="fa-regular fa-calendar"></i>
                               </span>
-                            <DatePicker
-                              selected={
-                                field.value ? new Date(field.value) : null
-                              }
-                              onChange={(date) =>
-                                field.onChange(
-                                  date ? format(date, "yyyy-MM-dd") : ""
-                                )
-                              }
-                              className="form-control datetimepicker"
-                              dateFormat="yyyy-MM-dd"
-                            />
-                             
+                              <DatePicker
+                                selected={
+                                  field.value ? new Date(field.value) : null
+                                }
+                                onChange={(date) =>
+                                  field.onChange(
+                                    date ? format(date, "yyyy-MM-dd") : ""
+                                  )
+                                }
+                                className="form-control datetimepicker"
+                                dateFormat="yyyy-MM-dd"
+                              />
                             </div>
                           )}
                         />
@@ -333,7 +343,7 @@ export default function PersonalInformation({ nextcall, userId }) {
                 </div>
 
                 <div className="card-header">
-                <h4 className="card-title mb-0">Identity Information</h4>
+                  <h4 className="card-title mb-0">Identity Information</h4>
                 </div>
 
                 <div className="row mt-4">
@@ -475,7 +485,6 @@ export default function PersonalInformation({ nextcall, userId }) {
                   variant="primary"
                   type="submit"
                   style={{ float: "right" }}
-          
                 >
                   Save
                 </Button>

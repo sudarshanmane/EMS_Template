@@ -7,6 +7,10 @@ export const URLS = {
   GET_DESIGNATION_LIST_URL: "/users/api/v2/designationlist/",
   GET_EMPLOYMENT_TYPE_LIST_URL: "/users/api/v2/employementtypelist/",
   GET_BRANCH_LIST_URL: "/company/api/v2/branch/",
+  GET_EDUCATION_LIST_URL: "/userhrms/api/v2/educationtypelist/",
+  GET_SHIFT_POLICY_URL: "/company/api/v2/shiftPolicy/",
+  GET_WEEK_OFF_URL: "/company/api/v2/weekoff/",
+  GET_ALL_DROPDOWN_URL: "/users/api/v2/getalluserlist/",
   GET_USERROLE_PERMISSION_URL: "/users/api/v2/userrolepermissionlist",
 
   GET_CURRENT_ROLE_URL: "/users/api/v2/getcurrentuserrole/",
@@ -16,10 +20,9 @@ export const URLS = {
   ADD_CERTIFICATION_URL: "/userhrms/api/v2/certificate/",
   ADD_USER_SETTING_URL: "/userhrms/api/v2/usersettings/",
   ADD_PERSONAL_INFORMATION_URL: "/userhrms/api/v2/UserPersonalInformationpost/",
-  ADD_EDUCATION_URL: "/userhrms/api/v2/usersettings/",
-  ADD_EXPERIENCE_URL: "/userhrms/api/v2/usersettings/",
+  ADD_EDUCATION_URL: "/userhrms/api/v2/educationpost/",
+  ADD_EXPERIENCE_URL: "/userhrms/api/v2/userexperience/",
   CHANGE_PASSWORD_URL: "/users/api/v2/changepassword/",
-
 
   APPROVE_EXPENSE_URL: "/api/version_0/expense/approve-expense/",
   REJECT_EXPENSE_URL: "/api/version_0/expense/reject-expense/",

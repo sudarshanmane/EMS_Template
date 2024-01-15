@@ -11,7 +11,6 @@ import {
   addExperience,
   getDepartment,
   getDesignation,
-  getBranch,
   getUserRolePermission,
   getEmploymentType,
   addEducation,
@@ -21,8 +20,6 @@ import {
   addReportsubmit,
   getReportList,
   getApprovedReportList,
-  
-
   
   getExpenseList,
   updateReport,
@@ -54,88 +51,17 @@ import {
   rejectCard,
   createVendor,
   getVendor,
-  deleteVendorTable,
+  // deleteVendorTable,
   updateVendor,
-  updateVendorTable,
+  // updateVendorTable, 
   createTravel,
   getTravel,
   deleteTravel,
   addreimbursementRecord,
   rejectReportByAccount,
-
-
-  // =======================================
-  Updateuserprofile,
-  addExpenseItem,
-  addExpenseType,
-  addExternalcodeType,
-  addUser,
-  accountingCodeSubmit,
-  getParentTypelist,
-  getItemNameList,
-  itemizationsubmit,
-  AddExpesnesubmit,
-  getManagerList,
-  addRole,
-  getAccountingCodeList,
-  getExpenseTypePanel,
-  getExternalAccountPanel,
-  AboutUs,
-  ContactUs,
-  AboutUsPage,
-  ContactUsPage,
-  GetCompanyList,
-  UpdateCompanyList,
-  getAddUserPanel,
-  getExpenseItemSetupPanel,
-  itemizationPanel,
-  accountingCodePanel,
-  expensePanelList,
-  searchExpenseType,
-  searchExternalAccountCode,
-  UpdateExpenseItemSetup,
-  updateExpenseType,
-  updateUser,
-  // updateExternalAccountCode,
-  UpdateAccountcodePanel,
-
-  // UpdateExpenseIemaiztaion,
-  UpdateExpenseItemization,
-  UpdateExpenseList,
-  TableExpenseSubmitTrue,
-  rejectExpensemanager,
-  holdExpensemanager,
-  approvedbuttonExpensemanager,
-  Expenseapprovedpanel,
-  exportbuttonAccountingCode,
-  financemanagerexpenselist,
-  financemanagerreject,
-  financemanagerhold,
-  financemanagerapprove,
-  accountAddByFinanceManager,
-  getUserRolePermissions,
-  postCommonGenerator,
+  getShiftPolicy,
+  getWeekOff,
   getCommonGenerator,
-  putCommonGenerator,
-  commonDeleteRole,
-  addEmployeeAccountNumber,
-  updateExternalAccountCode,
-  exportExpenseType,
-  exportExpenseItemSetup,
-  exportExternalAccountCode,
-  exportUser,
-  exportFinanceManagerList,
-  getfinancemanagerdropdown,
-  exportCategoryList,
-  exportItemizationList,
-  exportexpenseList,
-  exportexpenseapprovedList,
-  ownExpenseDraftList,
-  ownExpenseHoldList,
-  ownExpenseRejectList,
-  commanmanagercardlidtfunction,
-  ownExpenseApproveList,
-  exportCompanypanel,
   createCategoryItem,
   updateTravel,
   rejectExpense,
@@ -143,6 +69,11 @@ import {
   getAllUser,
   addAllUser,
   addSelectedReport,
+  getEducationList,
+  getAllDropdown,
+  
+  // =======================================
+ 
 
 } from "./CommonSagas";
 
@@ -158,6 +89,9 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.GET_DESIGNATION_LIST, getDesignation);
   yield takeEvery(API_CONSTANTS.GET_BRANCH_LIST, getCommonGenerator);
   yield takeEvery(API_CONSTANTS.GET_USERROLE_PERMISSION, getUserRolePermission);
+  yield takeEvery(API_CONSTANTS.GET_SHIFT_POLICY_LIST, getShiftPolicy);
+  yield takeEvery(API_CONSTANTS.GET_WEEK_OFF_LIST, getWeekOff);
+  yield takeEvery(API_CONSTANTS.GET_ALL_DROPDOWN_LIST, getAllDropdown);
   yield takeEvery(API_CONSTANTS.ADD_SALARY, addSalaryRevision);
   yield takeEvery(API_CONSTANTS.ADD_CERTIFICATION, addCertification);
   yield takeEvery(API_CONSTANTS.ADD_USER_SETTING, addUserSetting);
@@ -165,9 +99,9 @@ export function* RootSaga() {
     API_CONSTANTS.ADD_PERSONAL_INFORMATION,
     addPersonalInformation
   );
+  yield takeEvery(API_CONSTANTS.GET_EDUCATION_LIST, getEducationList);
   yield takeEvery(API_CONSTANTS.ADD_EDUCATION, addEducation);
   yield takeEvery(API_CONSTANTS.ADD_EXPERIENCE, addExperience);
-
   yield takeEvery(API_CONSTANTS.ADD_REPORT, addReportsubmit);
   yield takeEvery(API_CONSTANTS.ADD_SELECTED_REPORT, addSelectedReport);
   yield takeEvery(API_CONSTANTS.GET_REPORT_LIST, getReportList);
@@ -217,8 +151,8 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.GET_VENDOR, getVendor);
   yield takeEvery(API_CONSTANTS.UPDATE_VENDOR, updateVendor);
   
-  yield takeEvery(API_CONSTANTS.DELETE_VENDOR, deleteVendorTable);
-  yield takeEvery(API_CONSTANTS.UPDATE_VENDOR, updateVendorTable);
+  // yield takeEvery(API_CONSTANTS.DELETE_VENDOR, deleteVendorTable);
+  // yield takeEvery(API_CONSTANTS.UPDATE_VENDOR, updateVendorTable);
 
   yield takeEvery(API_CONSTANTS.CREATE_TRAVEL, createTravel);
   yield takeEvery(API_CONSTANTS.GATE_TRAVEL, getTravel);
@@ -230,5 +164,4 @@ export function* RootSaga() {
 
   // ============================================================
 
-  yield takeEvery(API_CONSTANTS.EXPORT_COMPANY_PANEL, exportCompanypanel);
 }

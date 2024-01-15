@@ -8,7 +8,6 @@ const initialState = {
   email: "",
   mobile: "",
   changePasswordError: null,
-  // getbranchlist: [],
 };
 
 export const RootReducer = (state = initialState, action) => {
@@ -118,6 +117,46 @@ export const RootReducer = (state = initialState, action) => {
         getdesignation: action.result,
       };
 
+    case API_CONSTANTS.GET_SHIFT_POLICY_LIST:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_SHIFT_POLICY_LIST_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        shiftpolicy: action.result,
+      };
+
+    case API_CONSTANTS.GET_WEEK_OFF_LIST:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_WEEK_OFF_LIST_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        weekoff: action.result,
+      };
+
+      case API_CONSTANTS.GET_ALL_DROPDOWN_LIST:
+        return {
+          ...state,
+          loding: true,
+        };
+  
+      case API_CONSTANTS.GET_ALL_DROPDOWN_LIST_SUCCESS:
+        return {
+          ...state,
+          loding: false,
+          getalldropdown: action.result,
+        };
+
+        
     case API_CONSTANTS.GET_BRANCH_LIST:
       return {
         ...state,
@@ -155,6 +194,19 @@ export const RootReducer = (state = initialState, action) => {
         ...state,
         loding: false,
         getuserrolepermission: action.result,
+      };
+
+    case API_CONSTANTS.GET_EDUCATION_LIST:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_EDUCATION_LIST_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        geteducationlist: action.result,
       };
 
     case API_CONSTANTS.ADD_SALARY:
@@ -774,18 +826,18 @@ export const RootReducer = (state = initialState, action) => {
         getVendorSuccess: action.result,
       };
 
-    case API_CONSTANTS.DELETE_VENDOR_TABLE:
-      return {
-        ...state,
-        loding: true,
-      };
+    // case API_CONSTANTS.DELETE_VENDOR_TABLE:
+    //   return {
+    //     ...state,
+    //     loding: true,
+    //   };
 
-    case API_CONSTANTS.DELETE_VENDOR_TABLE_SUCCESS:
-      return {
-        ...state,
-        loding: false,
-        deleteVendorTableSuccess: action.result,
-      };
+    // case API_CONSTANTS.DELETE_VENDOR_TABLE_SUCCESS:
+    //   return {
+    //     ...state,
+    //     loding: false,
+    //     deleteVendorTableSuccess: action.result,
+    //   };
 
     case API_CONSTANTS.UPDATE_VENDOR:
       return {
@@ -800,18 +852,18 @@ export const RootReducer = (state = initialState, action) => {
         updateVendorResult: action.result,
       };
       
-      case API_CONSTANTS.UPDATE_VENDOR_TABLE:
-        return {
-          ...state,
-          loding: true,
-        };
+      // case API_CONSTANTS.UPDATE_VENDOR_TABLE:
+      //   return {
+      //     ...state,
+      //     loding: true,
+      //   };
   
-      case API_CONSTANTS.UPDATE_VENDOR_TABLE_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          updateVendorTableResult: action.result,
-        };
+      // case API_CONSTANTS.UPDATE_VENDOR_TABLE_SUCCESS:
+      //   return {
+      //     ...state,
+      //     loding: false,
+      //     updateVendorTableResult: action.result,
+      //   };
   
     case API_CONSTANTS.CREATE_TRAVEL:
       return {

@@ -47,7 +47,7 @@ function* ChangePassword(action) {
 function* UserRegisterGenerator(action) {
   try {
     let result = yield call(Method.postData, action);
-    if (result.status === 200) {
+    if (result.status === 201) {
       yield put({
         type: `${action.type}_SUCCESS`,
         status: "ok",
@@ -57,6 +57,10 @@ function* UserRegisterGenerator(action) {
       yield call(failSaga, "Server Down!");
     }
   } catch (error) {
+    // console.log(error);
+    // if (error.rsponse.data) {
+    //   message.info(error.response.data.email[0]);
+    // }
     yield call(errorSaga, "The credentials you entered are incorrect!");
   }
 }
@@ -228,6 +232,91 @@ function* getEmploymentType(action) {
     yield call(errorSaga, "The credentials you entered are incorrect!");
   }
 }
+
+function* getEducationList(action) {
+  try {
+    let result = yield call(Method.getData, action);
+    if (
+      result.status === 202 ||
+      result.status === 201 ||
+      result.status === 200
+    ) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* getShiftPolicy(action) {
+  try {
+    let result = yield call(Method.getData, action);
+    if (
+      result.status === 202 ||
+      result.status === 201 ||
+      result.status === 200
+    ) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* getWeekOff(action) {
+  try {
+    let result = yield call(Method.getData, action);
+    if (
+      result.status === 202 ||
+      result.status === 201 ||
+      result.status === 200
+    ) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* getAllDropdown(action) {
+  try {
+    let result = yield call(Method.getData, action);
+    if (
+      result.status === 202 ||
+      result.status === 201 ||
+      result.status === 200
+    ) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
 
 function* addSalaryRevision(action) {
   try {
@@ -416,7 +505,6 @@ function* addSelectedReport(action) {
     yield call(errorSaga, "The credentials you entered are incorrect!");
   }
 }
-
 
 function* addReportsubmit(action) {
   try {
@@ -618,9 +706,8 @@ function* rejectExpense(action) {
   }
 }
 
-
 function* addreimbursementRecord(action) {
-  console.log("comman sagaaaaaaaaaaa",action);
+  console.log("comman sagaaaaaaaaaaa", action);
   try {
     let result = yield call(Method.postData, action);
     console.log("resultresultresultresultresultresult", result);
@@ -1045,22 +1132,22 @@ function* createVendor(action) {
   }
 }
 
-function* deleteVendorTable(action) {
-  try {
-    let result = yield call(Method.deleteData, action);
-    if (result.status === 204) {
-      yield put({
-        type: `${action.type}_SUCCESS`,
-        status: "ok",
-        result: "Deleted Successfully",
-      });
-    } else {
-      yield call(failSaga, "Server Down!");
-    }
-  } catch (error) {
-    yield call(errorSaga, "Something went wrong!");
-  }
-}
+// function* deleteVendorTable(action) {
+//   try {
+//     let result = yield call(Method.deleteData, action);
+//     if (result.status === 204) {
+//       yield put({
+//         type: `${action.type}_SUCCESS`,
+//         status: "ok",
+//         result: "Deleted Successfully",
+//       });
+//     } else {
+//       yield call(failSaga, "Server Down!");
+//     }
+//   } catch (error) {
+//     yield call(errorSaga, "Something went wrong!");
+//   }
+// }
 
 function* updateVendor(action) {
   try {
@@ -1079,22 +1166,22 @@ function* updateVendor(action) {
   }
 }
 
-function* updateVendorTable(action) {
-  try {
-    let result = yield call(Method.putData, action);
-    if (result.status === 200) {
-      yield put({
-        type: `${action.type}_SUCCESS`,
-        status: "ok",
-        result: result.data,
-      });
-    } else {
-      yield call(failSaga, "Server Down!");
-    }
-  } catch (error) {
-    yield call(errorSaga, "The credentials you entered are incorrect!");
-  }
-}
+// function* updateVendorTable(action) {
+//   try {
+//     let result = yield call(Method.putData, action);
+//     if (result.status === 200) {
+//       yield put({
+//         type: `${action.type}_SUCCESS`,
+//         status: "ok",
+//         result: result.data,
+//       });
+//     } else {
+//       yield call(failSaga, "Server Down!");
+//     }
+//   } catch (error) {
+//     yield call(errorSaga, "The credentials you entered are incorrect!");
+//   }
+// }
 
 function* createTravel(action) {
   try {
@@ -2519,12 +2606,16 @@ export {
   addUserSetting,
   addPersonalInformation,
   addEducation,
+  getEducationList,
   addExperience,
   getCurrentRole,
   getCurrentUser,
   getReportList,
   getApprovedReportList,
   getExpenseList,
+  getShiftPolicy,
+  getWeekOff,
+  getAllDropdown,
   addReportsubmit,
   addSelectedReport,
   updateReport,
@@ -2539,7 +2630,6 @@ export {
   rejectExpense,
   addreimbursementRecord,
   rejectReportByAccount,
-
   ChangePassword,
   getAddCategoryList,
   categoryPanelList,
@@ -2562,9 +2652,9 @@ export {
   rejectCard,
   getVendor,
   createVendor,
-  deleteVendorTable,
+  // deleteVendorTable,
   updateVendor,
-  updateVendorTable,
+  // updateVendorTable,
   createTravel,
   getTravel,
   deleteTravel,

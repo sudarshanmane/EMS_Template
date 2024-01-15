@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 
+
 import {
   createVendorPyment,
   getVendorPayment,
@@ -22,7 +23,7 @@ import { icon } from "@fortawesome/fontawesome-svg-core";
 
 const VendorPannel = () => {
   const url = URLS.GET_VENDOR_URL;
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
   const [allVendor, setAllVendor] = useState([]);
   const [focused, setFocused] = useState(false);
   const [deleteVendorData, setDeleteVendorData] = useState(null);
@@ -78,8 +79,6 @@ const VendorPannel = () => {
   const vendorSelector = useSelector((state) => state.getVendorPaymentResult);
 
   useEffect(() => {
-    console.log("vendorSelector:", vendorSelector);
-
     if (Array.isArray(vendorSelector)) {
       const allVendorType = vendorSelector.map((element) => ({
         id: element.id,
@@ -98,21 +97,22 @@ const VendorPannel = () => {
     setDeleteVendorData(record);
   };
   const { handleSubmit: handleDelete } = useForm({});
- const [selectedId, setSelectedId] =  useState();
+  const [selectedId, setSelectedId] = useState();
 
   const onRecord = (record) => {
     if (record && record.company_name && record.telephone) {
       setRecordPaymentData(record);
-      setSelectedId(record.id)
+      setSelectedId(record.id);
       setValueRecord("company_name", record?.company_name);
       setValueRecord("telephone", record?.telephone);
     } else {
       console.error("Invalid record or missing required fields");
     }
   };
-  const onAddVendor =  (values) => {
+  const onAddVendor = (values) => {
     dispatch(createVendor(values));
     setIsAddFormVisible(false);
+    reset();
   };
 
   const onEdit = (record) => {
@@ -137,10 +137,9 @@ const VendorPannel = () => {
     setIsAddFormVisible(false);
   }, [updatevendorSelector]);
 
-
   const onSubmitRecord = (values) => {
-   dispatch(createVendorPyment(values));
-    values["vendor"] = selectedId
+    dispatch(createVendorPyment(values));
+    values["vendor"] = selectedId;
     setIsAddFormVisible(false);
   };
   const onDelete = () => {
@@ -678,7 +677,7 @@ const VendorPannel = () => {
                       <div className="input-block">
                         <label>Telephone</label>
                         <input
-                        disabled
+                          disabled
                           className="form-control"
                           type="tel"
                           {...recordpayment("telephone")}
