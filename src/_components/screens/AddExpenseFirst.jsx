@@ -6,18 +6,22 @@ import {
   InputNumber,
   Checkbox,
   Input,
+  message,
 } from "antd";
 import React, { useState, useEffect, useContext } from "react";
 import {
   getCategoryListBulkExpense,
   getTotalForDistance,
   postMileage,
+  setExpenseUpdationResFalse,
+  updateExpense,
 } from "../../store/Action/Actions";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ExpenseUpdatingContext } from "./ContextForUpdatingRecord";
 import { URLS } from "./../../Globals/URLS";
 import "antd/dist/antd.css";
+import moment from "moment";
 
 const AddExpense = () => {
   const { record, setRecord } = useContext(ExpenseUpdatingContext);
@@ -34,18 +38,43 @@ const AddExpense = () => {
   }
 
   const dispatch = useDispatch();
-  const [categoryList1, setCategoryList1] = useState();
+  const [categoryList1, setCategoryList1] = useState([]);
 
   function onFinish(values) {
-    values.expense_date = getFullDate(values.expense_date);
-    let formData = new FormData();
-    for (const el in values) {
-      if (el != "expense_bill") formData.append(el, values[el]);
-      else formData.append("expense_bill", categoryList1[0]);
-    }
+    if (record) {
+      console.log("inside update");
+      values.expense_date = getFullDate(values.expense_date);
+      let formData = new FormData();
+      for (const el in values) {
+        if (el != "expense_bill") formData.append(el, values[el]);
+        else if (categoryList1[0])
+          formData.append("expense_bill", categoryList1[0]);
+      }
 
-    dispatch(postMileage(formData));
+      dispatch(updateExpense(formData, record.id));
+    } else {
+      values.expense_date = getFullDate(values.expense_date);
+      let formData = new FormData();
+      for (const el in values) {
+        if (el != "expense_bill") formData.append(el, values[el]);
+        else formData.append("expense_bill", categoryList1[0]);
+      }
+      dispatch(postMileage(formData));
+    }
   }
+
+  const expenseUpdatingResultSelector = useSelector(
+    (state) => state.expenseUpdatingResult
+  );
+
+  useEffect(() => {
+    if (expenseUpdatingResultSelector) {
+      message.success("Expense Updated Successfully!");
+      form.resetFields();
+      setRecord(null);
+      dispatch(setExpenseUpdationResFalse());
+    }
+  }, [expenseUpdatingResultSelector]);
 
   const [categoryList, setCategoryList] = useState([]);
 
@@ -54,11 +83,15 @@ const AddExpense = () => {
   }
   useEffect(() => {
     if (record) {
+      console.log(
+        "record?.expense_date.split",
+        record?.expense_date.split("T")[0]
+      );
       form.setFieldsValue({
         amount: record?.amount,
         category: record?.category,
         paid_by: record?.paid_by,
-        expense_date: record?.expense_date,
+        expense_date: moment("2024-01-11", "YYYY-MM-DD"),
         claim_reimbursement: record?.claim_reimbursement,
         desc: record?.desc,
       });
@@ -70,6 +103,9 @@ const AddExpense = () => {
 
   useEffect(() => {
     dispatch(getCategoryListBulkExpense());
+    return () => {
+      setRecord(null);
+    };
   }, []);
 
   const addBulkExpenseCategoryListSelector = useSelector(
@@ -237,7 +273,7 @@ const AddExpense = () => {
             name={"expense_bill"}
             label="Expense Bill"
             rules={[
-              {
+              !record && {
                 required: true,
                 message: "Expense Bill is required!",
               },
@@ -258,12 +294,12 @@ const AddExpense = () => {
           </Form.Item>
 
           {img && (
-            <>
+            <div className="w-25 b-25">
               <a href={img} target="_blank">
                 <div>Uploaded Document</div>
-                <img className="w-25 b-25" src={img} alt="" />
+                <img className="w-100 b-100" src={img} alt="" />
               </a>
-            </>
+            </div>
           )}
 
           <Form.Item className="flex-end">

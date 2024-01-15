@@ -190,7 +190,7 @@ function getApprovedReportList(payload) {
 function getExpenseList(payload) {
   return {
     type: API_CONSTANTS.GET_EXPENSE_LIST,
-    payload: payload.payload,
+    // payload: payload.payload,
     URL: payload.URL,
     contentType: contentType.json,
   };
@@ -1314,6 +1314,21 @@ function postMileage(payload) {
   };
 }
 
+function setExpenseUpdationResFalse() {
+  return {
+    type: API_CONSTANTS.SET_EXPENSE_UPDATE_RESULT_FALSE,
+  };
+}
+
+function updateExpense(payload, id) {
+  return {
+    type: API_CONSTANTS.UPDATE_EXPENSE,
+    payload,
+    URL: URLS.UPDATE_EXPENSE + id + "/",
+    contentType: contentType.form,
+  };
+}
+
 function deleteExpenseAction(payload) {
   return {
     type: API_CONSTANTS.DELETE_EXPENSE,
@@ -1324,6 +1339,8 @@ function deleteExpenseAction(payload) {
 }
 
 export {
+  updateExpense,
+  setExpenseUpdationResFalse,
   deleteExpenseAction,
   postMileage,
   getTotalForDistance,

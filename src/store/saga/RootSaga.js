@@ -174,10 +174,12 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.REJECT_REPORT, rejectReport);
   yield takeEvery(API_CONSTANTS.APPROVE_EXPENSE, approveExpense);
   yield takeEvery(API_CONSTANTS.REJECT_EXPENSE, rejectExpense);
+
   yield takeEvery(
     API_CONSTANTS.ADD_REIMBURSMENT_RECORD,
     addreimbursementRecord
   );
+
   yield takeEvery(
     API_CONSTANTS.REJECT_REPORT_BY_ACCOUNT,
     rejectReportByAccount
@@ -233,4 +235,5 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.GET_DISTANCE_FOR_TOTAL, postCommonGenerator);
   yield takeEvery(API_CONSTANTS.POST_MILEAGE_DETAILS, postCommonGenerator);
   yield takeEvery(API_CONSTANTS.DELETE_EXPENSE, commonDeleteRole);
+  yield takeEvery(API_CONSTANTS.UPDATE_EXPENSE, putCommonGenerator);
 }

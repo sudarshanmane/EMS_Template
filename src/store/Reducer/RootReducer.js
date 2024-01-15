@@ -1955,6 +1955,28 @@ export const RootReducer = (state = initialState, action) => {
       };
     }
 
+    case API_CONSTANTS.UPDATE_EXPENSE: {
+      return {
+        ...state,
+        loding: true,
+      };
+    }
+
+    case API_CONSTANTS.UPDATE_EXPENSE_SUCCESS: {
+      return {
+        ...state,
+        loding: false,
+        expenseUpdatingResult: action.result,
+      };
+    }
+
+    case API_CONSTANTS.SET_EXPENSE_UPDATE_RESULT_FALSE: {
+      return {
+        ...state,
+        expenseUpdatingResult: false,
+      };
+    }
+
     default:
       return state;
   }

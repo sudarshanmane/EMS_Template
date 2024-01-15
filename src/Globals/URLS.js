@@ -134,4 +134,5 @@ export const URLS = {
   GET_AMOUNT_FROM_DISTANCE_TRAVELED:
     "/api/version_0/expense/calculate_mileage_amount/",
   DELETE_EXPENSE_URL: "/api/version_0/expense/modify_expense/",
+  UPDATE_EXPENSE: "/api/version_0/expense/modify_expense/",
 };

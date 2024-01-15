@@ -33,7 +33,7 @@ const AddMileage = () => {
   const [selectedOption, setSelectedOption] = useState("Distance traveled");
 
   function onFinish(values) {
-    values.date = getFullDate(values.date);
+    values.expense_date = getFullDate(values.date);
     let formData = new FormData();
     for (const el in values) {
       if (el != "expense_bill") formData.append(el, values[el]);

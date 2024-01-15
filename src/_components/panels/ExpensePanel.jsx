@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Modal, Space, Table } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -110,7 +110,7 @@ const ExpensePanel = () => {
 
   useEffect(() => {
     if (expenseDeletedResultSelector) {
-      getPageDetails();
+      getPageDetails(url);
     }
   }, [expenseDeletedResultSelector]);
 
@@ -229,14 +229,14 @@ const ExpensePanel = () => {
       title: "Attachment",
       dataIndex: "attachment",
       render: (text, record) => {
-        let recordType = record.expense_bill.split(".");
+        let recordType = record?.expense_bill?.split(".");
         let isPdf = false;
-        if (recordType.includes("pdf")) isPdf = true;
+        if (recordType?.includes("pdf")) isPdf = true;
         return (
           <Space>
             <EyeOutlined
               style={{ color: "blue", cursor: "pointer" }}
-              onClick={() => handleViewReceipt(isPdf, record.expense_bill)}
+              onClick={() => handleViewReceipt(isPdf, record?.expense_bill)}
             />
           </Space>
         );
@@ -274,8 +274,6 @@ const ExpensePanel = () => {
             <Link
               className="dropdown-item"
               to="#"
-              data-bs-toggle="modal"
-              data-bs-target="#edit_expense"
               onClick={() => onEdit(record)}
             >
               <i className="fa fa-pencil m-r-5" /> Edit
@@ -611,55 +609,7 @@ const ExpensePanel = () => {
           </div>
         )}
       </Modal>
-      <div id="edit_expense" className="modal custom-modal fade" role="dialog">
-        <div
-          className="modal-dialog modal-dialog-centered modal-md"
-          role="document"
-        >
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title">Update Policy</h5>
-              <button
-                type="button"
-                className="close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">×</span>
-              </button>
-            </div>
-            <div className="modal-body">
-              <form onSubmit={handleUpdate(onUpdate)}>
-                <div className="input-block">
-                  <label> Expense Amount Limit</label>
 
-                  <div className="col-md-12">
-                    <div className="input-group">
-                      <div className="input-group-prepend">
-                        <span className="input-group-text">$USD</span>
-                      </div>
-                      <input
-                        className="form-control"
-                        type="number"
-                        // {...updateregister("expense_amt_limit")}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="submit-section">
-                  <button
-                    className="btn btn-primary submit-btn"
-                    data-bs-dismiss="modal"
-                  >
-                    Update
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
       <div
         className="modal custom-modal fade"
         id="delete_expense"
