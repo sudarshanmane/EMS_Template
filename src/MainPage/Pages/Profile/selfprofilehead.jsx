@@ -19,19 +19,19 @@ export default function SelfProfileHead() {
     getPageDetails(url);
   }, []);
 
-  function fetchRoleData(url) {
+  function fetchUserData(url) {
     dispatch(getCurrentUser({ payload: {}, URL: url }));
   }
 
   useEffect(() => {
-    fetchRoleData(url);
+    fetchUserData(url);
   }, []);
 
-  const userRoleSelector = useSelector((state) => state.getuserrole);
+  const userSelector = useSelector((state) => state.getcurrentuser);
 
   useEffect(() => {
-    if (userRoleSelector && Array.isArray(userRoleSelector)) {
-      const userRole = userRoleSelector.map((element) => {
+    if (userSelector && Array.isArray(userSelector)) {
+      const userRole = userSelector.map((element) => {
         return {
           profile_image: element.profile_image,
           emp_id: element.emp_id,
@@ -46,7 +46,7 @@ export default function SelfProfileHead() {
       });
       setUserRole(userRole);
     }
-  }, [userRoleSelector]);
+  }, [userSelector]);
   
 
 

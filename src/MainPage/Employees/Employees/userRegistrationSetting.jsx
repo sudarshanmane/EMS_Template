@@ -132,6 +132,20 @@ export default function UserRegistrationSetting({ nextcall, userId }) {
     }
   }, [addSettingSelector]);
 
+  useEffect(() => {
+    if (addSettingSelector) {
+      console.log("All complete");
+      dispatch(clearUserregistration());
+      dispatch(clearPersonalinfo());
+      dispatch(clearEducationInfo());
+      dispatch(clearExperienceInfo());
+      dispatch(clearSalaryRevision());
+      dispatch(clearCertificateInfo());
+      dispatch(clearUserSettings());
+      nextcall();
+    }
+  }, [addSettingSelector]);
+  
   return (
     <>
       {" "}

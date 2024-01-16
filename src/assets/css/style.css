@@ -7804,6 +7804,7 @@ table .team-members li:first-child a {
 
 .table-avatar a.avatar {
   line-height: normal;
+  border: solid 1px #ccc;
 }
 
 .progress-bar.w-40 {
@@ -9731,3 +9732,14 @@ th.width-64 {
   height: 42px;
 }
 .h-42 .ant-select-selector{ height:42px !important}
+
+.fw-4{
+  font-weight: 400;
+}
+
+.fs-16{
+  font-size: 16px;
+}
+.btn i{
+  color: #fff;
+}

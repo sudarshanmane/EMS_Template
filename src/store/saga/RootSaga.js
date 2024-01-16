@@ -60,78 +60,7 @@ import {
   rejectReportByAccount,
   getShiftPolicy,
   getWeekOff,
-
-  // =======================================
-  Updateuserprofile,
-  addExpenseItem,
-  addExpenseType,
-  addExternalcodeType,
-  addUser,
-  accountingCodeSubmit,
-  getParentTypelist,
-  getItemNameList,
-  itemizationsubmit,
-  AddExpesnesubmit,
-  getManagerList,
-  addRole,
-  getAccountingCodeList,
-  getExpenseTypePanel,
-  getExternalAccountPanel,
-  AboutUs,
-  ContactUs,
-  AboutUsPage,
-  ContactUsPage,
-  GetCompanyList,
-  UpdateCompanyList,
-  getAddUserPanel,
-  getExpenseItemSetupPanel,
-  itemizationPanel,
-  accountingCodePanel,
-  expensePanelList,
-  searchExpenseType,
-  searchExternalAccountCode,
-  UpdateExpenseItemSetup,
-  updateExpenseType,
-  updateUser,
-  // updateExternalAccountCode,
-  UpdateAccountcodePanel,
-
-  // UpdateExpenseIemaiztaion,
-  UpdateExpenseItemization,
-  UpdateExpenseList,
-  TableExpenseSubmitTrue,
-  rejectExpensemanager,
-  holdExpensemanager,
-  approvedbuttonExpensemanager,
-  Expenseapprovedpanel,
-  exportbuttonAccountingCode,
-  financemanagerexpenselist,
-  financemanagerreject,
-  financemanagerhold,
-  financemanagerapprove,
-  accountAddByFinanceManager,
-  getUserRolePermissions,
-  postCommonGenerator,
   getCommonGenerator,
-  putCommonGenerator,
-  commonDeleteRole,
-  addEmployeeAccountNumber,
-  updateExternalAccountCode,
-  exportExpenseType,
-  exportExpenseItemSetup,
-  exportExternalAccountCode,
-  exportUser,
-  exportFinanceManagerList,
-  getfinancemanagerdropdown,
-  exportCategoryList,
-  exportItemizationList,
-  exportexpenseList,
-  exportexpenseapprovedList,
-  ownExpenseDraftList,
-  ownExpenseHoldList,
-  ownExpenseRejectList,
-  commanmanagercardlidtfunction,
-  ownExpenseApproveList,
   exportCompanypanel,
   createCategoryItem,
   updateTravel,
@@ -143,7 +72,11 @@ import {
   getEducationList,
   getDesignationList,
   getAllDropdown,
-  
+  getUserSetting,
+  updateUserSetting,
+  getUserAttendance,
+  getUserAttendanceDynamic,
+   // =======================================
 
 } from "./CommonSagas";
 
@@ -153,6 +86,8 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.USER_REGISTER, UserRegisterGenerator);
   yield takeEvery(API_CONSTANTS.GET_CURRENT_ROLE, getCurrentRole);
   yield takeEvery(API_CONSTANTS.GET_CURRENT_USER, getCurrentUser);
+  yield takeEvery(API_CONSTANTS.GET_USER_ATTENDANCE_LIST, getUserAttendance);
+  yield takeEvery(API_CONSTANTS.GET_USER_ATTENDANCE_DYNAMIC_LIST, getUserAttendanceDynamic);
   yield takeEvery(API_CONSTANTS.GET_STAFF_LIST, getStaff);
   yield takeEvery(API_CONSTANTS.GET_EMPLOYMENT_TYPE_LIST, getEmploymentType);
   yield takeEvery(API_CONSTANTS.GET_DEPARTMENT_LIST, getDepartment);
@@ -165,6 +100,8 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.ADD_SALARY, addSalaryRevision);
   yield takeEvery(API_CONSTANTS.ADD_CERTIFICATION, addCertification);
   yield takeEvery(API_CONSTANTS.ADD_USER_SETTING, addUserSetting);
+  yield takeEvery(API_CONSTANTS.GET_USER_SETTING, getUserSetting);
+  yield takeEvery(API_CONSTANTS.UPDATE_USER_SETTING, updateUserSetting);
   yield takeEvery(
     API_CONSTANTS.ADD_PERSONAL_INFORMATION,
     addPersonalInformation
