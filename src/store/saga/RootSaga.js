@@ -51,9 +51,7 @@ import {
   rejectCard,
   createVendor,
   getVendor,
-  // deleteVendorTable,
   updateVendor,
-  // updateVendorTable, 
   createTravel,
   getTravel,
   deleteTravel,
@@ -62,7 +60,6 @@ import {
   getShiftPolicy,
   getWeekOff,
   getCommonGenerator,
-  exportCompanypanel,
   createCategoryItem,
   updateTravel,
   rejectExpense,
@@ -76,6 +73,9 @@ import {
   updateUserSetting,
   getUserAttendance,
   getUserAttendanceDynamic,
+  deleteVendorTable,
+  updateVendorTable,
+  updateVendorPayment,
    // =======================================
 
 } from "./CommonSagas";
@@ -153,13 +153,14 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.VIEW_VENDOR, getVendorDetails);
   yield takeEvery(API_CONSTANTS.GET_VENDOR_PAYMENT, getVendorPayment);
   yield takeEvery(API_CONSTANTS.CREATE_VENDOR_PAYMENT, createVendorPayment);
+  yield takeEvery(API_CONSTANTS.UPDATE_VENDOR_PAYMENT, updateVendorPayment);
 
   yield takeEvery(API_CONSTANTS.CREATE_VENDOR, createVendor);
   yield takeEvery(API_CONSTANTS.GET_VENDOR, getVendor);
-  yield takeEvery(API_CONSTANTS.UPDATE_VENDOR, updateVendor);
+  // yield takeEvery(API_CONSTANTS.UPDATE_VENDOR, updateVendor);
   
-  // yield takeEvery(API_CONSTANTS.DELETE_VENDOR, deleteVendorTable);
-  // yield takeEvery(API_CONSTANTS.UPDATE_VENDOR, updateVendorTable);
+  yield takeEvery(API_CONSTANTS.DELETE_VENDOR_TABLE, deleteVendorTable);
+  yield takeEvery(API_CONSTANTS.UPDATE_VENDOR_TABLE, updateVendorTable);
 
   yield takeEvery(API_CONSTANTS.CREATE_TRAVEL, createTravel);
   yield takeEvery(API_CONSTANTS.GATE_TRAVEL, getTravel);

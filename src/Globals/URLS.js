@@ -48,6 +48,8 @@ export const URLS = {
   VIEW_VENDOR_BY_ID_URL: "/api/version_0/expense/register_vendor/",
   GET_VENDOR_PAYMENT_URL: "/api/version_0/expense/vendor_payment/",
   CREATE_VENDOR_PAYMENT_URL: "/api/version_0/expense/vendor_payment/",
+  UPDATE_VENDOR_PAYMENT_URL:"/api/version_0/expense/vendor_payment/",
+
 
   FETCH_REPORT_URL: "/api/version_0/expense/fetch_report/",
   ADD_REIMBURSMENT_RECORD_URL: "/api/version_0/expense/reimbursement/",
@@ -79,10 +81,8 @@ export const URLS = {
   CREATE_VENDOR_URL: "/api/version_0/expense/register_vendor/",
   GET_VENDOR_URL: "/api/version_0/expense/register_vendor/",
 
-  DELETE_VENDOR_TABLE_URL: "",
-  UPDATE_VENDOR_TABLE_URL: "",  
-
-  UPDATE_VENDOR_URL: "/api/version_0/expense/vendor_payment/",
+  DELETE_VENDOR_TABLE_URL: "/api/version_0/expense/register_vendor/",
+  UPDATE_VENDOR_TABLE_URL: "/api/version_0/expense/register_vendor/",  
 
 
   CREATE_TRAVEL_URL: "/api/version_0/expense/request_travel/",

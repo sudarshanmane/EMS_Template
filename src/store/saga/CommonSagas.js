@@ -712,6 +712,24 @@ function* createVendorPayment(action) {
   }
 }
 
+function* updateVendorPayment(action) {
+  try {
+    let result = yield call(Method.putData, action);
+    if (result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+
 
 
 function* approveReport(action) {
@@ -1208,22 +1226,22 @@ function* createVendor(action) {
   }
 }
 
-// function* deleteVendorTable(action) {
-//   try {
-//     let result = yield call(Method.deleteData, action);
-//     if (result.status === 204) {
-//       yield put({
-//         type: `${action.type}_SUCCESS`,
-//         status: "ok",
-//         result: "Deleted Successfully",
-//       });
-//     } else {
-//       yield call(failSaga, "Server Down!");
-//     }
-//   } catch (error) {
-//     yield call(errorSaga, "Something went wrong!");
-//   }
-// }
+function* deleteVendorTable(action) {
+  try {
+    let result = yield call(Method.deleteData, action);
+    if (result.status === 204) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: "Deleted Successfully",
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "Something went wrong!");
+  }
+}
 
 function* updateVendor(action) {
   try {
@@ -1242,22 +1260,22 @@ function* updateVendor(action) {
   }
 }
 
-// function* updateVendorTable(action) {
-//   try {
-//     let result = yield call(Method.putData, action);
-//     if (result.status === 200) {
-//       yield put({
-//         type: `${action.type}_SUCCESS`,
-//         status: "ok",
-//         result: result.data,
-//       });
-//     } else {
-//       yield call(failSaga, "Server Down!");
-//     }
-//   } catch (error) {
-//     yield call(errorSaga, "The credentials you entered are incorrect!");
-//   }
-// }
+function* updateVendorTable(action) {
+  try {
+    let result = yield call(Method.putData, action);
+    if (result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
 
 function* createTravel(action) {
   try {
@@ -2701,6 +2719,7 @@ export {
   getVendorDetails,
   getVendorPayment,
   createVendorPayment,
+  updateVendorPayment,
   approveReport,
   rejectReport,
   approveExpense,
@@ -2729,9 +2748,9 @@ export {
   rejectCard,
   getVendor,
   createVendor,
-  // deleteVendorTable,
+  deleteVendorTable,
   updateVendor,
-  // updateVendorTable,
+  updateVendorTable,
   createTravel,
   getTravel,
   deleteTravel,

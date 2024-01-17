@@ -78,58 +78,58 @@ export const RootReducer = (state = initialState, action) => {
         getcurrentuser: action.result,
       };
 
-      case API_CONSTANTS.GET_USER_SETTING:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.GET_USER_SETTING_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          getusersetting: action.result,
-        };
+    case API_CONSTANTS.GET_USER_SETTING:
+      return {
+        ...state,
+        loding: true,
+      };
 
-        case API_CONSTANTS.UPDATE_USER_SETTING:
-          return {
-            ...state,
-            loding: true,
-          };
-    
-        case API_CONSTANTS.UPDATE_USER_SETTING_SUCCESS:
-          return {
-            ...state,
-            loding: false,
-            updateusersetting: action.result,
-          };
+    case API_CONSTANTS.GET_USER_SETTING_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getusersetting: action.result,
+      };
 
-          case API_CONSTANTS.GET_USER_ATTENDANCE_LIST:
-            return {
-              ...state,
-              loding: true,
-            };
-      
-          case API_CONSTANTS.GET_USER_ATTENDANCE_LIST_SUCCESS:
-            return {
-              ...state,
-              loding: false,
-              getuserattendance: action.result,
-            };
+    case API_CONSTANTS.UPDATE_USER_SETTING:
+      return {
+        ...state,
+        loding: true,
+      };
 
-            case API_CONSTANTS.GET_USER_ATTENDANCE_DYNAMIC_LIST:
-              return {
-                ...state,
-                loding: true,
-              };
-        
-            case API_CONSTANTS.GET_USER_ATTENDANCE_DYNAMIC_LIST_SUCCESS:
-              return {
-                ...state,
-                loding: false,
-                getuserattendancedynamic: action.result,
-              };
-          
+    case API_CONSTANTS.UPDATE_USER_SETTING_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        updateusersetting: action.result,
+      };
+
+    case API_CONSTANTS.GET_USER_ATTENDANCE_LIST:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_USER_ATTENDANCE_LIST_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getuserattendance: action.result,
+      };
+
+    case API_CONSTANTS.GET_USER_ATTENDANCE_DYNAMIC_LIST:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_USER_ATTENDANCE_DYNAMIC_LIST_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getuserattendancedynamic: action.result,
+      };
+
     case API_CONSTANTS.GET_STAFF_LIST:
       return {
         ...state,
@@ -195,20 +195,19 @@ export const RootReducer = (state = initialState, action) => {
         weekoff: action.result,
       };
 
-      case API_CONSTANTS.GET_ALL_DROPDOWN_LIST:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.GET_ALL_DROPDOWN_LIST_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          getalldropdown: action.result,
-        };
+    case API_CONSTANTS.GET_ALL_DROPDOWN_LIST:
+      return {
+        ...state,
+        loding: true,
+      };
 
-        
+    case API_CONSTANTS.GET_ALL_DROPDOWN_LIST_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getalldropdown: action.result,
+      };
+
     case API_CONSTANTS.GET_BRANCH_LIST:
       return {
         ...state,
@@ -435,45 +434,6 @@ export const RootReducer = (state = initialState, action) => {
         ...state,
         loding: false,
         reportDetails: action.result,
-      };
-
-    case API_CONSTANTS.VIEW_VENDOR:
-      return {
-        ...state,
-        loding: true,
-      };
-
-    case API_CONSTANTS.VIEW_VENDOR_SUCCESS:
-      return {
-        ...state,
-        loding: false,
-        vendorDetails: action.result,
-      };
-
-    case API_CONSTANTS.GET_VENDOR_PAYMENT:
-      return {
-        ...state,
-        loding: true,
-      };
-
-    case API_CONSTANTS.GET_VENDOR_PAYMENT_SUCCESS:
-      return {
-        ...state,
-        loding: false,
-        getVendorPaymentResult: action.result,
-      };
-
-    case API_CONSTANTS.CREATE_VENDOR_PAYMENT:
-      return {
-        ...state,
-        loding: true,
-      };
-
-    case API_CONSTANTS.CREATE_VENDOR_PAYMENT_SUCCESS:
-      return {
-        ...state,
-        loding: false,
-        createVendorSuccess: action.result,
       };
 
     case API_CONSTANTS.ADD_REIMBURSMENT_RECORD:
@@ -852,6 +812,46 @@ export const RootReducer = (state = initialState, action) => {
         rejectCardSuccess: action.result,
       };
 
+    case API_CONSTANTS.VIEW_VENDOR:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.VIEW_VENDOR_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        vendorDetails: action.result,
+      };
+
+    case API_CONSTANTS.GET_VENDOR_PAYMENT:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_VENDOR_PAYMENT_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getVendorPaymentResult: action.result,
+      };
+
+    case API_CONSTANTS.CREATE_VENDOR_PAYMENT:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.CREATE_VENDOR_PAYMENT_SUCCESS:
+      console.log("Create Vendor Payment Result:", action.result);
+      return {
+        ...state,
+        loding: false,
+        createVendorPayment: action.result,
+      };
+
     case API_CONSTANTS.CREATE_VENDOR:
       return {
         ...state,
@@ -878,45 +878,44 @@ export const RootReducer = (state = initialState, action) => {
         getVendorSuccess: action.result,
       };
 
-    // case API_CONSTANTS.DELETE_VENDOR_TABLE:
-    //   return {
-    //     ...state,
-    //     loding: true,
-    //   };
-
-    // case API_CONSTANTS.DELETE_VENDOR_TABLE_SUCCESS:
-    //   return {
-    //     ...state,
-    //     loding: false,
-    //     deleteVendorTableSuccess: action.result,
-    //   };
-
-    case API_CONSTANTS.UPDATE_VENDOR:
+    case API_CONSTANTS.DELETE_VENDOR_TABLE:
       return {
         ...state,
         loding: true,
       };
 
-    case API_CONSTANTS.UPDATE_VENDOR_SUCCESS:
+    case API_CONSTANTS.DELETE_VENDOR_TABLE_SUCCESS:
       return {
         ...state,
         loding: false,
-        updateVendorResult: action.result,
+        deleteVendorTableSuccess: action.result,
       };
-      
-      // case API_CONSTANTS.UPDATE_VENDOR_TABLE:
-      //   return {
-      //     ...state,
-      //     loding: true,
-      //   };
-  
-      // case API_CONSTANTS.UPDATE_VENDOR_TABLE_SUCCESS:
-      //   return {
-      //     ...state,
-      //     loding: false,
-      //     updateVendorTableResult: action.result,
-      //   };
-  
+
+    case API_CONSTANTS.UPDATE_VENDOR_TABLE:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.UPDATE_VENDOR_TABLE_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        updateVendorTableResult: action.result,
+      };
+    case API_CONSTANTS.UPDATE_VENDOR_PAYMENT:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.UPDATE_VENDOR_PAYMENT_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        updateVendorPaymentResult: action.result,
+      };
+
     case API_CONSTANTS.CREATE_TRAVEL:
       return {
         ...state,

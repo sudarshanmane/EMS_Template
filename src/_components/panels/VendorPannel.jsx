@@ -6,20 +6,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 
-
 import {
-  createVendorPyment,
-  getVendorPayment,
-  deleteVendor,
+  createVendorPaymentAction,
   getVendor,
-  updateVendor,
   createVendor,
+  deleteVendorTable,
+  updateVendorTable,
 } from "../../store/Action/Actions";
 import {
   onShowSizeChange,
   itemRender,
 } from "../../MainPage/paginationfunction";
-import { icon } from "@fortawesome/fontawesome-svg-core";
 
 const VendorPannel = () => {
   const url = URLS.GET_VENDOR_URL;
@@ -32,8 +29,14 @@ const VendorPannel = () => {
   const [isAddFormVisible, setIsAddFormVisible] = useState(false);
   const [isEditFormVisible, setIsEditFormVisible] = useState(false);
   const [viewVendorData, setViewVendorData] = useState(null);
-  const [allVendorType, setAllVendorType] = useState([]);
+  const [selectedId, setSelectedId] = useState();
 
+  const [vendorBill, setVendorBillFile] = useState();
+
+  const handleFileChange = (e) => {
+    setVendorBillFile(e.target.files[0]);
+    console.log("filesssssssssssssss", e.target.files[0]);
+  };
   const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] =
     useState(false);
   const navigate = useNavigate();
@@ -58,57 +61,8 @@ const VendorPannel = () => {
     formState: { errors },
   } = useForm({});
 
-  function getPageDetails(url) {
-    dispatch(getVendorPayment({ payload: {}, URL: url }));
-  }
-  useEffect(() => {
-    getPageDetails(url);
-  }, []);
-
-  useEffect(() => {
-    fetchvendordata(url);
-  }, []);
-
-  function fetchvendordata(url) {
-    dispatch(getVendorPayment({ payload: {}, URL: url }));
-  }
-  useEffect(() => {
-    getVendorPayment(url);
-  }, []);
-
-  const vendorSelector = useSelector((state) => state.getVendorPaymentResult);
-
-  useEffect(() => {
-    if (Array.isArray(vendorSelector)) {
-      const allVendorType = vendorSelector.map((element) => ({
-        id: element.id,
-        paid_amount: element.paid_amount,
-        due_amount: element.due_amount,
-        vendor_bill: element.vendor_bill,
-        amount: element.amount,
-        vendor: element.vendor,
-      }));
-
-      setAllVendorType(allVendorType);
-    }
-  }, [vendorSelector]);
-
-  const DeleteVendor = (record) => {
-    setDeleteVendorData(record);
-  };
   const { handleSubmit: handleDelete } = useForm({});
-  const [selectedId, setSelectedId] = useState();
 
-  const onRecord = (record) => {
-    if (record && record.company_name && record.telephone) {
-      setRecordPaymentData(record);
-      setSelectedId(record.id);
-      setValueRecord("company_name", record?.company_name);
-      setValueRecord("telephone", record?.telephone);
-    } else {
-      console.error("Invalid record or missing required fields");
-    }
-  };
   const onAddVendor = (values) => {
     dispatch(createVendor(values));
     setIsAddFormVisible(false);
@@ -125,11 +79,13 @@ const VendorPannel = () => {
     setValue("website", record.website);
     setValue("fax", record.fax);
   };
+
   const onUpdate = (values) => {
     dispatch(updateVendorTable({ id: editVendorData.id, payload: values }));
     setIsEditFormVisible(false);
   };
-  const updatevendorSelector = useSelector((state) => state.updateVendorTable);
+
+  const updatevendorSelector = useSelector((state) => state.updateVendorTableResult);
   useEffect(() => {
     if (updatevendorSelector) {
       dispatch(getVendor({ payload: {}, URL: url }));
@@ -137,11 +93,11 @@ const VendorPannel = () => {
     setIsAddFormVisible(false);
   }, [updatevendorSelector]);
 
-  const onSubmitRecord = (values) => {
-    dispatch(createVendorPyment(values));
-    values["vendor"] = selectedId;
-    setIsAddFormVisible(false);
+
+  const DeleteVendor = (record) => {
+    setDeleteVendorData(record);
   };
+
   const onDelete = () => {
     const deletedVendorId = deleteVendorData.id;
     dispatch(deleteVendorTable({ id: deletedVendorId }));
@@ -151,14 +107,46 @@ const VendorPannel = () => {
       prevItems.filter((item) => item.id !== deletedVendorId)
     );
   };
+
+  const createVendorPaymentSelector = useSelector(
+    (state) => state.createVendorPayment
+  );
+
+  const onRecord = (record) => {
+    if (record && record.id) {
+      setRecordPaymentData(record);
+      setSelectedId(record.id);
+      setValueRecord("vendor", record?.id);
+    } else {
+      console.error("Invalid record or missing required fields");
+    }
+  };
+
+  const onSubmitRecord = (values) => {
+    let formData = new FormData();
+    formData.append("vendor_bill", vendorBill);
+
+    for (const key in values) {
+      if (key == "vendor_bill") {
+      } else {
+        formData.append(key, values[key]);
+      }
+    }
+    console.log("Submitted Values:", values);
+    dispatch(createVendorPaymentAction(formData));
+    setIsAddFormVisible(false);
+  };
+
   const viewVendor = (record) => {
     setViewVendorData(record);
     setIsAddFormVisible(false);
     navigate("/home/VendorPannel", { state: record });
   };
+
   function getPageDetails(url) {
     dispatch(getVendor({ payload: {}, URL: url }));
   }
+
   function fetchPageDetials(url) {
     dispatch(getVendor({ payload: {}, URL: url }));
   }
@@ -203,6 +191,7 @@ const VendorPannel = () => {
       setIsAddFormVisible(false);
     }
   }, [createVendorSelector, submittedValues]);
+
 
   const deleteVendorSelector = useSelector(
     (state) => state.deleteVendorSuccess
@@ -277,43 +266,33 @@ const VendorPannel = () => {
       render: (record) => (
         <div className="dropdown dropdown-action text-end">
           <Link
-            to="#"
-            className="action-icon dropdown-toggle"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
+            to={`/home/viewVendor/${record.id}`}
+            className="btn btn-primary btn-sm m-r-5"
+            onClick={() => viewVendor(record)}
           >
-            <i className="material-icons">more_vert</i>
+            <i className="fa fa-eye m-r-5" />
           </Link>
-          <div className="dropdown-menu dropdown-menu-right">
-            <Link
-              to={`/home/viewVendor/${record.id}`}
-              className="dropdown-item"
-              onClick={() => viewVendor(record)}
-            >
-              <i className="fa fa-eye m-r-5" /> View
-            </Link>
-            <Link
-              className="dropdown-item"
-              to="#"
-              data-bs-toggle="modal"
-              data-bs-target="#edit_vendor"
-              onClick={() => onEdit(record)}
-            >
-              <i className="fa fa-pencil m-r-5" /> Edit
-            </Link>
+          <Link
+            className="btn btn-success btn-sm m-r-5"
+            to="#"
+            data-bs-toggle="modal"
+            data-bs-target="#edit_vendor"
+            onClick={() => onEdit(record)}
+          >
+            <i className="fa fa-pencil m-r-5" />
+          </Link>
 
-            <Link
-              className="dropdown-item"
-              to="#"
-              data-bs-toggle="modal"
-              data-bs-target="#delete_vendor"
-              onClick={() => {
-                DeleteVendor(record);
-              }}
-            >
-              <i className="fa fa-trash m-r-5" /> Delete
-            </Link>
-          </div>
+          <Link
+            className="btn btn-danger btn-sm"
+            to="#"
+            data-bs-toggle="modal"
+            data-bs-target="#delete_vendor"
+            onClick={() => {
+              DeleteVendor(record);
+            }}
+          >
+            <i className="fa fa-trash m-r-5" />
+          </Link>
         </div>
       ),
     },
@@ -661,26 +640,12 @@ const VendorPannel = () => {
                   <div className="input-block">
                     <div className="col-md-12">
                       <div className="input-block">
-                        <label>Company Name</label>
+                        <label>Vendor</label>
                         <input
                           className="form-control"
-                          type="text"
+                          type="number"
                           disabled
-                          {...recordpayment("company_name")}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="input-block">
-                    <div className="col-md-12">
-                      <div className="input-block">
-                        <label>Telephone</label>
-                        <input
-                          disabled
-                          className="form-control"
-                          type="tel"
-                          {...recordpayment("telephone")}
+                          {...recordpayment("vendor")}
                         />
                       </div>
                     </div>
@@ -693,7 +658,8 @@ const VendorPannel = () => {
                         <input
                           className="form-control"
                           type="file"
-                          {...recordpayment("vendor_bill ")}
+                          {...recordpayment("vendor_bill")}
+                          onChange={(e) => handleFileChange(e)}
                         />
                       </div>
                     </div>
@@ -711,17 +677,17 @@ const VendorPannel = () => {
                     </div>
                   </div>
                   {/* <div className="input-block">
-                    <div className="col-md-12">
-                      <div className="input-block">
-                        <label>Due Amount</label>
-                        <input
-                          className="form-control"
-                          type="number"
-                          {...recordpayment("due_amount")}
-                        />
+                      <div className="col-md-12">
+                        <div className="input-block">
+                          <label>Due Amount</label>
+                          <input
+                            className="form-control"
+                            type="number"
+                            {...recordpayment("due_amount")}
+                          />
+                        </div>
                       </div>
-                    </div>
-                  </div> */}
+                    </div> */}
                   <div className="input-block">
                     <div className="col-md-12">
                       <div className="input-block">

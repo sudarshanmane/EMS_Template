@@ -321,12 +321,13 @@ function getVendorPayment(payload) {
 }
 
 
-function createVendorPyment(payload) {
+function createVendorPaymentAction(payload) {
+  console.log("Payload before API call:", payload);
   return {
     type: API_CONSTANTS.CREATE_VENDOR_PAYMENT,
     payload,
     URL: URLS.CREATE_VENDOR_PAYMENT_URL,
-    contentType: contentType.json,
+    contentType: contentType.form,
   };
 }
 
@@ -580,31 +581,40 @@ function getVendor(payload) {
   };
 }
 
-// function deleteVendorTable(payload) {
-//   return {
-//     type: API_CONSTANTS.DELETE_VENDOR_TABLE,
-//     URL: URLS.DELETE_VENDOR_TABLE_URL + payload.id + "/",
-//     contentType: contentType.json,
-//   };
-// }
-
-function updateVendor(payload) {
+function deleteVendorTable(payload) {
   return {
-    type: API_CONSTANTS.UPDATE_VENDOR,
-    payload: payload.payload,
-    URL: URLS.UPDATE_VENDOR_URL + payload.id + "/",
+    type: API_CONSTANTS.DELETE_VENDOR_TABLE,
+    URL: URLS.DELETE_VENDOR_TABLE_URL + payload.id + "/",
     contentType: contentType.json,
   };
 }
 
-// function updateVendorTable(payload) {
+// function updateVendor(payload) {
 //   return {
-//     type: API_CONSTANTS.UPDATE_VENDOR_TABLE,
+//     type: API_CONSTANTS.UPDATE_VENDOR,
 //     payload: payload.payload,
-//     URL: URLS.UPDATE_VENDOR_TABLE_URL + payload.id + "/",
+//     URL: URLS.UPDATE_VENDOR_URL + payload.id + "/",
 //     contentType: contentType.json,
 //   };
 // }
+
+function updateVendorTable(payload) {
+  return {
+    type: API_CONSTANTS.UPDATE_VENDOR_TABLE,
+    payload: payload.payload,
+    URL: URLS.UPDATE_VENDOR_TABLE_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+function updateVendorPayment(payload) {
+  return {
+    type: API_CONSTANTS.UPDATE_VENDOR_PAYMENT,
+    payload: payload.payload,
+    URL: URLS.UPDATE_VENDOR_PAYMENT_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
 
 
 function createTravel(payload) {
@@ -1417,7 +1427,7 @@ export {
   getReportDetails,
   getVendorData,
   getVendorPayment,
-  createVendorPyment,
+  createVendorPaymentAction,
   getExpenseList,
   approveReport,
   rejectReport,
@@ -1446,9 +1456,10 @@ export {
   rejectCard,
   createVendor,
   getVendor,
-  // deleteVendorTable,
-  updateVendor,
-  // updateVendorTable,
+  deleteVendorTable,
+  // updateVendor,
+  updateVendorTable,
+  updateVendorPayment,
   createTravel,
   getTravel,
   deleteTravel,

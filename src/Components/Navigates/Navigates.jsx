@@ -50,6 +50,8 @@ import ExperienceProfile from "../../MainPage/Pages/Profile/experienceprofile";
 import DocumentProfile from "../../MainPage/Pages/Profile/documentprofile";
 import CertificateInfo from "../../MainPage/Pages/Profile/certificateinfo";
 import LeavesList from "../../MainPage/Pages/Profile/leavelist";
+import ViewVendor from "../../_components/panels/ViewVendor";
+
 
 
 const Navigates = () => {
@@ -66,6 +68,9 @@ const Navigates = () => {
           <Route path="/home/viewReport/:id" element={<ViewReport />} />
           <Route path="/home/viewReportApproved/:id" element={<ViewReportApproved/>}></Route>
           <Route path="/home/viewVendor/:id" element={<ViewVendor/>}></Route>
+
+          
+          
           <Route path="addexpense" element={<Addexpense></Addexpense>}></Route>
           <Route path="addemployee" element={<Addemployees></Addemployees>}></Route>
           <Route path="certification" element={<Certification></Certification>}></Route>

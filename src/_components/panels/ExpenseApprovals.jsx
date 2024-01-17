@@ -150,26 +150,17 @@ const ExpenseApprovals = () => {
     },
     {
       title: "Action",
-      render: (record) =>{
-        return <div className="dropdown dropdown-action text-end">
+      render: (record) => (
+        <div className="dropdown dropdown-action text-end">
           <Link
-            to="#"
-            className="action-icon dropdown-toggle"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
+            to={`/home/viewReportApproved/${record.id}`}
+            className="btn btn-primary btn-sm m-r-5"
+            onClick={() => viewReportApproved(record)}
           >
-            <i className="material-icons">more_vert</i>
+            <i className="fa fa-eye m-r-5" />
           </Link>
-          <div className="dropdown-menu dropdown-menu-right">
-            <Link
-              to={`/home/viewReportApproved/${record.id}`}
-              className="dropdown-item"
-              onClick={() => viewReportApproved(record)}
-            >
-              <i className="fa fa-eye m-r-5" /> View
-            </Link>
-          </div>
-        </div>}
+        </div>
+      ),
     },
   ];
 
