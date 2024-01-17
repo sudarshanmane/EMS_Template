@@ -2,25 +2,24 @@
 
 import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Table } from "antd";
 import "antd/dist/antd.min.css";
-import { itemRender, onShowSizeChange } from "../../paginationfunction";
-// import { User } from "../../../Entryfile/imagepath";
-import Editemployee from "../../../_components/modelbox/Editemployee";
-// import Header from "../../../initialpage/Sidebar/header";
+import { itemRender} from "../../paginationfunction";
 import Sidebar from "../../../initialpage/Sidebar/sidebar";
 import Offcanvas from "../../../Entryfile/offcanvance";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllStaff, getUserRole } from "../../../store/Action/Actions";
+import { getAllStaff, getCurrentRole } from "../../../store/Action/Actions";
 import { URLS } from "../../../Globals/URLS";
 import DatePicker from "react-datepicker";
+import { User } from "../../../Entryfile/imagepath";
 
 const Employeeslist = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [selectedDate1, setSelectedDate1] = useState(new Date());
   const [selectedDate2, setSelectedDate2] = useState(new Date());
-  const [menu, setMenu] = useState(false);
+  const [viewReportData, setViewReportData] = useState(null);
   const [allStaffList, setAllStaffList] = useState([]);
   const [focused, setFocused] = useState(false);
   const [tablePagination, setTablePagination] = useState({
@@ -28,6 +27,8 @@ const Employeeslist = () => {
     current: 1,
   });
   const staffurl = URLS.GET_STAFF_LIST_URL;
+  const userroleurl = URLS.GET_CURRENT_ROLE_URL;
+  const baseurl = URLS.BASE_URL_EXPORT;
 
   const handleDateChange1 = (date) => {
     setSelectedDate1(date);
@@ -36,7 +37,7 @@ const Employeeslist = () => {
     setSelectedDate2(date);
   };
 
-  function getPageDetails(url) {
+  function getPageDetails() {
     dispatch(getAllStaff({ payload: {}, URL: staffurl }));
   }
 
@@ -44,7 +45,7 @@ const Employeeslist = () => {
     getPageDetails(staffurl);
   }, []);
 
-  function fetchStaffData(url) {
+  function fetchStaffData() {
     dispatch(getAllStaff({ payload: {}, URL: staffurl }));
   }
 
@@ -52,23 +53,45 @@ const Employeeslist = () => {
     fetchStaffData(staffurl);
   }, []);
 
+  const userRoles = useSelector((state) => state.getcurrentrole);
+  useEffect(() => {
+    dispatch(getCurrentRole({ payload: {}, URL: userroleurl }));
+  }, []);
+
+  useEffect(() => {
+    if (userRoles) {
+      dispatch(getAllStaff({ payload: {}, URL: staffurl }));
+    }
+  }, [userRoles]);
+
   const staffSelector = useSelector((state) => state.getstafflist);
   useEffect(() => {
     if (staffSelector) {
-      const allStaffList = staffSelector?.data?.map((element) => ({
-        id: element.id,
-        image: element.image,
-        name: element.name,
-        role: element.role,
-        employee_id: element.employee_id,
-        email: element.email,
-        mobile: element.mobile,
-        branch: element.branch,
-        designation: element.designation,
+      const allStaffList = staffSelector?.data?.map((p) => ({
+        id: p?.id,
+        image: p?.profile_image,
+        name: p?.full_name,
+        role: p?.user_role?.user_role,
+        employee_id: p?.emp_id,
+        email: p?.email,
+        mobile: p?.mobile_no,
+        branch: p?.branch?.branch_name,
+        designation: p?.designation?.designation,
       }));
       setAllStaffList(allStaffList);
     }
   }, [staffSelector]);
+
+  const viewReport = (record) => {
+    navigate(`/home/viewEmployee/${record.id}`, {
+      state: {
+        id: record.id,
+       
+      },
+    });
+  };
+  
+  
 
   const columns = [
     {
@@ -84,8 +107,31 @@ const Employeeslist = () => {
     {
       title: "Name",
       dataIndex: "name",
+      render: (text, record) => {
+        return (
+          <>
+            <h4 className="table-avatar fw-4 fs-16">
+              <Link
+                to={`/app/profile/employee-profile${record.id}`}
+                className="avatar"
+              >
+                {record?.image != null ? (
+                  <img alt="" src={`${baseurl}${record?.image}`} />
+                ) : (
+                  <img alt="" src={User} />
+                )}
+              </Link>
+              <Link to={`/app/profile/employee-profile${record.id}`}>
+                {text} <span>{record.role}</span>
+              </Link>
+            </h4>
+    
+          </>
+        );
+      },
       sorter: (a, b) => a.name.length - b.name.length,
     },
+
     {
       title: "Employee ID",
       dataIndex: "employee_id",
@@ -111,6 +157,27 @@ const Employeeslist = () => {
       dataIndex: "designation",
       sorter: (a, b) => a.designation.length - b.designation.length,
     },
+    {
+      title: "Action",
+      render: (record) => (
+        <div className="dropdown dropdown-action text-end">
+         
+          <Link
+          to={{
+            pathname: `/home/viewEmployee/${record.id}`,
+            state: { userSelector: record },
+          }}
+          className="btn btn-primary btn-sm m-r-5"
+          onClick={() => viewReport(record)}
+        >
+          <i className="fa fa-eye" />
+        </Link>
+        
+         
+       
+        </div>
+      ),
+    },
   ];
   return (
     <>
@@ -135,14 +202,9 @@ const Employeeslist = () => {
                   </ul>
                 </div>
                 <div className="col-auto float-end ms-auto">
-                <Link
-                      to="/home/addemployee"
-                      className="btn add-btn"
-            
-                    >
-                      <i className="fa fa-plus" /> Add user
-                    </Link>
-                 
+                  <Link to="/home/addemployee" className="btn add-btn">
+                    <i className="fa fa-plus" /> Add user
+                  </Link>
                 </div>
               </div>
             </div>
@@ -211,7 +273,6 @@ const Employeeslist = () => {
                       <Table
                         className="table-striped"
                         pagination={{
-                          
                           total: allStaffList ? allStaffList.length : 0,
                           showTotal: (total, range) =>
                             `Showing ${range[0]} to ${range[1]} of ${total} entries`,
@@ -240,43 +301,7 @@ const Employeeslist = () => {
           </div>
         </div>
 
-        <Editemployee />
-
-        <div
-          className="modal custom-modal fade"
-          id="delete_employee"
-          role="dialog"
-        >
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-body">
-                <div className="form-header">
-                  <h3>Delete Employee</h3>
-                  <p>Are you sure want to delete?</p>
-                </div>
-                <div className="modal-btn delete-action">
-                  <div className="row">
-                    <div className="col-6">
-                      <Link to="" className="btn btn-primary continue-btn">
-                        Delete
-                      </Link>
-                    </div>
-                    <div className="col-6">
-                      <Link
-                        to=""
-                        data-bs-dismiss="modal"
-                        className="btn btn-primary cancel-btn"
-                      >
-                        Cancel
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* /Delete Employee Modal */}
+        {/* <Editemployee /> */}
       </div>
       <Offcanvas />
     </>

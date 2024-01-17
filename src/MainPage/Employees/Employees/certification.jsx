@@ -33,9 +33,7 @@ export default function certification({ nextcall, userId }) {
     return `${year}-${month}-${day}`;
   };
 
-  const addcertificationSelector = useSelector(
-    (state) => state.addcertification
-  );
+
 
   const onFinish = (values) => {
     values?.users?.forEach((user, index) => {
@@ -48,13 +46,15 @@ export default function certification({ nextcall, userId }) {
     });
   };
 
-  const certificate_info = useSelector((state) => state.certificateinfo?.newData?.id);
+  const addcertificationSelector = useSelector(
+    (state) => state.addcertification
+  );
 
   useEffect(() => {
-    if (certificate_info) {
+    if (addcertificationSelector) {
       nextcall();
     }
-  }, [certificate_info]);
+  }, [addcertificationSelector]);
 
   return (
     <>

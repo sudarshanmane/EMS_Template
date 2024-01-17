@@ -47,6 +47,42 @@ function getCurrentUser(payload) {
   };
 }
 
+function getUserSettingAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_USER_SETTING,
+    payload: payload.payload,
+    URL: URLS.GET_USER_SETTING_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+function updateUserSettingAction(payload) {
+  return {
+    type: API_CONSTANTS.UPDATE_USER_SETTING,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
+function getUserAttendanceAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_USER_ATTENDANCE_LIST,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
+function getUserAttendanceDynamicAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_USER_ATTENDANCE_DYNAMIC_LIST,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
 function getAllStaff(payload) {
   return {
     type: API_CONSTANTS.GET_STAFF_LIST,
@@ -1357,6 +1393,7 @@ export {
   getCurrentRole,
   getCurrentUser,
   getAllStaff,
+  getUserSettingAction,
   getDepartmentAction,
   getDesignationAction,
   getBranchAction,
@@ -1416,6 +1453,10 @@ export {
   getTravel,
   deleteTravel,
   updateTravel,
+  updateUserSettingAction,
+  getUserAttendanceAction,
+  getUserAttendanceDynamicAction,
+
 
   // ===========================================================
   addExpenseItemSetup,

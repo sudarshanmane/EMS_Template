@@ -87,7 +87,7 @@ const CardApproval = () => {
   }, []);
 
   const cardSelector = useSelector((state) => state.getCardSuccess);
-  console.log("cardSelectorcardSelector",cardSelector);
+
   useEffect(() => {
     if (cardSelector) {
       const allCards = cardSelector?.map((element) => ({
@@ -163,26 +163,18 @@ const CardApproval = () => {
       title: "Action",
       render: (record) => (
         <div className="dropdown dropdown-action text-end">
-          <Link
-            to="#"
-            className="action-icon dropdown-toggle"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <i className="material-icons">more_vert</i>
-          </Link>
-          <div className="dropdown-menu dropdown-menu-right">
+        
             <Link
-              className="dropdown-item"
+              className="btn btn-success btn-sm m-r-5"
               to="#"
               data-bs-toggle="modal"
               data-bs-target="#approve-card"
               onClick={() => Approve(record)}
             >
-              <i className="fa fa-check m-r-5" /> Approve
+              <i className="fa fa-check m-r-5" />
             </Link>
             <Link
-              className="dropdown-item"
+                className="btn btn-danger btn-sm"
               to="#"
               data-bs-toggle="modal"
               data-bs-target="#reject-card"
@@ -190,10 +182,10 @@ const CardApproval = () => {
                Reject(record);
               }}
             >
-              <i className="fa fa-times m-r-5" /> Reject
+              <i className="fa fa-times m-r-5" />
             </Link>
           </div>
-        </div>
+       
       ),
     },
   ];

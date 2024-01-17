@@ -62,6 +62,7 @@ import {
   getShiftPolicy,
   getWeekOff,
   getCommonGenerator,
+  exportCompanypanel,
   createCategoryItem,
   updateTravel,
   rejectExpense,
@@ -71,9 +72,11 @@ import {
   addSelectedReport,
   getEducationList,
   getAllDropdown,
-  
-  // =======================================
- 
+  getUserSetting,
+  updateUserSetting,
+  getUserAttendance,
+  getUserAttendanceDynamic,
+   // =======================================
 
 } from "./CommonSagas";
 
@@ -83,6 +86,8 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.USER_REGISTER, UserRegisterGenerator);
   yield takeEvery(API_CONSTANTS.GET_CURRENT_ROLE, getCurrentRole);
   yield takeEvery(API_CONSTANTS.GET_CURRENT_USER, getCurrentUser);
+  yield takeEvery(API_CONSTANTS.GET_USER_ATTENDANCE_LIST, getUserAttendance);
+  yield takeEvery(API_CONSTANTS.GET_USER_ATTENDANCE_DYNAMIC_LIST, getUserAttendanceDynamic);
   yield takeEvery(API_CONSTANTS.GET_STAFF_LIST, getStaff);
   yield takeEvery(API_CONSTANTS.GET_EMPLOYMENT_TYPE_LIST, getEmploymentType);
   yield takeEvery(API_CONSTANTS.GET_DEPARTMENT_LIST, getDepartment);
@@ -95,6 +100,8 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.ADD_SALARY, addSalaryRevision);
   yield takeEvery(API_CONSTANTS.ADD_CERTIFICATION, addCertification);
   yield takeEvery(API_CONSTANTS.ADD_USER_SETTING, addUserSetting);
+  yield takeEvery(API_CONSTANTS.GET_USER_SETTING, getUserSetting);
+  yield takeEvery(API_CONSTANTS.UPDATE_USER_SETTING, updateUserSetting);
   yield takeEvery(
     API_CONSTANTS.ADD_PERSONAL_INFORMATION,
     addPersonalInformation

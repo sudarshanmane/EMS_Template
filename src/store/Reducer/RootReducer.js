@@ -78,6 +78,58 @@ export const RootReducer = (state = initialState, action) => {
         getcurrentuser: action.result,
       };
 
+      case API_CONSTANTS.GET_USER_SETTING:
+        return {
+          ...state,
+          loding: true,
+        };
+  
+      case API_CONSTANTS.GET_USER_SETTING_SUCCESS:
+        return {
+          ...state,
+          loding: false,
+          getusersetting: action.result,
+        };
+
+        case API_CONSTANTS.UPDATE_USER_SETTING:
+          return {
+            ...state,
+            loding: true,
+          };
+    
+        case API_CONSTANTS.UPDATE_USER_SETTING_SUCCESS:
+          return {
+            ...state,
+            loding: false,
+            updateusersetting: action.result,
+          };
+
+          case API_CONSTANTS.GET_USER_ATTENDANCE_LIST:
+            return {
+              ...state,
+              loding: true,
+            };
+      
+          case API_CONSTANTS.GET_USER_ATTENDANCE_LIST_SUCCESS:
+            return {
+              ...state,
+              loding: false,
+              getuserattendance: action.result,
+            };
+
+            case API_CONSTANTS.GET_USER_ATTENDANCE_DYNAMIC_LIST:
+              return {
+                ...state,
+                loding: true,
+              };
+        
+            case API_CONSTANTS.GET_USER_ATTENDANCE_DYNAMIC_LIST_SUCCESS:
+              return {
+                ...state,
+                loding: false,
+                getuserattendancedynamic: action.result,
+              };
+          
     case API_CONSTANTS.GET_STAFF_LIST:
       return {
         ...state,

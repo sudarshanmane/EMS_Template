@@ -4,7 +4,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Button } from "react-bootstrap";
 import { Form } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
 // import "./styles.css";
 import { Helmet } from "react-helmet";
 import {
@@ -18,7 +17,6 @@ export default function EducationPost({ nextcall, userId }) {
   const getEducationListurl = URLS.GET_EDUCATION_LIST_URL;
   const id = userId;
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [formDates, setFormDates] = useState([]);
@@ -27,6 +25,7 @@ export default function EducationPost({ nextcall, userId }) {
     control,
     formState: { errors },
   } = useForm({});
+ 
 
   const educationListSelector = useSelector((state) => state.geteducationlist);
   function fetchPageDetails(getEducationListurl) {
@@ -98,22 +97,14 @@ export default function EducationPost({ nextcall, userId }) {
     return `${year}-${month}-${day}`;
   };
 
-  const edu_submit_id = useSelector((state) => state.education?.newData?.id);
+
+  const educationSelector = useSelector((state) => state.addeducation);
 
   useEffect(() => {
-    if (edu_submit_id) {
-      const link = `/app/profile/employee-profile${id}`;
-      navigate(link);
-    }
-  }, [edu_submit_id]);
-
-  const edu_info = useSelector((state) => state.educationinfo?.newData?.id);
-
-  useEffect(() => {
-    if (edu_info) {
+    if (educationSelector) {
       nextcall();
     }
-  }, [edu_info]);
+  }, [educationSelector]);
 
   return (
     <>

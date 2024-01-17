@@ -12,9 +12,13 @@ export const URLS = {
   GET_WEEK_OFF_URL: "/company/api/v2/weekoff/",
   GET_ALL_DROPDOWN_URL: "/users/api/v2/getalluserlist/",
   GET_USERROLE_PERMISSION_URL: "/users/api/v2/userrolepermissionlist",
+  GET_USER_ATTENDANCE_URL: "/attendance/api/v2/attendanceFilter/?get_data_by_user_id=${user_id}",
+  GET_USER_ATTENDANCE_DYNAMIC_URL: "/attendance/api/v2/attendanceFilterForAllData/?get_data_by_user_id=${userId}",
 
   GET_CURRENT_ROLE_URL: "/users/api/v2/getcurrentuserrole/",
   GET_CURRENT_USER_URL: "/users/api/v2/getalluser/",
+  GET_USER_SETTING_URL: "/usersettings/api/v2/getusersettingsbyid/?user_id=${id}",
+  UPDATE_USER_SETTING_URL: "/usersettings/api/v2/usersettings/${id}/",
   GET_STAFF_LIST_URL: "/users/api/v2/getallstaff/",
   ADD_SALARY_URL: "/userhrms/api/v2/salaryrevision/",
   ADD_CERTIFICATION_URL: "/userhrms/api/v2/certificate/",

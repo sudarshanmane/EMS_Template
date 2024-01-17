@@ -47,12 +47,10 @@ export default function PersonalInformation({ nextcall, userId }) {
   } = useForm({
     resolver: yupResolver(stepSchema),
   });
-
   const dispatch = useDispatch();
-  let newUserId = getUserRegistrationId().id;
-
-  console.log("newUserIdnewUserIdnewUserId", newUserId);
-
+  // let newUserId = getUserRegistrationId().id;
+  let newUserId = userId;
+  
   const options = [
     { value: "A+", label: "A+" },
     { value: "A-", label: "A-" },
@@ -80,7 +78,7 @@ export default function PersonalInformation({ nextcall, userId }) {
   const addPersonalInformationSelector = useSelector(
     (state) => state.addpersonalinformation
   );
-  const per_info = useSelector((state) => state.personalinfo?.newData?.id);
+
   const onSubmit = (data) => {
     const formDataWithUserId = {
       ...data,
@@ -94,10 +92,10 @@ export default function PersonalInformation({ nextcall, userId }) {
   }, []);
 
   useEffect(() => {
-    if (per_info) {
+    if (addPersonalInformationSelector) {
       nextcall();
     }
-  }, [per_info]);
+  }, [addPersonalInformationSelector]);
 
   return (
     <>
