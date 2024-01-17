@@ -541,11 +541,11 @@ export default function Usersetting({ userId }) {
                           {...register("shift_policy")}
                         >
                           <option value=""> Select Shift Policy </option>
-                          {(data) => {
+                          {shiftPolicy_dropdown?.map((data) => {
                             return (
                               <option value={data.id}>{data.shift_code}</option>
                             );
-                          }}
+                          })}
                         </Select>
                       </div>
                     </div>
@@ -559,13 +559,13 @@ export default function Usersetting({ userId }) {
                           {...register("weekly_off")}
                         >
                           <option value=""> Select Weekly Off </option>
-                          {(data) => {
+                          {weekoff_dropdown?.map((data) => {
                             return (
                               <option value={data.id}>
                                 {data.weekly_off_code}
                               </option>
                             );
-                          }}
+                          })}
                         </select>
                       </div>
                     </div>

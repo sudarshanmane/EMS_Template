@@ -52,6 +52,19 @@ export const RootReducer = (state = initialState, action) => {
         registerDetails: action.result,
       };
 
+    case API_CONSTANTS.UPDATE_SELF_LEAVE:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.UPDATE_SELF_LEAVE_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        updateselfleave: action.result,
+      };
+
     case API_CONSTANTS.GET_CURRENT_ROLE:
       return {
         ...state,
@@ -78,58 +91,110 @@ export const RootReducer = (state = initialState, action) => {
         getcurrentuser: action.result,
       };
 
-      case API_CONSTANTS.GET_USER_SETTING:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.GET_USER_SETTING_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          getusersetting: action.result,
-        };
+    case API_CONSTANTS.GET_USER_SETTING:
+      return {
+        ...state,
+        loding: true,
+      };
 
-        case API_CONSTANTS.UPDATE_USER_SETTING:
-          return {
-            ...state,
-            loding: true,
-          };
-    
-        case API_CONSTANTS.UPDATE_USER_SETTING_SUCCESS:
-          return {
-            ...state,
-            loding: false,
-            updateusersetting: action.result,
-          };
+    case API_CONSTANTS.GET_USER_SETTING_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getusersetting: action.result,
+      };
 
-          case API_CONSTANTS.GET_USER_ATTENDANCE_LIST:
-            return {
-              ...state,
-              loding: true,
-            };
-      
-          case API_CONSTANTS.GET_USER_ATTENDANCE_LIST_SUCCESS:
-            return {
-              ...state,
-              loding: false,
-              getuserattendance: action.result,
-            };
+    case API_CONSTANTS.UPDATE_USER_SETTING:
+      return {
+        ...state,
+        loding: true,
+      };
 
-            case API_CONSTANTS.GET_USER_ATTENDANCE_DYNAMIC_LIST:
-              return {
-                ...state,
-                loding: true,
-              };
-        
-            case API_CONSTANTS.GET_USER_ATTENDANCE_DYNAMIC_LIST_SUCCESS:
-              return {
-                ...state,
-                loding: false,
-                getuserattendancedynamic: action.result,
-              };
-          
+    case API_CONSTANTS.UPDATE_USER_SETTING_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        updateusersetting: action.result,
+      };
+
+    case API_CONSTANTS.GET_USER_ATTENDANCE_LIST:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_USER_ATTENDANCE_LIST_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getuserattendance: action.result,
+      };
+
+    case API_CONSTANTS.GET_USER_ATTENDANCE_DYNAMIC_LIST:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_USER_ATTENDANCE_DYNAMIC_LIST_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getuserattendancedynamic: action.result,
+      };
+
+    case API_CONSTANTS.GET_LEAVES_LIST:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_LEAVES_LIST_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getleavelist: action.result,
+      };
+
+    case API_CONSTANTS.GET_SELF_LEAVES_LIST:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_SELF_LEAVES_LIST_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getSelfleavelist: action.result,
+      };
+
+    case API_CONSTANTS.GET_DYNAMIC_LEAVES_LIST:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_DYNAMIC_LEAVES_LIST_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getDynamicleavelist: action.result,
+      };
+
+    case API_CONSTANTS.GET_DYNAMIC_SELF_LEAVES_LIST:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_DYNAMIC_SELF_LEAVES_LIST_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getDynamicSelfleavelist: action.result,
+      };
+
     case API_CONSTANTS.GET_STAFF_LIST:
       return {
         ...state,
@@ -195,20 +260,19 @@ export const RootReducer = (state = initialState, action) => {
         weekoff: action.result,
       };
 
-      case API_CONSTANTS.GET_ALL_DROPDOWN_LIST:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.GET_ALL_DROPDOWN_LIST_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          getalldropdown: action.result,
-        };
+    case API_CONSTANTS.GET_ALL_DROPDOWN_LIST:
+      return {
+        ...state,
+        loding: true,
+      };
 
-        
+    case API_CONSTANTS.GET_ALL_DROPDOWN_LIST_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getalldropdown: action.result,
+      };
+
     case API_CONSTANTS.GET_BRANCH_LIST:
       return {
         ...state,

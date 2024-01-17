@@ -83,6 +83,42 @@ function getUserAttendanceDynamicAction(payload) {
   };
 }
 
+function getLeaveListAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_LEAVES_LIST,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
+function getSelfLeaveAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_SELF_LEAVES_LIST,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
+function getDynamicLeaveListAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_DYNAMIC_SELF_LEAVES_LIST,
+    payload: payload.payload,
+    URL: URLS.GET_DYNAMIC_LEAVES_LIST_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+function getDynamicSelfLeaveAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_DYNAMIC_SELF_LEAVES_LIST,
+    payload: payload.payload,
+    URL: URLS.GET_DYNAMIC_SELF_LEAVES_LIST_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
 function getAllStaff(payload) {
   return {
     type: API_CONSTANTS.GET_STAFF_LIST,
@@ -378,6 +414,15 @@ function updateCategorypanle(payload) {
     type: API_CONSTANTS.UPDATE_CATEGORY_PANEL,
     payload: payload.payload,
     URL: URLS.UPDATE_CATEGORY_PANEL_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+function updateSelfLeaveAction(payload) {
+  return {
+    type: API_CONSTANTS.UPDATE_SELF_LEAVE,
+    payload: payload.payload,
+    URL: URLS.UPDATE_SELF_LEAVE_URL + payload.id + "/",
     contentType: contentType.json,
   };
 }
@@ -1412,7 +1457,11 @@ export {
   updateUserSettingAction,
   getUserAttendanceAction,
   getUserAttendanceDynamicAction,
-
+  getSelfLeaveAction,
+  getLeaveListAction,
+  getDynamicLeaveListAction,
+  getDynamicSelfLeaveAction,
+  updateSelfLeaveAction,
 
   // ===========================================================
   addExpenseItemSetup,

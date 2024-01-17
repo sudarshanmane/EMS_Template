@@ -13,7 +13,7 @@ import { URLS } from "../../../Globals/URLS";
 const AttendaceUser = ({ isClass = true, userId }) => {
   const simpleurl = URLS.GET_USER_ATTENDANCE_URL;
   const dynamicurl = URLS.GET_USER_ATTENDANCE_DYNAMIC_URL;
-
+  const baseurl = URLS.BASE_URL_EXPORT;
   const dispatch = useDispatch();
   const userRoles = useSelector((state) => state.getstafflist);
   const getDetail = useSelector((state) => state.getuserattendance);
@@ -99,13 +99,14 @@ const AttendaceUser = ({ isClass = true, userId }) => {
       dataIndex: "sign_in_image",
 
       render: (text) => {
+        console.log("texyt",text)
         return (
           <div className="attendance-img">
             {text ? (
               <img
                 data-bs-toggle="modal"
                 data-bs-target="#image_pop_up"
-                src={text ? API_HOST + text : ""}
+                src={text ? baseurl + text : ""}
                 alt={text ? text : ""}
                 style={{ cursor: "pointer" }}
               ></img>
@@ -126,7 +127,7 @@ const AttendaceUser = ({ isClass = true, userId }) => {
                   <div className="modal-content">
                     <div className="modal-body">
                       <img
-                        src={text ? API_HOST + text : ""}
+                        src={text ? baseurl + text : ""}
                         alt={text ? text : ""}
                         style={{ width: "100%", cursor: "pointer" }}
                       />
@@ -157,7 +158,7 @@ const AttendaceUser = ({ isClass = true, userId }) => {
               <img
                 data-bs-toggle="modal"
                 data-bs-target="#image_pop_up"
-                src={text ? API_HOST + text : ""}
+                src={text ? baseurl + text : ""}
                 alt={text ? text : ""}
                 style={{ cursor: "pointer" }}
               ></img>
@@ -177,7 +178,7 @@ const AttendaceUser = ({ isClass = true, userId }) => {
                   <div className="modal-content">
                     <div className="modal-body">
                       <img
-                        src={text ? API_HOST + text : ""}
+                        src={text ? baseurl + text : ""}
                         alt={text ? text : ""}
                         style={{ width: "100%", cursor: "pointer" }}
                       />

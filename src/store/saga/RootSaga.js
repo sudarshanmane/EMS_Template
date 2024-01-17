@@ -76,6 +76,11 @@ import {
   updateUserSetting,
   getUserAttendance,
   getUserAttendanceDynamic,
+  getLeaveList,
+  getSelfLeave,
+  getDynamicLeave,
+  getDynamicSelfLeave,
+  updateSelfLeave,
    // =======================================
 
 } from "./CommonSagas";
@@ -106,6 +111,11 @@ export function* RootSaga() {
     API_CONSTANTS.ADD_PERSONAL_INFORMATION,
     addPersonalInformation
   );
+  yield takeEvery(API_CONSTANTS.UPDATE_SELF_LEAVE, updateSelfLeave);
+  yield takeEvery(API_CONSTANTS.GET_LEAVES_LIST, getLeaveList);
+  yield takeEvery(API_CONSTANTS.GET_SELF_LEAVES_LIST, getSelfLeave);
+  yield takeEvery(API_CONSTANTS.GET_DYNAMIC_LEAVES_LIST, getDynamicLeave);
+  yield takeEvery(API_CONSTANTS.GET_DYNAMIC_SELF_LEAVES_LIST, getDynamicSelfLeave);
   yield takeEvery(API_CONSTANTS.GET_EDUCATION_LIST, getEducationList);
   yield takeEvery(API_CONSTANTS.ADD_EDUCATION, addEducation);
   yield takeEvery(API_CONSTANTS.ADD_EXPERIENCE, addExperience);

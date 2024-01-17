@@ -39,7 +39,7 @@ export default function UserRegistrationSetting({ nextcall, userId }) {
   const dispatch = useDispatch();
 
   const shiftPolicySelector = useSelector((state) => state.shiftpolicy);
-  console.log("shiftPolicySelector",shiftPolicySelector)
+
   function fetchPageDetails(getShiftPolicyurl) {
     dispatch(getShiftPolicyAction({ payload: {}, URL: getShiftPolicyurl }));
   }
@@ -57,7 +57,6 @@ export default function UserRegistrationSetting({ nextcall, userId }) {
   }, []);
 
   const weekOffSelector = useSelector((state) => state.weekoff);
-  console.log("weekOffSelector",weekOffSelector)
 
   function fetchPageDetails(getWeekOffurl) {
     dispatch(getWeekOffAction({ payload: {}, URL: getWeekOffurl }));
@@ -94,7 +93,6 @@ export default function UserRegistrationSetting({ nextcall, userId }) {
 
 
   const onSubmit = (data) => {
-    console.log("submit data", data);
 
     const leaveAcceptAccessValues = data?.leave_accept_access?.map(
       (option) => option
@@ -131,20 +129,6 @@ export default function UserRegistrationSetting({ nextcall, userId }) {
       nextcall();
     }
   }, [addSettingSelector]);
-
-  useEffect(() => {
-    if (addSettingSelector) {
-      console.log("All complete");
-      dispatch(clearUserregistration());
-      dispatch(clearPersonalinfo());
-      dispatch(clearEducationInfo());
-      dispatch(clearExperienceInfo());
-      dispatch(clearSalaryRevision());
-      dispatch(clearCertificateInfo());
-      dispatch(clearUserSettings());
-      nextcall();
-    }
-  }, [addSettingSelector]);
   
   return (
     <>
@@ -156,55 +140,49 @@ export default function UserRegistrationSetting({ nextcall, userId }) {
               <h4 className="card-title mb-0">Settings</h4>
             </div>
             <div className="card-body">
-              <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <h4>Approval Access</h4>
                 <div className="row my-4">
                   <div className="col-sm-6">
-                    <div className="input-block row">
-                      <label className="col-form-label col-md-3">
-                        Shift Policy{" "}
-                         <span className="text-danger">*</span>
-                      </label>
-
-                      <div className="col-md-9">
+                    <div className="input-block">
+                      <label className="col-form-label">Shift Policy</label>
+                      <div>
                         <select
                           className="form-control"
                           {...register("shift_policy")}
                         >
-                          <option value="">Select Shift Policy</option>
+                          <option value=""> Select Shift Policy </option>
                           {shiftPolicySelector?.map((data) => {
                             return (
-                              <option value={data.id}>
-                                {data.shift_policy}
-                              </option>
+                              <option value={data.id}>{data.shift_code}</option>
                             );
                           })}
                         </select>
                         <div className="text-danger">
-                          {errors.shiftPolicy?.message}
+                          {errors.shift_policy?.message}
                         </div>
                       </div>
                     </div>
                   </div>
                   <div className="col-sm-6">
-                    <div className="input-block row">
-                      <label className="col-form-label col-md-3">
-                        Week Off <span className="text-danger">*</span>
-                      </label>
-
-                      <div className="col-md-9">
+                    <div className="input-block">
+                      <label className="col-form-label">Weekly Off</label>
+                      <div>
                         <select
                           className="form-control"
                           {...register("weekly_off")}
                         >
-                          <option value="">Select Week Off</option>
+                          <option value=""> Select Weekly Off </option>
                           {weekOffSelector?.map((data) => {
                             return (
-                              <option value={data.id}>{data.weekly_off}</option>
+                              <option value={data.id}>
+                                {data.weekly_off_code}
+                              </option>
                             );
                           })}
                         </select>
                         <div className="text-danger">
-                          {errors.weeklyOff?.message}
+                          {errors.weekly_off?.message}
                         </div>
                       </div>
                     </div>
@@ -231,7 +209,7 @@ export default function UserRegistrationSetting({ nextcall, userId }) {
                               placeholder="Search options..."
                               value={field.value}
                               onChange={(value) => {
-                                console.log("Leave value", value);
+                               
                                 field.onChange(value);
                               }}
                             />

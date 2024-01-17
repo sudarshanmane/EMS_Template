@@ -16,7 +16,10 @@ const ViewEmployee = () => {
   const url = URLS.GET_STAFF_LIST_URL;
   const baseurl = URLS.BASE_URL_EXPORT;
   const [user, setUser] = useState([]);
-  const { id } = useParams();
+  
+  const params = useParams();
+  const { id } = params;
+  // const { id } = useParams();
 
   const [activeTab, setActiveTab] = useState("emp_profile");
 
@@ -254,11 +257,11 @@ const ViewEmployee = () => {
             </div>
 
             <div className="tab-pane fade" id="emp_attendance">
-              <AttendaceUser isClass={false} userId={id} />
+              <AttendaceUser userId={id} />
             </div>
 
             <div className="tab-pane fade" id="emp_leave">
-              <LeavesList isClass={false} userId={id} />
+              <LeavesList userId={id} />
             </div>
           </div>
           <div
