@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import DocumentProfile from "./documentprofile";
 
 export default function ProfilePage({ userId }) {
-  const userRoles = useSelector((state) => state.getstafflist);
+  const userRoles = useSelector((state) => state.getcurrentrole);
   const navigate = useNavigate();
 
   const canViewPersonalInfo =

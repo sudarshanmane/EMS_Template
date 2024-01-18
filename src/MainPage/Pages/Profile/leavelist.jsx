@@ -14,6 +14,7 @@ import {
 } from "../../../store/Action/Actions";
 
 const LeavesList = ({ isClass = true, userId }) => {
+  const id =userId;
   const dispatch = useDispatch();
   const baseurl = URLS.BASE_URL_EXPORT;
   const leaveurl = URLS.GET_LEAVES_LIST_URL;
@@ -46,9 +47,9 @@ const LeavesList = ({ isClass = true, userId }) => {
       dispatch(getSelfLeaveAction({ payload: {}, URL: selfurl }));
     } else {
       dispatch(
-        getDynamicLeaveListAction({ payload: {}, URL: leavedynamicurl })
+        getDynamicLeaveListAction({ payload: {id}, URL: leavedynamicurl })
       );
-      dispatch(getDynamicSelfLeaveAction({ payload: {}, URL: selfdynamicurl }));
+      dispatch(getDynamicSelfLeaveAction({ payload: {id}, URL: selfdynamicurl }));
     }
   }, []);
 

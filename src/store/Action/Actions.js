@@ -51,7 +51,7 @@ function getUserSettingAction(payload) {
   return {
     type: API_CONSTANTS.GET_USER_SETTING,
     payload: payload.payload,
-    URL: URLS.GET_USER_SETTING_URL + payload.id + "/",
+    URL: URLS.GET_USER_SETTING_URL + payload.payload.id + "/",
     contentType: contentType.json,
   };
 }
@@ -59,8 +59,8 @@ function getUserSettingAction(payload) {
 function updateUserSettingAction(payload) {
   return {
     type: API_CONSTANTS.UPDATE_USER_SETTING,
-    payload: payload.payload,
-    URL: payload.URL,
+    payload: payload,
+    URL: URLS.UPDATE_USER_SETTING_URL + payload.id + "/",
     contentType: contentType.json,
   };
 }
@@ -105,7 +105,7 @@ function getDynamicLeaveListAction(payload) {
   return {
     type: API_CONSTANTS.GET_DYNAMIC_SELF_LEAVES_LIST,
     payload: payload.payload,
-    URL: URLS.GET_DYNAMIC_LEAVES_LIST_URL + payload.id + "/",
+    URL: URLS.GET_DYNAMIC_LEAVES_LIST_URL + payload.payload.id + "/",
     contentType: contentType.json,
   };
 }
@@ -114,7 +114,7 @@ function getDynamicSelfLeaveAction(payload) {
   return {
     type: API_CONSTANTS.GET_DYNAMIC_SELF_LEAVES_LIST,
     payload: payload.payload,
-    URL: URLS.GET_DYNAMIC_SELF_LEAVES_LIST_URL + payload.id + "/",
+    URL: URLS.GET_DYNAMIC_SELF_LEAVES_LIST_URL + payload.payload.id + "/",
     contentType: contentType.json,
   };
 }
@@ -285,7 +285,6 @@ function getEducationList(payload) {
     contentType: contentType.json,
   };
 }
-
 
 function getApprovedReportList(payload) {
   return {

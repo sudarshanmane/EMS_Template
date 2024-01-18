@@ -124,7 +124,6 @@ function* getUserSetting(action) {
   }
 }
 
-
 function* updateSelfLeave(action) {
   try {
     let result = yield call(Method.putData, action);
@@ -142,10 +141,10 @@ function* updateSelfLeave(action) {
   }
 }
 
-
 function* updateUserSetting(action) {
   try {
-    let result = yield call(Method.putData, action);
+    let result = yield call(Method.patchData, action);
+    console.log(result, "syugdysgdyg");
     if (result.status === 200) {
       yield put({
         type: `${action.type}_SUCCESS`,
@@ -285,7 +284,6 @@ function* getDynamicSelfLeave(action) {
     yield call(errorSaga, "The credentials you entered are incorrect!");
   }
 }
-
 
 function* getStaff(action) {
   try {
@@ -496,7 +494,6 @@ function* getAllDropdown(action) {
     yield call(errorSaga, "The credentials you entered are incorrect!");
   }
 }
-
 
 function* addSalaryRevision(action) {
   try {

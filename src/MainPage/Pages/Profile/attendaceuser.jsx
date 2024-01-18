@@ -17,7 +17,7 @@ const AttendaceUser = ({ isClass = true, userId }) => {
   const dispatch = useDispatch();
   const userRoles = useSelector((state) => state.getstafflist);
   const getDetail = useSelector((state) => state.getuserattendance);
-  const isLoader = useSelector((state) => state.getuserattendancedynamic);
+  const isLoader = useSelector((state) => state.getuserattendancedynamic?.data);
 
   
   const [tablePagination, setTablePagination] = useState({
