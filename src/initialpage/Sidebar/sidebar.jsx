@@ -90,20 +90,19 @@ const Sidebar = () => {
                     }}
                   >
                     <li>
-                        <Link
-                          className={
-                            pathname.includes("employeeslist")
-                              ? "active"
-                              : pathname.includes("employees-list")
-                              ? "active"
-                              : ""
-                          }
-                          to="/home/employeeslist"
-                        >
-                          All Users
-                        </Link>
-                      </li>
-                  
+                      <Link
+                        className={
+                          pathname.includes("employeeslist")
+                            ? "active"
+                            : pathname.includes("employees-list")
+                            ? "active"
+                            : ""
+                        }
+                        to="/home/employeeslist"
+                      >
+                        All Users
+                      </Link>
+                    </li>
                   </ul>
                 ) : (
                   ""
@@ -123,7 +122,7 @@ const Sidebar = () => {
                 </Link>
                 {isSideMenu == "company" ? (
                   <ul
-                    style={{
+                    style={{x 
                       display: isSideMenu == "company" ? "block" : "none",
                     }}
                   >
@@ -224,13 +223,53 @@ const Sidebar = () => {
               <li className="submenu">
                 <Link
                   to="#"
+                  className={isSideMenu == "travelRequestPannel" ? "subdrop" : ""}
+                  onClick={() =>
+                    toggleSidebar(isSideMenu == "travelRequestPannel" ? "" : "travelRequestPannel")
+                  }
+                >
+                <i className='fas fa-taxi'></i>
+
+                  <span>Travels Request</span> <span className="menu-arrow" />
+                </Link>
+                {isSideMenu == "travelRequestPannel" ? (
+                  <ul>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("travelRequest-request") ? "active" : ""
+                        }
+                        to="/home/travelRequest"
+                      >
+                        Request{" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("travelRequest-approval") ? "active" : ""
+                        }
+                        to="/home/requestApprovals"
+                      >
+                       Request Approvals{" "}
+                      </Link>
+                    </li>
+                  </ul>
+                ) : (
+                  ""
+                )}
+              </li>
+
+              <li className="submenu">
+                <Link
+                  to="#"
                   className={isSideMenu == "reports" ? "subdrop" : ""}
                   onClick={() =>
                     toggleSidebar(isSideMenu == "reports" ? "" : "reports")
                   }
                 >
-                  <i className="la la-file-text" /> <span>Expense Reports </span>{" "}
-                  <span className="menu-arrow" />
+                  <i className="la la-file-text" />{" "}
+                  <span>Expense Reports </span> <span className="menu-arrow" />
                 </Link>
                 {isSideMenu == "reports" ? (
                   <ul>
@@ -256,32 +295,13 @@ const Sidebar = () => {
                         Expense Approvals{" "}
                       </Link>
                     </li>
-                    
                   </ul>
                 ) : (
                   ""
                 )}
               </li>
 
-              <li className="submenu">
-                <Link
-                  to="/home/TravelRequestPannel"
-                  className={
-                    isSideMenu == "TravelRequestPannel" ? "subdrop" : ""
-                  }
-                  onClick={() =>
-                    toggleSidebar(
-                      isSideMenu == "TravelRequestPannel"
-                        ? ""
-                        : "TravelRequestPannel"
-                    )
-                  }
-                >
-                  <i className="la la-file-text" />{" "}
-                  <span> Travels Request </span>{" "}
-                  {/* <span className="menu-arrow" /> */}
-                </Link>
-              </li>
+              
 
               <li className="submenu">
                 <Link
@@ -753,6 +773,31 @@ const Sidebar = () => {
                   report_gmailerrorred
                 </span>
               </Link>
+
+              <Link
+                className="nav-link"
+                id="v-pills-travelRequestPannel-tab"
+                title="TravelRequestPannel"
+                data-bs-toggle="pill"
+                to="#v-pills-travelRequestPannel"
+                role="tab"
+                aria-controls="v-pills-travelRequestPannel"
+                aria-selected="false"
+              >
+                <span
+                  className="material-icons-outlined"
+                  onClick={() =>
+                    toggleSidebar(
+                      isSideMenu == "travelRequestPannel"
+                        ? ""
+                        : "travelRequestPannel"
+                    )
+                  }
+                >
+                  travelRequestPannel_gmailerrorred
+                </span>
+              </Link>
+
               <Link
                 className="nav-link"
                 id="v-pills-performance-tab"

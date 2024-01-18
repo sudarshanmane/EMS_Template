@@ -929,13 +929,13 @@ export const RootReducer = (state = initialState, action) => {
         createTravelSuccess: action.result,
       };
 
-    case API_CONSTANTS.GATE_TRAVEL:
+    case API_CONSTANTS.GET_TRAVEL:
       return {
         ...state,
         loding: true,
       };
 
-    case API_CONSTANTS.GATE_TRAVEL_SUCCESS:
+    case API_CONSTANTS.GET_TRAVEL_SUCCESS:
       return {
         ...state,
         loding: false,
@@ -973,12 +973,51 @@ export const RootReducer = (state = initialState, action) => {
         loding: true,
       };
 
+    case API_CONSTANTS.SUBMIT_TRAVEL_REQUEST:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.SUBMIT_TRAVEL_REQUEST_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        submitTravelRequestResult: action.result,
+      };
+
+    case API_CONSTANTS.GET_TRAVEL_REQUEST_APPROVALS:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_TRAVEL_REQUEST_APPROVALS_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getTravelApprovalSuccess: action.result,
+      };
+
     case API_CONSTANTS.ADD_ALL_USER_SUCCESS:
       return {
         ...state,
         loding: false,
         addAllUserresult: action.result,
       };
+
+      case API_CONSTANTS.REJECT_TRAVEL_REQUEST_APPROVALS:
+        return {
+          ...state,
+          loding: true,
+        };
+  
+      case API_CONSTANTS.REJECT_TRAVEL_REQUEST_APPROVALS_SUCCESS:
+        return {
+          ...state,
+          loding: false,
+          rejectTravelApprovalsSuccess: action.result,
+        };
 
     case API_CONSTANTS.GET_ALL_USER:
       return {

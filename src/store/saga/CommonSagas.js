@@ -1350,6 +1350,61 @@ function* updateTravel(action) {
   }
 }
 
+function* submitTravelRequest(action) {
+  try {
+    let result = yield call(Method.putData, action);
+    if (result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* getTravelApproval(action) {
+  try {
+    let result = yield call(Method.getData, action);
+    if (
+      result.status === 202 ||
+      result.status === 201 ||
+      result.status === 200
+    ) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
+function* rejectTravelApprovals(action) {
+  try {
+    let result = yield call(Method.putData, action);
+    if (result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "Something went wrong!");
+  }
+}
+
 function* addAllUser(action) {
   try {
     let result = yield call(Method.postData, action);
@@ -2755,6 +2810,9 @@ export {
   getTravel,
   deleteTravel,
   updateTravel,
+  submitTravelRequest,
+  getTravelApproval,
+  rejectTravelApprovals,
   getAllUser,
   addAllUser,
   updateUserSetting,

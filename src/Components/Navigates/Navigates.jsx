@@ -14,7 +14,6 @@ import EmployeeProfile from "../../MainPage/Pages/Profile/employeeprofile";
 import ExpenseReportPanel from "../../_components/panels/ExpenseReportPanel";
 import Mileage from "../../_components/screens/Mileage";
 import Expenses from "../../_components/screens/Expenses";
-import TravelRequestPannel from "../../_components/panels/TravelRequestPannel";
 import VendorPannel from "../../_components/panels/VendorPannel";
 import ExpensePolicies from "../../_components/panels/ExpensePolicies";
 import Loginpage from "../../initialpage/loginpage";
@@ -51,6 +50,8 @@ import DocumentProfile from "../../MainPage/Pages/Profile/documentprofile";
 import CertificateInfo from "../../MainPage/Pages/Profile/certificateinfo";
 import LeavesList from "../../MainPage/Pages/Profile/leavelist";
 import ViewVendor from "../../_components/panels/ViewVendor";
+import TravelRequest from "../../_components/screens/TravelRequest";
+import RequestApprovals from "../../_components/screens/RequestApprovals";
 
 
 
@@ -65,6 +66,8 @@ const Navigates = () => {
 
         <Route path="/home" element={<PrivateRoute></PrivateRoute>}>
           <Route path="applyforcard" element={<Card></Card>}></Route>
+          <Route path="travelRequest" element={<TravelRequest></TravelRequest>}></Route>
+          <Route path="requestApprovals" element={<RequestApprovals></RequestApprovals>}></Route>
           <Route path="/home/viewReport/:id" element={<ViewReport />} />
           <Route path="/home/viewReportApproved/:id" element={<ViewReportApproved/>}></Route>
           <Route path="/home/viewVendor/:id" element={<ViewVendor/>}></Route>
@@ -150,14 +153,6 @@ const Navigates = () => {
           ></Route>
           <Route path="mileage" element={<Mileage></Mileage>}></Route>
           <Route path="expenses" element={<Expenses></Expenses>}></Route>
-          {/* <Route
-            path="ReimbursmentRecord"
-            element={<ReimbursmentRecord></ReimbursmentRecord>}
-          ></Route> */}
-          <Route
-            path="TravelRequestPannel"
-            element={<TravelRequestPannel></TravelRequestPannel>}
-          ></Route>
           <Route
             path="VendorPannel"
             element={<VendorPannel></VendorPannel>}

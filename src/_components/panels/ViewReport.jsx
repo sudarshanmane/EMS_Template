@@ -173,7 +173,7 @@ const ViewReportPage = () => {
               data-bs-toggle="modal"
               data-bs-target="#approveExpense"
               onClick={() => onApproveExpense()}
-            >
+            > 
               <i className="fa fa-check m-r-5" /> Approve
             </Link>
             <Link

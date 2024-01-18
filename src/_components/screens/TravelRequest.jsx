@@ -12,6 +12,7 @@ import {
   getTravel,
   deleteTravel,
   updateTravel,
+  submitTravelRequest,
   createTravel,
 } from "../../store/Action/Actions";
 
@@ -20,7 +21,7 @@ import {
   itemRender,
 } from "../../MainPage/paginationfunction";
 
-const TravelRequestPannel = () => {
+const TravelRequest = () => {
   const [url, setUrl] = useState(URLS.GET_TRAVEL_URL);
   const dispatch = useDispatch();
   const [selectedDate1, setSelectedDate1] = useState(null);
@@ -154,6 +155,13 @@ const TravelRequestPannel = () => {
     );
   };
 
+  const onSubmitTravelRequest = (record) => {
+    console.log("record", record.id);
+    dispatch(
+      submitTravelRequest({ id: record.id, payload: record })
+    );
+  };
+
   const columns = [
     {
       title: "Employee",
@@ -201,7 +209,7 @@ const TravelRequestPannel = () => {
       title: "Action",
       render: (record) => (
         <div className="dropdown dropdown-action text-end">
-        <Link
+          <Link
             className="btn btn-success btn-sm m-r-5"
             to="#"
             data-bs-toggle="modal"
@@ -222,6 +230,24 @@ const TravelRequestPannel = () => {
           >
             <i className="fa fa-trash" />
           </Link>
+
+          <button
+            className="btn btn-info btn-sm m-r-5"
+            onClick={() => {
+              onSubmitTravelRequest(record);
+            }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              className="bi bi-send"
+              viewBox="0 0 16 16"
+            >
+              <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z" />
+            </svg>
+          </button>
         </div>
       ),
     },
@@ -453,7 +479,7 @@ const TravelRequestPannel = () => {
 
         {/* Add Travel Request */}
 
-        {/* Edit Expense Modal */}
+        {/* Edit Travel Modal */}
 
         <div id="edit_travel" className="modal custom-modal fade" role="dialog">
           <div
@@ -584,7 +610,9 @@ const TravelRequestPannel = () => {
           </div>
         </div>
 
-        {/* Delete Category Modal */}
+        {/* Edit Travel Modal End */}
+
+        {/* Delete Travel Modal */}
 
         <div
           className="modal custom-modal fade"
@@ -625,9 +653,10 @@ const TravelRequestPannel = () => {
             </div>
           </div>
         </div>
+        {/* Delete Travel Modal End*/}
       </div>
     </>
   );
 };
 
-export default TravelRequestPannel;
+export default TravelRequest;

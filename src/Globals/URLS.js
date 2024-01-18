@@ -1,6 +1,6 @@
 export const URLS = {
   BASE_URL_EXPORT: "http://192.168.1.219:8001/",
-  
+
   USER_LOGIN_URL: "/users/api/v2/login_web/",
   USER_REGISTER_URL: "/users/api/v2/userregister/",
   GET_DEPARTMENT_LIST_URL: "/users/api/v2/departmentlist/",
@@ -12,12 +12,15 @@ export const URLS = {
   GET_WEEK_OFF_URL: "/company/api/v2/weekoff/",
   GET_ALL_DROPDOWN_URL: "/users/api/v2/getalluserlist/",
   GET_USERROLE_PERMISSION_URL: "/users/api/v2/userrolepermissionlist",
-  GET_USER_ATTENDANCE_URL: "/attendance/api/v2/attendanceFilter/?get_data_by_user_id=${user_id}",
-  GET_USER_ATTENDANCE_DYNAMIC_URL: "/attendance/api/v2/attendanceFilterForAllData/?get_data_by_user_id=${userId}",
+  GET_USER_ATTENDANCE_URL:
+    "/attendance/api/v2/attendanceFilter/?get_data_by_user_id=${user_id}",
+  GET_USER_ATTENDANCE_DYNAMIC_URL:
+    "/attendance/api/v2/attendanceFilterForAllData/?get_data_by_user_id=${userId}",
 
   GET_CURRENT_ROLE_URL: "/users/api/v2/getcurrentuserrole/",
   GET_CURRENT_USER_URL: "/users/api/v2/getalluser/",
-  GET_USER_SETTING_URL: "/usersettings/api/v2/getusersettingsbyid/?user_id=${id}",
+  GET_USER_SETTING_URL:
+    "/usersettings/api/v2/getusersettingsbyid/?user_id=${id}",
   UPDATE_USER_SETTING_URL: "/usersettings/api/v2/usersettings/${id}/",
   GET_STAFF_LIST_URL: "/users/api/v2/getallstaff/",
   ADD_SALARY_URL: "/userhrms/api/v2/salaryrevision/",
@@ -48,13 +51,11 @@ export const URLS = {
   VIEW_VENDOR_BY_ID_URL: "/api/version_0/expense/register_vendor/",
   GET_VENDOR_PAYMENT_URL: "/api/version_0/expense/vendor_payment/",
   CREATE_VENDOR_PAYMENT_URL: "/api/version_0/expense/vendor_payment/",
-  UPDATE_VENDOR_PAYMENT_URL:"/api/version_0/expense/vendor_payment/",
-
+  UPDATE_VENDOR_PAYMENT_URL: "/api/version_0/expense/vendor_payment/",
 
   FETCH_REPORT_URL: "/api/version_0/expense/fetch_report/",
   ADD_REIMBURSMENT_RECORD_URL: "/api/version_0/expense/reimbursement/",
   REJECT_REPORT_BY_ACCOUNT_URL: "/api/version_0/expense/reject_exp_by_account/",
-
 
   ADD_CATEGORY_URL: "/api/version_0/expense/expensecategory/",
   GET_CATEGORY_PANEL_URL: "/api/version_0/expense/expensecategory/",
@@ -82,19 +83,20 @@ export const URLS = {
   GET_VENDOR_URL: "/api/version_0/expense/register_vendor/",
 
   DELETE_VENDOR_TABLE_URL: "/api/version_0/expense/register_vendor/",
-  UPDATE_VENDOR_TABLE_URL: "/api/version_0/expense/register_vendor/",  
-
+  UPDATE_VENDOR_TABLE_URL: "/api/version_0/expense/register_vendor/",
 
   CREATE_TRAVEL_URL: "/api/version_0/expense/request_travel/",
   GET_TRAVEL_URL: "/api/version_0/expense/request_travel/",
   DELETE_TRAVEL_URL: "/api/version_0/expense/request_travel_details/",
   UPDATE_TRAVEL_URL: "/api/version_0/expense/request_travel_details/",
+  SUBMIT_TRAVEL_REQUEST_URL: "/api/version_0/expense/submit_travel/",
 
-  GET_ALL_USER_URL:  "/api/v2/getalluser/",
+  GET_TRAVEL_REQUEST_APPROVALS_URL: "/api/version_0/expense/request_for_approval/",
+  REJECT_TRAVEL_REQUEST_APPROVALS_URL: "/api/version_0/expense/reject_travel_request/",
+
+
+  GET_ALL_USER_URL: "/api/v2/getalluser/",
   ADD_ALL_USER_URL: "/api/v2/userrole/",
-
-
-  
 
   // ========================================================================================
 

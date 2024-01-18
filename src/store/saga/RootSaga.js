@@ -20,7 +20,6 @@ import {
   addReportsubmit,
   getReportList,
   getApprovedReportList,
-  
   getExpenseList,
   updateReport,
   deleteReport,
@@ -55,13 +54,14 @@ import {
   createTravel,
   getTravel,
   deleteTravel,
+  updateTravel,
+  submitTravelRequest,
   addreimbursementRecord,
   rejectReportByAccount,
   getShiftPolicy,
   getWeekOff,
   getCommonGenerator,
   createCategoryItem,
-  updateTravel,
   rejectExpense,
   approveExpense,
   getAllUser,
@@ -76,8 +76,9 @@ import {
   deleteVendorTable,
   updateVendorTable,
   updateVendorPayment,
-   // =======================================
-
+  getTravelApproval,
+  rejectTravelApprovals,
+  // =======================================
 } from "./CommonSagas";
 
 export function* RootSaga() {
@@ -87,7 +88,10 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.GET_CURRENT_ROLE, getCurrentRole);
   yield takeEvery(API_CONSTANTS.GET_CURRENT_USER, getCurrentUser);
   yield takeEvery(API_CONSTANTS.GET_USER_ATTENDANCE_LIST, getUserAttendance);
-  yield takeEvery(API_CONSTANTS.GET_USER_ATTENDANCE_DYNAMIC_LIST, getUserAttendanceDynamic);
+  yield takeEvery(
+    API_CONSTANTS.GET_USER_ATTENDANCE_DYNAMIC_LIST,
+    getUserAttendanceDynamic
+  );
   yield takeEvery(API_CONSTANTS.GET_STAFF_LIST, getStaff);
   yield takeEvery(API_CONSTANTS.GET_EMPLOYMENT_TYPE_LIST, getEmploymentType);
   yield takeEvery(API_CONSTANTS.GET_DEPARTMENT_LIST, getDepartment);
@@ -112,20 +116,27 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.ADD_REPORT, addReportsubmit);
   yield takeEvery(API_CONSTANTS.ADD_SELECTED_REPORT, addSelectedReport);
   yield takeEvery(API_CONSTANTS.GET_REPORT_LIST, getReportList);
-  yield takeEvery(API_CONSTANTS.GET_APPROVED_REPORT_LIST, getApprovedReportList);
+  yield takeEvery(
+    API_CONSTANTS.GET_APPROVED_REPORT_LIST,
+    getApprovedReportList
+  );
   yield takeEvery(API_CONSTANTS.GET_EXPENSE_LIST, getExpenseList);
   yield takeEvery(API_CONSTANTS.UPDATE_REPORT, updateReport);
   yield takeEvery(API_CONSTANTS.DELETE_REPORT, deleteReport);
   yield takeEvery(API_CONSTANTS.VIEW_REPORT, getReport);
 
-
-
   yield takeEvery(API_CONSTANTS.APPROVE_REPORT, approveReport);
   yield takeEvery(API_CONSTANTS.REJECT_REPORT, rejectReport);
   yield takeEvery(API_CONSTANTS.APPROVE_EXPENSE, approveExpense);
   yield takeEvery(API_CONSTANTS.REJECT_EXPENSE, rejectExpense);
-  yield takeEvery(API_CONSTANTS.ADD_REIMBURSMENT_RECORD, addreimbursementRecord);
-  yield takeEvery(API_CONSTANTS.REJECT_REPORT_BY_ACCOUNT, rejectReportByAccount);
+  yield takeEvery(
+    API_CONSTANTS.ADD_REIMBURSMENT_RECORD,
+    addreimbursementRecord
+  );
+  yield takeEvery(
+    API_CONSTANTS.REJECT_REPORT_BY_ACCOUNT,
+    rejectReportByAccount
+  );
 
   yield takeEvery(API_CONSTANTS.ADD_CATEGORY, getAddCategoryList);
   yield takeEvery(API_CONSTANTS.GET_CATEGORYLIST_PANEL, categoryPanelList);
@@ -158,18 +169,21 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.CREATE_VENDOR, createVendor);
   yield takeEvery(API_CONSTANTS.GET_VENDOR, getVendor);
   // yield takeEvery(API_CONSTANTS.UPDATE_VENDOR, updateVendor);
-  
+
   yield takeEvery(API_CONSTANTS.DELETE_VENDOR_TABLE, deleteVendorTable);
   yield takeEvery(API_CONSTANTS.UPDATE_VENDOR_TABLE, updateVendorTable);
 
   yield takeEvery(API_CONSTANTS.CREATE_TRAVEL, createTravel);
-  yield takeEvery(API_CONSTANTS.GATE_TRAVEL, getTravel);
+  yield takeEvery(API_CONSTANTS.GET_TRAVEL, getTravel);
   yield takeEvery(API_CONSTANTS.DELETE_TRAVEL, deleteTravel);
   yield takeEvery(API_CONSTANTS.UPDATE_TRAVEL, updateTravel);
+  yield takeEvery(API_CONSTANTS.SUBMIT_TRAVEL_REQUEST, submitTravelRequest);
+
+  yield takeEvery(API_CONSTANTS.GET_TRAVEL_REQUEST_APPROVALS, getTravelApproval);
+  yield takeEvery(API_CONSTANTS.REJECT_TRAVEL_REQUEST_APPROVALS,  rejectTravelApprovals);
 
   yield takeEvery(API_CONSTANTS.GET_ALL_USER, getAllUser);
   yield takeEvery(API_CONSTANTS.ADD_ALL_USER, addAllUser);
 
   // ============================================================
-
 }

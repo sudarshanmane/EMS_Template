@@ -628,7 +628,7 @@ function createTravel(payload) {
 
 function getTravel(payload) {
   return {
-    type: API_CONSTANTS.GATE_TRAVEL,
+    type: API_CONSTANTS.GET_TRAVEL,
     payload: payload.payload,
     URL: payload.URL,
     contentType: contentType.json,
@@ -648,6 +648,35 @@ function updateTravel(payload) {
     type: API_CONSTANTS.UPDATE_TRAVEL,
     payload: payload.payload,
     URL: URLS.UPDATE_TRAVEL_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+function submitTravelRequest(payload) {
+  console.log("payload",payload)
+  return {
+    type: API_CONSTANTS.SUBMIT_TRAVEL_REQUEST,
+    payload: payload.payload,
+    URL: URLS.SUBMIT_TRAVEL_REQUEST_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+
+function getTravelApproval(payload) {
+  return {
+    type: API_CONSTANTS.GET_TRAVEL_REQUEST_APPROVALS,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
+function rejectTravelApprovals(payload) {
+  return {
+    type: API_CONSTANTS.REJECT_TRAVEL_REQUEST_APPROVALS,
+    payload: payload.payload,
+    URL: URLS.REJECT_TRAVEL_REQUEST_APPROVALS_URL + payload.id + "/",
     contentType: contentType.json,
   };
 }
@@ -1464,6 +1493,9 @@ export {
   getTravel,
   deleteTravel,
   updateTravel,
+  submitTravelRequest,
+  getTravelApproval,
+  rejectTravelApprovals,
   updateUserSettingAction,
   getUserAttendanceAction,
   getUserAttendanceDynamicAction,

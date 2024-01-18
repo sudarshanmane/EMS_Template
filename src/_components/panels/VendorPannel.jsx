@@ -69,6 +69,15 @@ const VendorPannel = () => {
     reset();
   };
 
+  // const onAddVendor = async (values) => {
+  //   try {
+  //     await dispatch(createVendor(values));
+  //     setIsAddFormVisible(false);
+  //     reset();
+    
+  //   } catch (error) {
+
+
   const onEdit = (record) => {
     setIsEditFormVisible(true);
     setEditVendorData(record);
