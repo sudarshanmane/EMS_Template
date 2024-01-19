@@ -6,10 +6,12 @@ import { URLS } from "../../Globals/URLS";
 import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-datepicker";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import {
   getTravelApproval,
   rejectTravelApprovals,
+  approveTravelApprovals,
 } from "../../store/Action/Actions";
 
 import {
@@ -25,14 +27,28 @@ const RequestApprovals = () => {
   const [selectedDate2, setSelectedDate2] = useState(null);
   const [allTravel, setAllTravel] = useState([]);
   const [isRejectFormVisible, setIsRejectFormVisible] = useState(false);
-  const [rejectExpenseData, setRejectExpenseData] = useState(null);
+  const [isApproveFormVisible, setIsApproveFormVisible] = useState(false);
+  const [rejectTravleData, setRejectTravelData] = useState(null);
+  const [approveTravleData, setApproveTravelData] = useState(null);
+
   const { id } = useParams();
+  const [tablePagination, setTablePagination] = useState({
+    pageSize: 10,
+    current: 1,
+  });
 
   const {
-    register: registerTravelApprovals,
+    register: registerReject,
     handleSubmit: handleRejectTravelApprovals,
-    setValue: ExpenseSetValue,
+    setValue: RejectSetValue,
     formState,
+  } = useForm({});
+
+  const {
+    register: registerApprove,
+    handleSubmit: handleApproveTravelApprovals,
+    setValue: ApproveSetValue,
+    // formState,
   } = useForm({});
 
   const handleDateChange1 = (date) => {
@@ -54,57 +70,63 @@ const RequestApprovals = () => {
   useEffect(() => {
     fetchPageDetials(url);
   }, []);
+
   const getTravelSelector = useSelector(
     (state) => state.getTravelApprovalSuccess
   );
+
   useEffect(() => {
     if (getTravelSelector) {
-      const allTravel = getTravelSelector.map((element) => {
-        return {
-          id: element.id,
-          emp: element.emp,
-          title: element.title,
-          travel_purpose: element.travel_purpose,
-          from_date: element.from_date,
-          to_date: element.to_date,
-          estimated_budget: element.estimated_budget,
-        };
-      });
-      setAllTravel(allTravel);
+      setAllTravel(getTravelSelector);
     }
   }, [getTravelSelector]);
 
-  //   const approveReportSelector = useSelector(
-  //     (state) => state.approveReportSuccess
-  //   );
-  //   useEffect(() => {
-  //     if (approveReportSelector) {
-  //       dispatch(approveReport({ payload: {}, URL: url }));
-  //     }
-  //   }, [approveReportSelector]);
+  useEffect(() => {
+    dispatch(getTravelApproval({ id }));
+  }, []);
 
-  const rejectTravelApprovalSelector = useSelector(
+  const approveTravelSelector = useSelector(
+    (state) => state.approveTravelApprovalsSuccess
+  );
+
+  const onApproveTravelApprovals = (record) => {
+    console.log("values", record);
+    dispatch(
+      approveTravelApprovals({ id: approveTravleData.id, payload: record })
+    );
+  };
+
+  const ApproveTravelApprovals = (record) => {
+    setIsApproveFormVisible(true);
+    setApproveTravelData(record);
+    ApproveSetValue("approved_budget", record.estimated_budget);
+  };
+
+  const rejectTravelSelector = useSelector(
     (state) => state.rejectTravelApprovalsSuccess
   );
 
-  const onRejectTravelApprovals = (values) => {
-    dispatch(rejectTravelApprovals({ id: id, payload: values }));
+  const onRejectTravelApprovals = (record) => {
+    dispatch(
+      rejectTravelApprovals({ id: rejectTravleData.id, payload: record })
+    );
   };
-
-  useEffect(() => {
-    if (rejectTravelApprovalSelector) {
-      dispatch(rejectTravelApprovals({ payload: {}, URL: url }));
-    }
-    setIsRejectFormVisible(false);
-  }, [rejectTravelApprovalSelector]);
 
   const RejectTravelApprovals = (record) => {
     setIsRejectFormVisible(true);
-    setRejectExpenseData(record);
-    ExpenseSetValue("remark", record.remark);
+    setRejectTravelData(record);
+    RejectSetValue("remark", record.remark);
   };
 
   const columns = [
+    {
+      title: "Sr No",
+      dataIndex: "id",
+      render: (text, record, index) => {
+        const { pageSize, current } = tablePagination;
+        return index + 1 + pageSize * (current - 1);
+      },
+    },
     {
       title: "Employee",
       dataIndex: "emp",
@@ -128,18 +150,18 @@ const RequestApprovals = () => {
       key: "",
       sorter: (a, b) => a.start_date.length - b.start_date.length,
     },
-    {
-      title: "From_Date",
-      dataIndex: "from_date",
-      key: "",
-      sorter: (a, b) => a.start_date.length - b.start_date.length,
-    },
-    {
-      title: "To_Date",
-      dataIndex: "to_date",
-      key: "",
-      sorter: (a, b) => a.start_date.length - b.start_date.length,
-    },
+    // {
+    //   title: "From_Date",
+    //   dataIndex: "from_date",
+    //   key: "",
+    //   sorter: (a, b) => a.start_date.length - b.start_date.length,
+    // },
+    // {
+    //   title: "To_Date",
+    //   dataIndex: "to_date",
+    //   key: "",
+    //   sorter: (a, b) => a.start_date.length - b.start_date.length,
+    // },
     {
       title: "Estimated_Budget",
       dataIndex: "estimated_budget",
@@ -152,9 +174,11 @@ const RequestApprovals = () => {
       render: (record) => (
         <div className="dropdown dropdown-action text-end">
           <Link
-            to={`/home/e/${record.id}`}
             className="btn btn-primary btn-sm m-r-5"
-            onClick={() => e(record)}
+            to="#"
+            data-bs-toggle="modal"
+            data-bs-target="#viewTravelApprovals"
+            // onClick={() => (record)}
           >
             <i className="fa fa-eye m-r-5" />
           </Link>
@@ -163,10 +187,10 @@ const RequestApprovals = () => {
             className="btn btn-success btn-sm m-r-5"
             to="#"
             data-bs-toggle="modal"
-            data-bs-target="#approveExpense"
-            onClick={() => onApproveExpense()}
+            data-bs-target="#approveTravelApprovals"
+            onClick={() => ApproveTravelApprovals(record)}
           >
-            <i class="fa fa-check" aria-hidden="true"></i>
+            <i className="fa fa-check" aria-hidden="true"></i>
           </Link>
 
           <Link
@@ -178,7 +202,7 @@ const RequestApprovals = () => {
               RejectTravelApprovals(record);
             }}
           >
-            <i class="fa fa-times" aria-hidden="true"></i>
+            <i className="fa fa-times" aria-hidden="true"></i>
           </Link>
         </div>
       ),
@@ -301,7 +325,7 @@ const RequestApprovals = () => {
                           <input
                             className="form-control"
                             type="text"
-                            {...registerTravelApprovals("remark")}
+                            {...registerReject("remark")}
                           />
                         </div>
                       </div>
@@ -320,7 +344,113 @@ const RequestApprovals = () => {
               </div>
             </div>
           </div>
-          {/* {/ /Reject Modal /} */}
+          {/* {/ /Reject Modal End /} */}
+
+          {/* {/ /Approve Modal /} */}
+          <div
+            id="approveTravelApprovals"
+            className="modal custom-modal fade"
+            role="dialog"
+          >
+            <div
+              className="modal-dialog modal-dialog-centered modal-md"
+              role="document"
+            >
+              <div className="modal-content">
+                <div className="modal-header">
+                  <button
+                    type="button"
+                    className="close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <div className="modal-body">
+                  <form
+                    onSubmit={handleApproveTravelApprovals(
+                      onApproveTravelApprovals
+                    )}
+                  >
+                    <div className="row">
+                      <div className="col-md-16">
+                        <div className="input-block">
+                          <label>Approved Budget</label>
+                          <input
+                            className="form-control"
+                            type="number"
+                            {...registerApprove("approved_budget")}
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="submit-section">
+                      <button
+                        className="btn btn-primary submit-btn"
+                        data-bs-dismiss="modal"
+                      >
+                        Approve
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* {/ /Approve Modal End/} */}
+
+          {/* {/ /View Modal /} */}
+          <div
+            id="viewTravelApprovals"
+            className="modal custom-modal fade"
+            role="dialog"
+          >
+            <div
+              className="modal-dialog modal-dialog-centered modal-md"
+              role="document"
+            >
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">Travel Request</h5>
+                  <button
+                    type="button"
+                    className="close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <div className="modal-body">
+                  <form>
+                    <div className="form-row">
+                      <div className="row">
+                        <div className="col-md-8 mb-3">
+                          {getTravelSelector?.map((travel, index) => (
+                            <div key={index}>
+                              <p>
+                                Employee:- &nbsp; {travel?.emp?.id} -{" "}
+                                {travel?.emp?.first_name}{" "}
+                                {travel?.emp?.last_name}
+                              </p>
+                              <p>Title:- &nbsp; {travel.title}</p>
+                              <p>Travel Purpose:- &nbsp; {travel.travel_purpose}</p>
+                              <p>From Date:- &nbsp; {travel.from_date}</p>
+                              <p>To Date:- &nbsp; {travel.to_date}</p>
+                              <p>Estimated Budget:- &nbsp; {travel.estimated_budget}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* {/ /View Modal End /} */}
         </div>
       </div>
     </>

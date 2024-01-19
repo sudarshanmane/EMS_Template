@@ -1405,6 +1405,23 @@ function* rejectTravelApprovals(action) {
   }
 }
 
+function* approveTravelApprovals(action) {
+  try {
+    let result = yield call(Method.putData, action);
+    if (result.status === 200) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "Something went wrong!");
+  }
+}
+
 function* addAllUser(action) {
   try {
     let result = yield call(Method.postData, action);
@@ -2813,6 +2830,7 @@ export {
   submitTravelRequest,
   getTravelApproval,
   rejectTravelApprovals,
+  approveTravelApprovals,
   getAllUser,
   addAllUser,
   updateUserSetting,

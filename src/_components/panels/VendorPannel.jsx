@@ -74,9 +74,8 @@ const VendorPannel = () => {
   //     await dispatch(createVendor(values));
   //     setIsAddFormVisible(false);
   //     reset();
-    
-  //   } catch (error) {
 
+  //   } catch (error) {
 
   const onEdit = (record) => {
     setIsEditFormVisible(true);
@@ -94,14 +93,15 @@ const VendorPannel = () => {
     setIsEditFormVisible(false);
   };
 
-  const updatevendorSelector = useSelector((state) => state.updateVendorTableResult);
+  const updatevendorSelector = useSelector(
+    (state) => state.updateVendorTableResult
+  );
   useEffect(() => {
     if (updatevendorSelector) {
       dispatch(getVendor({ payload: {}, URL: url }));
     }
     setIsAddFormVisible(false);
   }, [updatevendorSelector]);
-
 
   const DeleteVendor = (record) => {
     setDeleteVendorData(record);
@@ -201,7 +201,6 @@ const VendorPannel = () => {
     }
   }, [createVendorSelector, submittedValues]);
 
-
   const deleteVendorSelector = useSelector(
     (state) => state.deleteVendorSuccess
   );
@@ -249,7 +248,6 @@ const VendorPannel = () => {
 
     {
       title: "Record Payment",
-      // dataIndex: "payment",
       render: (record) => (
         <Link
           to="#"

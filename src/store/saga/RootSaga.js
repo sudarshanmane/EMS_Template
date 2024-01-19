@@ -78,6 +78,7 @@ import {
   updateVendorPayment,
   getTravelApproval,
   rejectTravelApprovals,
+  approveTravelApprovals,
   // =======================================
 } from "./CommonSagas";
 
@@ -181,6 +182,7 @@ export function* RootSaga() {
 
   yield takeEvery(API_CONSTANTS.GET_TRAVEL_REQUEST_APPROVALS, getTravelApproval);
   yield takeEvery(API_CONSTANTS.REJECT_TRAVEL_REQUEST_APPROVALS,  rejectTravelApprovals);
+  yield takeEvery(API_CONSTANTS.APPROVE_TRAVEL_REQUEST_APPROVALS,  approveTravelApprovals);
 
   yield takeEvery(API_CONSTANTS.GET_ALL_USER, getAllUser);
   yield takeEvery(API_CONSTANTS.ADD_ALL_USER, addAllUser);

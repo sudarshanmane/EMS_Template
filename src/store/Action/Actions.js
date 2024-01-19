@@ -351,6 +351,7 @@ function rejectReport(payload) {
   };
 }
 
+
 function addreimbursementRecord(payload) {
   return {
     type: API_CONSTANTS.ADD_REIMBURSMENT_RECORD,
@@ -673,6 +674,7 @@ function getTravelApproval(payload) {
 }
 
 function rejectTravelApprovals(payload) {
+ console.log("payload", payload)
   return {
     type: API_CONSTANTS.REJECT_TRAVEL_REQUEST_APPROVALS,
     payload: payload.payload,
@@ -680,6 +682,16 @@ function rejectTravelApprovals(payload) {
     contentType: contentType.json,
   };
 }
+
+function approveTravelApprovals(payload) {
+  console.log("payload", payload)
+   return {
+     type: API_CONSTANTS.APPROVE_TRAVEL_REQUEST_APPROVALS,
+     payload: payload.payload,
+     URL: URLS.APPROVE_TRAVEL_REQUEST_APPROVALS_URL + payload.id + "/",
+     contentType: contentType.json,
+   };
+ }                                  
 
 function addAllUser(payload) {
   return {
@@ -1496,6 +1508,7 @@ export {
   submitTravelRequest,
   getTravelApproval,
   rejectTravelApprovals,
+  approveTravelApprovals,
   updateUserSettingAction,
   getUserAttendanceAction,
   getUserAttendanceDynamicAction,

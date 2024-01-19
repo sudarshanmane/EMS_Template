@@ -1006,18 +1006,31 @@ export const RootReducer = (state = initialState, action) => {
         addAllUserresult: action.result,
       };
 
-      case API_CONSTANTS.REJECT_TRAVEL_REQUEST_APPROVALS:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.REJECT_TRAVEL_REQUEST_APPROVALS_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          rejectTravelApprovalsSuccess: action.result,
-        };
+    case API_CONSTANTS.REJECT_TRAVEL_REQUEST_APPROVALS:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.REJECT_TRAVEL_REQUEST_APPROVALS_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        rejectTravelApprovalsSuccess: action.result,
+      };
+
+    case API_CONSTANTS.APPROVE_TRAVEL_REQUEST_APPROVALS:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.APPROVE_TRAVEL_REQUEST_APPROVALS_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        approveTravelApprovalsSuccess: action.result,
+      };
 
     case API_CONSTANTS.GET_ALL_USER:
       return {

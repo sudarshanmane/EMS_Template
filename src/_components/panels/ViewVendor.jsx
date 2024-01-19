@@ -44,11 +44,6 @@ const ViewVendor = () => {
   const onEdit = (record) => {
     setIsEditFormVisible(true);
     setEditVendorData(record);
-    // setValue("date", record?.date);
-    // setValue("paid_amount", record?.paid_amount);
-    // setValue("due_amount", record?.due_amount);
-    // setValue("amount", record?.amount);
-
   
     setValue("paid_amount", record.paid_amount);
     setValue("due_amount", record.due_amount);

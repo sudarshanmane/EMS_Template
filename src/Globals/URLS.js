@@ -93,6 +93,7 @@ export const URLS = {
 
   GET_TRAVEL_REQUEST_APPROVALS_URL: "/api/version_0/expense/request_for_approval/",
   REJECT_TRAVEL_REQUEST_APPROVALS_URL: "/api/version_0/expense/reject_travel_request/",
+  APPROVE_TRAVEL_REQUEST_APPROVALS_URL: "/api/version_0/expense/approve_travel_request/",
 
 
   GET_ALL_USER_URL: "/api/v2/getalluser/",
