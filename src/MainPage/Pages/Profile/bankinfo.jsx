@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-// import {
-//   addpersonalinfoData,
-//   getpersonalinfoData,
-//   updatepersonalinfoData,
-// } from "../../../store/personalinfo";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup.js";
 import * as Yup from "yup";
+import {
+  addPersonalInformationAction,
+  getPersonalInfoAction,
+  updatePersonalInfoAction,
+} from "../../../store/Action/Actions";
+import { URLS } from "../../../Globals/URLS";
 
-const stepSchema = Yup.object().shape({
-  // bank_name: Yup.string().required(" Bank Name is Required"),
-  // middle_name: Yup.string().required(" Middle Name is Required"),
-  // last_name: Yup.string().required(" Last Name is Required"),
-  // email: Yup.string().email("Email is not valid").required("Email is required"),
-});
+const stepSchema = Yup.object().shape({});
 
 export default function BankInfo({ userId }) {
   const { register, handleSubmit, setValue } = useForm();
@@ -33,14 +29,15 @@ export default function BankInfo({ userId }) {
 
   const dispatch = useDispatch();
 
-  const token = useSelector((state) => state.userSlice.token);
+  const url = URLS.GET_PERSONAL_INFORMATION_URL;
   const personal_info = useSelector(
-    (state) => state.personalinfo.personalinfoData?.data?.[0]
+    (state) => state.getpersonalinfo?.data?.[0]
   );
-  const update_personal_info = useSelector(
-    (state) => state.personalinfo.updateText?.id
+  const update_personal_info = useSelector((state) => state.updatepersonalinfo);
+  const add_personal_info = useSelector(
+    (state) => state.addpersonalinformation
   );
-  const userRoles = useSelector((state) => state.userrole.userRole);
+  const userRoles = useSelector((state) => state.getcurrentrole);
 
   // Edit Bank Info
   const handleEdit = (record) => {
@@ -60,7 +57,7 @@ export default function BankInfo({ userId }) {
 
   //submit the data
   const onSubmit = (data) => {
-    dispatch(updatepersonalinfoData(token, data.id, data));
+    dispatch(updatePersonalInfoAction({ id: data.id, payload: data }));
   };
 
   const bankInfoSubmit = (data) => {
@@ -68,20 +65,20 @@ export default function BankInfo({ userId }) {
       ...data,
       user_id: userId,
     };
-    dispatch(addpersonalinfoData(token, formDataWithUserId));
+    dispatch(addPersonalInformationAction(formDataWithUserId));
   };
 
-  //Get the Personal information
+  function getPageDetails(url) {
+    dispatch(getPersonalInfoAction({ payload: { userId }, URL: url }));
+  }
+
   useEffect(() => {
-    if (userId) {
-      dispatch(getpersonalinfoData(token, userId));
-    }
+    getPageDetails(url);
   }, []);
 
-  //after update the Personal information
   useEffect(() => {
     if (update_personal_info) {
-      dispatch(getpersonalinfoData(token, userId));
+      dispatch(getPersonalInfoAction({ payload: { userId }, URL: url }));
     }
   }, [update_personal_info]);
 

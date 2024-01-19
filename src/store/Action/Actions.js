@@ -304,6 +304,115 @@ function getExpenseList(payload) {
   };
 }
 
+function getPersonalInfoAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_PERSONAL_INFORMATION,
+    payload: payload.payload,
+    URL: URLS.GET_PERSONAL_INFORMATION_URL + payload.payload.userId + "/",
+    contentType: contentType.json,
+  };
+}
+
+function updatePersonalInfoAction(payload) {
+  return {
+    type: API_CONSTANTS.UPDATE_PERSONAL_INFORMATION,
+    payload: payload,
+    URL: URLS.UPDATE_PERSONAL_INFORMATION_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+function getCertificateAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_CERTIFICATE,
+    payload: payload.payload,
+    URL: URLS.GET_CERTIFICATE_URL + payload.payload.userId + "/",
+    contentType: contentType.json,
+  };
+}
+
+function updateCertificateAction(payload) {
+  return {
+    type: API_CONSTANTS.UPDATE_CERTIFICATE,
+    payload: payload,
+    URL: URLS.UPDATE_CERTIFICATE_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+function getEducationAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_EDUCATION,
+    payload: payload.payload,
+    URL: URLS.GET_EDUCATION_URL + payload.payload.userId,
+    contentType: contentType.json,
+  };
+}
+
+function updateEducationAction(payload) {
+  return {
+    type: API_CONSTANTS.UPDATE_EDUCATION,
+    payload: payload,
+    URL: URLS.UPDATE_EDUCATION_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+function getExperienceAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_EXPERIENCE,
+    payload: payload.payload,
+    URL: URLS.GET_EDUCATION_URL + payload.payload.userId,
+    contentType: contentType.json,
+  };
+}
+
+function updateExperienceAction(payload) {
+  return {
+    type: API_CONSTANTS.UPDATE_EXPERIENCE,
+    payload: payload,
+    URL: URLS.UPDATE_EDUCATION_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+function addDocumentAction(payload) {
+  return {
+    type: API_CONSTANTS.ADD_DOCUMENT,
+    payload,
+    URL: URLS.ADD_DOCUMENT_URL,
+    contentType: contentType.json,
+  };
+}
+
+
+function getDocumentAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_DOCUMENT,
+    payload: payload.payload,
+    URL: URLS.GET_DOCUMENT_URL + payload.payload.userId,
+    contentType: contentType.json,
+  };
+}
+
+function updateDocumentAction(payload) {
+  return {
+    type: API_CONSTANTS.UPDATE_DOCUMENT,
+    payload: payload,
+    URL: URLS.UPDATE_DOCUMENT_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+function removeDocumentAction(payload) {
+  return {
+    type: API_CONSTANTS.REMOVE_DOCUMENT,
+    payload: payload,
+    URL: URLS.REMOVE_DOCUMENT_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
 function updateReportAction(payload) {
   return {
     type: API_CONSTANTS.UPDATE_REPORT,
@@ -1461,6 +1570,18 @@ export {
   getDynamicLeaveListAction,
   getDynamicSelfLeaveAction,
   updateSelfLeaveAction,
+  getPersonalInfoAction,
+  updatePersonalInfoAction,
+  getCertificateAction,
+  updateCertificateAction,
+  getEducationAction,
+  updateEducationAction,
+  getExperienceAction,
+  updateExperienceAction,
+  addDocumentAction,
+  getDocumentAction,
+  updateDocumentAction,
+  removeDocumentAction,
 
   // ===========================================================
   addExpenseItemSetup,

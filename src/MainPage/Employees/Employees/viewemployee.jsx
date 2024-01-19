@@ -177,17 +177,7 @@ const ViewEmployee = () => {
               <div className="col-lg-12 col-md-12 col-sm-12 line-tabs">
                 <ul className="nav nav-tabs nav-tabs-bottom">
                   <li className="nav-item">
-                    {/* <Link
-                      to="#emp_profile"
-                      data-bs-toggle="tab"
-                      // className="nav-link active"
-                      onClick={() => handleTabChange("emp_profile")}
-                      className={`nav-link ${
-                        activeTab === "emp_profile" ? "active" : ""
-                      }`}
-                    >
-                      Profile
-                    </Link> */}
+                   
                     <Link
                       data-bs-toggle="tab"
                       onClick={() => handleTabChange("emp_profile")}

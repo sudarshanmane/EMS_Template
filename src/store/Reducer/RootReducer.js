@@ -104,6 +104,171 @@ export const RootReducer = (state = initialState, action) => {
         getusersetting: action.result,
       };
 
+
+      case API_CONSTANTS.GET_CERTIFICATE:
+        return {
+          ...state,
+          loding: true,
+        };
+  
+      case API_CONSTANTS.GET_CERTIFICATE_SUCCESS:
+        return {
+          ...state,
+          loding: false,
+          getcertificate: action.result,
+        };
+
+        case API_CONSTANTS.UPDATE_CERTIFICATE:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.UPDATE_CERTIFICATE_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        updatecertificate: action.result,
+      };
+
+      case API_CONSTANTS.GET_EDUCATION:
+        return {
+          ...state,
+          loding: true,
+        };
+  
+      case API_CONSTANTS.GET_EDUCATION_SUCCESS:
+        return {
+          ...state,
+          loding: false,
+          geteducation: action.result,
+         
+        };
+
+        case API_CONSTANTS.UPDATE_EDUCATION:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.UPDATE_EDUCATION_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        updateeducation: action.result,
+      };
+
+
+      case API_CONSTANTS.GET_EXPERIENCE:
+        return {
+          ...state,
+          loding: true,
+        };
+  
+      case API_CONSTANTS.GET_EXPERIENCE_SUCCESS:
+        return {
+          ...state,
+          loding: false,
+          getexperience: action.result,
+         
+        };
+
+        case API_CONSTANTS.UPDATE_EXPERIENCE:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.UPDATE_EXPERIENCE_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        updateexperience: action.result,
+      };
+
+
+      
+      case API_CONSTANTS.GET_DOCUMENT:
+        return {
+          ...state,
+          loding: true,
+        };
+  
+      case API_CONSTANTS.GET_DOCUMENT_SUCCESS:
+        return {
+          ...state,
+          loding: false,
+          getdocument: action.result,
+         
+        };
+
+        case API_CONSTANTS.UPDATE_DOCUMENT:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.UPDATE_DOCUMENT_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        updatedocument: action.result,
+      };
+
+      
+      case API_CONSTANTS.ADD_DOCUMENT:
+        return {
+          ...state,
+          loding: true,
+        };
+  
+      case API_CONSTANTS.ADD_DOCUMENT_SUCCESS:
+        return {
+          ...state,
+          loding: false,
+          adddocument: action.result,
+         
+        };
+
+        case API_CONSTANTS.REMOVE_DOCUMENT:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.REMOVE_DOCUMENT_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        removedocument: action.result,
+      };
+
+      case API_CONSTANTS.GET_PERSONAL_INFORMATION:
+        return {
+          ...state,
+          loding: true,
+        };
+  
+      case API_CONSTANTS.GET_PERSONAL_INFORMATION_SUCCESS:
+        return {
+          ...state,
+          loding: false,
+          getpersonalinfo: action.result,
+        };
+
+        case API_CONSTANTS.UPDATE_PERSONAL_INFORMATION:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.UPDATE_PERSONAL_INFORMATION_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        updatepersonalinfo: action.result,
+      };
+
     case API_CONSTANTS.UPDATE_USER_SETTING:
       return {
         ...state,

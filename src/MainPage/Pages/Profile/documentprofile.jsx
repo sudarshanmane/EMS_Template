@@ -4,15 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup.js";
 import * as Yup from "yup";
-// import { API_HOST } from "../../../config/https";
-// import {
-//   addUserPersonaldocuments,
-//   getuserPersonaldocument,
-//   removeUserPersonalDocuments,
-//   updateUserPerdocuments,
-// } from "../../../store/userdocuments";
 import { Table } from "antd";
 import { itemRender, onShowSizeChange } from "../../paginationfunction";
+import {
+  addDocumentAction,
+  getDocumentAction,
+  removeDocumentAction,
+  updateDocumentAction,
+} from "../../../store/Action/Actions";
 
 const validationSchema = Yup.object().shape({
   document_name: Yup.string().required("document name is not Empty"),
@@ -80,7 +79,7 @@ export default function DocumentProfile({ userId }) {
     formData.append("document", imageFile);
     formData.append("user_id", userId);
     formData.append("document_name", data.document_name);
-    dispatch(addUserPersonaldocuments(token, formData, userId));
+    dispatch(addDocumentAction(token, formData, userId));
     resetAdd();
     setImageFile("");
   };
@@ -100,7 +99,7 @@ export default function DocumentProfile({ userId }) {
     file && file ? formData.append("document", file) : null;
     formData.append("user_id", userId);
     formData.append("document_name", data.document_name);
-    dispatch(updateUserPerdocuments(token, data.id, formData));
+    dispatch(updateDocumentAction(token, data.id, formData));
     setFile();
   };
 
@@ -111,7 +110,7 @@ export default function DocumentProfile({ userId }) {
 
   // Delete API
   const onDelete = async (data) => {
-    dispatch(removeUserPersonalDocuments(token, data.id));
+    dispatch(removeDocumentAction(token, data.id));
   };
 
   // file download
@@ -137,13 +136,13 @@ export default function DocumentProfile({ userId }) {
 
   useEffect(() => {
     if (userId) {
-      dispatch(getuserPersonaldocument(token, userId));
+      dispatch(getDocumentAction(token, userId));
     }
   }, []);
 
   useEffect(() => {
     if (userRoles || per_add_documents || per_update_docs || per_delete_docs) {
-      dispatch(getuserPersonaldocument(token, userId));
+      dispatch(getDocumentAction(token, userId));
     }
   }, [userRoles, per_add_documents, per_update_docs, per_delete_docs]);
 

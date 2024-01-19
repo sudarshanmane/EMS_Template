@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-// import {
-//   addpersonalinfoData,
-//   getpersonalinfoData,
-//   updatepersonalinfoData,
-// } from "../../../store/personalinfo";
 import { useForm } from "react-hook-form";
+import {
+  addPersonalInformationAction,
+  getPersonalInfoAction,
+  updatePersonalInfoAction,
+} from "../../../store/Action/Actions";
+import { URLS } from "../../../Globals/URLS";
 
 export default function EmergencyContact({ userId }) {
   const { register, handleSubmit, setValue } = useForm();
@@ -21,32 +22,28 @@ export default function EmergencyContact({ userId }) {
 
   const dispatch = useDispatch();
 
-  const token = useSelector((state) => state.userSlice.token);
-
+  const url = URLS.GET_PERSONAL_INFORMATION_URL;
   const personal_info = useSelector(
-    (state) => state.personalinfo.personalinfoData?.data?.[0]
+    (state) => state.getpersonalinfo?.data?.[0]
   );
-  const update_personal_info = useSelector(
-    (state) => state.personalinfo.updateText?.id
+  const update_personal_info = useSelector((state) => state.updatepersonalinfo);
+  const add_personal_info = useSelector(
+    (state) => state.addpersonalinformation
   );
-  const userRoles = useSelector((state) => state.userrole.userRole);
+  const userRoles = useSelector((state) => state.getcurrentrole);
 
-  // Edit Emergency Info
   const handleEdit = (record) => {
     setValue("id", record.id);
     setValue("emergency_contact_relation", record.emergency_contact_relation);
     setValue("emergency_person_number", record.emergency_person_number);
   };
 
-  // Handle add Emergency Info
   const handleAdd = () => {
     pReset();
   };
 
-  //submit the data
   const onSubmit = (data) => {
-    // console.log("salary data on submit", data);
-    dispatch(updatepersonalinfoData(token, data.id, data));
+    dispatch(updatePersonalInfoAction({ id: data.id, payload: data }));
   };
 
   const ponSubmit = (data) => {
@@ -54,23 +51,23 @@ export default function EmergencyContact({ userId }) {
       ...data,
       user_id: userId,
     };
-    // setValue("id", userId);
-    dispatch(addpersonalinfoData(token, formDataWithUserId));
+
+    dispatch(addPersonalInformationAction(formDataWithUserId));
   };
 
-  //Get the Personal information
+  function getPageDetails(url) {
+    dispatch(getPersonalInfoAction({ payload: { userId }, URL: url }));
+  }
+
   useEffect(() => {
-    if (userId) {
-      dispatch(getpersonalinfoData(token, userId));
-    }
+    getPageDetails(url);
   }, []);
 
-  //after update the Personal information
-  useEffect(() => {
-    if (update_personal_info) {
-      dispatch(getpersonalinfoData(token, userId));
-    }
-  }, [update_personal_info]);
+  // useEffect(() => {
+  //   if (update_personal_info) {
+  //     dispatch(getPersonalInfoAction({ payload: { userId }, URL: url }));
+  //   }
+  // }, [update_personal_info]);
 
   return (
     <>
@@ -149,7 +146,7 @@ export default function EmergencyContact({ userId }) {
             <div className="modal-body">
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="row">
-                  <div className="col-md-6">
+                  <div className="col-sm-6">
                     <div className="input-block">
                       <label>Relation Name</label>
                       <input
@@ -158,8 +155,6 @@ export default function EmergencyContact({ userId }) {
                         {...register("emergency_contact_relation")}
                       />
                     </div>
-                  </div>
-                  <div className="col-md-6">
                     <div className="input-block">
                       <label>Phone</label>
                       <div>
@@ -171,6 +166,7 @@ export default function EmergencyContact({ userId }) {
                       </div>
                     </div>
                   </div>
+                  
                 </div>
                 <div className="submit-section">
                   <button

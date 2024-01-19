@@ -3,14 +3,15 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup.js";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-// import {
-//   geteducationData,
-//   updateeducationData,
-// } from "../../../store/education";
+import {
+  getEducationAction,
+  getEducationList,
+  updateEducationAction,
+} from "../../../store/Action/Actions";
+import { URLS } from "../../../Globals/URLS";
 import { Controller, useForm } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
-// import { API_HOST } from "../../../config/https";
 
 const validationSchema = Yup.object().shape({
   education_type: Yup.string().required("Education type is required"),
@@ -34,7 +35,9 @@ const validationSchema = Yup.object().shape({
 
 export default function EducationProfile({ userId }) {
   const dispatch = useDispatch();
-
+  const typeurl = URLS.GET_EDUCATION_LIST_URL;
+  const url = URLS.GET_EDUCATION_URL;
+  const baseurl = URLS.BASE_URL_EXPORT;
   const {
     register: editEducationRegister,
     handleSubmit: handleEditEducationData,
@@ -49,16 +52,11 @@ export default function EducationProfile({ userId }) {
   const [initialDocument, setInitialDocument] = useState(null);
   const [startDate, setStartDate] = useState(null);
 
-  const token = useSelector((state) => state.userSlice.token);
-  const userRoles = useSelector((state) => state.userrole.userRole);
-  const edu_Data = useSelector((state) => state.education.educationData?.data);
-  const updateeduSelector = useSelector(
-    (state) => state.education.educationupdateData
-  );
-  const edu_type = useSelector(
-    (state) => state.educationtype?.educationtypeData
-  );
+  const edu_type = useSelector((state) => state.geteducationlist);
+  const edu_Data = useSelector((state) => state.geteducation?.data);
+  const updateeduSelector = useSelector((state) => state.updateeducation);
 
+  const userRoles = useSelector((state) => state.getcurrentrole);
   const formatDate = (date) => {
     return date ? format(date, "yyyy-MM-dd") : null;
   };
@@ -79,7 +77,7 @@ export default function EducationProfile({ userId }) {
     setValue("college_name", record.college_name);
     setValue("in_year", record.in_year);
     setValue("passout_year", record.passout_year);
-    const documenturl = `${API_HOST}${record.marksheet}`;
+    // const documenturl = `${baseurl}${record.marksheet}`;
     setInitialDocument(documenturl);
   };
 
@@ -94,18 +92,41 @@ export default function EducationProfile({ userId }) {
     formData.append("percentage", data.percentage);
     formData.append("in_year", data.in_year);
     formData.append("passout_year", data.passout_year);
-    dispatch(updateeducationData(token, data.id, formData));
+    dispatch(updateEducationAction({ id: data.id, payload: data }));
   };
 
+  function getPageDetails(typeurl) {
+   
+    dispatch(getEducationList({ payload: { userId }, URL: typeurl }));
+   
+  }
+
   useEffect(() => {
-    if (userId) {
-      dispatch(geteducationData(token, userId));
-    }
+    getPageDetails(typeurl);
   }, []);
+
+
+  function getPageDetails(url) {
+    dispatch(getEducationAction({ payload: { userId }, URL: url }));
+  }
+
+  useEffect(() => {
+    getPageDetails(url);
+  }, []);
+
+
+  function fetchReportData(url) {
+    dispatch(getEducationAction({ payload: {userId}, URL: url }));
+  }
+
+  useEffect(() => {
+    fetchReportData(url);
+  }, []);
+
 
   useEffect(() => {
     if (updateeduSelector) {
-      dispatch(geteducationData(token, userId));
+      dispatch(getEducationAction({ payload: { userId }, URL: url }));
     }
   }, [updateeduSelector]);
 
@@ -214,13 +235,14 @@ export default function EducationProfile({ userId }) {
                               className="form-control"
                               {...editEducationRegister(`education_type`)}
                             >
-                              {edu_type?.map((data) => {
-                                return (
-                                  <option value={data?.id}>
-                                    {data?.education_type}
-                                  </option>
-                                );
-                              })}
+                              {Array.isArray(edu_type) &&
+                                edu_type.map((data) => {
+                                  return (
+                                    <option key={data?.id} value={data?.id}>
+                                      {data?.education_type}
+                                    </option>
+                                  );
+                                })}
                             </select>
                             <div className="text-danger">
                               {errors.education_type?.message}

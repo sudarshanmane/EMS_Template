@@ -81,6 +81,18 @@ import {
   getDynamicLeave,
   getDynamicSelfLeave,
   updateSelfLeave,
+  getPersonalInfo,
+  updatePersonalInfo,
+  updateCertificate,
+  getCertificate,
+  getEducation,
+  updateEducation,
+  getExperience,
+  updateExperience,
+  addDocument,
+  getDocument,
+  updateDocument,
+  removeDocument,
    // =======================================
 
 } from "./CommonSagas";
@@ -111,6 +123,19 @@ export function* RootSaga() {
     API_CONSTANTS.ADD_PERSONAL_INFORMATION,
     addPersonalInformation
   );
+  yield takeEvery(API_CONSTANTS.ADD_DOCUMENT, addDocument);
+  yield takeEvery(API_CONSTANTS.GET_DOCUMENT, getDocument);
+  yield takeEvery(API_CONSTANTS.UPDATE_DOCUMENT, updateDocument);
+  yield takeEvery(API_CONSTANTS.REMOVE_DOCUMENT, removeDocument);
+
+  yield takeEvery(API_CONSTANTS.GET_EXPERIENCE, getExperience);
+  yield takeEvery(API_CONSTANTS.UPDATE_EXPERIENCE, updateExperience);
+  yield takeEvery(API_CONSTANTS.GET_EDUCATION, getEducation);
+  yield takeEvery(API_CONSTANTS.UPDATE_EDUCATION, updateEducation);
+  yield takeEvery(API_CONSTANTS.GET_CERTIFICATE, getCertificate);
+  yield takeEvery(API_CONSTANTS.UPDATE_CERTIFICATE, updateCertificate);
+  yield takeEvery(API_CONSTANTS.GET_PERSONAL_INFORMATION, getPersonalInfo);
+  yield takeEvery(API_CONSTANTS.UPDATE_PERSONAL_INFORMATION, updatePersonalInfo);
   yield takeEvery(API_CONSTANTS.UPDATE_SELF_LEAVE, updateSelfLeave);
   yield takeEvery(API_CONSTANTS.GET_LEAVES_LIST, getLeaveList);
   yield takeEvery(API_CONSTANTS.GET_SELF_LEAVES_LIST, getSelfLeave);
