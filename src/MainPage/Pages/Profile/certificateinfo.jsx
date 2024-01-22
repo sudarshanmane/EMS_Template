@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Controller, useForm } from "react-hook-form";
-// import { API_HOST } from "../../../config/https";
-// import {
-//   getcertificateData,
-//   updatecertificateData,
-// } from "../../../store/certificate";
+import {
+  getCertificateAction,
+  updateCertificateAction,
+} from "../../../store/Action/Actions";
+import { URLS } from "../../../Globals/URLS";
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
@@ -27,17 +27,12 @@ export default function certificateinfo({ userId }) {
   const [file, setFile] = useState();
   const [initialDocument, setInitialDocument] = useState(null);
 
-  const token = useSelector((state) => state.userSlice.token);
-  const certificate_Data = useSelector(
-    (state) => state.certificate.certificateData?.data
-  );
-  const updateCertificateSelector = useSelector(
-    (state) => state.certificate.updateText
-  );
-  const userRoles = useSelector((state) => state.userrole.userRole);
-  // const handleDateChange = (date) => {
-  //   setSelectedDate(date);
-  // };
+  const url = URLS.GET_CERTIFICATE_URL;
+  const baseurl = URLS.BASE_URL_EXPORT;
+  const certificate_Data = useSelector((state) => state.getcertificate?.data);
+  const updateCertificateSelector = useSelector((state) => state.updatecertificate);
+
+  const userRoles = useSelector((state) => state.getcurrentrole);
 
   const formatDate = (date) => {
     return format(date, "yyyy-MM-dd");
@@ -49,38 +44,36 @@ export default function certificateinfo({ userId }) {
   };
 
   const handleEditExperience = (record) => {
-    // console.log("record", record);
     setSelectedRow(record);
     setValue("course_name", record.course_name);
     setValue("certification_date", record.certification_date);
     setValue("certification", record.certification);
-    const documenturl = `${API_HOST}${record.certification}`;
+    const documenturl = `${baseurl}${record.certification}`;
     setInitialDocument(documenturl);
   };
 
   const onUpdate = (data) => {
-    // console.log("Received values of form:", data);
-
     const formData = new FormData();
     formData.append("course_name", data.course_name);
     formData.append("certification_date", data.certification_date);
     file && formData.append("certification", file);
 
-    dispatch(updatecertificateData(token, selectedRow.id, formData));
+    dispatch(updateCertificateAction({ id: data.id, payload: data }));
   };
 
+  function getPageDetails(url) {
+    dispatch(getCertificateAction({ payload: { userId }, URL: url }));
+  }
+
   useEffect(() => {
-    if (userId) {
-      dispatch(getcertificateData(token, userId));
-    }
+    getPageDetails(url);
   }, []);
 
   useEffect(() => {
     if (updateCertificateSelector) {
-      dispatch(getcertificateData(token, userId));
+      dispatch(getCertificateAction({ payload: { userId }, URL: url }));
     }
   }, [updateCertificateSelector]);
-
   return (
     <>
       {" "}

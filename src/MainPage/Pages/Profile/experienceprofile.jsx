@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-// import {
-//   deleteExperienceData,
-//   getexperienceData,
-//   updateexperienceData,
-// } from "../../../store/experience";
 import { Controller, useForm } from "react-hook-form";
-// import { API_HOST } from "../../../config/https";
-// import Select from "react-select";
+import { getExperienceAction, updateExperienceAction } from "../../../store/Action/Actions";
+import { URLS } from "../../../Globals/URLS";
 
 export default function ExperienceProfile({ userId }) {
+  const url = URLS.GET_EXPERIENCE_URL;
+  const baseurl = URLS.BASE_URL_EXPORT;
   const {
     register: editExperienceRegister,
     handleSubmit: handleEditExperienceData,
@@ -27,17 +24,15 @@ export default function ExperienceProfile({ userId }) {
   const [selectedRow, setSelectedRow] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const token = useSelector((state) => state.userSlice.token);
+ 
   const exp_Data = useSelector(
-    (state) => state.experience.experienceData?.data
+    (state) => state.getexperience?.data
   );
   const updateExperienceSelector = useSelector(
-    (state) => state.experience.updateExperienceData
+    (state) => state.updateexperience
   );
-  const deleteExperienceSelector = useSelector(
-    (state) => state.experience.experienceremove
-  );
-  const userRoles = useSelector((state) => state.userrole.userRole);
+ 
+  const userRoles = useSelector((state) => state.getcurrentrole);
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -59,16 +54,16 @@ export default function ExperienceProfile({ userId }) {
     setValue("comments", record.comments);
     setValue("year_of_experience", record.year_of_experience);
 
-    const absoluteImageUrl = `${API_HOST}${record.relieving_letter}`;
+    const absoluteImageUrl = `${baseurl}${record.relieving_letter}`;
     // const documenturl = `${API_HOST}${record.document}`;
     setInitialDocument(absoluteImageUrl);
     // setInitialDocument(documenturl);
-    const absoluteImageUrls = `${API_HOST}${record.salary_slip}`;
+    const absoluteImageUrls = `${baseurl}${record.salary_slip}`;
     setSalarySlip(absoluteImageUrls);
   };
 
   const onUpdate = (data) => {
-    // console.log("Received values of form:", data);
+   
     const formData = new FormData();
     file && formData.append("relieving_letter", file);
     file1 && formData.append("salary_slip", file1);
@@ -77,27 +72,34 @@ export default function ExperienceProfile({ userId }) {
     formData.append("comments", data.comments);
     formData.append("year_of_experience", data.year_of_experience);
 
-    dispatch(updateexperienceData(token, selectedRow.id, formData));
+    dispatch(updateExperienceAction({ id: data.id, payload: data }));
   };
 
+  function getPageDetails(url) {
+    dispatch(getExperienceAction({ payload: { userId }, URL: url }));
+  }
+
   useEffect(() => {
-    if (userId) {
-      dispatch(getexperienceData(token, userId));
-    }
+    getPageDetails(url);
   }, []);
+
+
+  function fetchReportData(url) {
+    dispatch(getExperienceAction({ payload: {userId}, URL: url }));
+  }
+
+  useEffect(() => {
+    fetchReportData(url);
+  }, []);
+
 
   useEffect(() => {
     if (updateExperienceSelector) {
-      dispatch(getexperienceData(token, userId));
+      dispatch(getExperienceAction({ payload: { userId }, URL: url }));
     }
   }, [updateExperienceSelector]);
 
-  useEffect(() => {
-    if (deleteExperienceSelector) {
-      dispatch(getexperienceData(token, userId));
-    }
-  }, [deleteExperienceSelector]);
-
+ 
   return (
     <>
       {" "}

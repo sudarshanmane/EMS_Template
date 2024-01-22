@@ -8,9 +8,8 @@ import { getCurrentUser } from "../../../store/Action/Actions";
 
 export default function SelfProfileHead() {
   const dispatch = useDispatch();
-  const [userRole, setUserRole] = useState([]);
   const url = URLS.GET_CURRENT_USER_URL;
- 
+  const [user, setUser] = useState([]);
   function getPageDetails(url) {
     dispatch(getCurrentUser({ payload: {}, URL: url }));
   }
@@ -27,11 +26,11 @@ export default function SelfProfileHead() {
     fetchUserData(url);
   }, []);
 
-  const userSelector = useSelector((state) => state.getcurrentuser);
+  const userSelector = useSelector((state) => state.getcurrentuser?.data);
 
   useEffect(() => {
-    if (userSelector && Array.isArray(userSelector)) {
-      const userRole = userSelector.map((element) => {
+    if (userSelector) {
+      const user = userSelector?.map((element) => {
         return {
           profile_image: element.profile_image,
           emp_id: element.emp_id,
@@ -44,7 +43,7 @@ export default function SelfProfileHead() {
           permanent_address: element.permanent_address,
         };
       });
-      setUserRole(userRole);
+      setUser(user);
     }
   }, [userSelector]);
   
@@ -61,8 +60,8 @@ export default function SelfProfileHead() {
                 <div className="profile-img-wrap">
                   <div className="profile-img">
                     {/* <Link to="#"> */}
-                    {userRole?.profile_image != null ? (
-                      <img alt="img" src={userRole?.profile_image} />
+                    {userSelector?.profile_image != null ? (
+                      <img alt="img" src={userSelector?.profile_image} />
                     ) : (
                       <img alt="img" src={Avatar_21} />
                     )}
@@ -74,13 +73,13 @@ export default function SelfProfileHead() {
                     <div className="col-md-5">
                       <div className="profile-info-left">
                         <h3 className="user-name m-t-0 mb-0">
-                          {userRole?.first_name + " " + userRole?.last_name}
+                          {userSelector?.first_name + " " + userSelector?.last_name}
                         </h3>
                         <small className="text-muted">
-                          {userRole?.user_role?.user_role || "NA"}
+                          {userSelector?.user_role?.user_role || "NA"}
                         </small>
                         <div className="staff-id">
-                          Employee ID : {userRole?.emp_id || "NA"}
+                          Employee ID : {userSelector?.emp_id || "NA"}
                         </div>
 
                         <div className="staff-msg">
@@ -101,24 +100,24 @@ export default function SelfProfileHead() {
                         <li>
                           <div className="title">Phone:</div>
                           <div className="text">
-                            {userRole?.mobile_no || "NA"}
+                            {userSelector?.mobile_no || "NA"}
                           </div>
                         </li>
                         <li>
                           <div className="title">Email:</div>
-                          <div className="text">{userRole?.email || "NA"}</div>
+                          <div className="text">{userSelector?.email || "NA"}</div>
                         </li>
                         <li>
                           <div className="title">Birthday:</div>
                           <div className="text">
-                            {userRole?.date_of_birth || "NA"}
+                            {userSelector?.date_of_birth || "NA"}
                           </div>
                         </li>
 
                         <li>
                           <div className="title">Address:</div>
                           <div className="text">
-                            {userRole?.permanent_address || "NA"}
+                            {userSelector?.permanent_address || "NA"}
                           </div>{" "}
                         </li>
                       </ul>

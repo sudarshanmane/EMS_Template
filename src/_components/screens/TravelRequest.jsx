@@ -39,20 +39,19 @@ const TravelRequest = () => {
 
   const [selectedOption, setSelectedOption] = useState("allTravels");
   const filteredReportList = useMemo(() => {
-
     if (selectedOption === "allTravels") {
       return allTravelList;
     } else if (selectedOption === "approved") {
       return allTravelList.filter((report) => report.status === "Approved");
     } else if (selectedOption === "rejected") {
       return allTravelList.filter((report) => report.status === "Rejected");
-    } 
+    }
   }, [selectedOption, allTravelList]);
 
   const handleDateChange1 = (date) => {
     setSelectedDate1(date);
   };
-  
+
   const handleDateChange2 = (date) => {
     setSelectedDate2(date);
   };
@@ -214,7 +213,7 @@ const TravelRequest = () => {
       dataIndex: "from_date",
       key: "",
       sorter: (a, b) => a.start_date.length - b.start_date.length,
-    },  
+    },
     {
       title: "To_Date",
       dataIndex: "to_date",
@@ -230,10 +229,9 @@ const TravelRequest = () => {
     {
       title: "Status",
       dataIndex: "status",
-      key: "status",  // Add this line to provide a unique key for the column
+      key: "status", // Add this line to provide a unique key for the column
       sorter: (a, b) => a.status.length - b.status.length,
     },
-    
 
     {
       title: "Action",
@@ -246,7 +244,7 @@ const TravelRequest = () => {
             data-bs-target="#edit_travel"
             onClick={() => onEdit(record)}
           >
-            <i className="fa fa-pencil" />
+            <i className="fa-solid fa-pen-to-square"></i>
           </Link>
 
           <Link
@@ -258,7 +256,7 @@ const TravelRequest = () => {
               DeleteTravel(record);
             }}
           >
-            <i className="fa fa-trash" />
+            <i className="fa-regular fa-trash-can " />
           </Link>
 
           <button
@@ -267,16 +265,7 @@ const TravelRequest = () => {
               onSubmitTravelRequest(record);
             }}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              className="bi bi-send"
-              viewBox="0 0 16 16"
-            >
-              <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z" />
-            </svg>
+            <i className="fa fa-paper-plane" ></i>
           </button>
         </div>
       ),
@@ -359,7 +348,6 @@ const TravelRequest = () => {
           <div className="row">
             <div className="col-sm-12">
               <div className="card mb-0">
-
                 <div className="card-header">
                   <ul className="nav nav-tabs card-header-tabs">
                     <li className="nav-item">
@@ -465,323 +453,329 @@ const TravelRequest = () => {
                         rowKey={(record) => record.id}
                       />
                     </div>
-
                   </div>
                 </div>
               </div>
             </div>
           </div>
-      
 
-        {/* Add Travel Request */}
-        <div id="add_travel" className="modal custom-modal fade" role="dialog">
+          {/* Add Travel Request */}
           <div
-            className="modal-dialog modal-dialog-centered modal-md"
-            role="document"
+            id="add_travel"
+            className="modal custom-modal fade"
+            role="dialog"
           >
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Add Travel Request</h5>
-                <button
-                  type="button"
-                  className="close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">×</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                <form onSubmit={handleSubmit(onSubmit)}>
-                  <div className="input-block">
-                    <div className="col-md-12">
-                      <div className="input-block">
-                        <label>Title</label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          {...register("title")}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="input-block">
-                    <div className="col-md-12">
-                      <div className="input-block">
-                        <label>Travel Purposes</label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          {...register("travel_purpose")}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="input-block">
-                    <label className="col-form-label" id="start_date">
-                      From Date <span className="text-danger">*</span>
-                    </label>
-                    <div className="">
-                      <Controller
-                        control={control}
-                        name="from_date"
-                        render={({ field }) => (
-                          <DatePicker
-                            selected={
-                              field.value ? new Date(field.value) : null
-                            }
-                            onChange={(date) => {
-                              const formattedDate = formatDate(date);
-                              field.onChange(formattedDate);
-                              setValue("from_date", formattedDate);
-                            }}
-                            dateFormat="yyyy-MM-dd"
-                            className="form-control"
-                          />
-                        )}
-                      />
-                      <div className="text-danger">
-                        {errors.from_date?.message}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="input-block">
-                    <label className="col-form-label" id="to_date">
-                      To Date <span className="text-danger">*</span>
-                    </label>
-                    <div className="">
-                      <Controller
-                        control={control}
-                        name="to_date"
-                        render={({ field }) => (
-                          <DatePicker
-                            selected={
-                              field.value ? new Date(field.value) : null
-                            }
-                            onChange={(date) => {
-                              const formattedDate = formatDate(date);
-                              field.onChange(formattedDate);
-                              setValue("to_date", formattedDate);
-                            }}
-                            dateFormat="yyyy-MM-dd"
-                            className="form-control"
-                          />
-                        )}
-                      />
-                      <div className="text-danger">
-                        {errors.to_date?.message}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="input-block">
-                    <div className="col-md-12">
-                      <div className="input-block">
-                        <label>Estimated Budget</label>
-                        <input
-                          className="form-control"
-                          type="number"
-                          {...register("estimated_budget")}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="submit-section">
-                    <button
-                      className="btn btn-primary submit-btn"
-                      data-bs-dismiss="modal"
-                    >
-                      Submit
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Add Travel Request */}
-
-        {/* Edit Travel Modal */}
-
-        <div id="edit_travel" className="modal custom-modal fade" role="dialog">
-          <div
-            className="modal-dialog modal-dialog-centered modal-md"
-            role="document"
-          >
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Add Travel Request</h5>
-                <button
-                  type="button"
-                  className="close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">×</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                <form onSubmit={handleUpdate(onUpdate)}>
-                  <div className="input-block">
-                    <div className="col-md-12">
-                      <div className="input-block">
-                        <label>Title</label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          {...updateregister("title")}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="input-block">
-                    <div className="col-md-12">
-                      <div className="input-block">
-                        <label>Travel Purposes</label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          {...updateregister("travel_purpose")}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="input-block">
-                    <label className="col-form-label" id="start_date">
-                      From Date <span className="text-danger">*</span>
-                    </label>
-                    <div className="">
-                      <Controller
-                        control={control}
-                        name="from_date"
-                        render={({ field }) => (
-                          <DatePicker
-                            selected={
-                              field.value ? new Date(field.value) : null
-                            }
-                            onChange={(date) => {
-                              const formattedDate = formatDate(date);
-                              field.onChange(formattedDate);
-                              setValue("from_date", formattedDate);
-                            }}
-                            dateFormat="yyyy-MM-dd"
-                            className="form-control"
-                          />
-                        )}
-                      />
-                      <div className="text-danger">
-                        {errors.from_date?.message}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="input-block">
-                    <label className="col-form-label" id="to_date">
-                      To Date <span className="text-danger">*</span>
-                    </label>
-                    <div className="">
-                      <Controller
-                        control={control}
-                        name="to_date"
-                        render={({ field }) => (
-                          <DatePicker
-                            selected={
-                              field.value ? new Date(field.value) : null
-                            }
-                            onChange={(date) => {
-                              const formattedDate = formatDate(date);
-                              field.onChange(formattedDate);
-                              setValue("to_date", formattedDate);
-                            }}
-                            dateFormat="yyyy-MM-dd"
-                            className="form-control"
-                          />
-                        )}
-                      />
-                      <div className="text-danger">
-                        {errors.to_date?.message}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="input-block">
-                    <div className="col-md-12">
-                      <div className="input-block">
-                        <label>Estimated Budget</label>
-                        <input
-                          className="form-control"
-                          type="number"
-                          {...updateregister("estimated_budget")}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="submit-section">
-                    <button
-                      className="btn btn-primary submit-btn"
-                      data-bs-dismiss="modal"
-                    >
-                      Submit
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Edit Travel Modal End */}
-
-        {/* Delete Travel Modal */}
-
-        <div
-          className="modal custom-modal fade"
-          id="delete_travel"
-          role="dialog"
-        >
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-body">
-                <div className="form-header">
-                  <h3>Delete Travel</h3>
-                  <p>Are you sure want to delete?</p>
+            <div
+              className="modal-dialog modal-dialog-centered modal-md"
+              role="document"
+            >
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">Add Travel Request</h5>
+                  <button
+                    type="button"
+                    className="close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">×</span>
+                  </button>
                 </div>
-                <div className="modal-btn delete-action">
-                  <div className="row">
-                    <div className="col-6">
-                      <Link
-                        to=""
-                        className="btn btn-primary continue-btn"
-                        onClick={handleDelete(onDelete)}
+                <div className="modal-body">
+                  <form onSubmit={handleSubmit(onSubmit)}>
+                    <div className="input-block">
+                      <div className="col-md-12">
+                        <div className="input-block">
+                          <label>Title</label>
+                          <input
+                            className="form-control"
+                            type="text"
+                            {...register("title")}
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="input-block">
+                      <div className="col-md-12">
+                        <div className="input-block">
+                          <label>Travel Purposes</label>
+                          <input
+                            className="form-control"
+                            type="text"
+                            {...register("travel_purpose")}
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="input-block">
+                      <label className="col-form-label" id="start_date">
+                        From Date <span className="text-danger">*</span>
+                      </label>
+                      <div className="">
+                        <Controller
+                          control={control}
+                          name="from_date"
+                          render={({ field }) => (
+                            <DatePicker
+                              selected={
+                                field.value ? new Date(field.value) : null
+                              }
+                              onChange={(date) => {
+                                const formattedDate = formatDate(date);
+                                field.onChange(formattedDate);
+                                setValue("from_date", formattedDate);
+                              }}
+                              dateFormat="yyyy-MM-dd"
+                              className="form-control"
+                            />
+                          )}
+                        />
+                        <div className="text-danger">
+                          {errors.from_date?.message}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="input-block">
+                      <label className="col-form-label" id="to_date">
+                        To Date <span className="text-danger">*</span>
+                      </label>
+                      <div className="">
+                        <Controller
+                          control={control}
+                          name="to_date"
+                          render={({ field }) => (
+                            <DatePicker
+                              selected={
+                                field.value ? new Date(field.value) : null
+                              }
+                              onChange={(date) => {
+                                const formattedDate = formatDate(date);
+                                field.onChange(formattedDate);
+                                setValue("to_date", formattedDate);
+                              }}
+                              dateFormat="yyyy-MM-dd"
+                              className="form-control"
+                            />
+                          )}
+                        />
+                        <div className="text-danger">
+                          {errors.to_date?.message}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="input-block">
+                      <div className="col-md-12">
+                        <div className="input-block">
+                          <label>Estimated Budget</label>
+                          <input
+                            className="form-control"
+                            type="number"
+                            {...register("estimated_budget")}
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="submit-section">
+                      <button
+                        className="btn btn-primary submit-btn"
                         data-bs-dismiss="modal"
                       >
-                        Delete
-                      </Link>
+                        Submit
+                      </button>
                     </div>
-                    <div className="col-6">
-                      <Link
-                        to=""
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Add Travel Request */}
+
+          {/* Edit Travel Modal */}
+
+          <div
+            id="edit_travel"
+            className="modal custom-modal fade"
+            role="dialog"
+          >
+            <div
+              className="modal-dialog modal-dialog-centered modal-md"
+              role="document"
+            >
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">Add Travel Request</h5>
+                  <button
+                    type="button"
+                    className="close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <div className="modal-body">
+                  <form onSubmit={handleUpdate(onUpdate)}>
+                    <div className="input-block">
+                      <div className="col-md-12">
+                        <div className="input-block">
+                          <label>Title</label>
+                          <input
+                            className="form-control"
+                            type="text"
+                            {...updateregister("title")}
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="input-block">
+                      <div className="col-md-12">
+                        <div className="input-block">
+                          <label>Travel Purposes</label>
+                          <input
+                            className="form-control"
+                            type="text"
+                            {...updateregister("travel_purpose")}
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="input-block">
+                      <label className="col-form-label" id="start_date">
+                        From Date <span className="text-danger">*</span>
+                      </label>
+                      <div className="">
+                        <Controller
+                          control={control}
+                          name="from_date"
+                          render={({ field }) => (
+                            <DatePicker
+                              selected={
+                                field.value ? new Date(field.value) : null
+                              }
+                              onChange={(date) => {
+                                const formattedDate = formatDate(date);
+                                field.onChange(formattedDate);
+                                setValue("from_date", formattedDate);
+                              }}
+                              dateFormat="yyyy-MM-dd"
+                              className="form-control"
+                            />
+                          )}
+                        />
+                        <div className="text-danger">
+                          {errors.from_date?.message}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="input-block">
+                      <label className="col-form-label" id="to_date">
+                        To Date <span className="text-danger">*</span>
+                      </label>
+                      <div className="">
+                        <Controller
+                          control={control}
+                          name="to_date"
+                          render={({ field }) => (
+                            <DatePicker
+                              selected={
+                                field.value ? new Date(field.value) : null
+                              }
+                              onChange={(date) => {
+                                const formattedDate = formatDate(date);
+                                field.onChange(formattedDate);
+                                setValue("to_date", formattedDate);
+                              }}
+                              dateFormat="yyyy-MM-dd"
+                              className="form-control"
+                            />
+                          )}
+                        />
+                        <div className="text-danger">
+                          {errors.to_date?.message}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="input-block">
+                      <div className="col-md-12">
+                        <div className="input-block">
+                          <label>Estimated Budget</label>
+                          <input
+                            className="form-control"
+                            type="number"
+                            {...updateregister("estimated_budget")}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="submit-section">
+                      <button
+                        className="btn btn-primary submit-btn"
                         data-bs-dismiss="modal"
-                        className="btn btn-primary cancel-btn"
                       >
-                        Cancel
-                      </Link>
+                        Submit
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Edit Travel Modal End */}
+
+          {/* Delete Travel Modal */}
+
+          <div
+            className="modal custom-modal fade"
+            id="delete_travel"
+            role="dialog"
+          >
+            <div className="modal-dialog modal-dialog-centered">
+              <div className="modal-content">
+                <div className="modal-body">
+                  <div className="form-header">
+                    <h3>Delete Travel</h3>
+                    <p>Are you sure want to delete?</p>
+                  </div>
+                  <div className="modal-btn delete-action">
+                    <div className="row">
+                      <div className="col-6">
+                        <Link
+                          to=""
+                          className="btn btn-primary continue-btn"
+                          onClick={handleDelete(onDelete)}
+                          data-bs-dismiss="modal"
+                        >
+                          Delete
+                        </Link>
+                      </div>
+                      <div className="col-6">
+                        <Link
+                          to=""
+                          data-bs-dismiss="modal"
+                          className="btn btn-primary cancel-btn"
+                        >
+                          Cancel
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          {/* Delete Travel Modal End*/}
         </div>
-        {/* Delete Travel Modal End*/}
-      </div>
       </div>
     </>
   );

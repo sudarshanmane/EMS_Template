@@ -19,7 +19,7 @@ import { URLS } from "../../../Globals/URLS";
 const stepSchema = Yup.object().shape({});
 
 export default function Usersetting({ userId }) {
-
+  const id = userId;
   const shifturl = URLS.GET_SHIFT_POLICY_URL;
   const weekurl = URLS.GET_WEEK_OFF_URL;
   const dropdownurl = URLS.GET_ALL_DROPDOWN_URL;
@@ -51,20 +51,28 @@ export default function Usersetting({ userId }) {
 
   const shiftPolicy_dropdown = useSelector((state) => state.shiftpolicy);
   const weekoff_dropdown = useSelector((state) => state.weekoff);
-  const userlist_drop = useSelector((state) => state.getalldropdown);
-  const usr_setting = useSelector((state) => state.getusersetting);
+  const userlist_drop = useSelector((state) => state.getalldropdown?.data);
+  const usr_setting = useSelector((state) => state.getusersetting?.data);
   const update_setting_id = useSelector((state) => state.getusersetting);
   const userRoles = useSelector((state) => state.getcurrentrole);
 
-  const userOptions =
-    userlist_drop?.data?.map((user) => ({
-      value: user.id,
-      label: user.full_name,
-    })) || [];
+  useEffect(() => {
+    if (userId) {
+      dispatch(getShiftPolicyAction({ payload: {}, URL: shifturl }));
+      dispatch(getWeekOffAction({ payload: {}, URL: weekurl }));
+      dispatch(getAllDropdownAction({ payload: {}, URL: dropdownurl }));
+      dispatch(getUserSettingAction({ payload: { id }, URL: settingurl }));
+      dispatch(getCurrentRole({ payload: {}, URL: roleurl }));
+    }
+  }, []);
 
-  // Edit Department
+  const userOptions =
+  userlist_drop?.map((user) => ({
+    value: user.id,
+    label: user.full_name,
+  })) || [];
+ 
   const handleEdit = (record) => {
-    dispatch(getUserSettingAction(userId));
     setValue("attendance", record.attendance);
     setValue("app_access", record.app_access);
     setValue("active", record.active);
@@ -101,24 +109,8 @@ export default function Usersetting({ userId }) {
   };
 
   const onSubmit = (data) => {
-    dispatch(updateUserSettingAction(data.id, data));
+    dispatch(updateUserSettingAction(data));
   };
-
-  useEffect(() => {
-    if (userId) {
-      dispatch(getShiftPolicyAction({ payload: {}, URL: shifturl }));
-      dispatch(getWeekOffAction({ payload: {}, URL: weekurl }));
-      dispatch(getAllDropdownAction({ payload: {}, URL: dropdownurl }));
-      dispatch(getUserSettingAction({ payload: {}, URL: settingurl }));
-      dispatch(getCurrentRole({ payload: {}, URL: roleurl }));
-    }
-  }, []);
-
-  useEffect(() => {
-    if (update_setting_id) {
-      dispatch(getUserSettingAction({ payload: {}, URL: settingurl }));
-    }
-  }, [update_setting_id]);
 
   return (
     <>
@@ -536,17 +528,17 @@ export default function Usersetting({ userId }) {
                     <div className="input-block">
                       <label className="col-form-label">Shift Policy</label>
                       <div className="">
-                        <Select
+                        <select
                           className="form-control"
                           {...register("shift_policy")}
                         >
                           <option value=""> Select Shift Policy </option>
-                          {(data) => {
+                          {shiftPolicy_dropdown?.map((data) => {
                             return (
                               <option value={data.id}>{data.shift_code}</option>
                             );
-                          }}
-                        </Select>
+                          })}
+                        </select>
                       </div>
                     </div>
                   </div>
@@ -559,13 +551,13 @@ export default function Usersetting({ userId }) {
                           {...register("weekly_off")}
                         >
                           <option value=""> Select Weekly Off </option>
-                          {(data) => {
+                          {weekoff_dropdown?.map((data) => {
                             return (
                               <option value={data.id}>
                                 {data.weekly_off_code}
                               </option>
                             );
-                          }}
+                          })}
                         </select>
                       </div>
                     </div>
@@ -585,21 +577,23 @@ export default function Usersetting({ userId }) {
                           render={({ field }) => (
                             <Select
                               id="dropdown"
+                              className="d-block h-42"
                               options={userOptions}
-                              isMulti
+                              mode="multiple"
                               isSearchable={true}
                               placeholder="Search options..."
-                              value={userOptions.filter(
-                                (option) =>
-                                  field.value &&
-                                  field.value.includes(option.value)
-                              )}
-                              onChange={(selectedOptions) => {
-                                const selectedValues = selectedOptions?.map(
-                                  (option) => option.value
-                                );
-                                field.onChange(selectedValues);
-                              }}
+                             // onChange={handleBranchChange}
+                             value={userOptions.filter(
+                              (option) =>
+                                field.value &&
+                                field.value.includes(option.value)
+                            )}
+                            onChange={(selectedOptions) => {
+                              const selectedValues = selectedOptions?.map(
+                                (option) => option.value
+                              );
+                              field.onChange(selectedValues);
+                            }}
                             />
                           )}
                         />
@@ -616,22 +610,23 @@ export default function Usersetting({ userId }) {
                           render={({ field }) => (
                             <Select
                               id="dropdown"
+                              className="d-block h-42"
                               options={userOptions}
-                              isMulti
+                              mode="multiple"
                               isSearchable={true}
                               placeholder="Search options..."
-                              // onChange={handleBranchChange}
-                              value={userOptions.filter(
-                                (option) =>
-                                  field.value &&
-                                  field.value.includes(option.value)
-                              )}
-                              onChange={(selectedOptions) => {
-                                const selectedValues = selectedOptions?.map(
-                                  (option) => option.value
-                                );
-                                field.onChange(selectedValues);
-                              }}
+                             // onChange={handleBranchChange}
+                             value={userOptions.filter(
+                              (option) =>
+                                field.value &&
+                                field.value.includes(option.value)
+                            )}
+                            onChange={(selectedOptions) => {
+                              const selectedValues = selectedOptions?.map(
+                                (option) => option.value
+                              );
+                              field.onChange(selectedValues);
+                            }}
                             />
                           )}
                         />
@@ -653,22 +648,23 @@ export default function Usersetting({ userId }) {
                           render={({ field }) => (
                             <Select
                               id="dropdown"
+                              className="d-block h-42"
                               options={userOptions}
-                              isMulti
+                              mode="multiple"
                               isSearchable={true}
                               placeholder="Search options..."
-                              // onChange={handleBranchChange}
-                              value={userOptions.filter(
-                                (option) =>
-                                  field.value &&
-                                  field.value.includes(option.value)
-                              )}
-                              onChange={(selectedOptions) => {
-                                const selectedValues = selectedOptions?.map(
-                                  (option) => option.value
-                                );
-                                field.onChange(selectedValues);
-                              }}
+                             // onChange={handleBranchChange}
+                             value={userOptions.filter(
+                              (option) =>
+                                field.value &&
+                                field.value.includes(option.value)
+                            )}
+                            onChange={(selectedOptions) => {
+                              const selectedValues = selectedOptions?.map(
+                                (option) => option.value
+                              );
+                              field.onChange(selectedValues);
+                            }}
                             />
                           )}
                         />
@@ -687,8 +683,9 @@ export default function Usersetting({ userId }) {
                           render={({ field }) => (
                             <Select
                               id="dropdown"
+                              className="d-block h-42"
                               options={userOptions}
-                              isMulti
+                              mode="multiple"
                               isSearchable={true}
                               placeholder="Search options..."
                               // onChange={handleBranchChange}
@@ -696,6 +693,7 @@ export default function Usersetting({ userId }) {
                                 (option) =>
                                   field.value &&
                                   field.value.includes(option.value)
+                                 
                               )}
                               onChange={(selectedOptions) => {
                                 const selectedValues = selectedOptions?.map(
@@ -704,6 +702,7 @@ export default function Usersetting({ userId }) {
                                 field.onChange(selectedValues);
                               }}
                             />
+                            
                           )}
                         />
                       </div>

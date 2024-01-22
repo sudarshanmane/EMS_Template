@@ -218,34 +218,37 @@ const ExpenseReport = () => {
       title: "Action",
       render: (record) => (
         <div className="dropdown dropdown-action text-end">
-          <Link
-            to={`/home/viewReport/${record.id}`}
-            className="btn btn-primary btn-sm m-r-5"
-            onClick={() => viewReport(record)}
-          >
-            <i className="fa fa-eye m-r-5" />
-          </Link>
-          <Link
-            className="btn btn-success btn-sm m-r-5"
-            to="#"
-            data-bs-toggle="modal"
-            data-bs-target="#edit_report"
-            onClick={() => onEdit(record)}
-          >
-            <i className="fa fa-pencil m-r-5" />
-          </Link>
-          <Link
+         
+        
+            <Link
+              to={`/home/viewReport/${record.id}`}
+              className="btn btn-primary btn-sm m-r-5"
+              onClick={() => viewReport(record)}
+            >
+              <i className="fa fa-eye m-r-5" />
+            </Link>
+            <Link
+               className="btn btn-success btn-sm m-r-5"
+              to="#"
+              data-bs-toggle="modal"
+              data-bs-target="#edit_report"
+              onClick={() => onEdit(record)}
+            >
+              <i className="fa-solid fa-pen-to-square"></i>
+            </Link>
+            <Link
             className="btn btn-danger btn-sm"
-            to="#"
-            data-bs-toggle="modal"
-            data-bs-target="#delete_report"
-            onClick={() => {
-              deleteReport(record);
-            }}
-          >
-            <i className="fa fa-trash m-r-5" />
-          </Link>
-        </div>
+              to="#"
+              data-bs-toggle="modal"
+              data-bs-target="#delete_report"
+              onClick={() => {
+                deleteReport(record);
+              }}
+            >
+             <i className="fa-regular fa-trash-can " />
+            </Link>
+          </div>
+       
       ),
     },
   ];

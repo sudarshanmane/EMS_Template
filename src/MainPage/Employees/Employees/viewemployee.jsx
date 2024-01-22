@@ -4,19 +4,19 @@ import { Link, useParams } from "react-router-dom";
 import Offcanvas from "../../../../src/Entryfile/offcanvance";
 import { useDispatch, useSelector } from "react-redux";
 import { URLS } from "../../../Globals/URLS";
-import { getAllStaff } from "../../../store/Action/Actions";
 import { User } from "../../../Entryfile/imagepath";
 import ProfilePage from "../../Pages/Profile/profilepage";
 import Usersetting from "../../Pages/Profile/usersetting";
-import AttendaceUser from "../../Pages/Profile/attendaceuser";
-import LeavesList from "../../Pages/Profile/leavelist";
+// import AttendaceUser from "../../Pages/Profile/attendaceuser";
+// import LeavesList from "../../Pages/Profile/leavelist";
 
 const ViewEmployee = () => {
-  const dispatch = useDispatch();
   const url = URLS.GET_STAFF_LIST_URL;
   const baseurl = URLS.BASE_URL_EXPORT;
   const [user, setUser] = useState([]);
-  const { id } = useParams();
+
+  const params = useParams();
+  const { id } = params;
 
   const [activeTab, setActiveTab] = useState("emp_profile");
 
@@ -24,7 +24,6 @@ const ViewEmployee = () => {
     setActiveTab(tabId);
     window.location.hash = `#${tabId}`;
   };
-  
 
   const userSelector = useSelector((state) => state.getstafflist);
 
@@ -50,9 +49,6 @@ const ViewEmployee = () => {
     }
   }, [userSelector]);
 
-  useEffect(() => {
-    dispatch(getAllStaff({ id }));
-  }, [id]);
 
   useEffect(() => {
     if ($(".select").length > 0) {
@@ -81,6 +77,11 @@ const ViewEmployee = () => {
         <div className="content container-fluid">
           <div className="page-header">
             <div className="row">
+              <div>
+                <Link className="btn add-btn" to="/home/employeeslist">
+                  <i className="fa fa-right" /> Back
+                </Link>
+              </div>
               <div className="col-sm-12">
                 <h3 className="page-title">Profile</h3>
                 <ul className="breadcrumb">
@@ -149,7 +150,7 @@ const ViewEmployee = () => {
                               <div className="title">Email:</div>
                               <div className="text">{user?.email || "NA"}</div>
                             </li>
-                            <li>
+                            {/* <li>
                               <div className="title">Birthday:</div>
                               <div className="text">
                                 {user?.date_of_birth || "NA"}
@@ -161,7 +162,7 @@ const ViewEmployee = () => {
                               <div className="text">
                                 {user?.permanent_address || "NA"}
                               </div>{" "}
-                            </li>
+                            </li> */}
                           </ul>
                         </div>
                       </div>
@@ -176,17 +177,7 @@ const ViewEmployee = () => {
               <div className="col-lg-12 col-md-12 col-sm-12 line-tabs">
                 <ul className="nav nav-tabs nav-tabs-bottom">
                   <li className="nav-item">
-                    {/* <Link
-                      to="#emp_profile"
-                      data-bs-toggle="tab"
-                      // className="nav-link active"
-                      onClick={() => handleTabChange("emp_profile")}
-                      className={`nav-link ${
-                        activeTab === "emp_profile" ? "active" : ""
-                      }`}
-                    >
-                      Profile
-                    </Link> */}
+                   
                     <Link
                       data-bs-toggle="tab"
                       onClick={() => handleTabChange("emp_profile")}
@@ -211,7 +202,7 @@ const ViewEmployee = () => {
                       User Settings
                     </Link>
                   </li>
-                  <li className="nav-item">
+                  {/* <li className="nav-item">
                     <Link
                       to="#emp_attendance"
                       data-bs-toggle="tab"
@@ -236,7 +227,7 @@ const ViewEmployee = () => {
                     >
                       Leave
                     </Link>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
             </div>
@@ -253,145 +244,13 @@ const ViewEmployee = () => {
               <Usersetting userId={id} />
             </div>
 
-            <div className="tab-pane fade" id="emp_attendance">
-              <AttendaceUser isClass={false} userId={id} />
+            {/* <div className="tab-pane fade" id="emp_attendance">
+              <AttendaceUser userId={id} />
             </div>
 
             <div className="tab-pane fade" id="emp_leave">
-              <LeavesList isClass={false} userId={id} />
-            </div>
-          </div>
-          <div
-            id="family_info_modal"
-            className="modal custom-modal fade"
-            role="dialog"
-          >
-            <div
-              className="modal-dialog modal-dialog-centered modal-lg"
-              role="document"
-            >
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title"> Family Informations</h5>
-                  <button
-                    type="button"
-                    className="close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    <span aria-hidden="true">×</span>
-                  </button>
-                </div>
-                <div className="modal-body">
-                  <form>
-                    <div className="form-scroll">
-                      <div className="card">
-                        <div className="card-body">
-                          <h3 className="card-title">
-                            Family Member{" "}
-                            <Link to="#" className="delete-icon">
-                              <i className="fa fa-trash" />
-                            </Link>
-                          </h3>
-                          <div className="row">
-                            <div className="col-md-6">
-                              <div className="input-block">
-                                <label>
-                                  Name <span className="text-danger">*</span>
-                                </label>
-                                <input className="form-control" type="text" />
-                              </div>
-                            </div>
-                            <div className="col-md-6">
-                              <div className="input-block">
-                                <label>
-                                  Relationship{" "}
-                                  <span className="text-danger">*</span>
-                                </label>
-                                <input className="form-control" type="text" />
-                              </div>
-                            </div>
-                            <div className="col-md-6">
-                              <div className="input-block">
-                                <label>
-                                  Date of birth{" "}
-                                  <span className="text-danger">*</span>
-                                </label>
-                                <input className="form-control" type="text" />
-                              </div>
-                            </div>
-                            <div className="col-md-6">
-                              <div className="input-block">
-                                <label>
-                                  Phone <span className="text-danger">*</span>
-                                </label>
-                                <input className="form-control" type="text" />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="card">
-                        <div className="card-body">
-                          <h3 className="card-title">
-                            Education Informations{" "}
-                            <Link to="#" className="delete-icon">
-                              <i className="fa fa-trash" />
-                            </Link>
-                          </h3>
-                          <div className="row">
-                            <div className="col-md-6">
-                              <div className="input-block">
-                                <label>
-                                  Name <span className="text-danger">*</span>
-                                </label>
-                                <input className="form-control" type="text" />
-                              </div>
-                            </div>
-                            <div className="col-md-6">
-                              <div className="input-block">
-                                <label>
-                                  Relationship{" "}
-                                  <span className="text-danger">*</span>
-                                </label>
-                                <input className="form-control" type="text" />
-                              </div>
-                            </div>
-                            <div className="col-md-6">
-                              <div className="input-block">
-                                <label>
-                                  Date of birth{" "}
-                                  <span className="text-danger">*</span>
-                                </label>
-                                <input className="form-control" type="text" />
-                              </div>
-                            </div>
-                            <div className="col-md-6">
-                              <div className="input-block">
-                                <label>
-                                  Phone <span className="text-danger">*</span>
-                                </label>
-                                <input className="form-control" type="text" />
-                              </div>
-                            </div>
-                          </div>
-                          <div className="add-more">
-                            <Link to="#">
-                              <i className="fa fa-plus-circle" /> Add More
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="submit-section">
-                      <button className="btn btn-primary submit-btn">
-                        Submit
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
+              <LeavesList userId={id} />
+            </div> */}
           </div>
         </div>
       </div>

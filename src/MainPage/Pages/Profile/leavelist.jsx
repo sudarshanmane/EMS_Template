@@ -2,26 +2,28 @@ import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { Table } from "antd";
-// import { itemRender } from "../paginationfunction";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
-// import { API_HOST } from "../../config/https";
-// import "./CustomModal.css";
-// import CustomModal from "./modal";
-// import {
-//   getLeavesData,
-//   getLeavesDynamicData,
-//   getSelfLeaveList,
-//   getSelfLeaveListDynamicData,
-//   updateLeavesSelfData,
-// } from "../../store/leave";
-// import CardCustom from "./customcard";
-// import Loader from "./customlodaer";
+import { URLS } from "../../../Globals/URLS";
+import {
+  getDynamicLeaveListAction,
+  getDynamicSelfLeaveAction,
+  getLeaveListAction,
+  getSelfLeaveAction,
+  updateSelfLeaveAction,
+} from "../../../store/Action/Actions";
 
 const LeavesList = ({ isClass = true, userId }) => {
+  const id =userId;
   const dispatch = useDispatch();
-  const userRoles = useSelector((state) => state.getstafflist);
+  const baseurl = URLS.BASE_URL_EXPORT;
+  const leaveurl = URLS.GET_LEAVES_LIST_URL;
+  const leavedynamicurl = URLS.GET_DYNAMIC_LEAVES_LIST_URL;
+  const selfurl = URLS.GET_SELF_LEAVES_LIST_URL;
+  const selfdynamicurl = URLS.GET_DYNAMIC_SELF_LEAVES_LIST_URL;
 
+  const [updateSelfLeaveData, setEditMileageData] = useState(null);
+  const userRoles = useSelector((state) => state.getstafflist);
   const [tablePagination, setTablePagination] = useState({
     pageSize: 10,
     current: 1,
@@ -41,11 +43,13 @@ const LeavesList = ({ isClass = true, userId }) => {
 
   useEffect(() => {
     if (userId === undefined) {
-      // dispatch(getLeavesData( setGetData, setIsLoader));
-      // dispatch(getSelfLeaveList( setLeaveDetails));
+      dispatch(getLeaveListAction({ payload: {}, URL: leaveurl }));
+      dispatch(getSelfLeaveAction({ payload: {}, URL: selfurl }));
     } else {
-      // dispatch(getLeavesDynamicData( setGetData, userId, setIsLoader));
-      // dispatch(getSelfLeaveListDynamicData( setLeaveDetails, userId));
+      dispatch(
+        getDynamicLeaveListAction({ payload: {id}, URL: leavedynamicurl })
+      );
+      dispatch(getDynamicSelfLeaveAction({ payload: {id}, URL: selfdynamicurl }));
     }
   }, []);
 
@@ -67,18 +71,20 @@ const LeavesList = ({ isClass = true, userId }) => {
       status: "Cancelled",
       cancelled_reason: notes,
     };
-    // dispatch(updateLeavesSelfData( modalDetails?.cancel_id, details));
+    dispatch(
+      updateSelfLeaveAction({ id: updateSelfLeaveData.id, payload: values })
+    );
     setTimeout(() => {
       setIsModal(false);
-      setGetData([]); // improve this
-      // dispatch(getLeavesData( setGetData));
+      setGetData([]);
+      dispatch(getLeaveListAction({ payload: {}, URL: dynamicurl }));
     }, 200);
     setNotes("");
   };
 
   const handleFileDownload = (item) => {
     if (item) {
-      fetch(API_HOST + item, { method: "GET" })
+      fetch(baseurl + item, { method: "GET" })
         .then((response) => response.blob())
         .then((blob) => {
           const blobUrl = URL.createObjectURL(blob);

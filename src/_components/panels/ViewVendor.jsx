@@ -111,7 +111,7 @@ const ViewVendor = () => {
             data-bs-target="#edit_payment"
             onClick={() => onEdit(record)}
           >
-            <i className="fa fa-pencil m-r-5" />
+              <i className="fa-solid fa-pen-to-square"></i>
           </Link>
         </div>
       ),

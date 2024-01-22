@@ -40,7 +40,6 @@ import Projects from "../../MainPage/Pages/Profile/projects";
 import BankStatutory from "../../MainPage/Pages/Profile/bankstatutory";
 import Assets from "../../MainPage/Pages/Profile/assets";
 import Usersetting from "../../MainPage/Pages/Profile/usersetting";
-import AttendaceUser from "../../MainPage/Pages/Profile/attendaceuser";
 import PersonalInfo from "../../MainPage/Pages/Profile/personalinfo";
 import EmergencyContact from "../../MainPage/Pages/Profile/emergencycontact";
 import BankInfo from "../../MainPage/Pages/Profile/bankinfo";
@@ -53,6 +52,7 @@ import ViewVendor from "../../_components/panels/ViewVendor";
 import TravelRequest from "../../_components/screens/TravelRequest";
 import RequestApprovals from "../../_components/screens/RequestApprovals";
 
+import AttendaceUser from "../../MainPage/Pages/Profile/attendaceuser";
 
 
 const Navigates = () => {

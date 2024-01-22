@@ -211,7 +211,7 @@ const Mileage = () => {
               data-bs-target="#edit_mileage"
               onClick={() => onEdit(record)}
             >
-              <i className="fa fa-pencil " />
+              <i className="fa-solid fa-pen-to-square"></i>
             </Link>
             <Link
                 className="btn btn-danger btn-sm"
@@ -222,7 +222,7 @@ const Mileage = () => {
                 DeleteMileage(record);
               }}
             >
-              <i className="fa fa-trash " />
+              <i className="fa-regular fa-trash-can " />
             </Link>
           </div>
       

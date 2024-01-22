@@ -4,13 +4,14 @@ import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-// import {
-//   addpersonalinfoData,
-//   getpersonalinfoData,
-//   updatepersonalinfoData,
-// } from "../../../store/personalinfo";
 import { Controller, useForm } from "react-hook-form";
 import moment from "moment";
+import {
+  addPersonalInformationAction,
+  getPersonalInfoAction,
+  updatePersonalInfoAction,
+} from "../../../store/Action/Actions";
+import { URLS } from "../../../Globals/URLS";
 
 export default function PersonalInfo({ userId }) {
   const { register, handleSubmit, setValue, control, reset } = useForm();
@@ -24,18 +25,13 @@ export default function PersonalInfo({ userId }) {
   } = useForm({});
 
   const dispatch = useDispatch();
-
-  const token = useSelector((state) => state.userSlice.token);
-  const personal_info = useSelector(
-    (state) => state.personalinfo.personalinfoData?.data?.[0]
-  );
-  const update_personal_info = useSelector(
-    (state) => state.personalinfo.updateText?.id
-  );
+  const url = URLS.GET_PERSONAL_INFORMATION_URL;
+  const personal_info = useSelector((state) => state.getpersonalinfo?.data?.[0]);
+  const update_personal_info = useSelector((state) => state.updatepersonalinfo);
   const add_personal_info = useSelector(
-    (state) => state.personalinfo.newData?.id
+    (state) => state.addpersonalinformation
   );
-  const userRoles = useSelector((state) => state.userrole.userRole);
+  const userRoles = useSelector((state) => state.getcurrentrole);
 
   //Array of BloodGroup
   const options = [
@@ -83,7 +79,7 @@ export default function PersonalInfo({ userId }) {
 
   //submit the data
   const onSubmit = (data) => {
-    dispatch(updatepersonalinfoData(token, data.id, data));
+    dispatch(updatePersonalInfoAction({ id: data.id, payload: data }));
   };
 
   const perInfoSubmit = (data) => {
@@ -91,22 +87,19 @@ export default function PersonalInfo({ userId }) {
       ...data,
       user_id: userId,
     };
-    dispatch(addpersonalinfoData(token, formDataWithUserId));
+    dispatch(addPersonalInformationAction(formDataWithUserId));
   };
 
-  //Get the Personal information
+
+  
+  function getPageDetails(url) {
+    dispatch(getPersonalInfoAction({ payload: {userId}, URL: url }));
+  }
+
   useEffect(() => {
-    if (userId) {
-      dispatch(getpersonalinfoData(token, userId));
-    }
+    getPageDetails(url);
   }, []);
 
-  //after update the Personal information
-  useEffect(() => {
-    if (update_personal_info || add_personal_info) {
-      dispatch(getpersonalinfoData(token, userId));
-    }
-  }, [update_personal_info, add_personal_info]);
 
   useEffect(() => {
     reset();

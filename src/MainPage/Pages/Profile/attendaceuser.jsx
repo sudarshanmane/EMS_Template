@@ -13,11 +13,11 @@ import { URLS } from "../../../Globals/URLS";
 const AttendaceUser = ({ isClass = true, userId }) => {
   const simpleurl = URLS.GET_USER_ATTENDANCE_URL;
   const dynamicurl = URLS.GET_USER_ATTENDANCE_DYNAMIC_URL;
-
+  const baseurl = URLS.BASE_URL_EXPORT;
   const dispatch = useDispatch();
   const userRoles = useSelector((state) => state.getstafflist);
-  const getDetail = useSelector((state) => state.getuserattendance);
-  const isLoader = useSelector((state) => state.getuserattendancedynamic);
+  const getDetail = useSelector((state) => state.getuserattendance?.data);
+  const isLoader = useSelector((state) => state.getuserattendancedynamic?.data);
 
   
   const [tablePagination, setTablePagination] = useState({
@@ -25,13 +25,13 @@ const AttendaceUser = ({ isClass = true, userId }) => {
     current: 1,
   });
  
-  useEffect(() => {
-    if (userId === undefined) {
-      dispatch(getUserAttendanceAction({ payload: {}, URL: simpleurl }));
-    } else {
-      dispatch(getUserAttendanceDynamicAction({ payload: {}, URL: dynamicurl }));
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (userId === undefined) {
+  //     dispatch(getUserAttendanceAction({ payload: {}, URL: simpleurl }));
+  //   } else {
+  //     dispatch(getUserAttendanceDynamicAction({ payload: {}, URL: dynamicurl }));
+  //   }
+  // }, []);
 
   function formatTime(hours, minutes, seconds) {
     const padZero = (value) => (value < 10 ? `0${value}` : `${value}`);
@@ -105,7 +105,7 @@ const AttendaceUser = ({ isClass = true, userId }) => {
               <img
                 data-bs-toggle="modal"
                 data-bs-target="#image_pop_up"
-                src={text ? API_HOST + text : ""}
+                src={text ? baseurl + text : ""}
                 alt={text ? text : ""}
                 style={{ cursor: "pointer" }}
               ></img>
@@ -126,7 +126,7 @@ const AttendaceUser = ({ isClass = true, userId }) => {
                   <div className="modal-content">
                     <div className="modal-body">
                       <img
-                        src={text ? API_HOST + text : ""}
+                        src={text ? baseurl + text : ""}
                         alt={text ? text : ""}
                         style={{ width: "100%", cursor: "pointer" }}
                       />
@@ -157,7 +157,7 @@ const AttendaceUser = ({ isClass = true, userId }) => {
               <img
                 data-bs-toggle="modal"
                 data-bs-target="#image_pop_up"
-                src={text ? API_HOST + text : ""}
+                src={text ? baseurl + text : ""}
                 alt={text ? text : ""}
                 style={{ cursor: "pointer" }}
               ></img>
@@ -177,7 +177,7 @@ const AttendaceUser = ({ isClass = true, userId }) => {
                   <div className="modal-content">
                     <div className="modal-body">
                       <img
-                        src={text ? API_HOST + text : ""}
+                        src={text ? baseurl + text : ""}
                         alt={text ? text : ""}
                         style={{ width: "100%", cursor: "pointer" }}
                       />

@@ -51,7 +51,7 @@ function getUserSettingAction(payload) {
   return {
     type: API_CONSTANTS.GET_USER_SETTING,
     payload: payload.payload,
-    URL: URLS.GET_USER_SETTING_URL + payload.id + "/",
+    URL: URLS.GET_USER_SETTING_URL + payload.payload.id + "/",
     contentType: contentType.json,
   };
 }
@@ -59,8 +59,8 @@ function getUserSettingAction(payload) {
 function updateUserSettingAction(payload) {
   return {
     type: API_CONSTANTS.UPDATE_USER_SETTING,
-    payload: payload.payload,
-    URL: payload.URL,
+    payload: payload,
+    URL: URLS.UPDATE_USER_SETTING_URL + payload.id + "/",
     contentType: contentType.json,
   };
 }
@@ -79,6 +79,42 @@ function getUserAttendanceDynamicAction(payload) {
     type: API_CONSTANTS.GET_USER_ATTENDANCE_DYNAMIC_LIST,
     payload: payload.payload,
     URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
+function getLeaveListAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_LEAVES_LIST,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
+function getSelfLeaveAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_SELF_LEAVES_LIST,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
+function getDynamicLeaveListAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_DYNAMIC_SELF_LEAVES_LIST,
+    payload: payload.payload,
+    URL: URLS.GET_DYNAMIC_LEAVES_LIST_URL + payload.payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+function getDynamicSelfLeaveAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_DYNAMIC_SELF_LEAVES_LIST,
+    payload: payload.payload,
+    URL: URLS.GET_DYNAMIC_SELF_LEAVES_LIST_URL + payload.payload.id + "/",
     contentType: contentType.json,
   };
 }
@@ -250,7 +286,6 @@ function getEducationList(payload) {
   };
 }
 
-
 function getApprovedReportList(payload) {
   return {
     type: API_CONSTANTS.GET_APPROVED_REPORT_LIST,
@@ -265,6 +300,116 @@ function getExpenseList(payload) {
     type: API_CONSTANTS.GET_EXPENSE_LIST,
     payload: payload.payload,
     URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
+function getPersonalInfoAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_PERSONAL_INFORMATION,
+    payload: payload.payload,
+    URL: URLS.GET_PERSONAL_INFORMATION_URL + payload.payload.userId + "/",
+    contentType: contentType.json,
+  };
+}
+
+function updatePersonalInfoAction(payload) {
+  return {
+    type: API_CONSTANTS.UPDATE_PERSONAL_INFORMATION,
+    payload: payload,
+    URL: URLS.UPDATE_PERSONAL_INFORMATION_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+function getCertificateAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_CERTIFICATE,
+    payload: payload.payload,
+    URL: URLS.GET_CERTIFICATE_URL + payload.payload.userId + "/",
+    contentType: contentType.json,
+  };
+}
+
+function updateCertificateAction(payload) {
+  return {
+    type: API_CONSTANTS.UPDATE_CERTIFICATE,
+    payload: payload,
+    URL: URLS.UPDATE_CERTIFICATE_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+function getEducationAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_EDUCATION,
+    payload: payload.payload,
+    URL: URLS.GET_EDUCATION_URL + payload.payload.userId,
+    contentType: contentType.json,
+  };
+}
+
+function updateEducationAction(payload) {
+  return {
+    type: API_CONSTANTS.UPDATE_EDUCATION,
+    payload: payload,
+    URL: URLS.UPDATE_EDUCATION_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+function getExperienceAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_EXPERIENCE,
+    payload: payload.payload,
+    URL: URLS.GET_EDUCATION_URL + payload.payload.userId,
+    contentType: contentType.json,
+  };
+}
+
+function updateExperienceAction(payload) {
+  return {
+    type: API_CONSTANTS.UPDATE_EXPERIENCE,
+    payload: payload,
+    URL: URLS.UPDATE_EDUCATION_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+function addDocumentAction(payload) {
+  return {
+    type: API_CONSTANTS.ADD_DOCUMENT,
+    payload,
+    URL: URLS.ADD_DOCUMENT_URL,
+    contentType: contentType.json,
+  };
+}
+
+
+function getDocumentAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_DOCUMENT,
+    payload: payload.payload,
+    URL: URLS.GET_DOCUMENT_URL + payload.payload.userId,
+    contentType: contentType.json,
+  };
+}
+
+function updateDocumentAction(payload) {
+  console.log("payload",payload)
+  return {
+    type: API_CONSTANTS.UPDATE_DOCUMENT,
+    payload: payload,
+    URL: URLS.UPDATE_DOCUMENT_URL + payload,
+    contentType: contentType.json,
+  };
+}
+
+function removeDocumentAction(payload) {
+  return {
+    type: API_CONSTANTS.REMOVE_DOCUMENT,
+    payload: payload,
+    URL: URLS.REMOVE_DOCUMENT_URL + payload.id + "/",
     contentType: contentType.json,
   };
 }
@@ -411,6 +556,15 @@ function updateCategorypanle(payload) {
     type: API_CONSTANTS.UPDATE_CATEGORY_PANEL,
     payload: payload.payload,
     URL: URLS.UPDATE_CATEGORY_PANEL_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+function updateSelfLeaveAction(payload) {
+  return {
+    type: API_CONSTANTS.UPDATE_SELF_LEAVE,
+    payload: payload.payload,
+    URL: URLS.UPDATE_SELF_LEAVE_URL + payload.id + "/",
     contentType: contentType.json,
   };
 }
@@ -1512,7 +1666,23 @@ export {
   updateUserSettingAction,
   getUserAttendanceAction,
   getUserAttendanceDynamicAction,
-
+  getSelfLeaveAction,
+  getLeaveListAction,
+  getDynamicLeaveListAction,
+  getDynamicSelfLeaveAction,
+  updateSelfLeaveAction,
+  getPersonalInfoAction,
+  updatePersonalInfoAction,
+  getCertificateAction,
+  updateCertificateAction,
+  getEducationAction,
+  updateEducationAction,
+  getExperienceAction,
+  updateExperienceAction,
+  addDocumentAction,
+  getDocumentAction,
+  updateDocumentAction,
+  removeDocumentAction,
 
   // ===========================================================
   addExpenseItemSetup,

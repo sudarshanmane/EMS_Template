@@ -5,11 +5,11 @@ import { Helmet } from "react-helmet";
 import { Link, useNavigate } from "react-router-dom";
 import { Table } from "antd";
 import "antd/dist/antd.min.css";
-import { itemRender} from "../../paginationfunction";
+import { itemRender } from "../../paginationfunction";
 import Sidebar from "../../../initialpage/Sidebar/sidebar";
 import Offcanvas from "../../../Entryfile/offcanvance";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllStaff, getCurrentRole } from "../../../store/Action/Actions";
+import { getAllStaff } from "../../../store/Action/Actions";
 import { URLS } from "../../../Globals/URLS";
 import DatePicker from "react-datepicker";
 import { User } from "../../../Entryfile/imagepath";
@@ -19,7 +19,6 @@ const Employeeslist = () => {
   const navigate = useNavigate();
   const [selectedDate1, setSelectedDate1] = useState(new Date());
   const [selectedDate2, setSelectedDate2] = useState(new Date());
-  const [viewReportData, setViewReportData] = useState(null);
   const [allStaffList, setAllStaffList] = useState([]);
   const [focused, setFocused] = useState(false);
   const [tablePagination, setTablePagination] = useState({
@@ -27,7 +26,6 @@ const Employeeslist = () => {
     current: 1,
   });
   const staffurl = URLS.GET_STAFF_LIST_URL;
-  const userroleurl = URLS.GET_CURRENT_ROLE_URL;
   const baseurl = URLS.BASE_URL_EXPORT;
 
   const handleDateChange1 = (date) => {
@@ -45,18 +43,7 @@ const Employeeslist = () => {
     getPageDetails(staffurl);
   }, []);
 
-  function fetchStaffData() {
-    dispatch(getAllStaff({ payload: {}, URL: staffurl }));
-  }
-
-  useEffect(() => {
-    fetchStaffData(staffurl);
-  }, []);
-
   const userRoles = useSelector((state) => state.getcurrentrole);
-  useEffect(() => {
-    dispatch(getCurrentRole({ payload: {}, URL: userroleurl }));
-  }, []);
 
   useEffect(() => {
     if (userRoles) {
@@ -86,12 +73,9 @@ const Employeeslist = () => {
     navigate(`/home/viewEmployee/${record.id}`, {
       state: {
         id: record.id,
-       
       },
     });
   };
-  
-  
 
   const columns = [
     {
@@ -125,7 +109,6 @@ const Employeeslist = () => {
                 {text} <span>{record.role}</span>
               </Link>
             </h4>
-    
           </>
         );
       },
@@ -161,20 +144,16 @@ const Employeeslist = () => {
       title: "Action",
       render: (record) => (
         <div className="dropdown dropdown-action text-end">
-         
           <Link
-          to={{
-            pathname: `/home/viewEmployee/${record.id}`,
-            state: { userSelector: record },
-          }}
-          className="btn btn-primary btn-sm m-r-5"
-          onClick={() => viewReport(record)}
-        >
-          <i className="fa fa-eye" />
-        </Link>
-        
-         
-       
+            to={{
+              pathname: `/home/viewEmployee/${record.id}`,
+              state: { userSelector: record },
+            }}
+            className="btn btn-primary btn-sm m-r-5"
+            onClick={() => viewReport(record)}
+          >
+            <i className="fa fa-eye" />
+          </Link>
         </div>
       ),
     },
