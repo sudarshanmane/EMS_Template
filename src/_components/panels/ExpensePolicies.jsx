@@ -191,7 +191,7 @@ const ExpensePolicies = () => {
               data-bs-target="#edit_company"
               onClick={() => onEdit(record)}
             >
-              <i className="fa fa-pencil" />
+             <i className="fa-solid fa-pen-to-square"></i>
             </Link>
             <Link
                className="btn btn-danger btn-sm"
@@ -202,7 +202,7 @@ const ExpensePolicies = () => {
                 DeleteExpense(record);
               }}
             >
-              <i className="fa fa-trash" />
+             <i className="fa-regular fa-trash-can " />
             </Link>
           </div>
         

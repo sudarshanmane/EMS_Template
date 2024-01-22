@@ -269,54 +269,6 @@ const CategoryTypePanel = () => {
       },
       sorter: (a, b) => a.amount.length - b.amount.length,
     },
-
-    {
-      title: "Status",
-      dataIndex: "status",
-      render: (text) => (
-        <div className="dropdown action-label text-center">
-          <Link
-            className="btn btn-white btn-sm btn-rounded dropdown-toggle"
-            to="#"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <i
-              className={
-                text === "New"
-                  ? "far fa-dot-circle text-purple"
-                  : text === "Pending"
-                  ? "far fa-dot-circle text-info"
-                  : text === "Approved"
-                  ? "far fa-dot-circle text-success"
-                  : "far fa-dot-circle text-danger"
-              }
-            />{" "}
-            {text}
-          </Link>
-          <div className="dropdown-menu dropdown-menu-right">
-            <Link className="dropdown-item" to="#">
-              <i className="far fa-dot-circle text-purple" /> New
-            </Link>
-            <Link className="dropdown-item" to="#">
-              <i className="far fa-dot-circle text-info" /> Pending
-            </Link>
-            <Link
-              className="dropdown-item"
-              to="#"
-              data-bs-toggle="modal"
-              data-bs-target="#approve_leave"
-            >
-              <i className="far fa-dot-circle text-success" /> Approved
-            </Link>
-            <Link className="dropdown-item" to="#">
-              <i className="far fa-dot-circle text-danger" /> Declined
-            </Link>
-          </div>
-        </div>
-      ),
-      sorter: (a, b) => a.status.length - b.status.length,
-    },
     {
       title: "Action",
       render: (record) => (
@@ -330,7 +282,7 @@ const CategoryTypePanel = () => {
               data-bs-target="#edit_expense"
               onClick={() => onEdit(record)}
             >
-              <i className="fa fa-pencil" />
+              <i className="fa-solid fa-pen-to-square"></i>
             </Link>
             <Link
               className="btn btn-danger btn-sm"
@@ -341,7 +293,7 @@ const CategoryTypePanel = () => {
                 deleteCategory(record);
               }}
             >
-              <i className="fa fa-trash" />
+              <i className="fa-regular fa-trash-can " />
             </Link>
           </div>
        

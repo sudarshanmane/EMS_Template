@@ -12,14 +12,16 @@ import {
   removeDocumentAction,
   updateDocumentAction,
 } from "../../../store/Action/Actions";
+import { URLS } from "../../../Globals/URLS";
 
 const validationSchema = Yup.object().shape({
   document_name: Yup.string().required("document name is not Empty"),
-  // document: Yup.string().required("document is required"),
 });
 
 export default function DocumentProfile({ userId }) {
   const dispatch = useDispatch();
+  const url = URLS.GET_DOCUMENT_URL;
+  const baseurl = URLS.BASE_URL_EXPORT;
 
   const {
     register: addRegister,
@@ -50,20 +52,11 @@ export default function DocumentProfile({ userId }) {
     current: 1,
   });
 
-  const token = useSelector((state) => state.userSlice.token);
-  const userRoles = useSelector((state) => state.userrole.userRole);
-  const per_documents = useSelector(
-    (state) => state.userdocuments.personal_docs?.data
-  );
-  const per_add_documents = useSelector(
-    (state) => state.userdocuments.newData?.id
-  );
-  const per_update_docs = useSelector(
-    (state) => state.userdocuments.updateText?.id
-  );
-  const per_delete_docs = useSelector(
-    (state) => state.userdocuments.delit_data
-  );
+  const userRoles = useSelector((state) => state.getcurrentrole);
+  const per_documents = useSelector((state) => state.getdocument?.data);
+  const per_add_documents = useSelector((state) => state.adddocument);
+  const per_update_docs = useSelector((state) => state.updatedocument);
+  const per_delete_docs = useSelector((state) => state.removedocument);
 
   const imageFormDataConverter = (e) => {
     setImageFile(e.target.files[0]);
@@ -79,7 +72,7 @@ export default function DocumentProfile({ userId }) {
     formData.append("document", imageFile);
     formData.append("user_id", userId);
     formData.append("document_name", data.document_name);
-    dispatch(addDocumentAction(token, formData, userId));
+    dispatch(addDocumentAction(formData));
     resetAdd();
     setImageFile("");
   };
@@ -89,7 +82,7 @@ export default function DocumentProfile({ userId }) {
     setValue("id", record.id);
     setValue("document", record.document);
     setValue("document_name", record.document_name);
-    const documenturl = `${API_HOST}${record.document}`;
+    const documenturl = `${baseurl}${record.document}`;
     setInitialImage(documenturl);
   };
 
@@ -99,7 +92,8 @@ export default function DocumentProfile({ userId }) {
     file && file ? formData.append("document", file) : null;
     formData.append("user_id", userId);
     formData.append("document_name", data.document_name);
-    dispatch(updateDocumentAction(token, data.id, formData));
+    dispatch(updateDocumentAction(data.id, formData));
+
     setFile();
   };
 
@@ -110,13 +104,13 @@ export default function DocumentProfile({ userId }) {
 
   // Delete API
   const onDelete = async (data) => {
-    dispatch(removeDocumentAction(token, data.id));
+    dispatch(removeDocumentAction(data.id));
   };
 
   // file download
   const handleFileDownload = (item) => {
     if (item) {
-      fetch(API_HOST + item, { method: "GET" })
+      fetch(baseurl + item, { method: "GET" })
         .then((response) => response.blob())
         .then((blob) => {
           const blobUrl = URL.createObjectURL(blob);
@@ -134,15 +128,18 @@ export default function DocumentProfile({ userId }) {
     }
   };
 
+
+  function fetchDocumentData(url) {
+    dispatch(getDocumentAction({ payload: {userId}, URL: url }));
+  }
+
   useEffect(() => {
-    if (userId) {
-      dispatch(getDocumentAction(token, userId));
-    }
+    fetchDocumentData(url);
   }, []);
 
   useEffect(() => {
     if (userRoles || per_add_documents || per_update_docs || per_delete_docs) {
-      dispatch(getDocumentAction(token, userId));
+      dispatch(getDocumentAction({ payload: {userId}, URL: url }));
     }
   }, [userRoles, per_add_documents, per_update_docs, per_delete_docs]);
 
@@ -170,10 +167,10 @@ export default function DocumentProfile({ userId }) {
           {record.document ? (
             <button
               onClick={() => handleFileDownload(text)}
-              className="btn btn-outline-primary"
+              className="btn btn-secondary btn-sm"
               style={{ width: "40px" }}
             >
-              <i className="fa fa-download m-r-5" />
+              <i className="fa fa-download" />
             </button>
           ) : null}
         </div>
@@ -185,7 +182,7 @@ export default function DocumentProfile({ userId }) {
         <>
           {userRoles?.data?.users?.user_personal_document?.includes("Edit") ? (
             <Link
-              className="btn btn-success text-white"
+              className="btn btn-success btn-sm m-r-5"
               to="#"
               data-bs-toggle="modal"
               data-bs-target="#update_per_docs"
@@ -198,7 +195,7 @@ export default function DocumentProfile({ userId }) {
             "Delete"
           ) ? (
             <Link
-              className="btn btn-danger text-white ml-3"
+              className="btn btn-danger btn-sm"
               to="#"
               data-bs-toggle="modal"
               data-bs-target="#delete_per_docs"
@@ -270,7 +267,8 @@ export default function DocumentProfile({ userId }) {
                         }}
                         style={{ overflowX: "auto" }}
                         columns={columns}
-                        dataSource={per_documents && per_documents}
+                        // dataSource={per_documents && per_documents}
+                        dataSource={Array.isArray(per_documents) ? per_documents : []}
                         rowKey={(record) => record.id}
                       />
                     </div>

@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 import { Link, useNavigate } from "react-router-dom";
 import { Table } from "antd";
 import "antd/dist/antd.min.css";
-import { itemRender} from "../../paginationfunction";
+import { itemRender } from "../../paginationfunction";
 import Sidebar from "../../../initialpage/Sidebar/sidebar";
 import Offcanvas from "../../../Entryfile/offcanvance";
 import { useDispatch, useSelector } from "react-redux";
@@ -43,14 +43,6 @@ const Employeeslist = () => {
     getPageDetails(staffurl);
   }, []);
 
-  // function fetchStaffData() {
-  //   dispatch(getAllStaff({ payload: {}, URL: staffurl }));
-  // }
-
-  // useEffect(() => {
-  //   fetchStaffData(staffurl);
-  // }, []);
-
   const userRoles = useSelector((state) => state.getcurrentrole);
 
   useEffect(() => {
@@ -81,12 +73,9 @@ const Employeeslist = () => {
     navigate(`/home/viewEmployee/${record.id}`, {
       state: {
         id: record.id,
-       
       },
     });
   };
-  
-  
 
   const columns = [
     {
@@ -120,7 +109,6 @@ const Employeeslist = () => {
                 {text} <span>{record.role}</span>
               </Link>
             </h4>
-    
           </>
         );
       },
@@ -156,20 +144,16 @@ const Employeeslist = () => {
       title: "Action",
       render: (record) => (
         <div className="dropdown dropdown-action text-end">
-         
           <Link
-          to={{
-            pathname: `/home/viewEmployee/${record.id}`,
-            state: { userSelector: record },
-          }}
-          className="btn btn-primary btn-sm m-r-5"
-          onClick={() => viewReport(record)}
-        >
-          <i className="fa fa-eye" />
-        </Link>
-        
-         
-       
+            to={{
+              pathname: `/home/viewEmployee/${record.id}`,
+              state: { userSelector: record },
+            }}
+            className="btn btn-primary btn-sm m-r-5"
+            onClick={() => viewReport(record)}
+          >
+            <i className="fa fa-eye" />
+          </Link>
         </div>
       ),
     },

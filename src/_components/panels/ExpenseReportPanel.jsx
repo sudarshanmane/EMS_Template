@@ -235,7 +235,7 @@ const ExpenseReport = () => {
               data-bs-target="#edit_report"
               onClick={() => onEdit(record)}
             >
-              <i className="fa fa-pencil m-r-5" />
+              <i className="fa-solid fa-pen-to-square"></i>
             </Link>
             <Link
             className="btn btn-danger btn-sm"
@@ -246,7 +246,7 @@ const ExpenseReport = () => {
                 deleteReport(record);
               }}
             >
-              <i className="fa fa-trash m-r-5" />
+             <i className="fa-regular fa-trash-can " />
             </Link>
           </div>
        

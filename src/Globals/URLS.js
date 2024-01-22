@@ -42,7 +42,7 @@ export const URLS = {
   UPDATE_EXPERIENCE_URL: "/userhrms/api/v2/userexperience/?id",
   ADD_DOCUMENT_URL: "/userhrms/api/v2/UserPersonalDocument/?user_id=",
   GET_DOCUMENT_URL: "/userhrms/api/v2/UserPersonalDocument/?user_id=",
-  UPDATE_DOCUMENT_URL: "/userhrms/api/v2/UserPersonalDocument/?id",
+  UPDATE_DOCUMENT_URL: "/userhrms/api/v2/UserPersonalDocument/?id=",
   REMOVE_DOCUMENT_URL: "/userhrms/api/v2/UserPersonalDocument/?id",
   CHANGE_PASSWORD_URL: "/users/api/v2/changepassword/",
 

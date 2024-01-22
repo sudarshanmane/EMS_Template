@@ -396,10 +396,11 @@ function getDocumentAction(payload) {
 }
 
 function updateDocumentAction(payload) {
+  console.log("payload",payload)
   return {
     type: API_CONSTANTS.UPDATE_DOCUMENT,
     payload: payload,
-    URL: URLS.UPDATE_DOCUMENT_URL + payload.id + "/",
+    URL: URLS.UPDATE_DOCUMENT_URL + payload,
     contentType: contentType.json,
   };
 }

@@ -106,15 +106,6 @@ export default function EducationProfile({ userId }) {
   }, []);
 
 
-  function getPageDetails(url) {
-    dispatch(getEducationAction({ payload: { userId }, URL: url }));
-  }
-
-  useEffect(() => {
-    getPageDetails(url);
-  }, []);
-
-
   function fetchReportData(url) {
     dispatch(getEducationAction({ payload: {userId}, URL: url }));
   }

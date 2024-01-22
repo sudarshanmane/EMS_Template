@@ -16,7 +16,7 @@ const AttendaceUser = ({ isClass = true, userId }) => {
   const baseurl = URLS.BASE_URL_EXPORT;
   const dispatch = useDispatch();
   const userRoles = useSelector((state) => state.getstafflist);
-  const getDetail = useSelector((state) => state.getuserattendance);
+  const getDetail = useSelector((state) => state.getuserattendance?.data);
   const isLoader = useSelector((state) => state.getuserattendancedynamic?.data);
 
   
@@ -25,13 +25,13 @@ const AttendaceUser = ({ isClass = true, userId }) => {
     current: 1,
   });
  
-  useEffect(() => {
-    if (userId === undefined) {
-      dispatch(getUserAttendanceAction({ payload: {}, URL: simpleurl }));
-    } else {
-      dispatch(getUserAttendanceDynamicAction({ payload: {}, URL: dynamicurl }));
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (userId === undefined) {
+  //     dispatch(getUserAttendanceAction({ payload: {}, URL: simpleurl }));
+  //   } else {
+  //     dispatch(getUserAttendanceDynamicAction({ payload: {}, URL: dynamicurl }));
+  //   }
+  // }, []);
 
   function formatTime(hours, minutes, seconds) {
     const padZero = (value) => (value < 10 ? `0${value}` : `${value}`);
@@ -99,7 +99,6 @@ const AttendaceUser = ({ isClass = true, userId }) => {
       dataIndex: "sign_in_image",
 
       render: (text) => {
-        console.log("texyt",text)
         return (
           <div className="attendance-img">
             {text ? (
