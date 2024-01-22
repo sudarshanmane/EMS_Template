@@ -22,15 +22,15 @@ const ViewEmployee = () => {
 
   const handleTabChange = (tabId) => {
     setActiveTab(tabId);
-    window.location.hash = `#${tabId}`;
   };
 
+  
   const userSelector = useSelector((state) => state.getstafflist);
 
   useEffect(() => {
     if (userSelector) {
       const userData = userSelector.data.find(
-        (element) => element.id === parseInt(id, 10)
+        (element) => element.id === parseInt(id)
       );
 
       if (userData) {
@@ -101,14 +101,11 @@ const ViewEmployee = () => {
                   <div className="profile-view">
                     <div className="profile-img-wrap">
                       <div className="profile-img">
-                        {/* <Link to="#"> */}
                         {user?.profile_image != null ? (
                           <img alt="" src={`${baseurl}${user.profile_image}`} />
                         ) : (
                           <img alt="img" src={User} />
                         )}
-
-                        {/* </Link> */}
                       </div>
                     </div>
                     <div className="profile-basic">
@@ -150,19 +147,6 @@ const ViewEmployee = () => {
                               <div className="title">Email:</div>
                               <div className="text">{user?.email || "NA"}</div>
                             </li>
-                            {/* <li>
-                              <div className="title">Birthday:</div>
-                              <div className="text">
-                                {user?.date_of_birth || "NA"}
-                              </div>
-                            </li>
-
-                            <li>
-                              <div className="title">Address:</div>
-                              <div className="text">
-                                {user?.permanent_address || "NA"}
-                              </div>{" "}
-                            </li> */}
                           </ul>
                         </div>
                       </div>
@@ -177,7 +161,6 @@ const ViewEmployee = () => {
               <div className="col-lg-12 col-md-12 col-sm-12 line-tabs">
                 <ul className="nav nav-tabs nav-tabs-bottom">
                   <li className="nav-item">
-                   
                     <Link
                       data-bs-toggle="tab"
                       onClick={() => handleTabChange("emp_profile")}

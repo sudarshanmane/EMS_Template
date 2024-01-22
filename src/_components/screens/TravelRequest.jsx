@@ -260,7 +260,7 @@ const TravelRequest = () => {
           </Link>
 
           <button
-            className="btn btn-info btn-sm m-r-5"
+            className="btn btn-primary btn-sm m-r-5"
             onClick={() => {
               onSubmitTravelRequest(record);
             }}
