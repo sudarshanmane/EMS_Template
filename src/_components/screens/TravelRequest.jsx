@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { Table } from "antd";
 import { Link } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
@@ -20,13 +20,15 @@ import {
   onShowSizeChange,
   itemRender,
 } from "../../MainPage/paginationfunction";
+import { Helmet } from "react-helmet";
 
 const TravelRequest = () => {
   const [url, setUrl] = useState(URLS.GET_TRAVEL_URL);
   const dispatch = useDispatch();
   const [selectedDate1, setSelectedDate1] = useState(null);
   const [selectedDate2, setSelectedDate2] = useState(null);
-  const [allTravel, setAllTravel] = useState([]);
+  const [allTravels] = useState([]);
+  const [allTravelList, setAllTravel] = useState([]);
   const [deleteTravelData, setDeleteTravelData] = useState(null);
   const [editTravelData, setEditTravelData] = useState(null);
   const [isAddFormVisible, setIsAddFormVisible] = useState(false);
@@ -35,9 +37,22 @@ const TravelRequest = () => {
     useState(false);
   const [submittedValues, setSubmittedValues] = useState(null);
 
+  const [selectedOption, setSelectedOption] = useState("allTravels");
+  const filteredReportList = useMemo(() => {
+
+    if (selectedOption === "allTravels") {
+      return allTravelList;
+    } else if (selectedOption === "approved") {
+      return allTravelList.filter((report) => report.status === "Approved");
+    } else if (selectedOption === "rejected") {
+      return allTravelList.filter((report) => report.status === "Rejected");
+    } 
+  }, [selectedOption, allTravelList]);
+
   const handleDateChange1 = (date) => {
     setSelectedDate1(date);
   };
+  
   const handleDateChange2 = (date) => {
     setSelectedDate2(date);
   };
@@ -67,9 +82,11 @@ const TravelRequest = () => {
     setSubmittedValues(values);
     setIsAddFormVisible(false);
   };
+
   const createTravelSelector = useSelector(
     (state) => state.createTravelSuccess
   );
+
   useEffect(() => {
     if (createTravelSelector && submittedValues) {
       const createdTravel = createTravelSelector;
@@ -85,6 +102,7 @@ const TravelRequest = () => {
     dispatch(updateTravel({ id: editTravelData.id, payload: values }));
     setIsEditFormVisible(false);
   };
+
   const onEdit = (record) => {
     setIsEditFormVisible(true);
     setEditTravelData(record);
@@ -94,6 +112,7 @@ const TravelRequest = () => {
     setValue("to_date", record.to_date);
     setValue("estimated_budget", record.estimated_budget);
   };
+
   const updatetravelSelector = useSelector((state) => state.updateTravelResult);
   useEffect(() => {
     if (updatetravelSelector) {
@@ -105,19 +124,23 @@ const TravelRequest = () => {
   function getPageDetails(url) {
     dispatch(getTravel({ payload: {}, URL: url }));
   }
+
   useEffect(() => {
     getPageDetails(url);
   }, []);
+
   function fetchPageDetials(url) {
     dispatch(getTravel({ payload: {}, URL: url }));
   }
+
   useEffect(() => {
     fetchPageDetials(url);
   }, []);
+
   const getTravelSelector = useSelector((state) => state.getTravelSuccess);
   useEffect(() => {
     if (getTravelSelector) {
-      const allTravel = getTravelSelector.map((element) => {
+      const allTravelList = getTravelSelector.map((element) => {
         return {
           id: element.id,
           emp: element.emp,
@@ -126,15 +149,17 @@ const TravelRequest = () => {
           from_date: element.from_date,
           to_date: element.to_date,
           estimated_budget: element.estimated_budget,
+          status: element.status,
         };
       });
-      setAllTravel(allTravel);
+      setAllTravel(allTravelList);
     }
   }, [getTravelSelector]);
 
   const deleteTravelSelector = useSelector(
     (state) => state.deleteTravelSuccess
   );
+
   useEffect(() => {
     if (deleteTravelSelector) {
       dispatch(getTravel({ payload: {}, URL: url }));
@@ -157,9 +182,7 @@ const TravelRequest = () => {
 
   const onSubmitTravelRequest = (record) => {
     console.log("record", record.id);
-    dispatch(
-      submitTravelRequest({ id: record.id, payload: record })
-    );
+    dispatch(submitTravelRequest({ id: record.id, payload: record }));
   };
 
   const columns = [
@@ -191,7 +214,7 @@ const TravelRequest = () => {
       dataIndex: "from_date",
       key: "",
       sorter: (a, b) => a.start_date.length - b.start_date.length,
-    },
+    },  
     {
       title: "To_Date",
       dataIndex: "to_date",
@@ -204,6 +227,13 @@ const TravelRequest = () => {
       key: "",
       sorter: (a, b) => a.start_date.length - b.start_date.length,
     },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",  // Add this line to provide a unique key for the column
+      sorter: (a, b) => a.status.length - b.status.length,
+    },
+    
 
     {
       title: "Action",
@@ -256,7 +286,14 @@ const TravelRequest = () => {
   return (
     <>
       <div className="page-wrapper">
+        <Helmet>
+          <title>Expense Report - HRMS Admin Template</title>
+          <meta name="description" content="Login page" />
+        </Helmet>
+        {/* Page Content */}
         <div className="content container-fluid">
+          {/* Page Header */}
+
           <div className="page-header">
             <div className="row">
               <div className="col">
@@ -266,19 +303,21 @@ const TravelRequest = () => {
                   </li>
                   <li className="breadcrumb-item active">Travel Request</li>
                 </ul>
-                <div className="col-auto float-end ms-auto">
-                  <Link
-                    to="#"
-                    className="btn add-btn"
-                    data-bs-toggle="modal"
-                    data-bs-target="#add_travel"
-                  >
-                    <i className="fa fa-plus" /> New Request
-                  </Link>
-                </div>
+              </div>
+              <div className="col-auto float-end ms-auto">
+                <Link
+                  to="#"
+                  className="btn add-btn"
+                  data-bs-toggle="modal"
+                  data-bs-target="#add_travel"
+                >
+                  <i className="fa fa-plus" /> New Request
+                </Link>
               </div>
             </div>
           </div>
+          {/* Page Header */}
+
           {/* Search Filter */}
           <div className="row filter-row">
             <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
@@ -315,36 +354,124 @@ const TravelRequest = () => {
               </Link>
             </div>
           </div>
-          {/* /Search Filter */}
+          {/* /Search Filter End */}
+
           <div className="row">
             <div className="col-sm-12">
               <div className="card mb-0">
+
                 <div className="card-header">
-                  <lable className="card-title mb-0">Travel Request</lable>
+                  <ul className="nav nav-tabs card-header-tabs">
+                    <li className="nav-item">
+                      <a
+                        className={`nav-link ${
+                          selectedOption === "allTravels" && "active"
+                        }`}
+                        onClick={() => setSelectedOption("allTravels")}
+                      >
+                        Travel Request
+                      </a>
+                    </li>
+                    <li className="nav-item">
+                      <a
+                        className={`nav-link ${
+                          selectedOption === "approved" && "active"
+                        }`}
+                        onClick={() => setSelectedOption("approved")}
+                      >
+                        Approved
+                      </a>
+                    </li>
+                    <li className="nav-item">
+                      <a
+                        className={`nav-link ${
+                          selectedOption === "rejected" && "active"
+                        }`}
+                        onClick={() => setSelectedOption("rejected")}
+                      >
+                        Rejected
+                      </a>
+                    </li>
+                  </ul>
                 </div>
+
                 <div className="card-body">
-                  <div className="table-responsive">
-                    <Table
-                      className="table-striped"
-                      pagination={{
-                        total: allTravel.length,
-                        showTotal: (total, range) =>
-                          `Showing ${range[0]} to ${range[1]} of ${total} entries`,
-                        showSizeChanger: true,
-                        onShowSizeChange: onShowSizeChange,
-                        itemRender: itemRender,
-                      }}
-                      style={{ overflowX: "auto" }}
-                      columns={columns}
-                      dataSource={allTravel}
-                      rowKey={(record) => record.id}
-                    />
+                  <div className="tab-content">
+                    <div
+                      className={`tab-pane fade ${
+                        selectedOption === "allTravels" && "show active"
+                      }`}
+                      id="allTravels"
+                    >
+                      <Table
+                        className="table-striped"
+                        pagination={{
+                          total: allTravelList.length,
+                          showTotal: (total, range) =>
+                            `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+                          showSizeChanger: true,
+                          onShowSizeChange: onShowSizeChange,
+                          itemRender: itemRender,
+                        }}
+                        style={{ overflowX: "auto" }}
+                        columns={columns}
+                        dataSource={filteredReportList}
+                        rowKey={(record) => record.id}
+                      />
+                    </div>
+
+                    <div
+                      className={`tab-pane fade ${
+                        selectedOption === "approved" && "show active"
+                      }`}
+                      id="approved"
+                    >
+                      <Table
+                        className="table-striped"
+                        pagination={{
+                          total: allTravelList ? allTravelList.length : 0,
+                          showTotal: (total, range) =>
+                            `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+                          showSizeChanger: true,
+                          onShowSizeChange: onShowSizeChange,
+                          itemRender: itemRender,
+                        }}
+                        style={{ overflowX: "auto" }}
+                        columns={columns}
+                        dataSource={filteredReportList}
+                        rowKey={(record) => record.id}
+                      />
+                    </div>
+
+                    <div
+                      className={`tab-pane fade ${
+                        selectedOption === "rejected" && "show active"
+                      }`}
+                      id="rejected"
+                    >
+                      <Table
+                        className="table-striped"
+                        pagination={{
+                          total: allTravelList ? allTravelList.length : 0,
+                          showTotal: (total, range) =>
+                            `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+                          showSizeChanger: true,
+                          onShowSizeChange: onShowSizeChange,
+                          itemRender: itemRender,
+                        }}
+                        style={{ overflowX: "auto" }}
+                        columns={columns}
+                        dataSource={filteredReportList}
+                        rowKey={(record) => record.id}
+                      />
+                    </div>
+
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+      
 
         {/* Add Travel Request */}
         <div id="add_travel" className="modal custom-modal fade" role="dialog">
@@ -654,6 +781,7 @@ const TravelRequest = () => {
           </div>
         </div>
         {/* Delete Travel Modal End*/}
+      </div>
       </div>
     </>
   );

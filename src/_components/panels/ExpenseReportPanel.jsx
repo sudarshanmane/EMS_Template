@@ -283,6 +283,7 @@ const ExpenseReport = () => {
             </div>
           </div>
           {/* /Page Header */}
+
           {/* Search Filter */}
           <div className="row filter-row">
             <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
@@ -335,10 +336,11 @@ const ExpenseReport = () => {
               </Link>
             </div>
           </div>
-          {/* /Search Filter */}
+          {/* /Search Filter End */}
           <div className="row">
             <div className="col-md-12">
               <div className="card mb-0">
+
                 <div className="card-header">
                   <ul className="nav nav-tabs card-header-tabs">
                     <li className="nav-item">
@@ -383,6 +385,7 @@ const ExpenseReport = () => {
                     </li>
                   </ul>
                 </div>
+
                 <div className="card-body">
                   <div className="tab-content">
                     <div

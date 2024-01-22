@@ -426,7 +426,7 @@ const RequestApprovals = () => {
                 <div className="modal-body">
                   <form>
                     <div className="form-row">
-                      <div className="row">
+                      <div className="row"> 
                         <div className="col-md-8 mb-3">
                           {getTravelSelector?.map((travel, index) => (
                             <div key={index}>
