@@ -70,13 +70,13 @@ const CardApproval = () => {
     setSelectedDate2(date);
   };
 
-  function getPageDetails(url) {
-    dispatch(getCard({ payload: {}, URL: url }));
-  }
+  // function getPageDetails(url) {
+  //   dispatch(getCard({ payload: {}, URL: url }));
+  // }
 
-  useEffect(() => {
-    getPageDetails(url);
-  }, []);
+  // useEffect(() => {
+  //   getPageDetails(url);
+  // }, []);
 
   function fetchcard(url) {
     dispatch(getCard({ payload: {}, URL: url }));

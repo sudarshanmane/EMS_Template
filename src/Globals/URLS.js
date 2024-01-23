@@ -53,11 +53,16 @@ export const URLS = {
   ADD_REPORT_URL: "/api/version_0/expense/expensereport/",
   ADD_SELECTED_REPORT_URL: "/api/version_0/expense/modify_expense/",
   GET_REPORT_LIST_URL: "/api/version_0/expense/expensereport/",
+  GET_SUBMITTED_REPORT_LIST_URL: "/api/version_0/expense/get_submitted_reports/",
+  GET_APPROVED_REPORT_URL: "/api/version_0/expense/get_approved_reports/",
+  GET_REJECTED_REPORT_URL: "/api/version_0/expense/get_rejected_reports_user/",
+  GET_REIMBURSE_REPORT_URL: "/api/version_0/expense/get_reimbursed_reports_user/",
   GET_APPROVED_REPORT_LIST_URL: "/api/version_0/expense/getreportsforapproval/",
   UPDATE_REPORT: "/api/version_0/expense/expensereport/",
   GET_EXPENSE_LIST_URL: "/api/version_0/expense/create_expense/",
   UPDATE_REPORT: "/api/version_0/expense/update_expensereport/",
   DELETE_REPORT: "/api/version_0/expense/update_expensereport/",
+  SUBMIT_REPORT_URL: "/api/version_0/expense/submit-reports/",
 
   VIEW_REPORT_URL: "/api/version_0/expense/expensereport/",
   VIEW_REPORT_BY_ID_URL: "/api/version_0/expense/expensereport/",
@@ -71,6 +76,7 @@ export const URLS = {
   FETCH_REPORT_URL: "/api/version_0/expense/fetch_report/",
   ADD_REIMBURSMENT_RECORD_URL: "/api/version_0/expense/reimbursement/",
   REJECT_REPORT_BY_ACCOUNT_URL: "/api/version_0/expense/reject_exp_by_account/",
+
 
   ADD_CATEGORY_URL: "/api/version_0/expense/expensecategory/",
   GET_CATEGORY_PANEL_URL: "/api/version_0/expense/expensecategory/",

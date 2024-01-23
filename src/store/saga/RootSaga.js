@@ -96,6 +96,11 @@ import {
   getDocument,
   updateDocument,
   removeDocument,
+  submitReport,
+  getSubmittedReportList,
+  getApproved,
+  getRejected,
+  getReimbursed,
   // =======================================
 } from "./CommonSagas";
 
@@ -152,6 +157,12 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.ADD_REPORT, addReportsubmit);
   yield takeEvery(API_CONSTANTS.ADD_SELECTED_REPORT, addSelectedReport);
   yield takeEvery(API_CONSTANTS.GET_REPORT_LIST, getReportList);
+  yield takeEvery(API_CONSTANTS.GET_SUBMITTED_REPORT_LIST, getSubmittedReportList);
+  yield takeEvery(API_CONSTANTS.SUBMIT_REPORT, submitReport);
+  yield takeEvery(API_CONSTANTS.GET_APPROVED_REPORT, getApproved);
+  yield takeEvery(API_CONSTANTS.GET_REJECTED_REPORT, getRejected);
+  yield takeEvery(API_CONSTANTS.GET_REIMBURSED_REPORT, getReimbursed);
+
   yield takeEvery(
     API_CONSTANTS.GET_APPROVED_REPORT_LIST,
     getApprovedReportList

@@ -88,13 +88,13 @@ const CategoryTypePanel = () => {
     setIsEditFormVisible(false);
   };
 
-  function getPageDetails(url) {
-    dispatch(getCategoryPanelAction({ payload: {}, URL: url }));
-  }
+  // function getPageDetails(url) {
+  //   dispatch(getCategoryPanelAction({ payload: {}, URL: url }));
+  // }
 
-  useEffect(() => {
-    getPageDetails(url);
-  }, []);
+  // useEffect(() => {
+  //   getPageDetails(url);
+  // }, []);
 
   useEffect(() => {
     fetchcategorydata(url);
@@ -194,13 +194,13 @@ const CategoryTypePanel = () => {
     );
   };
 
-  function fetchPageDetails(fetchurl) {
-    dispatch(fetchCategory({ payload: {}, URL: fetchurl }));
-  }
+  // function fetchPageDetails(fetchurl) {
+  //   dispatch(fetchCategory({ payload: {}, URL: fetchurl }));
+  // }
 
-  useEffect(() => {
-    fetchPageDetails(fetchurl);
-  }, []);
+  // useEffect(() => {
+  //   fetchPageDetails(fetchurl);
+  // }, []);
 
   function fetchCategoryData(fetchurl) {
     dispatch(fetchCategory({ payload: {}, URL: fetchurl }));

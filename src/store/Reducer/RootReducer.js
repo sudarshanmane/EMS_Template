@@ -104,21 +104,20 @@ export const RootReducer = (state = initialState, action) => {
         getusersetting: action.result,
       };
 
+    case API_CONSTANTS.GET_CERTIFICATE:
+      return {
+        ...state,
+        loding: true,
+      };
 
-      case API_CONSTANTS.GET_CERTIFICATE:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.GET_CERTIFICATE_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          getcertificate: action.result,
-        };
+    case API_CONSTANTS.GET_CERTIFICATE_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getcertificate: action.result,
+      };
 
-        case API_CONSTANTS.UPDATE_CERTIFICATE:
+    case API_CONSTANTS.UPDATE_CERTIFICATE:
       return {
         ...state,
         loding: true,
@@ -131,21 +130,20 @@ export const RootReducer = (state = initialState, action) => {
         updatecertificate: action.result,
       };
 
-      case API_CONSTANTS.GET_EDUCATION:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.GET_EDUCATION_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          geteducation: action.result,
-         
-        };
+    case API_CONSTANTS.GET_EDUCATION:
+      return {
+        ...state,
+        loding: true,
+      };
 
-        case API_CONSTANTS.UPDATE_EDUCATION:
+    case API_CONSTANTS.GET_EDUCATION_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        geteducation: action.result,
+      };
+
+    case API_CONSTANTS.UPDATE_EDUCATION:
       return {
         ...state,
         loding: true,
@@ -158,22 +156,20 @@ export const RootReducer = (state = initialState, action) => {
         updateeducation: action.result,
       };
 
+    case API_CONSTANTS.GET_EXPERIENCE:
+      return {
+        ...state,
+        loding: true,
+      };
 
-      case API_CONSTANTS.GET_EXPERIENCE:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.GET_EXPERIENCE_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          getexperience: action.result,
-         
-        };
+    case API_CONSTANTS.GET_EXPERIENCE_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getexperience: action.result,
+      };
 
-        case API_CONSTANTS.UPDATE_EXPERIENCE:
+    case API_CONSTANTS.UPDATE_EXPERIENCE:
       return {
         ...state,
         loding: true,
@@ -186,23 +182,20 @@ export const RootReducer = (state = initialState, action) => {
         updateexperience: action.result,
       };
 
+    case API_CONSTANTS.GET_DOCUMENT:
+      return {
+        ...state,
+        loding: true,
+      };
 
-      
-      case API_CONSTANTS.GET_DOCUMENT:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.GET_DOCUMENT_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          getdocument: action.result,
-         
-        };
+    case API_CONSTANTS.GET_DOCUMENT_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getdocument: action.result,
+      };
 
-        case API_CONSTANTS.UPDATE_DOCUMENT:
+    case API_CONSTANTS.UPDATE_DOCUMENT:
       return {
         ...state,
         loding: true,
@@ -215,22 +208,20 @@ export const RootReducer = (state = initialState, action) => {
         updatedocument: action.result,
       };
 
-      
-      case API_CONSTANTS.ADD_DOCUMENT:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.ADD_DOCUMENT_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          adddocument: action.result,
-         
-        };
+    case API_CONSTANTS.ADD_DOCUMENT:
+      return {
+        ...state,
+        loding: true,
+      };
 
-        case API_CONSTANTS.REMOVE_DOCUMENT:
+    case API_CONSTANTS.ADD_DOCUMENT_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        adddocument: action.result,
+      };
+
+    case API_CONSTANTS.REMOVE_DOCUMENT:
       return {
         ...state,
         loding: true,
@@ -243,20 +234,20 @@ export const RootReducer = (state = initialState, action) => {
         removedocument: action.result,
       };
 
-      case API_CONSTANTS.GET_PERSONAL_INFORMATION:
-        return {
-          ...state,
-          loding: true,
-        };
-  
-      case API_CONSTANTS.GET_PERSONAL_INFORMATION_SUCCESS:
-        return {
-          ...state,
-          loding: false,
-          getpersonalinfo: action.result,
-        };
+    case API_CONSTANTS.GET_PERSONAL_INFORMATION:
+      return {
+        ...state,
+        loding: true,
+      };
 
-        case API_CONSTANTS.UPDATE_PERSONAL_INFORMATION:
+    case API_CONSTANTS.GET_PERSONAL_INFORMATION_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getpersonalinfo: action.result,
+      };
+
+    case API_CONSTANTS.UPDATE_PERSONAL_INFORMATION:
       return {
         ...state,
         loding: true,
@@ -568,6 +559,19 @@ export const RootReducer = (state = initialState, action) => {
         addexperience: action.result,
       };
 
+    case API_CONSTANTS.SUBMIT_REPORT:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.SUBMIT_REPORT_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        submitreport: action.result,
+      };
+
     case API_CONSTANTS.ADD_REPORT:
       return {
         ...state,
@@ -594,6 +598,19 @@ export const RootReducer = (state = initialState, action) => {
         getreportlist: action.result,
       };
 
+    case API_CONSTANTS.GET_SUBMITTED_REPORT_LIST:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_SUBMITTED_REPORT_LIST_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getsubmittedreportlist: action.result,
+      };
+
     case API_CONSTANTS.GET_EXPENSE_LIST:
       return {
         ...state,
@@ -618,6 +635,45 @@ export const RootReducer = (state = initialState, action) => {
         ...state,
         loding: false,
         getapprovedreportlist: action.result,
+      };
+
+    case API_CONSTANTS.GET_APPROVED_REPORT:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_APPROVED_REPORT_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getapproved: action.result,
+      };
+
+    case API_CONSTANTS.GET_REJECTED_REPORT:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_REJECTED_REPORT_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getrejected: action.result,
+      };
+
+    case API_CONSTANTS.GET_REIMBURSED_REPORT:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_REIMBURSED_REPORT_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getreimbursed: action.result,
       };
 
     case API_CONSTANTS.UPDATE_REPORT:

@@ -73,13 +73,13 @@ const ExpensePolicies = () => {
     setIsEditFormVisible(false);
   };
 
-  function getPageDetails(url) {
-    dispatch(getExpensePolicy({ payload: {}, URL: url }));
-  }
+  // function getPageDetails(url) {
+  //   dispatch(getExpensePolicy({ payload: {}, URL: url }));
+  // }
 
-  useEffect(() => {
-    getPageDetails(url);
-  }, []);
+  // useEffect(() => {
+  //   getPageDetails(url);
+  // }, []);
 
   function fetchExpensePolicyData(url) {
     dispatch(getExpensePolicy({ payload: {}, URL: url }));

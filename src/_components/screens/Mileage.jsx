@@ -94,13 +94,13 @@ const Mileage = () => {
     );
   };
 
-  function getPageDetails(url) {
-    dispatch(getMileage({ payload: {}, URL: url }));
-  }
+  // function getPageDetails(url) {
+  //   dispatch(getMileage({ payload: {}, URL: url }));
+  // }
 
-  useEffect(() => {
-    getPageDetails(url);
-  }, []);
+  // useEffect(() => {
+  //   getPageDetails(url);
+  // }, []);
 
   function fetchMileageData(url) {
     dispatch(getMileage({ payload: {}, URL: url }));
@@ -110,13 +110,13 @@ const Mileage = () => {
     fetchMileageData(url);
   }, []);
 
-  function fetchPageDetails(fetchurl) {
-    dispatch(fetchCategory({ payload: {}, URL: fetchurl }));
-  }
+  // function fetchPageDetails(fetchurl) {
+  //   dispatch(fetchCategory({ payload: {}, URL: fetchurl }));
+  // }
 
-  useEffect(() => {
-    fetchPageDetails(fetchurl);
-  }, []);
+  // useEffect(() => {
+  //   fetchPageDetails(fetchurl);
+  // }, []);
 
   function fetchCategoryData(fetchurl) {
     dispatch(fetchCategory({ payload: {}, URL: fetchurl }));

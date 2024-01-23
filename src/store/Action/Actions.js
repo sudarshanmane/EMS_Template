@@ -259,6 +259,16 @@ function addReport(payload) {
   };
 }
 
+function submitReportAction(payload) {
+  return {
+    type: API_CONSTANTS.SUBMIT_REPORT,
+    payload: payload.payload,
+    URL: URLS.SUBMIT_REPORT_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
+
 function addSelectedReport(payload) {
   return {
     type: API_CONSTANTS.ADD_SELECTED_REPORT,
@@ -277,6 +287,16 @@ function getReportList(payload) {
   };
 }
 
+function getSubmittedReportList(payload) {
+  return {
+    type: API_CONSTANTS.GET_SUBMITTED_REPORT_LIST,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
+
 function getEducationList(payload) {
   return {
     type: API_CONSTANTS.GET_EDUCATION_LIST,
@@ -294,6 +314,34 @@ function getApprovedReportList(payload) {
     contentType: contentType.json,
   };
 }
+
+function getApprovedAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_APPROVED_REPORT,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
+function getRejectedAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_REJECTED_REPORT,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
+function getReimbursedAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_REIMBURSED_REPORT,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
 
 function getExpenseList(payload) {
   return {
@@ -396,7 +444,6 @@ function getDocumentAction(payload) {
 }
 
 function updateDocumentAction(payload) {
-  console.log("payload",payload)
   return {
     type: API_CONSTANTS.UPDATE_DOCUMENT,
     payload: payload,
@@ -1683,6 +1730,11 @@ export {
   getDocumentAction,
   updateDocumentAction,
   removeDocumentAction,
+  submitReportAction,
+  getSubmittedReportList,
+  getApprovedAction,
+  getRejectedAction,
+  getReimbursedAction,
 
   // ===========================================================
   addExpenseItemSetup,

@@ -80,27 +80,27 @@ export default function UserRegistration({ nextcall, setUserId }) {
   });
 
   useEffect(() => {
-    fetchPageDetails(getDepartmenturl);
+    // fetchPageDetails(getDepartmenturl);
     fetchDepartmentData(getDepartmenturl);
 
-    fetchPageDetails(getDesignationurl);
+    // fetchPageDetails(getDesignationurl);
     fetchDesignationData(getDesignationurl);
 
-    fetchPageDetails(getBranchurl);
+    // fetchPageDetails(getBranchurl);
     fetchBranchData(getBranchurl);
 
-    fetchPageDetails(getEmploymentTypeurl);
+    // fetchPageDetails(getEmploymentTypeurl);
     fetchEmploymentTypeData(getEmploymentTypeurl);
 
-    fetchPageDetails(getUserRolePermissionurl);
+    // fetchPageDetails(getUserRolePermissionurl);
     fetchUserRolePermissionData(getUserRolePermissionurl);
   }, []);
 
   const departmentSelector = useSelector((state) => state.getdepartment);
 
-  function fetchPageDetails(getDepartmenturl) {
-    dispatch(getDepartmentAction({ payload: {}, URL: getDepartmenturl }));
-  }
+  // function fetchPageDetails(getDepartmenturl) {
+  //   dispatch(getDepartmentAction({ payload: {}, URL: getDepartmenturl }));
+  // }
 
   function fetchDepartmentData(getDepartmenturl) {
     dispatch(getDepartmentAction({ payload: {}, URL: getDepartmenturl }));
@@ -108,18 +108,18 @@ export default function UserRegistration({ nextcall, setUserId }) {
 
   const designationSelector = useSelector((state) => state.getdesignation);
 
-  function fetchPageDetails(getDesignationurl) {
-    dispatch(getDesignationAction({ payload: {}, URL: getDesignationurl }));
-  }
+  // function fetchPageDetails(getDesignationurl) {
+  //   dispatch(getDesignationAction({ payload: {}, URL: getDesignationurl }));
+  // }
 
   function fetchDesignationData(getDesignationurl) {
     dispatch(getDesignationAction({ payload: {}, URL: getDesignationurl }));
   }
 
   const branchSelector = useSelector((state) => state.getbranchlist);
-  function fetchPageDetails(getBranchurl) {
-    dispatch(getBranchAction({ payload: {}, URL: getBranchurl }));
-  }
+  // function fetchPageDetails(getBranchurl) {
+  //   dispatch(getBranchAction({ payload: {}, URL: getBranchurl }));
+  // }
 
   function fetchBranchData(getBranchurl) {
     dispatch(getBranchAction({ payload: {}, URL: getBranchurl }));
@@ -129,11 +129,11 @@ export default function UserRegistration({ nextcall, setUserId }) {
     (state) => state.getemploymenttype
   );
 
-  function fetchPageDetails(getEmploymentTypeurl) {
-    dispatch(
-      getEmploymentTypeAction({ payload: {}, URL: getEmploymentTypeurl })
-    );
-  }
+  // function fetchPageDetails(getEmploymentTypeurl) {
+  //   dispatch(
+  //     getEmploymentTypeAction({ payload: {}, URL: getEmploymentTypeurl })
+  //   );
+  // }
 
   function fetchEmploymentTypeData(getEmploymentTypeurl) {
     dispatch(
@@ -145,14 +145,14 @@ export default function UserRegistration({ nextcall, setUserId }) {
     (state) => state.getuserrolepermission
   );
 
-  function fetchPageDetails(getUserRolePermissionurl) {
-    dispatch(
-      getUserRolePermissionAction({
-        payload: {},
-        URL: getUserRolePermissionurl,
-      })
-    );
-  }
+  // function fetchPageDetails(getUserRolePermissionurl) {
+  //   dispatch(
+  //     getUserRolePermissionAction({
+  //       payload: {},
+  //       URL: getUserRolePermissionurl,
+  //     })
+  //   );
+  // }
 
   function fetchUserRolePermissionData(getUserRolePermissionurl) {
     dispatch(

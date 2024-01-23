@@ -51,8 +51,9 @@ import LeavesList from "../../MainPage/Pages/Profile/leavelist";
 import ViewVendor from "../../_components/panels/ViewVendor";
 import TravelRequest from "../../_components/screens/TravelRequest";
 import RequestApprovals from "../../_components/screens/RequestApprovals";
-
 import AttendaceUser from "../../MainPage/Pages/Profile/attendaceuser";
+import AllReports from "../../_components/panels/AllReportsPanel";
+import ViewReportManager from "../../_components/panels/ViewReportManager";
 
 
 const Navigates = () => {
@@ -69,6 +70,7 @@ const Navigates = () => {
           <Route path="travelRequest" element={<TravelRequest></TravelRequest>}></Route>
           <Route path="requestApprovals" element={<RequestApprovals></RequestApprovals>}></Route>
           <Route path="/home/viewReport/:id" element={<ViewReport />} />
+          <Route path="viewReportManager/:id" element={<ViewReportManager></ViewReportManager>}></Route>
           <Route path="/home/viewReportApproved/:id" element={<ViewReportApproved/>}></Route>
           <Route path="/home/viewVendor/:id" element={<ViewVendor/>}></Route>
 
@@ -101,6 +103,10 @@ const Navigates = () => {
           <Route path="educationprofile" element={<EducationProfile></EducationProfile>}></Route>
           <Route path="experienceprofile" element={<ExperienceProfile></ExperienceProfile>}></Route>
           <Route path="documentprofile" element={<DocumentProfile></DocumentProfile>}></Route>
+          <Route path="AllReports" element={<AllReports></AllReports>}></Route>
+         
+
+
 
 
 

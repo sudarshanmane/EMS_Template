@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { getReportDetails, submitReport, submitReportAction } from "../../store/Action/Actions";
+import {
+  approveExpense,
+  approveReport,
+  getReportDetails,
+  rejectExpense,
+  rejectReport,
+} from "../../store/Action/Actions";
+import { useForm } from "react-hook-form";
 import { Modal, Space, Table } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
 import {
@@ -10,7 +17,10 @@ import {
 } from "../../MainPage/paginationfunction";
 import { URLS } from "../../Globals/URLS";
 
-const ViewReportPage = () => {
+const ViewReportManager = () => {
+  const [rejectReportData, setRejectReportData] = useState(null);
+  const [rejectExpenseData, setRejectExpenseData] = useState(null);
+  const [isRejectFormVisible, setIsRejectFormVisible] = useState(false);
   const [allExpenses, setAllExpenses] = useState([]);
   const [selectedReceiptUrl, setSelectedReceiptUrl] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
@@ -22,8 +32,46 @@ const ViewReportPage = () => {
     current: 1,
   });
 
-  const onSubmitReport = () => {
-    dispatch(submitReportAction({ id: id }));
+  const {
+    register: registerReport,
+    handleSubmit: handleRejectReport,
+    setValue: ReportSetValue,
+    formState: { errors },
+  } = useForm({});
+
+  const {
+    register: registerExpense,
+    handleSubmit: handleRejectExpense,
+    setValue: ExpenseSetValue,
+    formState,
+  } = useForm({});
+
+  const onApproveReport = () => {
+    dispatch(approveReport({ id: id }));
+  };
+
+  const onRejectReport = (values) => {
+    dispatch(rejectReport({ id: id, payload: values }));
+  };
+
+  const RejectReport = (remark) => {
+    setIsRejectFormVisible(true);
+    setRejectReportData();
+    ReportSetValue("remark", remark);
+  };
+
+  const onApproveExpense = () => {
+    dispatch(approveExpense({ id: id }));
+  };
+
+  const onRejectExpense = (values) => {
+    dispatch(rejectExpense({ id: id, payload: values }));
+  };
+
+  const RejectExpense = (record) => {
+    setIsRejectFormVisible(true);
+    setRejectExpenseData(record);
+    ExpenseSetValue("remark", record.remark);
   };
 
   const reportDetailsSelector = useSelector((state) => state.reportDetails);
@@ -86,6 +134,28 @@ const ViewReportPage = () => {
       dataIndex: "amount",
       sorter: (a, b) => a.amount.length - b.amount.length,
     },
+    {
+      title: "Action",
+      render: (record) => (
+        <div className="dropdown dropdown-action text-end">
+          <button  className="btn btn-success btn-sm m-r-5" 
+          onClick={() => onApproveExpense()}>
+            <i className="fa fa-thumbs-up m-r-5" />
+          </button>
+          <Link
+             className="btn btn-danger btn-sm"
+            to="#"
+            data-bs-toggle="modal"
+            data-bs-target="#rejectExpense"
+            onClick={() => {
+              RejectExpense(record);
+            }}
+          >
+            <i className="fa fa-thumbs-down m-r-5" />
+          </Link>
+        </div>
+      ),
+    },
   ];
 
   return (
@@ -93,7 +163,7 @@ const ViewReportPage = () => {
       <div className="page-wrapper">
         <div className="content container-fluid">
           <div>
-            <Link className="btn add-btn" to="/home/AllReports">
+            <Link className="btn add-btn" to="/home/Reports">
               <i className="fa fa-right" /> Back
             </Link>
           </div>
@@ -132,13 +202,25 @@ const ViewReportPage = () => {
                       </div>
                     </div>
 
+                    <div className="col-auto float-start ms-auto">
+                      <Link
+                        className="btn add-btn"
+                        onClick={() => onApproveReport()}
+                      >
+                        <i className="fa fa-right" /> Approve
+                      </Link>
+                    </div>
                     <div className="col-auto float-end ms-auto">
                       <Link
                         to="#"
                         className="btn add-btn"
-                        onClick={() => onSubmitReport()}
+                        data-bs-toggle="modal"
+                        data-bs-target="#rejectReport"
+                        onClick={() => {
+                          RejectReport();
+                        }}
                       >
-                        <i className="fa fa-right" /> Submit
+                        <i className="fa fa-wrong" /> Reject
                       </Link>
                     </div>
                   </form>
@@ -172,6 +254,108 @@ const ViewReportPage = () => {
               </div>
             )}
           </Modal>
+
+          {/* {/ Reject Report Modal /}  */}
+          <div
+            id="rejectReport"
+            className="modal custom-modal fade"
+            role="dialog"
+          >
+            <div
+              className="modal-dialog modal-dialog-centered modal-md"
+              role="document"
+            >
+              <div className="modal-content">
+                <div className="modal-header">
+                  <button
+                    type="button"
+                    className="close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <div className="modal-body">
+                  <form onSubmit={handleRejectReport(onRejectReport)}>
+                    <div className="row">
+                      <div className="col-md-16">
+                        <div className="input-block">
+                          <label>Remark</label>
+                          <input
+                            className="form-control"
+                            type="text"
+                            {...registerReport("remark")}
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="submit-section">
+                      <button
+                        className="btn btn-primary submit-btn"
+                        data-bs-dismiss="modal"
+                      >
+                        Reject
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* {/ /Reject Modal /} */}
+
+          {/* {/ Reject Expense Modal /}  */}
+          <div
+            id="rejectExpense"
+            className="modal custom-modal fade"
+            role="dialog"
+          >
+            <div
+              className="modal-dialog modal-dialog-centered modal-md"
+              role="document"
+            >
+              <div className="modal-content">
+                <div className="modal-header">
+                  <button
+                    type="button"
+                    className="close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <div className="modal-body">
+                  <form onSubmit={handleRejectExpense(onRejectExpense)}>
+                    <div className="row">
+                      <div className="col-md-16">
+                        <div className="input-block">
+                          <label>Remark</label>
+                          <input
+                            className="form-control"
+                            type="text"
+                            {...registerExpense("remark")}
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="submit-section">
+                      <button
+                        className="btn btn-primary submit-btn"
+                        data-bs-dismiss="modal"
+                      >
+                        Reject
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* {/ /Reject Modal /} */}
 
           <div className="row">
             <div className="col-sm-12">
@@ -216,4 +400,4 @@ const ViewReportPage = () => {
   );
 };
 
-export default ViewReportPage;
+export default ViewReportManager;

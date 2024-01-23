@@ -273,6 +273,17 @@ const Sidebar = () => {
                 </Link>
                 {isSideMenu == "reports" ? (
                   <ul>
+                     <li>
+                      <Link
+                        className={
+                          pathname.includes("expense-") ? "active" : ""
+                        }
+                        to="/home/AllReports"
+                      >
+                        {" "}
+                        All Reports{" "}
+                      </Link>
+                    </li>
                     <li>
                       <Link
                         className={
@@ -281,7 +292,7 @@ const Sidebar = () => {
                         to="/home/Reports"
                       >
                         {" "}
-                        All Reports{" "}
+                        Approve Manager{" "}
                       </Link>
                     </li>
                     <li>

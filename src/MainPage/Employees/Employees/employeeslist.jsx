@@ -43,13 +43,13 @@ const Employeeslist = () => {
     getPageDetails(staffurl);
   }, []);
 
-  const userRoles = useSelector((state) => state.getcurrentrole);
+  // const userRoles = useSelector((state) => state.getcurrentrole);
 
-  useEffect(() => {
-    if (userRoles) {
-      dispatch(getAllStaff({ payload: {}, URL: staffurl }));
-    }
-  }, [userRoles]);
+  // useEffect(() => {
+  //   if (userRoles) {
+  //     dispatch(getAllStaff({ payload: {}, URL: staffurl }));
+  //   }
+  // }, [userRoles]);
 
   const staffSelector = useSelector((state) => state.getstafflist);
   useEffect(() => {
