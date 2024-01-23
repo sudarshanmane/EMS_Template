@@ -9,6 +9,8 @@ import DatePicker from "react-datepicker";
 import { format } from "date-fns";
 
 import {
+  getApprove,
+  getReject,
   getTravel,
   deleteTravel,
   updateTravel,
@@ -23,12 +25,16 @@ import {
 import { Helmet } from "react-helmet";
 
 const TravelRequest = () => {
-  const [url, setUrl] = useState(URLS.GET_TRAVEL_URL);
+  const url = URLS.GET_TRAVEL_URL;
+  const approveurl = URLS.GET_APPROVE_TRAVEL_REQUEST_APPROVALS_URL;
+  const rejecturl = URLS.GET_REJECT_TRAVEL_REQUEST_APPROVALS_URL;
+
   const dispatch = useDispatch();
   const [selectedDate1, setSelectedDate1] = useState(null);
   const [selectedDate2, setSelectedDate2] = useState(null);
-  const [allTravels] = useState([]);
   const [allTravelList, setAllTravel] = useState([]);
+  const [allApproveList, setAllApprove] = useState([]);
+  const [allRejectedList, setAllRejected] = useState([]);
   const [deleteTravelData, setDeleteTravelData] = useState(null);
   const [editTravelData, setEditTravelData] = useState(null);
   const [isAddFormVisible, setIsAddFormVisible] = useState(false);
@@ -38,15 +44,16 @@ const TravelRequest = () => {
   const [submittedValues, setSubmittedValues] = useState(null);
 
   const [selectedOption, setSelectedOption] = useState("allTravels");
+
   const filteredReportList = useMemo(() => {
     if (selectedOption === "allTravels") {
       return allTravelList;
     } else if (selectedOption === "approved") {
-      return allTravelList.filter((report) => report.status === "Approved");
+      return allApproveList;
     } else if (selectedOption === "rejected") {
-      return allTravelList.filter((report) => report.status === "Rejected");
+      return allRejectedList;
     }
-  }, [selectedOption, allTravelList]);
+  }, [selectedOption, allTravelList, allApproveList, allRejectedList]);
 
   const handleDateChange1 = (date) => {
     setSelectedDate1(date);
@@ -72,13 +79,67 @@ const TravelRequest = () => {
 
   const { handleSubmit: handleDelete } = useForm({});
 
+  function fetchPageDetialsAproval(approveurl) {
+    dispatch(getApprove({ payload: {}, URL: approveurl }));
+  }
+
+  useEffect(() => {
+    fetchPageDetialsAproval(approveurl);
+  }, []);
+
+  const getApproveSelector = useSelector((state) => state.getApproveSuccess);
+
+  useEffect(() => {
+    if (getApproveSelector) {
+      const allApproveList = getApproveSelector.map((element) => {
+        return {
+          id: element.id,
+          emp: element.emp,
+          title: element.title,
+          travel_purpose: element.travel_purpose,
+          from_date: element.from_date,
+          to_date: element.to_date,
+          estimated_budget: element.estimated_budget,
+        };
+      });
+      setAllApprove(allApproveList);
+    }
+  }, [getApproveSelector]);
+
+  function fetchPageDetialsReject(rejecturl) {
+    dispatch(getReject({ payload: {}, URL: rejecturl }));
+  }
+
+  useEffect(() => {
+    fetchPageDetialsReject(rejecturl);
+  }, []);
+
+  const getRejectSelector = useSelector((state) => state.getRejectSuccess);
+
+  useEffect(() => {
+    if (getRejectSelector) {
+      const allRejectedList = getRejectSelector.map((element) => {
+        return {
+          id: element.id,
+          emp: element.emp,
+          title: element.title,
+          travel_purpose: element.travel_purpose,
+          from_date: element.from_date,
+          to_date: element.to_date,
+          estimated_budget: element.estimated_budget,
+        };
+      });
+      setAllRejected(allRejectedList);
+    }
+  }, [getRejectSelector]);
+
   const formatDate = (date) => {
     return format(date, "yyyy-MM-dd");
   };
 
   const onSubmit = async (values) => {
     await dispatch(createTravel(values));
-    setSubmittedValues(values);
+    dispatch(getTravel({ payload: {}, URL: url }));
     setIsAddFormVisible(false);
   };
 
@@ -120,20 +181,12 @@ const TravelRequest = () => {
     setIsAddFormVisible(false);
   }, [updatetravelSelector]);
 
-  function getPageDetails(url) {
+  function fetchPageDetialsGetTravel(url) {
     dispatch(getTravel({ payload: {}, URL: url }));
   }
 
   useEffect(() => {
-    getPageDetails(url);
-  }, []);
-
-  function fetchPageDetials(url) {
-    dispatch(getTravel({ payload: {}, URL: url }));
-  }
-
-  useEffect(() => {
-    fetchPageDetials(url);
+    fetchPageDetialsGetTravel(url);
   }, []);
 
   const getTravelSelector = useSelector((state) => state.getTravelSuccess);
@@ -180,7 +233,6 @@ const TravelRequest = () => {
   };
 
   const onSubmitTravelRequest = (record) => {
-    console.log("record", record.id);
     dispatch(submitTravelRequest({ id: record.id, payload: record }));
   };
 
@@ -226,12 +278,6 @@ const TravelRequest = () => {
       key: "",
       sorter: (a, b) => a.start_date.length - b.start_date.length,
     },
-    {
-      title: "Status",
-      dataIndex: "status",
-      key: "status", // Add this line to provide a unique key for the column
-      sorter: (a, b) => a.status.length - b.status.length,
-    },
 
     {
       title: "Action",
@@ -264,8 +310,9 @@ const TravelRequest = () => {
             onClick={() => {
               onSubmitTravelRequest(record);
             }}
+            disabled={submittedValues && submittedValues.id === record.id}
           >
-            <i className="fa fa-paper-plane" ></i>
+            <i className="fa fa-paper-plane"></i>
           </button>
         </div>
       ),
@@ -417,7 +464,7 @@ const TravelRequest = () => {
                       <Table
                         className="table-striped"
                         pagination={{
-                          total: allTravelList ? allTravelList.length : 0,
+                          total: allApproveList.length,
                           showTotal: (total, range) =>
                             `Showing ${range[0]} to ${range[1]} of ${total} entries`,
                           showSizeChanger: true,
@@ -426,7 +473,7 @@ const TravelRequest = () => {
                         }}
                         style={{ overflowX: "auto" }}
                         columns={columns}
-                        dataSource={filteredReportList}
+                        dataSource={allApproveList}
                         rowKey={(record) => record.id}
                       />
                     </div>
@@ -440,7 +487,7 @@ const TravelRequest = () => {
                       <Table
                         className="table-striped"
                         pagination={{
-                          total: allTravelList ? allTravelList.length : 0,
+                          total: allRejectedList.length,
                           showTotal: (total, range) =>
                             `Showing ${range[0]} to ${range[1]} of ${total} entries`,
                           showSizeChanger: true,
@@ -449,7 +496,7 @@ const TravelRequest = () => {
                         }}
                         style={{ overflowX: "auto" }}
                         columns={columns}
-                        dataSource={filteredReportList}
+                        dataSource={allRejectedList}
                         rowKey={(record) => record.id}
                       />
                     </div>
@@ -719,6 +766,7 @@ const TravelRequest = () => {
                     </div>
                     <div className="submit-section">
                       <button
+                      class="alert alert-success d-flex align-items-center" role="alert"  
                         className="btn btn-primary submit-btn"
                         data-bs-dismiss="modal"
                       >
@@ -771,6 +819,7 @@ const TravelRequest = () => {
                     </div>
                   </div>
                 </div>
+                
               </div>
             </div>
           </div>

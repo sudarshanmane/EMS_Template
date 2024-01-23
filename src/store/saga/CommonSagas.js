@@ -103,7 +103,6 @@ function* getCurrentUser(action) {
   }
 }
 
-
 function* getCertificate(action) {
   try {
     let result = yield call(Method.getData, action);
@@ -218,7 +217,6 @@ function* updateExperience(action) {
   }
 }
 
-
 function* addDocument(action) {
   try {
     let result = yield call(Method.postData, action);
@@ -291,7 +289,6 @@ function* removeDocument(action) {
     yield call(errorSaga, "Something went wrong!");
   }
 }
-
 
 function* getUserSetting(action) {
   try {
@@ -370,7 +367,6 @@ function* getUserAttendance(action) {
   }
 }
 
-
 function* updatePersonalInfo(action) {
   try {
     let result = yield call(Method.patchData, action);
@@ -409,7 +405,6 @@ function* getPersonalInfo(action) {
     yield call(errorSaga, "The credentials you entered are incorrect!");
   }
 }
-
 
 function* getUserAttendanceDynamic(action) {
   try {
@@ -1060,9 +1055,6 @@ function* updateVendorPayment(action) {
     yield call(errorSaga, "The credentials you entered are incorrect!");
   }
 }
-
-
-
 
 function* approveReport(action) {
   try {
@@ -1751,6 +1743,49 @@ function* approveTravelApprovals(action) {
     }
   } catch (error) {
     yield call(errorSaga, "Something went wrong!");
+  }
+}
+function* getApprove(action) {
+  try {
+    console.log("reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+
+    let result = yield call(Method.getData, action);
+    if (
+      result.status === 202 ||
+      result.status === 201 ||
+      result.status === 200
+    ) {
+      console.log("reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", result);
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+function* getReject(action) {
+  try {
+    let result = yield call(Method.getData, action);
+    if (
+      result.status === 202 ||
+      result.status === 201 ||
+      result.status === 200
+    ) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
   }
 }
 
@@ -3163,6 +3198,8 @@ export {
   getTravelApproval,
   rejectTravelApprovals,
   approveTravelApprovals,
+  getApprove,
+  getReject,
   getAllUser,
   addAllUser,
   updateUserSetting,

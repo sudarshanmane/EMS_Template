@@ -30,6 +30,7 @@ const RequestApprovals = () => {
   const [isApproveFormVisible, setIsApproveFormVisible] = useState(false);
   const [rejectTravleData, setRejectTravelData] = useState(null);
   const [approveTravleData, setApproveTravelData] = useState(null);
+  const [selectedTravelData, setSelectedTravelData] = useState(null);
 
   const { id } = useParams();
   const [tablePagination, setTablePagination] = useState({
@@ -99,6 +100,7 @@ const RequestApprovals = () => {
   const ApproveTravelApprovals = (record) => {
     setIsApproveFormVisible(true);
     setApproveTravelData(record);
+    setSelectedTravelData(record);
     ApproveSetValue("approved_budget", record.estimated_budget);
   };
 
@@ -178,7 +180,7 @@ const RequestApprovals = () => {
             to="#"
             data-bs-toggle="modal"
             data-bs-target="#viewTravelApprovals"
-            // onClick={() => (record)}
+            onClick={() =>setSelectedTravelData(record)}
           >
             <i className="fa fa-eye m-r-5" />
           </Link>
@@ -190,7 +192,7 @@ const RequestApprovals = () => {
             data-bs-target="#approveTravelApprovals"
             onClick={() => ApproveTravelApprovals(record)}
           >
-            <i className="fa fa-check" aria-hidden="true"></i>
+            <i className="fa fa-thumbs-up" aria-hidden="true"></i>
           </Link>
 
           <Link
@@ -202,7 +204,7 @@ const RequestApprovals = () => {
               RejectTravelApprovals(record);
             }}
           >
-            <i className="fa fa-times" aria-hidden="true"></i>
+            <i className="fa fa-thumbs-down" aria-hidden="true"></i>
           </Link>
         </div>
       ),
@@ -427,22 +429,22 @@ const RequestApprovals = () => {
                   <form>
                     <div className="form-row">
                       <div className="row"> 
-                        <div className="col-md-8 mb-3">
-                          {getTravelSelector?.map((travel, index) => (
-                            <div key={index}>
-                              <p>
-                                Employee:- &nbsp; {travel?.emp?.id} -{" "}
-                                {travel?.emp?.first_name}{" "}
-                                {travel?.emp?.last_name}
-                              </p>
-                              <p>Title:- &nbsp; {travel.title}</p>
-                              <p>Travel Purpose:- &nbsp; {travel.travel_purpose}</p>
-                              <p>From Date:- &nbsp; {travel.from_date}</p>
-                              <p>To Date:- &nbsp; {travel.to_date}</p>
-                              <p>Estimated Budget:- &nbsp; {travel.estimated_budget}</p>
-                            </div>
-                          ))}
-                        </div>
+                      <div className="col-md-8 mb-3">
+                {selectedTravelData && ( // Check if selectedTravelData is available
+                  <div>
+                    <p>
+                      Employee:- &nbsp; {selectedTravelData?.emp?.id} -{" "}
+                      {selectedTravelData?.emp?.first_name}{" "}
+                      {selectedTravelData?.emp?.last_name}
+                    </p>
+                    <p>Title:- &nbsp; {selectedTravelData.title}</p>
+                    <p>Travel Purpose:- &nbsp; {selectedTravelData.travel_purpose}</p>
+                    <p>From Date:- &nbsp; {selectedTravelData.from_date}</p>
+                    <p>To Date:- &nbsp; {selectedTravelData.to_date}</p>
+                    <p>Estimated Budget:- &nbsp; {selectedTravelData.estimated_budget}</p>
+                  </div>
+                )}
+              </div>
                       </div>
                     </div>
                   </form>
