@@ -26,6 +26,14 @@ const ViewReportPage = () => {
     dispatch(submitReportAction({ id: id }));
   };
 
+  // const SubmitReportSelector = useSelector((state) => state.submitreport);
+
+  // useEffect(() => {
+  //   if (SubmitReportSelector) {
+  //     alert(SubmitReportSelector?.Status);
+  //   }
+  // }, [SubmitReportSelector]);
+
   const reportDetailsSelector = useSelector((state) => state.reportDetails);
   useEffect(() => {
     if (reportDetailsSelector) {

@@ -40,13 +40,6 @@ const ExpenseApprovals = () => {
     setSelectedDate2(date);
   };
 
-  const formatDate = (date) => {
-    return format(date, "yyyy-MM-dd");
-  };
-
-  const onSubmit = (values) => {
-    dispatch(addReport(values));
-  };
 
   const viewReportApproved = (record) => {
     setViewReportData(record);
@@ -54,30 +47,15 @@ const ExpenseApprovals = () => {
     navigate("/home/viewReportApproved", { state: record });
   };
 
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm({});
 
-  const { register: approveregister, handleSubmit: handleApprove } = useForm(
-    {}
-  );
 
-  const {
-    register: updateregister,
-    handleSubmit: handleUpdate,
-    setValue,
-  } = useForm({});
+  // function getPageDetails(url) {
+  //   dispatch(getApprovedReportList({ payload: {}, URL: url }));
+  // }
 
-  function getPageDetails(url) {
-    dispatch(getApprovedReportList({ payload: {}, URL: url }));
-  }
-
-  useEffect(() => {
-    getPageDetails(url);
-  }, []);
+  // useEffect(() => {
+  //   getPageDetails(url);
+  // }, []);
 
   function fetchReportData(url) {
     dispatch(getApprovedReportList({ payload: {}, URL: url }));

@@ -101,6 +101,10 @@ const AllReports = () => {
     setIsEditFormVisible(false);
   };
 
+  const deleteReport = (record) => {
+    setDeleteReportData(record);
+  };
+
   const onDelete = () => {
     const deletedReportId = deleteReportData.id;
     dispatch(deleteReportAction({ id: deletedReportId }));
@@ -258,13 +262,18 @@ const AllReports = () => {
     }
   }, [deleteReportlSelector]);
 
-  const deleteReport = (record) => {
-    setDeleteReportData(record);
-  };
 
   const submitReport = (record) => {
     dispatch(submitReportAction({ id: record?.id }));
   };
+
+  const SubmitReportSelector = useSelector((state) => state.submitreport);
+
+  useEffect(() => {
+    if (SubmitReportSelector) {
+      alert(SubmitReportSelector?.Status);
+    }
+  }, [SubmitReportSelector]);
 
   const columns = [
     {
@@ -300,9 +309,8 @@ const AllReports = () => {
       dataIndex: "status",
       sorter: (a, b) => a.status.length - b.status.length,
     },
-    {
+     {
       title: "Action",
-
       render: (record) => (
         <div className="dropdown dropdown-action text-end">
           <Link
@@ -312,35 +320,35 @@ const AllReports = () => {
           >
             <i className="fa fa-eye m-r-5" />
           </Link>
-          <Link
-            className="btn btn-success btn-sm m-r-5"
-            to="#"
-            data-bs-toggle="modal"
-            data-bs-target="#edit_report"
-            onClick={() => onEdit(record)}
-          >
-            <i className="fa-solid fa-pen-to-square"></i>
-          </Link>
-          <Link
-            className="btn btn-danger btn-sm m-r-5"
-            to="#"
-            data-bs-toggle="modal"
-            data-bs-target="#delete_report"
-            onClick={() => {
-              deleteReport(record);
-            }}
-          >
-            <i className="fa-regular fa-trash-can " />
-          </Link>
-          <button
-            className="btn btn-secondary btn-sm"
-            to="#"
-            onClick={() => {
-              submitReport(record);
-            }}
-          >
-            <i className="fa fa-paper-plane" />
-          </button>
+          {selectedOption === "allReports" && (
+            <>
+              <Link
+                className="btn btn-success btn-sm m-r-5"
+                to="#"
+                data-bs-toggle="modal"
+                data-bs-target="#edit_report"
+                onClick={() => onEdit(record)}
+              >
+                <i className="fa-solid fa-pen-to-square"></i>
+              </Link>
+              <Link
+                className="btn btn-danger btn-sm m-r-5"
+                to="#"
+                data-bs-toggle="modal"
+                data-bs-target="#delete_report"
+                onClick={() => deleteReport(record)}
+              >
+                <i className="fa-regular fa-trash-can" />
+              </Link>
+              <button
+                className="btn btn-secondary btn-sm"
+                to="#"
+                onClick={() => submitReport(record)}
+              >
+                <i className="fa fa-paper-plane" />
+              </button>
+            </>
+          )}
         </div>
       ),
     },

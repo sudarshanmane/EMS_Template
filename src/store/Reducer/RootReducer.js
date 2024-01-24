@@ -11,7 +11,6 @@ const initialState = {
 };
 
 export const RootReducer = (state = initialState, action) => {
-  console.log(action.type, action.result);
   switch (action.type) {
     case API_CONSTANTS.USER_LOGIN:
       return {
@@ -787,31 +786,6 @@ export const RootReducer = (state = initialState, action) => {
         rejectReportSuccess: action.result,
       };
 
-    case API_CONSTANTS.APPROVE_EXPENSE:
-      return {
-        ...state,
-        loding: true,
-      };
-
-    case API_CONSTANTS.APPROVE_EXPENSE_SUCCESS:
-      return {
-        ...state,
-        loding: false,
-        approveExpenseSuccess: action.result,
-      };
-
-    case API_CONSTANTS.REJECT_EXPENSE:
-      return {
-        ...state,
-        loding: true,
-      };
-
-    case API_CONSTANTS.REJECT_EXPENSE_SUCCESS:
-      return {
-        ...state,
-        loding: false,
-        rejectExpenseSuccess: action.result,
-      };
     case API_CONSTANTS.APPROVE_EXPENSE:
       return {
         ...state,

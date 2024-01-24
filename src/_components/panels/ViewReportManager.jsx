@@ -50,6 +50,15 @@ const ViewReportManager = () => {
     dispatch(approveReport({ id: id }));
   };
 
+  // const ApproveReportSelector = useSelector((state) => state.approveReportSuccess);
+
+  // useEffect(() => {
+  //   if (ApproveReportSelector) {
+  //     alert(ApproveReportSelector?.Status);
+  //   }
+  // }, [ApproveReportSelector]);
+
+
   const onRejectReport = (values) => {
     dispatch(rejectReport({ id: id, payload: values }));
   };
@@ -60,10 +69,28 @@ const ViewReportManager = () => {
     ReportSetValue("remark", remark);
   };
 
+  // const RejectReportSelector = useSelector((state) => state.rejectReportSuccess);
+
+  // useEffect(() => {
+  //   if (RejectReportSelector) {
+  //     alert(RejectReportSelector?.Status);
+  //   }
+  // }, [RejectReportSelector]);
+
+
   const onApproveExpense = () => {
     dispatch(approveExpense({ id: id }));
   };
 
+  // const ApproveExpenseSelector = useSelector((state) => state.approveExpenseSuccess);
+
+  // useEffect(() => {
+  //   if (ApproveExpenseSelector) {
+  //     alert(ApproveExpenseSelector?.Status);
+  //   }
+  // }, [ApproveExpenseSelector]);
+
+  
   const onRejectExpense = (values) => {
     dispatch(rejectExpense({ id: id, payload: values }));
   };
@@ -73,6 +100,14 @@ const ViewReportManager = () => {
     setRejectExpenseData(record);
     ExpenseSetValue("remark", record.remark);
   };
+
+  // const RejectExpenseSelector = useSelector((state) => state.rejectExpenseSuccess);
+
+  // useEffect(() => {
+  //   if (RejectExpenseSelector) {
+  //     alert(RejectExpenseSelector?.Status);
+  //   }
+  // }, [RejectExpenseSelector]);
 
   const reportDetailsSelector = useSelector((state) => state.reportDetails);
   useEffect(() => {
@@ -140,7 +175,7 @@ const ViewReportManager = () => {
         <div className="dropdown dropdown-action text-end">
           <button  className="btn btn-success btn-sm m-r-5" 
           onClick={() => onApproveExpense()}>
-            <i className="fa fa-thumbs-up m-r-5" />
+            <i className="fa fa-check m-r-5" />
           </button>
           <Link
              className="btn btn-danger btn-sm"
@@ -151,7 +186,7 @@ const ViewReportManager = () => {
               RejectExpense(record);
             }}
           >
-            <i className="fa fa-thumbs-down m-r-5" />
+            <i className="fa fa-times m-r-5" />
           </Link>
         </div>
       ),

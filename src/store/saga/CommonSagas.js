@@ -103,7 +103,6 @@ function* getCurrentUser(action) {
   }
 }
 
-
 function* getCertificate(action) {
   try {
     let result = yield call(Method.getData, action);
@@ -218,7 +217,6 @@ function* updateExperience(action) {
   }
 }
 
-
 function* addDocument(action) {
   try {
     let result = yield call(Method.postData, action);
@@ -291,7 +289,6 @@ function* removeDocument(action) {
     yield call(errorSaga, "Something went wrong!");
   }
 }
-
 
 function* getUserSetting(action) {
   try {
@@ -370,7 +367,6 @@ function* getUserAttendance(action) {
   }
 }
 
-
 function* updatePersonalInfo(action) {
   try {
     let result = yield call(Method.patchData, action);
@@ -409,7 +405,6 @@ function* getPersonalInfo(action) {
     yield call(errorSaga, "The credentials you entered are incorrect!");
   }
 }
-
 
 function* getUserAttendanceDynamic(action) {
   try {
@@ -876,7 +871,6 @@ function* getSubmittedReportList(action) {
   }
 }
 
-
 function* getApprovedReportList(action) {
   try {
     let result = yield call(Method.getData, action);
@@ -919,7 +913,6 @@ function* getApproved(action) {
   }
 }
 
-
 function* getRejected(action) {
   try {
     let result = yield call(Method.getData, action);
@@ -941,7 +934,6 @@ function* getRejected(action) {
   }
 }
 
-
 function* getReimbursed(action) {
   try {
     let result = yield call(Method.getData, action);
@@ -962,8 +954,6 @@ function* getReimbursed(action) {
     yield call(errorSaga, "The credentials you entered are incorrect!");
   }
 }
-
-
 
 function* getExpenseList(action) {
   try {
@@ -1030,6 +1020,12 @@ function* submitReport(action) {
         status: "ok",
         result: result.data,
       });
+    } else if (result.status === 203) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "Report does not contain Expense",
+        result: result.data,
+      });
     } else {
       yield call(failSaga, "Server Down!");
     }
@@ -1037,7 +1033,6 @@ function* submitReport(action) {
     yield call(errorSaga, "The credentials you entered are incorrect!");
   }
 }
-
 
 function* updateReport(action) {
   try {
@@ -1167,9 +1162,6 @@ function* updateVendorPayment(action) {
     yield call(errorSaga, "The credentials you entered are incorrect!");
   }
 }
-
-
-
 
 function* approveReport(action) {
   try {
@@ -1583,7 +1575,8 @@ function* applyCard(action) {
         status: "ok",
         result: result.data,
       });
-    } else {
+    }
+    else {
       yield call(failSaga, "Server Down!");
     }
   } catch (error) {

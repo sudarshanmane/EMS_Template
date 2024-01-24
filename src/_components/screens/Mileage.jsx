@@ -150,6 +150,7 @@ const Mileage = () => {
   useEffect(() => {
     if (addMileageSelector) {
       dispatch(getMileage({ payload: {}, URL: url }));
+      
       reset();
       setIsAddFormVisible(false);
     }

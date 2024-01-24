@@ -69,6 +69,7 @@ const ViewReportApproved = () => {
 
   const naviagte = useNavigate();
 
+
   const onReimbursRecord = (values) => {
     values["report"] = id;
     values["reimbursed_amount"] = reportDetailsSelector.reimbursable_amount;
@@ -78,6 +79,16 @@ const ViewReportApproved = () => {
     document.querySelector("#closeModal").click();
     naviagte("/home/ExpenseApprovals");
   };
+
+  // const reimburseSelector = useSelector(
+  //   (state) => state.addreimbursmentresult
+  // );
+  // useEffect(() => {
+  //   if (reimburseSelector) {
+  //     alert(reimburseSelector.Status)
+  //   }
+  // }, [reimburseSelector]);
+
 
   const onRejectExpense = (values) => {
     dispatch(rejectExpense({ id: id, payload: values }));
@@ -120,14 +131,6 @@ const ViewReportApproved = () => {
     }
   }, [reportDetailsSelector]);
 
-  const approveReportSelector = useSelector(
-    (state) => state.approveReportSuccess
-  );
-  useEffect(() => {
-    if (approveReportSelector) {
-      dispatch(approveReport({ payload: {}, URL: url }));
-    }
-  }, [approveReportSelector]);
 
   useEffect(() => {
     if (id) {

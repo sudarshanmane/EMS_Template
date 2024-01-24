@@ -79,7 +79,7 @@ const Sidebar = () => {
                     toggleSidebar(isSideMenu == "user" ? "" : "user")
                   }
                 >
-                  <i className="la la-user" /> <span>User Management</span>{" "}
+                  <i className="la fa-users" /> <span>User Management</span>{" "}
                   <span className="menu-arrow" />
                 </Link>
 
@@ -324,7 +324,7 @@ const Sidebar = () => {
                     )
                   }
                 >
-                  <i className="la la-file-text" /> <span> Vendors </span>{" "}
+                  <i className="la fa-university" /> <span> Vendors </span>{" "}
                   {/* <span className="menu-arrow" /> */}
                 </Link>
               </li>

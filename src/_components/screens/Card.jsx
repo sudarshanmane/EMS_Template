@@ -37,13 +37,13 @@ function Card() {
       }
     }
     dispatch(applyCard(formData));
-    alert("Applied Successfully ");
   };
 
   const applyCardSelector = useSelector((state) => state.applyCardresult);
 
   useEffect(() => {
     if (applyCardSelector) {
+      alert(applyCardSelector?.Status);
       dispatch(getCard({ payload: {}, URL: url }));
       reset();
     }
