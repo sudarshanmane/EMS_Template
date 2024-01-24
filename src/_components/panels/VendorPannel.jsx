@@ -5,6 +5,8 @@ import { URLS } from "../../Globals/URLS";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
+import * as Yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup/dist/yup.js";
 
 import {
   createVendorPaymentAction,
@@ -33,10 +35,21 @@ const VendorPannel = () => {
 
   const [vendorBill, setVendorBillFile] = useState();
 
+  const validationSchema = Yup.object().shape({
+    paid_amount: Yup.string().required("Paid amount is required!"),
+    amount: Yup.string().required("Amount is required!"),
+    vendor_bill: Yup.string().required("Vendor is required!"),
+    password: Yup.string()
+      .required("Password is required")
+      .min(6, "Password must be at least 6 characters")
+      .max(20, "Password must not exceed 20 characters"),
+  });
+
+
   const handleFileChange = (e) => {
     setVendorBillFile(e.target.files[0]);
-    console.log("filesssssssssssssss", e.target.files[0]);
   };
+
   const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] =
     useState(false);
   const navigate = useNavigate();
@@ -45,24 +58,25 @@ const VendorPannel = () => {
   const {
     register: updateregister,
     handleSubmit: handleUpdate,
-    setValue,
-  } = useForm({});
+  } = useForm({
+     resolver: yupResolver(validationSchema),
+  });
 
   const {
     register: recordpayment,
     handleSubmit: handleSubmitRecord,
     setValue: setValueRecord,
-  } = useForm({});
+   formState: { errors }
+
+  } = useForm({resolver: yupResolver(validationSchema),});
 
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
-  } = useForm({});
-
+   
+  } = useForm({resolver: yupResolver(validationSchema),});
   const { handleSubmit: handleDelete } = useForm({});
-
   const onAddVendor = (values) => {
     dispatch(createVendor(values));
     setIsAddFormVisible(false);
@@ -87,12 +101,10 @@ const VendorPannel = () => {
     setValue("website", record.website);
     setValue("fax", record.fax);
   };
-
   const onUpdate = (values) => {
     dispatch(updateVendorTable({ id: editVendorData.id, payload: values }));
     setIsEditFormVisible(false);
   };
-
   const updatevendorSelector = useSelector(
     (state) => state.updateVendorTableResult
   );
@@ -256,7 +268,7 @@ const VendorPannel = () => {
           data-bs-target="#make_payment"
           onClick={() => onRecord(record)}
         >
-           <i className="fa fa-credit-card"></i>
+          <i className="fa fa-credit-card"></i>
         </Link>
       ),
     },
@@ -290,7 +302,7 @@ const VendorPannel = () => {
               DeleteVendor(record);
             }}
           >
-              <i className="fa-regular fa-trash-can " />
+            <i className="fa-regular fa-trash-can " />
           </Link>
         </div>
       ),
@@ -298,7 +310,6 @@ const VendorPannel = () => {
   ];
 
   return (
-    <>
       <div className="page-wrapper">
         <div className="content container-fluid">
           {/* Page Header */}
@@ -464,10 +475,10 @@ const VendorPannel = () => {
 
                   <div className="submit-section">
                     <button
+                    
                       className="btn btn-primary submit-btn"
                       data-bs-dismiss="modal"
                     >
-                      Submit
                     </button>
                   </div>
                 </form>
@@ -647,6 +658,7 @@ const VendorPannel = () => {
                           {...recordpayment("vendor")}
                         />
                       </div>
+                      <span className="text-warning">{errors?.vendor_bill?.message}</span> 
                     </div>
                   </div>
 
@@ -654,12 +666,14 @@ const VendorPannel = () => {
                     <div className="col-md-12">
                       <div className="input-block">
                         <label>Vendor Bill</label>
-                        <input
+                        <input               
+                                  
                           className="form-control"
                           type="file"
                           {...recordpayment("vendor_bill")}
                           onChange={(e) => handleFileChange(e)}
                         />
+                        
                       </div>
                     </div>
                   </div>
@@ -672,7 +686,10 @@ const VendorPannel = () => {
                           type="number"
                           {...recordpayment("paid_amount")}
                         />
+                           <span className="text-warning">{errors.paid_amount?.message}</span>
                       </div>
+                   
+
                     </div>
                   </div>
                   {/* <div className="input-block">
@@ -696,16 +713,19 @@ const VendorPannel = () => {
                           type="number"
                           {...recordpayment("amount")}
                         />
+                      <span className="text-warning">{errors.amount?.message}</span> 
+
                       </div>
+                      
                     </div>
                   </div>
 
                   <div className="submit-section">
-                    <button
-                      className="btn btn-primary submit-btn"
-                      data-bs-dismiss="modal"
+                    <button type="submit"
+                      // className="btn btn-primary submit-btn"
+                      // data-bs-dismiss="modal"
                     >
-                      Submit
+                      Submit 
                     </button>
                   </div>
                 </form>
@@ -714,7 +734,6 @@ const VendorPannel = () => {
           </div>
         </div>
       </div>
-    </>
   );
 };
 

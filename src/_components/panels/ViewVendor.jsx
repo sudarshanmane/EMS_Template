@@ -261,6 +261,8 @@ const ViewVendor = () => {
                     </div>
                   </div>
 
+                  
+
                   <div className="submit-section">
                     <button
                       className="btn btn-primary submit-btn"

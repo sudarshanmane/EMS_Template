@@ -293,53 +293,59 @@ const TravelRequest = () => {
             <i className="fa-solid fa-pen-to-square"></i>
           </Link>
 
-          <Link
-            className="btn btn-danger btn-sm m-r-5"
-            to="#"
-            data-bs-toggle="modal"
-            data-bs-target="#delete_travel"
-            onClick={() => {
-              DeleteTravel(record);
-            }}
-          >
-            <i className="fa-regular fa-trash-can " />
-          </Link>
+          {selectedOption !== "approved" && selectedOption !== "rejected" && (
+            <>
+              <Link
+                className="btn btn-danger btn-sm m-r-5"
+                to="#"
+                data-bs-toggle="modal"
+                data-bs-target="#delete_travel"
+                onClick={() => {
+                  DeleteTravel(record);
+                }}
+              >
+                <i className="fa-regular fa-trash-can " />
+              </Link>
 
-          <button
-            className="btn btn-info btn-sm m-r-5"
-            onClick={() => {
-              onSubmitTravelRequest(record);
-            }}
-            disabled={submittedValues && submittedValues.id === record.id}
-          >
-            <i className="fa fa-paper-plane"></i>
-          </button>
+              <button
+                className="btn btn-info btn-sm m-r-5"
+                onClick={() => {
+                  onSubmitTravelRequest(record);
+                }}
+                disabled={submittedValues && submittedValues.id === record.id}
+              >
+                <i className="fa fa-paper-plane"></i>
+              </button>
+            </>
+          )}
         </div>
       ),
     },
   ];
 
   return (
-    <>
-      <div className="page-wrapper">
-        <Helmet>
-          <title>Expense Report - HRMS Admin Template</title>
-          <meta name="description" content="Login page" />
-        </Helmet>
-        {/* Page Content */}
-        <div className="content container-fluid">
-          {/* Page Header */}
+    
+    <div className="page-wrapper">
+      <Helmet>
+        <title>Expense Report - HRMS Admin Template</title>
+        <meta name="description" content="Login page" />
+      </Helmet>
+      {/* Page Content */}
+      <div className="content container-fluid">
+        {/* Page Header */}
 
-          <div className="page-header">
-            <div className="row">
-              <div className="col">
-                <ul className="breadcrumb">
-                  <li className="breadcrumb-item">
-                    <Link to="/app/main/dashboard">Dashboard</Link>
-                  </li>
-                  <li className="breadcrumb-item active">Travel Request</li>
-                </ul>
-              </div>
+        <div className="page-header">
+          <div className="row">
+            <div className="col">
+              <ul className="breadcrumb">
+                <li className="breadcrumb-item">
+                  <Link to="/app/main/dashboard">Dashboard</Link>
+                </li>
+                <li className="breadcrumb-item active">Travel Request</li>
+              </ul>
+            </div>
+
+            {selectedOption !== "approved" && selectedOption !== "rejected" && (
               <div className="col-auto float-end ms-auto">
                 <Link
                   to="#"
@@ -350,483 +356,476 @@ const TravelRequest = () => {
                   <i className="fa fa-plus" /> New Request
                 </Link>
               </div>
-            </div>
+            )}
           </div>
-          {/* Page Header */}
-
-          {/* Search Filter */}
-          <div className="row filter-row">
-            <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-              <div className="input-block form-focus select-focus">
-                <div className="cal-icon">
-                  <DatePicker
-                    selected={selectedDate1}
-                    onChange={handleDateChange1}
-                    className="form-control floating datetimepicker"
-                    type="date"
-                  />
-                </div>
-                <label className="focus-label">Date</label>
-              </div>
-            </div>
-            <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-              <div className="input-block form-focus select-focus">
-                <div className="cal-icon">
-                  <DatePicker
-                    selected={selectedDate2}
-                    onChange={handleDateChange2}
-                    className="form-control floating datetimepicker"
-                    type="date"
-                  />
-                </div>
-                <label className="focus-label">Date</label>
-              </div>
-            </div>
-
-            <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-              <Link to="#" className="btn btn-success btn-block w-100">
-                {" "}
-                Search{" "}
-              </Link>
-            </div>
-          </div>
-          {/* /Search Filter End */}
-
-          <div className="row">
-            <div className="col-sm-12">
-              <div className="card mb-0">
-                <div className="card-header">
-                  <ul className="nav nav-tabs card-header-tabs">
-                    <li className="nav-item">
-                      <a
-                        className={`nav-link ${
-                          selectedOption === "allTravels" && "active"
-                        }`}
-                        onClick={() => setSelectedOption("allTravels")}
-                      >
-                        Travel Request
-                      </a>
-                    </li>
-                    <li className="nav-item">
-                      <a
-                        className={`nav-link ${
-                          selectedOption === "approved" && "active"
-                        }`}
-                        onClick={() => setSelectedOption("approved")}
-                      >
-                        Approved
-                      </a>
-                    </li>
-                    <li className="nav-item">
-                      <a
-                        className={`nav-link ${
-                          selectedOption === "rejected" && "active"
-                        }`}
-                        onClick={() => setSelectedOption("rejected")}
-                      >
-                        Rejected
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="card-body">
-                  <div className="tab-content">
-                    <div
-                      className={`tab-pane fade ${
-                        selectedOption === "allTravels" && "show active"
-                      }`}
-                      id="allTravels"
-                    >
-                      <Table
-                        className="table-striped"
-                        pagination={{
-                          total: allTravelList.length,
-                          showTotal: (total, range) =>
-                            `Showing ${range[0]} to ${range[1]} of ${total} entries`,
-                          showSizeChanger: true,
-                          onShowSizeChange: onShowSizeChange,
-                          itemRender: itemRender,
-                        }}
-                        style={{ overflowX: "auto" }}
-                        columns={columns}
-                        dataSource={filteredReportList}
-                        rowKey={(record) => record.id}
-                      />
-                    </div>
-
-                    <div
-                      className={`tab-pane fade ${
-                        selectedOption === "approved" && "show active"
-                      }`}
-                      id="approved"
-                    >
-                      <Table
-                        className="table-striped"
-                        pagination={{
-                          total: allApproveList.length,
-                          showTotal: (total, range) =>
-                            `Showing ${range[0]} to ${range[1]} of ${total} entries`,
-                          showSizeChanger: true,
-                          onShowSizeChange: onShowSizeChange,
-                          itemRender: itemRender,
-                        }}
-                        style={{ overflowX: "auto" }}
-                        columns={columns}
-                        dataSource={allApproveList}
-                        rowKey={(record) => record.id}
-                      />
-                    </div>
-
-                    <div
-                      className={`tab-pane fade ${
-                        selectedOption === "rejected" && "show active"
-                      }`}
-                      id="rejected"
-                    >
-                      <Table
-                        className="table-striped"
-                        pagination={{
-                          total: allRejectedList.length,
-                          showTotal: (total, range) =>
-                            `Showing ${range[0]} to ${range[1]} of ${total} entries`,
-                          showSizeChanger: true,
-                          onShowSizeChange: onShowSizeChange,
-                          itemRender: itemRender,
-                        }}
-                        style={{ overflowX: "auto" }}
-                        columns={columns}
-                        dataSource={allRejectedList}
-                        rowKey={(record) => record.id}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Add Travel Request */}
-          <div
-            id="add_travel"
-            className="modal custom-modal fade"
-            role="dialog"
-          >
-            <div
-              className="modal-dialog modal-dialog-centered modal-md"
-              role="document"
-            >
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title">Add Travel Request</h5>
-                  <button
-                    type="button"
-                    className="close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    <span aria-hidden="true">×</span>
-                  </button>
-                </div>
-                <div className="modal-body">
-                  <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="input-block">
-                      <div className="col-md-12">
-                        <div className="input-block">
-                          <label>Title</label>
-                          <input
-                            className="form-control"
-                            type="text"
-                            {...register("title")}
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="input-block">
-                      <div className="col-md-12">
-                        <div className="input-block">
-                          <label>Travel Purposes</label>
-                          <input
-                            className="form-control"
-                            type="text"
-                            {...register("travel_purpose")}
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="input-block">
-                      <label className="col-form-label" id="start_date">
-                        From Date <span className="text-danger">*</span>
-                      </label>
-                      <div className="">
-                        <Controller
-                          control={control}
-                          name="from_date"
-                          render={({ field }) => (
-                            <DatePicker
-                              selected={
-                                field.value ? new Date(field.value) : null
-                              }
-                              onChange={(date) => {
-                                const formattedDate = formatDate(date);
-                                field.onChange(formattedDate);
-                                setValue("from_date", formattedDate);
-                              }}
-                              dateFormat="yyyy-MM-dd"
-                              className="form-control"
-                            />
-                          )}
-                        />
-                        <div className="text-danger">
-                          {errors.from_date?.message}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="input-block">
-                      <label className="col-form-label" id="to_date">
-                        To Date <span className="text-danger">*</span>
-                      </label>
-                      <div className="">
-                        <Controller
-                          control={control}
-                          name="to_date"
-                          render={({ field }) => (
-                            <DatePicker
-                              selected={
-                                field.value ? new Date(field.value) : null
-                              }
-                              onChange={(date) => {
-                                const formattedDate = formatDate(date);
-                                field.onChange(formattedDate);
-                                setValue("to_date", formattedDate);
-                              }}
-                              dateFormat="yyyy-MM-dd"
-                              className="form-control"
-                            />
-                          )}
-                        />
-                        <div className="text-danger">
-                          {errors.to_date?.message}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="input-block">
-                      <div className="col-md-12">
-                        <div className="input-block">
-                          <label>Estimated Budget</label>
-                          <input
-                            className="form-control"
-                            type="number"
-                            {...register("estimated_budget")}
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="submit-section">
-                      <button
-                        className="btn btn-primary submit-btn"
-                        data-bs-dismiss="modal"
-                      >
-                        Submit
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Add Travel Request */}
-
-          {/* Edit Travel Modal */}
-
-          <div
-            id="edit_travel"
-            className="modal custom-modal fade"
-            role="dialog"
-          >
-            <div
-              className="modal-dialog modal-dialog-centered modal-md"
-              role="document"
-            >
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title">Add Travel Request</h5>
-                  <button
-                    type="button"
-                    className="close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    <span aria-hidden="true">×</span>
-                  </button>
-                </div>
-                <div className="modal-body">
-                  <form onSubmit={handleUpdate(onUpdate)}>
-                    <div className="input-block">
-                      <div className="col-md-12">
-                        <div className="input-block">
-                          <label>Title</label>
-                          <input
-                            className="form-control"
-                            type="text"
-                            {...updateregister("title")}
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="input-block">
-                      <div className="col-md-12">
-                        <div className="input-block">
-                          <label>Travel Purposes</label>
-                          <input
-                            className="form-control"
-                            type="text"
-                            {...updateregister("travel_purpose")}
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="input-block">
-                      <label className="col-form-label" id="start_date">
-                        From Date <span className="text-danger">*</span>
-                      </label>
-                      <div className="">
-                        <Controller
-                          control={control}
-                          name="from_date"
-                          render={({ field }) => (
-                            <DatePicker
-                              selected={
-                                field.value ? new Date(field.value) : null
-                              }
-                              onChange={(date) => {
-                                const formattedDate = formatDate(date);
-                                field.onChange(formattedDate);
-                                setValue("from_date", formattedDate);
-                              }}
-                              dateFormat="yyyy-MM-dd"
-                              className="form-control"
-                            />
-                          )}
-                        />
-                        <div className="text-danger">
-                          {errors.from_date?.message}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="input-block">
-                      <label className="col-form-label" id="to_date">
-                        To Date <span className="text-danger">*</span>
-                      </label>
-                      <div className="">
-                        <Controller
-                          control={control}
-                          name="to_date"
-                          render={({ field }) => (
-                            <DatePicker
-                              selected={
-                                field.value ? new Date(field.value) : null
-                              }
-                              onChange={(date) => {
-                                const formattedDate = formatDate(date);
-                                field.onChange(formattedDate);
-                                setValue("to_date", formattedDate);
-                              }}
-                              dateFormat="yyyy-MM-dd"
-                              className="form-control"
-                            />
-                          )}
-                        />
-                        <div className="text-danger">
-                          {errors.to_date?.message}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="input-block">
-                      <div className="col-md-12">
-                        <div className="input-block">
-                          <label>Estimated Budget</label>
-                          <input
-                            className="form-control"
-                            type="number"
-                            {...updateregister("estimated_budget")}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="submit-section">
-                      <button
-                      class="alert alert-success d-flex align-items-center" role="alert"  
-                        className="btn btn-primary submit-btn"
-                        data-bs-dismiss="modal"
-                      >
-                        Submit
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Edit Travel Modal End */}
-
-          {/* Delete Travel Modal */}
-
-          <div
-            className="modal custom-modal fade"
-            id="delete_travel"
-            role="dialog"
-          >
-            <div className="modal-dialog modal-dialog-centered">
-              <div className="modal-content">
-                <div className="modal-body">
-                  <div className="form-header">
-                    <h3>Delete Travel</h3>
-                    <p>Are you sure want to delete?</p>
-                  </div>
-                  <div className="modal-btn delete-action">
-                    <div className="row">
-                      <div className="col-6">
-                        <Link
-                          to=""
-                          className="btn btn-primary continue-btn"
-                          onClick={handleDelete(onDelete)}
-                          data-bs-dismiss="modal"
-                        >
-                          Delete
-                        </Link>
-                      </div>
-                      <div className="col-6">
-                        <Link
-                          to=""
-                          data-bs-dismiss="modal"
-                          className="btn btn-primary cancel-btn"
-                        >
-                          Cancel
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-              </div>
-            </div>
-          </div>
-          {/* Delete Travel Modal End*/}
         </div>
+
+        {/* Page Header */}
+
+        {/* Search Filter */}
+        <div className="row filter-row">
+          <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+            <div className="input-block form-focus select-focus">
+              <div className="cal-icon">
+                <DatePicker
+                  selected={selectedDate1}
+                  onChange={handleDateChange1}
+                  className="form-control floating datetimepicker"
+                  type="date"
+                />
+              </div>
+              <label className="focus-label">Date</label>
+            </div>
+          </div>
+          <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+            <div className="input-block form-focus select-focus">
+              <div className="cal-icon">
+                <DatePicker
+                  selected={selectedDate2}
+                  onChange={handleDateChange2}
+                  className="form-control floating datetimepicker"
+                  type="date"
+                />
+              </div>
+              <label className="focus-label">Date</label>
+            </div>
+          </div>
+
+          <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+            <Link to="#" className="btn btn-success btn-block w-100">
+              {" "}
+              Search{" "}
+            </Link>
+          </div>
+        </div>
+        {/* /Search Filter End */}
+
+        <div className="row">
+          <div className="col-sm-12">
+            <div className="card mb-0">
+              <div className="card-header">
+                <ul className="nav nav-tabs card-header-tabs">
+                  <li className="nav-item">
+                    <a
+                      className={`nav-link ${
+                        selectedOption === "allTravels" && "active"
+                      }`}
+                      onClick={() => setSelectedOption("allTravels")}
+                    >
+                      Travel Request
+                    </a>
+                  </li>
+                  <li className="nav-item">
+                    <a
+                      className={`nav-link ${
+                        selectedOption === "approved" && "active"
+                      }`}
+                      onClick={() => setSelectedOption("approved")}
+                    >
+                      Approved
+                    </a>
+                  </li>
+                  <li className="nav-item">
+                    <a
+                      className={`nav-link ${
+                        selectedOption === "rejected" && "active"
+                      }`}
+                      onClick={() => setSelectedOption("rejected")}
+                    >
+                      Rejected
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="card-body">
+                <div className="tab-content">
+                  <div
+                    className={`tab-pane fade ${
+                      selectedOption === "allTravels" && "show active"
+                    }`}
+                    id="allTravels"
+                  >
+                    <Table
+                      className="table-striped"
+                      pagination={{
+                        total: allTravelList.length,
+                        showTotal: (total, range) =>
+                          `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+                        showSizeChanger: true,
+                        onShowSizeChange: onShowSizeChange,
+                        itemRender: itemRender,
+                      }}
+                      style={{ overflowX: "auto" }}
+                      columns={columns}
+                      dataSource={filteredReportList}
+                      rowKey={(record) => record.id}
+                    />
+                  </div>
+
+                  <div
+                    className={`tab-pane fade ${
+                      selectedOption === "approved" && "show active"
+                    }`}
+                    id="approved"
+                  >
+                    <Table
+                      className="table-striped"
+                      pagination={{
+                        total: allApproveList.length,
+                        showTotal: (total, range) =>
+                          `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+                        showSizeChanger: true,
+                        onShowSizeChange: onShowSizeChange,
+                        itemRender: itemRender,
+                      }}
+                      style={{ overflowX: "auto" }}
+                      columns={columns}
+                      dataSource={allApproveList}
+                      rowKey={(record) => record.id}
+                    />
+                  </div>
+
+                  <div
+                    className={`tab-pane fade ${
+                      selectedOption === "rejected" && "show active"
+                    }`}
+                    id="rejected"
+                  >
+                    <Table
+                      className="table-striped"
+                      pagination={{
+                        total: allRejectedList.length,
+                        showTotal: (total, range) =>
+                          `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+                        showSizeChanger: true,
+                        onShowSizeChange: onShowSizeChange,
+                        itemRender: itemRender,
+                      }}
+                      style={{ overflowX: "auto" }}
+                      columns={columns}
+                      dataSource={allRejectedList}
+                      rowKey={(record) => record.id}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Add Travel Request */}
+        <div id="add_travel" className="modal custom-modal fade" role="dialog">
+          <div
+            className="modal-dialog modal-dialog-centered modal-md"
+            role="document"
+          >
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Add Travel Request</h5>
+                <button
+                  type="button"
+                  className="close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <div className="input-block">
+                    <div className="col-md-12">
+                      <div className="input-block">
+                        <label>Title</label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          {...register("title")}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="input-block">
+                    <div className="col-md-12">
+                      <div className="input-block">
+                        <label>Travel Purposes</label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          {...register("travel_purpose")}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="input-block">
+                    <label className="col-form-label" id="start_date">
+                      From Date <span className="text-danger">*</span>
+                    </label>
+                    <div className="">
+                      <Controller
+                        control={control}
+                        name="from_date"
+                        render={({ field }) => (
+                          <DatePicker
+                            selected={
+                              field.value ? new Date(field.value) : null
+                            }
+                            onChange={(date) => {
+                              const formattedDate = formatDate(date);
+                              field.onChange(formattedDate);
+                              setValue("from_date", formattedDate);
+                            }}
+                            dateFormat="yyyy-MM-dd"
+                            className="form-control"
+                          />
+                        )}
+                      />
+                      <div className="text-danger">
+                        {errors.from_date?.message}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="input-block">
+                    <label className="col-form-label" id="to_date">
+                      To Date <span className="text-danger">*</span>
+                    </label>
+                    <div className="">
+                      <Controller
+                        control={control}
+                        name="to_date"
+                        render={({ field }) => (
+                          <DatePicker
+                            selected={
+                              field.value ? new Date(field.value) : null
+                            }
+                            onChange={(date) => {
+                              const formattedDate = formatDate(date);
+                              field.onChange(formattedDate);
+                              setValue("to_date", formattedDate);
+                            }}
+                            dateFormat="yyyy-MM-dd"
+                            className="form-control"
+                          />
+                        )}
+                      />
+                      <div className="text-danger">
+                        {errors.to_date?.message}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="input-block">
+                    <div className="col-md-12">
+                      <div className="input-block">
+                        <label>Estimated Budget</label>
+                        <input
+                          className="form-control"
+                          type="number"
+                          {...register("estimated_budget")}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="submit-section">
+                    <button
+                      className="btn btn-primary submit-btn"
+                      data-bs-dismiss="modal"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Add Travel Request */}
+
+        {/* Edit Travel Modal */}
+
+        <div id="edit_travel" className="modal custom-modal fade" role="dialog">
+          <div
+            className="modal-dialog modal-dialog-centered modal-md"
+            role="document"
+          >
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Add Travel Request</h5>
+                <button
+                  type="button"
+                  className="close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <form onSubmit={handleUpdate(onUpdate)}>
+                  <div className="input-block">
+                    <div className="col-md-12">
+                      <div className="input-block">
+                        <label>Title</label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          {...updateregister("title")}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="input-block">
+                    <div className="col-md-12">
+                      <div className="input-block">
+                        <label>Travel Purposes</label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          {...updateregister("travel_purpose")}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="input-block">
+                    <label className="col-form-label" id="start_date">
+                      From Date <span className="text-danger">*</span>
+                    </label>
+                    <div className="">
+                      <Controller
+                        control={control}
+                        name="from_date"
+                        render={({ field }) => (
+                          <DatePicker
+                            selected={
+                              field.value ? new Date(field.value) : null
+                            }
+                            onChange={(date) => {
+                              const formattedDate = formatDate(date);
+                              field.onChange(formattedDate);
+                              setValue("from_date", formattedDate);
+                            }}
+                            dateFormat="yyyy-MM-dd"
+                            className="form-control"
+                          />
+                        )}
+                      />
+                      <div className="text-danger">
+                        {errors.from_date?.message}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="input-block">
+                    <label className="col-form-label" id="to_date">
+                      To Date <span className="text-danger">*</span>
+                    </label>
+                    <div className="">
+                      <Controller
+                        control={control}
+                        name="to_date"
+                        render={({ field }) => (
+                          <DatePicker
+                            selected={
+                              field.value ? new Date(field.value) : null
+                            }
+                            onChange={(date) => {
+                              const formattedDate = formatDate(date);
+                              field.onChange(formattedDate);
+                              setValue("to_date", formattedDate);
+                            }}
+                            dateFormat="yyyy-MM-dd"
+                            className="form-control"
+                          />
+                        )}
+                      />
+                      <div className="text-danger">
+                        {errors.to_date?.message}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="input-block">
+                    <div className="col-md-12">
+                      <div className="input-block">
+                        <label>Estimated Budget</label>
+                        <input
+                          className="form-control"
+                          type="number"
+                          {...updateregister("estimated_budget")}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="submit-section">
+                    <button
+                      class="alert alert-success d-flex align-items-center"
+                      role="alert"
+                      className="btn btn-primary submit-btn"
+                      data-bs-dismiss="modal"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Edit Travel Modal End */}
+
+        {/* Delete Travel Modal */}
+
+        <div
+          className="modal custom-modal fade"
+          id="delete_travel"
+          role="dialog"
+        >
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-body">
+                <div className="form-header">
+                  <h3>Delete Travel</h3>
+                  <p>Are you sure want to delete?</p>
+                </div>
+                <div className="modal-btn delete-action">
+                  <div className="row">
+                    <div className="col-6">
+                      <Link
+                        to=""
+                        className="btn btn-primary continue-btn"
+                        onClick={handleDelete(onDelete)}
+                        data-bs-dismiss="modal"
+                      >
+                        Delete
+                      </Link>
+                    </div>
+                    <div className="col-6">
+                      <Link
+                        to=""
+                        data-bs-dismiss="modal"
+                        className="btn btn-primary cancel-btn"
+                      >
+                        Cancel
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* Delete Travel Modal End*/}
       </div>
-    </>
+    </div>
   );
 };
 
