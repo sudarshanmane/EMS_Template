@@ -30,6 +30,7 @@ const RequestApprovals = () => {
   const [isApproveFormVisible, setIsApproveFormVisible] = useState(false);
   const [rejectTravleData, setRejectTravelData] = useState(null);
   const [approveTravleData, setApproveTravelData] = useState(null);
+  const [selectedTravelData, setSelectedTravelData] = useState(null);
 
   const { id } = useParams();
   const [tablePagination, setTablePagination] = useState({
@@ -99,6 +100,7 @@ const RequestApprovals = () => {
   const ApproveTravelApprovals = (record) => {
     setIsApproveFormVisible(true);
     setApproveTravelData(record);
+    setSelectedTravelData(record);
     ApproveSetValue("approved_budget", record.estimated_budget);
   };
 
@@ -178,7 +180,7 @@ const RequestApprovals = () => {
             to="#"
             data-bs-toggle="modal"
             data-bs-target="#viewTravelApprovals"
-            // onClick={() => (record)}
+            onClick={() => setSelectedTravelData(record)}
           >
             <i className="fa fa-eye m-r-5" />
           </Link>
@@ -210,250 +212,256 @@ const RequestApprovals = () => {
   ];
 
   return (
-    <>
-      <div className="page-wrapper">
-        <div className="content container-fluid">
-          <div className="page-header">
-            <div className="row">
-              <div className="col">
-                <ul className="breadcrumb">
-                  <li className="breadcrumb-item">
-                    <Link to="/app/main/dashboard">Dashboard</Link>
-                  </li>
-                  <li className="breadcrumb-item active">Travel Request</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          {/* Search Filter */}
-          <div className="row filter-row">
-            <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-              <div className="input-block form-focus select-focus">
-                <div className="cal-icon">
-                  <DatePicker
-                    selected={selectedDate1}
-                    onChange={handleDateChange1}
-                    className="form-control floating datetimepicker"
-                    type="date"
-                  />
-                </div>
-                <label className="focus-label">Date</label>
-              </div>
-            </div>
-            <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-              <div className="input-block form-focus select-focus">
-                <div className="cal-icon">
-                  <DatePicker
-                    selected={selectedDate2}
-                    onChange={handleDateChange2}
-                    className="form-control floating datetimepicker"
-                    type="date"
-                  />
-                </div>
-                <label className="focus-label">Date</label>
-              </div>
-            </div>
-
-            <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-              <Link to="#" className="btn btn-success btn-block w-100">
-                {" "}
-                Search{" "}
-              </Link>
-            </div>
-          </div>
-          {/* /Search Filter */}
+    <div className="page-wrapper">
+      <div className="content container-fluid">
+        <div className="page-header">
           <div className="row">
-            <div className="col-sm-12">
-              <div className="card mb-0">
-                <div className="card-header">
-                  <lable className="card-title mb-0">Travel Request</lable>
-                </div>
-                <div className="card-body">
-                  <div className="table-responsive">
-                    <Table
-                      className="table-striped"
-                      pagination={{
-                        total: allTravel.length,
-                        showTotal: (total, range) =>
-                          `Showing ${range[0]} to ${range[1]} of ${total} entries`,
-                        showSizeChanger: true,
-                        onShowSizeChange: onShowSizeChange,
-                        itemRender: itemRender,
-                      }}
-                      style={{ overflowX: "auto" }}
-                      columns={columns}
-                      dataSource={allTravel}
-                      rowKey={(record) => record.id}
-                    />
-                  </div>
-                </div>
-              </div>
+            <div className="col">
+              <ul className="breadcrumb">
+                <li className="breadcrumb-item">
+                  <Link to="/app/main/dashboard">Dashboard</Link>
+                </li>
+                <li className="breadcrumb-item active">Travel Request</li>
+              </ul>
             </div>
           </div>
-
-          {/* {/ Reject Report Modal /}  */}
-          <div
-            id="rejectTravelApprovals"
-            className="modal custom-modal fade"
-            role="dialog"
-          >
-            <div
-              className="modal-dialog modal-dialog-centered modal-md"
-              role="document"
-            >
-              <div className="modal-content">
-                <div className="modal-header">
-                  <button
-                    type="button"
-                    className="close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    <span aria-hidden="true">×</span>
-                  </button>
-                </div>
-                <div className="modal-body">
-                  <form
-                    onSubmit={handleRejectTravelApprovals(
-                      onRejectTravelApprovals
-                    )}
-                  >
-                    <div className="row">
-                      <div className="col-md-16">
-                        <div className="input-block">
-                          <label>Remark</label>
-                          <input
-                            className="form-control"
-                            type="text"
-                            {...registerReject("remark")}
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="submit-section">
-                      <button
-                        className="btn btn-primary submit-btn"
-                        data-bs-dismiss="modal"
-                      >
-                        Reject
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* {/ /Reject Modal End /} */}
-
-          {/* {/ /Approve Modal /} */}
-          <div
-            id="approveTravelApprovals"
-            className="modal custom-modal fade"
-            role="dialog"
-          >
-            <div
-              className="modal-dialog modal-dialog-centered modal-md"
-              role="document"
-            >
-              <div className="modal-content">
-                <div className="modal-header">
-                  <button
-                    type="button"
-                    className="close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    <span aria-hidden="true">×</span>
-                  </button>
-                </div>
-                <div className="modal-body">
-                  <form
-                    onSubmit={handleApproveTravelApprovals(
-                      onApproveTravelApprovals
-                    )}
-                  >
-                    <div className="row">
-                      <div className="col-md-16">
-                        <div className="input-block">
-                          <label>Approved Budget</label>
-                          <input
-                            className="form-control"
-                            type="number"
-                            {...registerApprove("approved_budget")}
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="submit-section">
-                      <button
-                        className="btn btn-primary submit-btn"
-                        data-bs-dismiss="modal"
-                      >
-                        Approve
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* {/ /Approve Modal End/} */}
-
-          {/* {/ /View Modal /} */}
-          <div
-            id="viewTravelApprovals"
-            className="modal custom-modal fade"
-            role="dialog"
-          >
-            <div
-              className="modal-dialog modal-dialog-centered modal-md"
-              role="document"
-            >
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title">Travel Request</h5>
-                  <button
-                    type="button"
-                    className="close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    <span aria-hidden="true">×</span>
-                  </button>
-                </div>
-                <div className="modal-body">
-                  <form>
-                    <div className="form-row">
-                      <div className="row"> 
-                        <div className="col-md-8 mb-3">
-                          {getTravelSelector?.map((travel, index) => (
-                            <div key={index}>
-                              <p>
-                                Employee:- &nbsp; {travel?.emp?.id} -{" "}
-                                {travel?.emp?.first_name}{" "}
-                                {travel?.emp?.last_name}
-                              </p>
-                              <p>Title:- &nbsp; {travel.title}</p>
-                              <p>Travel Purpose:- &nbsp; {travel.travel_purpose}</p>
-                              <p>From Date:- &nbsp; {travel.from_date}</p>
-                              <p>To Date:- &nbsp; {travel.to_date}</p>
-                              <p>Estimated Budget:- &nbsp; {travel.estimated_budget}</p>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* {/ /View Modal End /} */}
         </div>
+        {/* Search Filter */}
+        <div className="row filter-row">
+          <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+            <div className="input-block form-focus select-focus">
+              <div className="cal-icon">
+                <DatePicker
+                  selected={selectedDate1}
+                  onChange={handleDateChange1}
+                  className="form-control floating datetimepicker"
+                  type="date"
+                />
+              </div>
+              <label className="focus-label">Date</label>
+            </div>
+          </div>
+          <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+            <div className="input-block form-focus select-focus">
+              <div className="cal-icon">
+                <DatePicker
+                  selected={selectedDate2}
+                  onChange={handleDateChange2}
+                  className="form-control floating datetimepicker"
+                  type="date"
+                />
+              </div>
+              <label className="focus-label">Date</label>
+            </div>
+          </div>
+
+          <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+            <Link to="#" className="btn btn-success btn-block w-100">
+              {" "}
+              Search{" "}
+            </Link>
+          </div>
+        </div>
+        {/* /Search Filter */}
+        <div className="row">
+          <div className="col-sm-12">
+            <div className="card mb-0">
+              <div className="card-header">
+                <lable className="card-title mb-0">Travel Request</lable>
+              </div>
+              <div className="card-body">
+                <div className="table-responsive">
+                  <Table
+                    className="table-striped"
+                    pagination={{
+                      total: allTravel.length,
+                      showTotal: (total, range) =>
+                        `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+                      showSizeChanger: true,
+                      onShowSizeChange: onShowSizeChange,
+                      itemRender: itemRender,
+                    }}
+                    style={{ overflowX: "auto" }}
+                    columns={columns}
+                    dataSource={allTravel}
+                    rowKey={(record) => record.id}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* {/ Reject Report Modal /}  */}
+        <div
+          id="rejectTravelApprovals"
+          className="modal custom-modal fade"
+          role="dialog"
+        >
+          <div
+            className="modal-dialog modal-dialog-centered modal-md"
+            role="document"
+          >
+            <div className="modal-content">
+              <div className="modal-header">
+                <button
+                  type="button"
+                  className="close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <form
+                  onSubmit={handleRejectTravelApprovals(
+                    onRejectTravelApprovals
+                  )}
+                >
+                  <div className="row">
+                    <div className="col-md-16">
+                      <div className="input-block">
+                        <label>Remark</label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          {...registerReject("remark")}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="submit-section">
+                    <button
+                      className="btn btn-primary submit-btn"
+                      data-bs-dismiss="modal"
+                    >
+                      Reject
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* {/ /Reject Modal End /} */}
+
+        {/* {/ /Approve Modal /} */}
+        <div
+          id="approveTravelApprovals"
+          className="modal custom-modal fade"
+          role="dialog"
+        >
+          <div
+            className="modal-dialog modal-dialog-centered modal-md"
+            role="document"
+          >
+            <div className="modal-content">
+              <div className="modal-header">
+                <button
+                  type="button"
+                  className="close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <form
+                  onSubmit={handleApproveTravelApprovals(
+                    onApproveTravelApprovals
+                  )}
+                >
+                  <div className="row">
+                    <div className="col-md-16">
+                      <div className="input-block">
+                        <label>Approved Budget</label>
+                        <input
+                          className="form-control"
+                          type="number"
+                          {...registerApprove("approved_budget")}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="submit-section">
+                    <button
+                      className="btn btn-primary submit-btn"
+                      data-bs-dismiss="modal"
+                    >
+                      Approve
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* {/ /Approve Modal End/} */}
+
+        {/* {/ /View Modal /} */}
+        <div
+          id="viewTravelApprovals"
+          className="modal custom-modal fade"
+          role="dialog"
+        >
+          <div
+            className="modal-dialog modal-dialog-centered modal-md"
+            role="document"
+          >
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Travel Request</h5>
+                <button
+                  type="button"
+                  className="close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <form>
+                  <div className="form-row">
+                    <div className="row">
+                      <div className="col-md-8 mb-3">
+                        {selectedTravelData && ( // Check if selectedTravelData is available
+                          <div>
+                            <p>
+                              Employee:- &nbsp; {selectedTravelData?.emp?.id} -{" "}
+                              {selectedTravelData?.emp?.first_name}{" "}
+                              {selectedTravelData?.emp?.last_name}
+                            </p>
+                            <p>Title:- &nbsp; {selectedTravelData.title}</p>
+                            <p>
+                              Travel Purpose:- &nbsp;{" "}
+                              {selectedTravelData.travel_purpose}
+                            </p>
+                            <p>
+                              From Date:- &nbsp; {selectedTravelData.from_date}
+                            </p>
+                            <p>To Date:- &nbsp; {selectedTravelData.to_date}</p>
+                            <p>
+                              Estimated Budget:- &nbsp;{" "}
+                              {selectedTravelData.estimated_budget}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* {/ /View Modal End /} */}
       </div>
-    </>
+    </div>
   );
 };
 

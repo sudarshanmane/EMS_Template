@@ -5,6 +5,8 @@ import { URLS } from "../../Globals/URLS";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
+import * as Yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup/dist/yup.js";
 
 import {
   createVendorPaymentAction,
@@ -33,34 +35,39 @@ const VendorPannel = () => {
 
   const [vendorBill, setVendorBillFile] = useState();
 
+  const validationSchema = Yup.object().shape({
+    paid_amount: Yup.string().required("Paid amount is required!"),
+    amount: Yup.string().required("Amount is required!"),
+    
+  });
+
   const handleFileChange = (e) => {
     setVendorBillFile(e.target.files[0]);
-    console.log("filesssssssssssssss", e.target.files[0]);
   };
+
   const [isDeleteConfirmationVisible, setIsDeleteConfirmationVisible] =
     useState(false);
   const navigate = useNavigate();
   const [submittedValues, setSubmittedValues] = useState(null);
 
-  const {
-    register: updateregister,
-    handleSubmit: handleUpdate,
+  const { 
+    register: updateregister, 
+    handleSubmit: handleUpdate,    
     setValue,
-  } = useForm({});
+   } = useForm({
+   
+  });
 
   const {
     register: recordpayment,
     handleSubmit: handleSubmitRecord,
     setValue: setValueRecord,
-  } = useForm({});
-
-  const {
-    register,
-    handleSubmit,
-    reset,
     formState: { errors },
-  } = useForm({});
+  } = useForm({ resolver: yupResolver(validationSchema) });
 
+  const { register, handleSubmit, reset } = useForm({
+  
+  });
   const { handleSubmit: handleDelete } = useForm({});
 
   const onAddVendor = (values) => {
@@ -69,30 +76,19 @@ const VendorPannel = () => {
     reset();
   };
 
-  // const onAddVendor = async (values) => {
-  //   try {
-  //     await dispatch(createVendor(values));
-  //     setIsAddFormVisible(false);
-  //     reset();
-
-  //   } catch (error) {
-
   const onEdit = (record) => {
     setIsEditFormVisible(true);
-    setEditVendorData(record);
-    // setValue("id", record.id);
     setValue("company_name", record.company_name);
     setValue("telephone", record.telephone);
     setValue("mail_id", record.mail_id);
     setValue("website", record.website);
     setValue("fax", record.fax);
+    setEditVendorData(record.id)
   };
-
   const onUpdate = (values) => {
-    dispatch(updateVendorTable({ id: editVendorData.id, payload: values }));
+    dispatch(updateVendorTable({ id: editVendorData, payload: values }));
     setIsEditFormVisible(false);
   };
-
   const updatevendorSelector = useSelector(
     (state) => state.updateVendorTableResult
   );
@@ -144,6 +140,7 @@ const VendorPannel = () => {
     console.log("Submitted Values:", values);
     dispatch(createVendorPaymentAction(formData));
     setIsAddFormVisible(false);
+    document.querySelector("#close_modall_popup_form").click()
   };
 
   const viewVendor = (record) => {
@@ -152,22 +149,22 @@ const VendorPannel = () => {
     navigate("/home/VendorPannel", { state: record });
   };
 
-  function getPageDetails(url) {
-    dispatch(getVendor({ payload: {}, URL: url }));
-  }
+  // function getPageDetails(url) {
+  //   dispatch(getVendor({ payload: {}, URL: url }));
+  // }
+
+  // useEffect(() => {
+  //   getPageDetails(url);
+  // }, []);
 
   function fetchPageDetials(url) {
     dispatch(getVendor({ payload: {}, URL: url }));
   }
-
-  useEffect(() => {
-    getPageDetails(url);
-  }, []);
-
   useEffect(() => {
     fetchPageDetials(url);
   }, []);
 
+  
   const getVendorSelector = useSelector((state) => state.getVendorSuccess);
   useEffect(() => {
     if (getVendorSelector) {
@@ -256,7 +253,7 @@ const VendorPannel = () => {
           data-bs-target="#make_payment"
           onClick={() => onRecord(record)}
         >
-           <i className="fa fa-credit-card"></i>
+          <i className="fa fa-credit-card"></i>
         </Link>
       ),
     },
@@ -290,7 +287,7 @@ const VendorPannel = () => {
               DeleteVendor(record);
             }}
           >
-              <i className="fa-regular fa-trash-can " />
+            <i className="fa-regular fa-trash-can " />
           </Link>
         </div>
       ),
@@ -298,384 +295,382 @@ const VendorPannel = () => {
   ];
 
   return (
-    <>
-      <div className="page-wrapper">
-        <div className="content container-fluid">
-          {/* Page Header */}
-          <div className="page-header">
-            <div className="row">
-              <div className="col">
-                <ul className="breadcrumb">
-                  <li className="breadcrumb-item">
-                    <Link to="/app/main/dashboard">Dashboard</Link>
-                  </li>
-                  <li className="breadcrumb-item active">Vendor </li>
-                </ul>
-              </div>
-              <div className="col-auto float-end ms-auto">
-                <Link
-                  to="#"
-                  className="btn add-btn"
-                  data-bs-toggle="modal"
-                  data-bs-target="#add_vendor"
-                >
-                  <i className="fa fa-plus" /> Add Vendor
-                </Link>
-              </div>
+    <div className="page-wrapper">
+      <div className="content container-fluid">
+        {/* Page Header */}
+        <div className="page-header">
+          <div className="row">
+            <div className="col">
+              <ul className="breadcrumb">
+                <li className="breadcrumb-item">
+                  <Link to="/app/main/dashboard">Dashboard</Link>
+                </li>
+                <li className="breadcrumb-item active">Vendor </li>
+              </ul>
             </div>
-          </div>
-          {/* /Page Header */}
-          {/* Search Filter */}
-          <div className="row filter-row">
-            <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-              <div
-                className={
-                  focused
-                    ? "input-block form-focus focused"
-                    : "input-block form-focus"
-                }
+            <div className="col-auto float-end ms-auto">
+              <Link
+                to="#"
+                className="btn add-btn"
+                data-bs-toggle="modal"
+                data-bs-target="#add_vendor"
               >
-                <input
-                  type="text"
-                  className="form-control floating"
-                  onFocus={() => setFocused(true)}
-                  onBlur={() => setFocused(false)}
-                />
-                <label className="focus-label">Search</label>
-              </div>
-            </div>
-            <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-              <Link to="#" className="btn btn-success btn-block w-100">
-                {" "}
-                Search{" "}
+                <i className="fa fa-plus" /> Add Vendor
               </Link>
             </div>
           </div>
-          {/* /Search Filter */}
-          <div className="row">
-            <div className="col-sm-12">
-              <div className="card mb-0">
-                <div className="card-header">
-                  <lable className="card-title mb-0">Vendor</lable>
-                </div>
-                <div className="card-body">
-                  <div className="table-responsive">
-                    <Table
-                      className="table-striped"
-                      pagination={{
-                        total: allVendor.length,
-                        showTotal: (total, range) =>
-                          `Showing ${range[0]} to ${range[1]} of ${total} entries`,
-                        showSizeChanger: true,
-                        onShowSizeChange: onShowSizeChange,
-                        itemRender: itemRender,
-                      }}
-                      style={{ overflowX: "auto" }}
-                      columns={columns}
-                      dataSource={allVendor}
-                      rowKey={(record) => record.id}
-                    />
-                  </div>
+        </div>
+        {/* /Page Header */}
+        {/* Search Filter */}
+        <div className="row filter-row">
+          <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+            <div
+              className={
+                focused
+                  ? "input-block form-focus focused"
+                  : "input-block form-focus"
+              }
+            >
+              <input
+                type="text"
+                className="form-control floating"
+                onFocus={() => setFocused(true)}
+                onBlur={() => setFocused(false)}
+              />
+              <label className="focus-label">Search</label>
+            </div>
+          </div>
+          <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+            <Link to="#" className="btn btn-success btn-block w-100">
+              {" "}
+              Search{" "}
+            </Link>
+          </div>
+        </div>
+        {/* /Search Filter */}
+        <div className="row">
+          <div className="col-sm-12">
+            <div className="card mb-0">
+              <div className="card-header">
+              <h4 className="card-title mb-0">Vendor</h4>
+              </div>
+              <div className="card-body">
+                <div className="table-responsive">
+                  <Table
+                    className="table-striped"
+                    pagination={{
+                      total: allVendor.length,
+                      showTotal: (total, range) =>
+                        `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+                      showSizeChanger: true,
+                      onShowSizeChange: onShowSizeChange,
+                      itemRender: itemRender,
+                    }}
+                    style={{ overflowX: "auto" }}
+                    columns={columns}
+                    dataSource={allVendor}
+                    rowKey={(record) => record.id}
+                  />
                 </div>
               </div>
             </div>
           </div>
         </div>
-        {/* Add vendor  */}
-        <div id="add_vendor" className="modal custom-modal fade" role="dialog">
-          <div
-            className="modal-dialog modal-dialog-centered modal-md"
-            role="document"
-          >
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Add Vendors</h5>
-                <button
-                  type="button"
-                  className="close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">×</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                <form onSubmit={handleSubmit(onAddVendor)}>
-                  <div className="input-block">
-                    <div className="col-md-12">
-                      <div className="input-block">
-                        <label>Company Name</label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          {...register("company_name")}
-                        />
-                      </div>
+      </div>
+      {/* Add vendor  */}
+      <div id="add_vendor" className="modal custom-modal fade" role="dialog">
+        <div
+          className="modal-dialog modal-dialog-centered modal-md"
+          role="document"
+        >
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Add Vendors</h5>
+              <button
+                type="button"
+                className="close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div className="modal-body">
+              <form onSubmit={handleSubmit(onAddVendor)}>
+                <div className="input-block">
+                  <div className="col-md-12">
+                    <div className="input-block">
+                      <label>Company Name</label>
+                      <input
+                        className="form-control"
+                        type="text"
+                        {...register("company_name")}
+                      />
                     </div>
                   </div>
-                  <div className="input-block">
-                    <div className="col-md-12">
-                      <div className="input-block">
-                        <label>Telephone</label>
-                        <input
-                          className="form-control"
-                          type="tel"
-                          {...register("telephone")}
-                        />
-                      </div>
+                </div>
+                <div className="input-block">
+                  <div className="col-md-12">
+                    <div className="input-block">
+                      <label>Telephone</label>
+                      <input
+                        className="form-control"
+                        type="tel"
+                        {...register("telephone")}
+                      />
                     </div>
                   </div>
-                  <div className="input-block">
-                    <div className="col-md-12">
-                      <div className="input-block">
-                        <label>Email Address</label>
-                        <input
-                          className="form-control"
-                          type="email"
-                          {...register("mail_id")}
-                        />
-                      </div>
+                </div>
+                <div className="input-block">
+                  <div className="col-md-12">
+                    <div className="input-block">
+                      <label>Email Address</label>
+                      <input
+                        className="form-control"
+                        type="email"
+                        {...register("mail_id")}
+                      />
                     </div>
                   </div>
-                  <div className="input-block">
-                    <div className="col-md-12">
-                      <div className="input-block">
-                        <label>Website</label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          {...register("website")}
-                        />
-                      </div>
+                </div>
+                <div className="input-block">
+                  <div className="col-md-12">
+                    <div className="input-block">
+                      <label>Website</label>
+                      <input
+                        className="form-control"
+                        type="text"
+                        {...register("website")}
+                      />
                     </div>
                   </div>
-                  <div className="input-block">
-                    <div className="col-md-12">
-                      <div className="input-block">
-                        <label>FAX</label>
-                        <input
-                          className="form-control"
-                          type="number"
-                          {...register("fax")}
-                        />
-                      </div>
+                </div>
+                <div className="input-block">
+                  <div className="col-md-12">
+                    <div className="input-block">
+                      <label>FAX</label>
+                      <input
+                        className="form-control"
+                        type="number"
+                        {...register("fax")}
+                      />
                     </div>
                   </div>
+                </div>
 
-                  <div className="submit-section">
-                    <button
-                      className="btn btn-primary submit-btn"
+                <div className="submit-section">
+                  <button
+                    className="btn btn-primary submit-btn"
+                    data-bs-dismiss="modal"
+                  >Submit</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* /Add vendor Ends */}
+      {/* Edit Expense Modal */}
+      <div id="edit_vendor" className="modal custom-modal fade" role="dialog">
+        <div
+          className="modal-dialog modal-dialog-centered modal-md"
+          role="document"
+        >
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Edit Vendors</h5>
+              <button
+                type="button"
+                className="close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div className="modal-body">
+              <form onSubmit={handleUpdate(onUpdate)}>
+                <div className="input-block">
+                  <div className="col-md-12">
+                    <div className="input-block">
+                      <label>Company Name</label>
+                      <input
+                        className="form-control"
+                        type="text"
+                        {...updateregister("company_name")}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="input-block">
+                  <div className="col-md-12">
+                    <div className="input-block">
+                      <label>Telephone</label>
+                      <input
+                        className="form-control"
+                        type="tel"
+                        {...updateregister("telephone")}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="input-block">
+                  <div className="col-md-12">
+                    <div className="input-block">
+                      <label>Email Address</label>
+                      <input
+                        className="form-control"
+                        type="email"
+                        {...updateregister("mail_id")}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="input-block">
+                  <div className="col-md-12">
+                    <div className="input-block">
+                      <label>Website</label>
+                      <input
+                        className="form-control"
+                        type="text"
+                        {...updateregister("website")}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="input-block">
+                  <div className="col-md-12">
+                    <div className="input-block">
+                      <label>FAX</label>
+                      <input
+                        className="form-control"
+                        type="number"
+                        {...updateregister("fax")}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="submit-section">
+                  <button
+                    className="btn btn-primary submit-btn"
+                    data-bs-dismiss="modal"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* /Edit Expense Modal */}
+      {/* Delete Category Modal */}
+      <div className="modal custom-modal fade" id="delete_vendor" role="dialog">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-body">
+              <div className="form-header">
+                <h3>Delete Vendor</h3>
+                <p>Are you sure want to delete?</p>
+              </div>
+              <div className="modal-btn delete-action">
+                <div className="row">
+                  <div className="col-6">
+                    <Link
+                      to=""
+                      className="btn btn-primary continue-btn"
+                      onClick={handleDelete(onDelete)}
                       data-bs-dismiss="modal"
                     >
-                      Submit
-                    </button>
+                      Delete
+                    </Link>
                   </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* /Add vendor Ends */}
-        {/* Edit Expense Modal */}
-        <div id="edit_vendor" className="modal custom-modal fade" role="dialog">
-          <div
-            className="modal-dialog modal-dialog-centered modal-md"
-            role="document"
-          >
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Edit Vendors</h5>
-                <button
-                  type="button"
-                  className="close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">×</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                <form onSubmit={handleUpdate(onUpdate)}>
-                  <div className="input-block">
-                    <div className="col-md-12">
-                      <div className="input-block">
-                        <label>Company Name</label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          {...updateregister("company_name")}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="input-block">
-                    <div className="col-md-12">
-                      <div className="input-block">
-                        <label>Telephone</label>
-                        <input
-                          className="form-control"
-                          type="tel"
-                          {...updateregister("telephone")}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="input-block">
-                    <div className="col-md-12">
-                      <div className="input-block">
-                        <label>Email Address</label>
-                        <input
-                          className="form-control"
-                          type="email"
-                          {...updateregister("mail_id")}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="input-block">
-                    <div className="col-md-12">
-                      <div className="input-block">
-                        <label>Website</label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          {...updateregister("website")}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="input-block">
-                    <div className="col-md-12">
-                      <div className="input-block">
-                        <label>FAX</label>
-                        <input
-                          className="form-control"
-                          type="number"
-                          {...updateregister("fax")}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="submit-section">
-                    <button
-                      className="btn btn-primary submit-btn"
+                  <div className="col-6">
+                    <Link
+                      to=""
                       data-bs-dismiss="modal"
+                      className="btn btn-primary cancel-btn"
                     >
-                      Submit
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* /Edit Expense Modal */}
-        {/* Delete Category Modal */}
-        <div
-          className="modal custom-modal fade"
-          id="delete_vendor"
-          role="dialog"
-        >
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-body">
-                <div className="form-header">
-                  <h3>Delete Vendor</h3>
-                  <p>Are you sure want to delete?</p>
-                </div>
-                <div className="modal-btn delete-action">
-                  <div className="row">
-                    <div className="col-6">
-                      <Link
-                        to=""
-                        className="btn btn-primary continue-btn"
-                        onClick={handleDelete(onDelete)}
-                        data-bs-dismiss="modal"
-                      >
-                        Delete
-                      </Link>
-                    </div>
-                    <div className="col-6">
-                      <Link
-                        to=""
-                        data-bs-dismiss="modal"
-                        className="btn btn-primary cancel-btn"
-                      >
-                        Cancel
-                      </Link>
-                    </div>
+                      Cancel
+                    </Link>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Record Payment Modal  */}
+      {/* Record Payment Modal  */}
+      <div id="make_payment" className="modal custom-modal fade" role="dialog">
         <div
-          id="make_payment"
-          className="modal custom-modal fade"
-          role="dialog"
+          className="modal-dialog modal-dialog-centered modal-md"
+          role="document"
         >
-          <div
-            className="modal-dialog modal-dialog-centered modal-md"
-            role="document"
-          >
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Make Payment for Vendor</h5>
-                <button
-                  type="button"
-                  className="close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">×</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                <form onSubmit={handleSubmitRecord(onSubmitRecord)}>
-                  <div className="input-block">
-                    <div className="col-md-12">
-                      <div className="input-block">
-                        <label>Vendor</label>
-                        <input
-                          className="form-control"
-                          type="number"
-                          disabled
-                          {...recordpayment("vendor")}
-                        />
-                      </div>
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Make Payment for Vendor</h5>
+              <button
+                type="button"
+                className="close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div className="modal-body">
+              <form onSubmit={handleSubmitRecord(onSubmitRecord)}>
+                <div className="input-block">
+                  <div className="col-md-12">
+                    <div className="input-block">
+                      <label>Vendor</label>
+                      <input
+                        className="form-control"
+                        type="number"
+                        disabled
+                        {...recordpayment("vendor")}
+                      />
                     </div>
+                  
                   </div>
+                </div>
 
-                  <div className="input-block">
-                    <div className="col-md-12">
-                      <div className="input-block">
-                        <label>Vendor Bill</label>
-                        <input
-                          className="form-control"
-                          type="file"
-                          {...recordpayment("vendor_bill")}
-                          onChange={(e) => handleFileChange(e)}
-                        />
-                      </div>
+                <div className="input-block">
+                  <div className="col-md-12">
+                    <div className="input-block">
+                      <label>Vendor Bill</label>
+                      <input
+                        className="form-control"
+                        required 
+                        type="file"
+                        {...register("vendor_bill")}
+                        onChange={(e) => handleFileChange(e)}
+                      />
+                         <span className="text-warning">
+                      {errors.vendor_bill?.message}
+                    </span>
+                    </div>  
+                 
+                  </div>
+                </div>
+                <div className="input-block">
+                  <div className="col-md-12">
+                    <div className="input-block">
+                      <label>Paid Amount</label>
+                      <input
+                        className="form-control"
+                        type="number"
+                        {...recordpayment("paid_amount")}
+                      />
+                      <span className="text-warning">
+                        {errors.paid_amount?.message}
+                      </span>
                     </div>
                   </div>
-                  <div className="input-block">
-                    <div className="col-md-12">
-                      <div className="input-block">
-                        <label>Paid Amount</label>
-                        <input
-                          className="form-control"
-                          type="number"
-                          {...recordpayment("paid_amount")}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  {/* <div className="input-block">
+                </div>
+                {/* <div className="input-block">
                       <div className="col-md-12">
                         <div className="input-block">
                           <label>Due Amount</label>
@@ -687,34 +682,43 @@ const VendorPannel = () => {
                         </div>
                       </div>
                     </div> */}
-                  <div className="input-block">
-                    <div className="col-md-12">
-                      <div className="input-block">
-                        <label>Amount</label>
-                        <input
-                          className="form-control"
-                          type="number"
-                          {...recordpayment("amount")}
-                        />
-                      </div>
+                <div className="input-block">
+                  <div className="col-md-12">
+                    <div className="input-block">
+                      <label>Amount</label>
+                      <input
+                        className="form-control"
+                        type="number"
+                        {...recordpayment("amount") } 
+                      />
+                      <span className="text-warning">
+                        {errors.amount?.message}
+                      </span>
                     </div>
                   </div>
+                </div>
 
-                  <div className="submit-section">
-                    <button
-                      className="btn btn-primary submit-btn"
-                      data-bs-dismiss="modal"
-                    >
-                      Submit
-                    </button>
-                  </div>
-                </form>
-              </div>
+                <div className="submit-section">
+                  <button
+                    type="submit"
+                    className="btn btn-primary submit-btn"
+                    // data-bs-dismiss="modal"
+                  >
+                    Submit
+                  </button>
+                  <button
+                  id="close_modall_popup_form"
+                  className="d-none"
+                    data-bs-dismiss="modal"
+                  >
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -891,7 +891,29 @@ function approveTravelApprovals(payload) {
      URL: URLS.APPROVE_TRAVEL_REQUEST_APPROVALS_URL + payload.id + "/",
      contentType: contentType.json,
    };
- }                                  
+ }      
+ 
+ 
+function getApprove(payload) {
+  return {
+    type: API_CONSTANTS.GET_APPROVE_TRAVEL_REQUEST_APPROVALS,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
+
+
+function getReject(payload) {
+  return {
+    type: API_CONSTANTS.GET_REJECT_TRAVEL_REQUEST_APPROVALS,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
 
 function addAllUser(payload) {
   return {
@@ -1782,6 +1804,8 @@ export {
   getTravelApproval,
   rejectTravelApprovals,
   approveTravelApprovals,
+  getApprove,
+  getReject,
   updateUserSettingAction,
   getUserAttendanceAction,
   getUserAttendanceDynamicAction,

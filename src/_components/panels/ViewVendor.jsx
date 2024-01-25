@@ -6,9 +6,11 @@ import { Controller, useForm } from "react-hook-form";
 import { URLS } from "../../Globals/URLS";
 import { itemRender } from "../../MainPage/paginationfunction";
 
-import { getVendor, getVendorData,
-        updateVendorPayment 
-        } from "../../store/Action/Actions";
+import {
+  getVendor,
+  getVendorData,
+  updateVendorPayment,
+} from "../../store/Action/Actions";
 
 const ViewVendor = () => {
   const [allExpenses, setAllExpenses] = useState([]);
@@ -42,9 +44,10 @@ const ViewVendor = () => {
   }, []);
 
   const onEdit = (record) => {
+    console.log("record", record);
     setIsEditFormVisible(true);
     setEditVendorData(record);
-  
+
     setValue("paid_amount", record.paid_amount);
     setValue("due_amount", record.due_amount);
     setValue("amount", record.amount);
@@ -111,7 +114,7 @@ const ViewVendor = () => {
             data-bs-target="#edit_payment"
             onClick={() => onEdit(record)}
           >
-              <i className="fa-solid fa-pen-to-square"></i>
+            <i className="fa-solid fa-pen-to-square"></i>
           </Link>
         </div>
       ),
@@ -220,7 +223,7 @@ const ViewVendor = () => {
               </div>
               <div className="modal-body">
                 <form onSubmit={handleUpdate(onUpdate)}>
-                 
+                
                   <div className="input-block">
                     <div className="col-md-12">
                       <div className="input-block">
@@ -228,7 +231,8 @@ const ViewVendor = () => {
                         <input
                           className="form-control"
                           type="number"
-                          {...register("paid_amount")}
+                          readOnly // Set readOnly attribute to make the input read-only
+                          defaultValue={editVendorData?.paid_amount}
                         />
                       </div>
                     </div>
@@ -256,6 +260,19 @@ const ViewVendor = () => {
                           type="number"
                           disabled
                           {...register("amount")}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="input-block">
+                    <div className="col-md-12">
+                      <div className="input-block">
+                        <label>Currently Paying</label>
+                        <input
+                          className="form-control"
+                          type="number"
+                          {...register("paid_amount")}
                         />
                       </div>
                     </div>
