@@ -8,7 +8,10 @@ import "react-datepicker/dist/react-datepicker.css";
 // import { Table } from "antd";
 import { Avatar_03, Avatar_04 } from "../../../src/Entryfile/imagepath";
 import "antd/dist/antd.min.css";
-import {itemRender,onShowSizeChange} from "../../MainPage/paginationfunction"
+import {
+  itemRender,
+  onShowSizeChange,
+} from "../../MainPage/paginationfunction";
 import Offcanvas from "../../../src/Entryfile/offcanvance";
 
 const { Content } = Layout;
@@ -94,7 +97,7 @@ function Reports() {
       dataIndex: "reportdate",
       sorter: (a, b) => a.reportdate.length - b.reportdate.length,
     },
-   
+
     {
       title: "Amount",
       dataIndex: "amount",
@@ -115,7 +118,8 @@ function Reports() {
           <Link
             className="btn btn-white btn-sm btn-rounded dropdown-toggle"
             to="#"
-            aria-expanded="false">
+            aria-expanded="false"
+          >
             <i
               className={
                 text === "Pending"
@@ -144,7 +148,8 @@ function Reports() {
           <Link
             to="#"
             className="action-icon dropdown-toggle"
-            aria-expanded="false">
+            aria-expanded="false"
+          >
             <i className="material-icons">more_vert</i>
           </Link>
           <div className="dropdown-menu dropdown-menu-right">
@@ -152,14 +157,16 @@ function Reports() {
               className="dropdown-item"
               to="#"
               data-bs-toggle="modal"
-              data-bs-target="#edit_leave">
+              data-bs-target="#edit_leave"
+            >
               <i className="fa fa-pencil m-r-5" /> Edit
             </Link>
             <Link
               className="dropdown-item"
               to="#"
               data-bs-toggle="modal"
-              data-bs-target="#delete_approve">
+              data-bs-target="#delete_approve"
+            >
               <i className="fa fa-trash m-r-5" /> Delete
             </Link>
           </div>
@@ -230,7 +237,11 @@ function Reports() {
               </div>
             </div>
             <div className="col-sm-6 col-md-3">
-              <Link to="#" className="btn btn-success btn-block w-100"  onClick={handleSeeReport}>
+              <Link
+                to="#"
+                className="btn btn-success btn-block w-100"
+                onClick={handleSeeReport}
+              >
                 {" "}
                 Search{" "}
               </Link>
@@ -266,7 +277,6 @@ function Reports() {
       <Offcanvas />
     </>
   );
-
 }
 
 export default Reports;

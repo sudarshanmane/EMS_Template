@@ -346,7 +346,7 @@ function getReimbursedAction(payload) {
 function getExpenseList(payload) {
   return {
     type: API_CONSTANTS.GET_EXPENSE_LIST,
-    payload: payload.payload,
+    // payload: payload.payload,
     URL: payload.URL,
     contentType: contentType.json,
   };
@@ -542,7 +542,6 @@ function rejectReport(payload) {
     contentType: contentType.json,
   };
 }
-
 
 function addreimbursementRecord(payload) {
   return {
@@ -1498,7 +1497,6 @@ function exportExternalAccountCodeAction(payload) {
 }
 
 function exportUserAction(payload) {
-  console.log("EXPORT_BUTTON", payload);
   return {
     type: API_CONSTANTS.EXPORT_USER,
     payload: payload.payload,
@@ -1508,7 +1506,6 @@ function exportUserAction(payload) {
 }
 
 function exportFinanceMangerListAction(payload) {
-  console.log("EXPORT_BUTTON", payload);
   return {
     type: API_CONSTANTS.EXPORT_FINANCE_MANAGER_LIST,
     payload: payload.payload,
@@ -1638,7 +1635,82 @@ function exportCompanyPanelAction(payload) {
   };
 }
 
+//---------------------------- SUDARSHAN -------------------------------
+
+function addBulkExpenseReport(payload) {
+  return {
+    type: API_CONSTANTS.ADD_BULK_EXPENSE_REPORT,
+    payload,
+    URL: URLS.ADD_BULK_EXPENSE_REPORT_URL,
+    contentType: contentType.form,
+  };
+}
+
+function setAddBulkExpenseReport() {
+  return {
+    type: API_CONSTANTS.SET_ADD_BULK_EXPENSE_FALSE,
+  };
+}
+
+function getCategoryListBulkExpense() {
+  return {
+    type: API_CONSTANTS.GET_CATEGORY_LIST_BULK_EXPENSE,
+    URL: URLS.GET_CATEGORY_PANEL_URL,
+    contentType: contentType.form,
+  };
+}
+
+function getTotalForDistance(payload) {
+  return {
+    type: API_CONSTANTS.GET_DISTANCE_FOR_TOTAL,
+    payload,
+    URL: URLS.GET_AMOUNT_FROM_DISTANCE_TRAVELED,
+    contentType: contentType.json,
+  };
+}
+
+function postMileage(payload) {
+  return {
+    type: API_CONSTANTS.POST_MILEAGE_DETAILS,
+    payload,
+    URL: URLS.CREATE_EXPENSE_COMMON_URL,
+    contentType: contentType.form,
+  };
+}
+
+function setExpenseUpdationResFalse() {
+  return {
+    type: API_CONSTANTS.SET_EXPENSE_UPDATE_RESULT_FALSE,
+  };
+}
+
+function updateExpense(payload, id) {
+  return {
+    type: API_CONSTANTS.UPDATE_EXPENSE,
+    payload,
+    URL: URLS.UPDATE_EXPENSE + id + "/",
+    contentType: contentType.form,
+  };
+}
+
+function deleteExpenseAction(payload) {
+  return {
+    type: API_CONSTANTS.DELETE_EXPENSE,
+    payload,
+    URL: URLS.DELETE_EXPENSE_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
 export {
+  updateExpense,
+  setExpenseUpdationResFalse,
+  deleteExpenseAction,
+  postMileage,
+  getTotalForDistance,
+  getCategoryListBulkExpense,
+  setAddBulkExpenseReport,
+  addBulkExpenseReport,
   userLogin,
   changePassword,
   userRegister,

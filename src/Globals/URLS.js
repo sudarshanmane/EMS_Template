@@ -77,7 +77,6 @@ export const URLS = {
   ADD_REIMBURSMENT_RECORD_URL: "/api/version_0/expense/reimbursement/",
   REJECT_REPORT_BY_ACCOUNT_URL: "/api/version_0/expense/reject_exp_by_account/",
 
-
   ADD_CATEGORY_URL: "/api/version_0/expense/expensecategory/",
   GET_CATEGORY_PANEL_URL: "/api/version_0/expense/expensecategory/",
   UPDATE_CATEGORY_PANEL_URL: "/api/version_0/expense/expensecategory/",
@@ -95,16 +94,16 @@ export const URLS = {
   UPDATE_MILEAGE_URL: "/api/version_0/expense/expensemileage/",
   DELETE_MILEAGE_URL: "/api/version_0/expense/expensemileage/",
 
-  APPLY_CARD_URL: "/api/version_0/card/card/",
-  GET_CARD_URL: "/api/version_0/card/get_cards/",
-  REJECT_CARD_URL: "/api/version_0/card/reject_card/",
-  APPROVE_CARD_URL: "/api/version_0/card/reject_card/",
+  APPLY_CARD_URL: "/card/card/",
+  GET_CARD_URL: "/card/get_cards/",
+  REJECT_CARD_URL: "/card/reject_card/",
+  APPROVE_CARD_URL: "/card/reject_card/",
 
-  CREATE_VENDOR_URL: "/api/version_0/expense/register_vendor/",
-  GET_VENDOR_URL: "/api/version_0/expense/register_vendor/",
+  CREATE_VENDOR_URL: "/expense/register_vendor/",
+  GET_VENDOR_URL: "/expense/register_vendor/",
 
-  DELETE_VENDOR_TABLE_URL: "/api/version_0/expense/register_vendor/",
-  UPDATE_VENDOR_TABLE_URL: "/api/version_0/expense/register_vendor/",
+  DELETE_VENDOR_TABLE_URL: "/expense/register_vendor/",
+  UPDATE_VENDOR_TABLE_URL: "/expense/register_vendor/",
 
   CREATE_TRAVEL_URL: "/api/version_0/expense/request_travel/",
   GET_TRAVEL_URL: "/api/version_0/expense/request_travel/",
@@ -177,4 +176,12 @@ export const URLS = {
   MANAGER_CARD_REJECT_LIST_URL: "/expense/rejected_expense-list-manager/",
   MANAGER_CARD_HOLD_LIST_URL: "/expense/hold_expense-list-manager/",
   OWN_EXPENSE_APPROVE_URL: "/expense/approval_expense/",
+
+  // Sudarshan !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  ADD_BULK_EXPENSE_REPORT_URL: "/api/version_0/expense/create-bulk-expenses/",
+  CREATE_EXPENSE_COMMON_URL: "/api/version_0/expense/create_expense/",
+  GET_AMOUNT_FROM_DISTANCE_TRAVELED:
+    "/api/version_0/expense/calculate_mileage_amount/",
+  DELETE_EXPENSE_URL: "/api/version_0/expense/modify_expense/",
+  UPDATE_EXPENSE: "/api/version_0/expense/modify_expense/",
 };

@@ -636,45 +636,6 @@ export const RootReducer = (state = initialState, action) => {
         getapprovedreportlist: action.result,
       };
 
-    case API_CONSTANTS.GET_APPROVED_REPORT:
-      return {
-        ...state,
-        loding: true,
-      };
-
-    case API_CONSTANTS.GET_APPROVED_REPORT_SUCCESS:
-      return {
-        ...state,
-        loding: false,
-        getapproved: action.result,
-      };
-
-    case API_CONSTANTS.GET_REJECTED_REPORT:
-      return {
-        ...state,
-        loding: true,
-      };
-
-    case API_CONSTANTS.GET_REJECTED_REPORT_SUCCESS:
-      return {
-        ...state,
-        loding: false,
-        getrejected: action.result,
-      };
-
-    case API_CONSTANTS.GET_REIMBURSED_REPORT:
-      return {
-        ...state,
-        loding: true,
-      };
-
-    case API_CONSTANTS.GET_REIMBURSED_REPORT_SUCCESS:
-      return {
-        ...state,
-        loding: false,
-        getreimbursed: action.result,
-      };
-
     case API_CONSTANTS.UPDATE_REPORT:
       return {
         ...state,
@@ -786,6 +747,31 @@ export const RootReducer = (state = initialState, action) => {
         rejectReportSuccess: action.result,
       };
 
+    case API_CONSTANTS.APPROVE_EXPENSE:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.APPROVE_EXPENSE_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        approveExpenseSuccess: action.result,
+      };
+
+    case API_CONSTANTS.REJECT_EXPENSE:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.REJECT_EXPENSE_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        rejectExpenseSuccess: action.result,
+      };
     case API_CONSTANTS.APPROVE_EXPENSE:
       return {
         ...state,
@@ -2253,6 +2239,7 @@ export const RootReducer = (state = initialState, action) => {
         loding: false,
         deleteexpenseitemizationResult: action.result,
       };
+
     case API_CONSTANTS.DELETE_ACCOUNTINGCODE_PANEL:
       return {
         ...state,
@@ -2265,6 +2252,7 @@ export const RootReducer = (state = initialState, action) => {
         loding: false,
         deleteaccountingcodeResult: action.result,
       };
+
     case API_CONSTANTS.DELETE_EXPENSE_PANEL:
       return {
         ...state,
@@ -2326,6 +2314,7 @@ export const RootReducer = (state = initialState, action) => {
         loding: false,
         ownExpenseApproveResult: action.result,
       };
+
     case API_CONSTANTS.EXPORT_COMPANY_PANEL:
       return {
         ...state,
@@ -2338,6 +2327,108 @@ export const RootReducer = (state = initialState, action) => {
         loding: false,
         exportcompanyResult: action.result,
       };
+
+    case API_CONSTANTS.ADD_BULK_EXPENSE_REPORT: {
+      return {
+        ...state,
+        loding: true,
+      };
+    }
+
+    case API_CONSTANTS.ADD_BULK_EXPENSE_REPORT_SUCCESS: {
+      return {
+        ...state,
+        loding: false,
+        addExpenseReportResult: action.result,
+      };
+    }
+
+    case API_CONSTANTS.SET_ADD_BULK_EXPENSE_FALSE: {
+      return {
+        ...state,
+        addExpenseReportResult: false,
+      };
+    }
+
+    case API_CONSTANTS.GET_CATEGORY_LIST_BULK_EXPENSE: {
+      return {
+        ...state,
+        loding: true,
+      };
+    }
+
+    case API_CONSTANTS.GET_DISTANCE_FOR_TOTAL: {
+      return {
+        ...state,
+      };
+    }
+
+    case API_CONSTANTS.GET_DISTANCE_FOR_TOTAL_SUCCESS: {
+      return {
+        ...state,
+        mileageDistanceTraveled: action.result,
+      };
+    }
+
+    case API_CONSTANTS.GET_CATEGORY_LIST_BULK_EXPENSE_SUCCESS: {
+      return {
+        ...state,
+        loding: false,
+        addBulkExpenseCategoryList: action.result,
+      };
+    }
+
+    case API_CONSTANTS.POST_MILEAGE_DETAILS: {
+      return {
+        ...state,
+        loding: true,
+      };
+    }
+
+    case API_CONSTANTS.POST_MILEAGE_DETAILS_SUCCESS: {
+      return {
+        ...state,
+        loding: false,
+        postMileageResult: action.result,
+      };
+    }
+
+    case API_CONSTANTS.DELETE_EXPENSE: {
+      return {
+        ...state,
+        loding: true,
+      };
+    }
+
+    case API_CONSTANTS.DELETE_EXPENSE_SUCCESS: {
+      return {
+        ...state,
+        loding: false,
+        expenseDeletedResult: action.result,
+      };
+    }
+
+    case API_CONSTANTS.UPDATE_EXPENSE: {
+      return {
+        ...state,
+        loding: true,
+      };
+    }
+
+    case API_CONSTANTS.UPDATE_EXPENSE_SUCCESS: {
+      return {
+        ...state,
+        loding: false,
+        expenseUpdatingResult: action.result,
+      };
+    }
+
+    case API_CONSTANTS.SET_EXPENSE_UPDATE_RESULT_FALSE: {
+      return {
+        ...state,
+        expenseUpdatingResult: false,
+      };
+    }
 
     default:
       return state;

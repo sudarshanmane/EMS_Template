@@ -210,33 +210,32 @@ const ExpensePolicies = () => {
   ];
 
   return (
-    <>
-      <div className="page-wrapper">
-        <div className="content container-fluid">
-          {/* {/ Page Header /} */}
-          <div className="page-header">
-            <div className="row">
-              <div className="col">
-                <ul className="breadcrumb">
-                  <li className="breadcrumb-item">
-                    <Link to="/app/main/dashboard">Dashboard</Link>
-                  </li>
-                  <li className="breadcrumb-item active">General Policies </li>
-                </ul>
-              </div>
-              <div className="col-auto float-end ms-auto">
-                <Link
-                  to="#"
-                  className="btn add-btn"
-                  data-bs-toggle="modal"
-                  data-bs-target="#add_company"
-                >
-                  <i className="fa fa-plus" /> Add Expense Policy
-                </Link>
-              </div>
+    <div className="page-wrapper">
+      <div className="content container-fluid">
+        {/* {/ Page Header /} */}
+        <div className="page-header">
+          <div className="row">
+            <div className="col">
+              <ul className="breadcrumb">
+                <li className="breadcrumb-item">
+                  <Link to="/app/main/dashboard">Dashboard</Link>
+                </li>
+                <li className="breadcrumb-item active">General Policies </li>
+              </ul>
+            </div>
+            <div className="col-auto float-end ms-auto">
+              <Link
+                to="#"
+                className="btn add-btn"
+                data-bs-toggle="modal"
+                data-bs-target="#add_company"
+              >
+                <i className="fa fa-plus" /> Add Expense Policy
+              </Link>
             </div>
           </div>
-          {/* {/ /Page Header /} */}
+        </div>
+        {/* {/ /Page Header /} */}
 
           {/* Search Filter */}
           <div className="row filter-row">
@@ -345,8 +344,8 @@ const ExpensePolicies = () => {
                     </div>
                   </div>
 
-                  <br></br>
-                  <br></br>
+                <br></br>
+                <br></br>
 
                   <div className="input-block">
                     <label>
@@ -393,8 +392,8 @@ const ExpensePolicies = () => {
                     </div>
                   </div>
 
-                  <br></br>
-                  <br></br>
+                <br></br>
+                <br></br>
 
                   <div className="input-block">
                     <label>
@@ -417,8 +416,8 @@ const ExpensePolicies = () => {
                     </div>
                   </div>
 
-                  <br></br>
-                  <br></br>
+                <br></br>
+                <br></br>
 
                   <div className="col-lg-10">
                     <div className="checkbox">
@@ -436,7 +435,7 @@ const ExpensePolicies = () => {
                     </div>
                   </div>
 
-                  <br></br>
+                <br></br>
 
                   <div className="col-md-10">
                     <div className="checkbox">
@@ -456,7 +455,7 @@ const ExpensePolicies = () => {
                     </div>
                   </div>
 
-                  <br></br>
+                <br></br>
 
                   <div className="col-lg-10">
                     <div className="checkbox">
@@ -474,7 +473,7 @@ const ExpensePolicies = () => {
                     </div>
                   </div>
 
-                  <br></br>
+                <br></br>
 
                   <div className="col-lg-10">
                     <div className="input-block">
@@ -555,8 +554,8 @@ const ExpensePolicies = () => {
                     </div>
                   </div>
 
-                  <br></br>
-                  <br></br>
+                <br></br>
+                <br></br>
 
                   <div className="input-block">
                     <label>
@@ -603,8 +602,8 @@ const ExpensePolicies = () => {
                     </div>
                   </div>
 
-                  <br></br>
-                  <br></br>
+                <br></br>
+                <br></br>
 
                   <div className="input-block">
                     <label>
@@ -627,8 +626,8 @@ const ExpensePolicies = () => {
                     </div>
                   </div>
 
-                  <br></br>
-                  <br></br>
+                <br></br>
+                <br></br>
 
                   <div className="col-lg-10">
                     <div className="checkbox">
@@ -646,7 +645,7 @@ const ExpensePolicies = () => {
                     </div>
                   </div>
 
-                  <br></br>
+                <br></br>
 
                   <div className="col-md-10">
                     <div className="checkbox">
@@ -666,7 +665,7 @@ const ExpensePolicies = () => {
                     </div>
                   </div>
 
-                  <br></br>
+                <br></br>
 
                   <div className="col-lg-10">
                     <div className="checkbox">
@@ -686,7 +685,7 @@ const ExpensePolicies = () => {
                     </div>
                   </div>
 
-                  <br></br>
+                <br></br>
 
                   <div className="col-lg-10">
                     <div className="input-block">
@@ -723,39 +722,38 @@ const ExpensePolicies = () => {
         </div>
         {/* {/ /Edit Expense Modal /}
         {/ Delete Category Modal /} */}
-        <div
-          className="modal custom-modal fade"
-          id="delete_company"
-          role="dialog"
-        >
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-body">
-                <div className="form-header">
-                  <h3>Delete Policy</h3>
-                  <p>Are you sure want to delete?</p>
-                </div>
-                <div className="modal-btn delete-action">
-                  <div className="row">
-                    <div className="col-6">
-                      <Link
-                        to=""
-                        className="btn btn-primary continue-btn"
-                        onClick={handleDelete(onDelete)}
-                        data-bs-dismiss="modal"
-                      >
-                        Delete
-                      </Link>
-                    </div>
-                    <div className="col-6">
-                      <Link
-                        to=""
-                        data-bs-dismiss="modal"
-                        className="btn btn-primary cancel-btn"
-                      >
-                        Cancel
-                      </Link>
-                    </div>
+      <div
+        className="modal custom-modal fade"
+        id="delete_company"
+        role="dialog"
+      >
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-body">
+              <div className="form-header">
+                <h3>Delete Policy</h3>
+                <p>Are you sure want to delete?</p>
+              </div>
+              <div className="modal-btn delete-action">
+                <div className="row">
+                  <div className="col-6">
+                    <Link
+                      to=""
+                      className="btn btn-primary continue-btn"
+                      onClick={handleDelete(onDelete)}
+                      data-bs-dismiss="modal"
+                    >
+                      Delete
+                    </Link>
+                  </div>
+                  <div className="col-6">
+                    <Link
+                      to=""
+                      data-bs-dismiss="modal"
+                      className="btn btn-primary cancel-btn"
+                    >
+                      Cancel
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -763,7 +761,7 @@ const ExpensePolicies = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

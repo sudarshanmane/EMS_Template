@@ -1574,8 +1574,7 @@ function* applyCard(action) {
         status: "ok",
         result: result.data,
       });
-    }
-    else {
+    } else {
       yield call(failSaga, "Server Down!");
     }
   } catch (error) {
@@ -2842,7 +2841,7 @@ function* postCommonGenerator(action) {
       yield put({
         type: `${action.type}_SUCCESS`,
         status: "ok",
-        result: result.data,
+        result: result,
       });
     } else {
       yield call(failSaga, "Server Down!");
@@ -3155,7 +3154,6 @@ function* commanmanagercardlidtfunction(action) {
 
 function* ownExpenseApproveList(action) {
   try {
-    console.log("actionaction", action);
     let result = yield call(Method.getData, action);
     if (result.status === 200) {
       yield put({
@@ -3173,7 +3171,6 @@ function* ownExpenseApproveList(action) {
 
 function* exportCompanypanel(action) {
   try {
-    console.log("actionaction", action);
     let result = yield call(Method.getData, action);
     if (result.status === 200) {
       yield put({

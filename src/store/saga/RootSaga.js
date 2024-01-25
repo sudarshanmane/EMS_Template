@@ -1,4 +1,4 @@
-import { takeEvery } from "redux-saga/effects";
+import { take, takeEvery } from "redux-saga/effects";
 import { API_CONSTANTS } from "../../Globals/APIConstants";
 
 import {
@@ -101,6 +101,10 @@ import {
   getApproved,
   getRejected,
   getReimbursed,
+  postCommonGenerator,
+  putCommonGenerator,
+  commonDeleteRole,
+  exportCompanypanel,
   // =======================================
 } from "./CommonSagas";
 
@@ -145,19 +149,28 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.GET_CERTIFICATE, getCertificate);
   yield takeEvery(API_CONSTANTS.UPDATE_CERTIFICATE, updateCertificate);
   yield takeEvery(API_CONSTANTS.GET_PERSONAL_INFORMATION, getPersonalInfo);
-  yield takeEvery(API_CONSTANTS.UPDATE_PERSONAL_INFORMATION, updatePersonalInfo);
+  yield takeEvery(
+    API_CONSTANTS.UPDATE_PERSONAL_INFORMATION,
+    updatePersonalInfo
+  );
   yield takeEvery(API_CONSTANTS.UPDATE_SELF_LEAVE, updateSelfLeave);
   yield takeEvery(API_CONSTANTS.GET_LEAVES_LIST, getLeaveList);
   yield takeEvery(API_CONSTANTS.GET_SELF_LEAVES_LIST, getSelfLeave);
   yield takeEvery(API_CONSTANTS.GET_DYNAMIC_LEAVES_LIST, getDynamicLeave);
-  yield takeEvery(API_CONSTANTS.GET_DYNAMIC_SELF_LEAVES_LIST, getDynamicSelfLeave);
+  yield takeEvery(
+    API_CONSTANTS.GET_DYNAMIC_SELF_LEAVES_LIST,
+    getDynamicSelfLeave
+  );
   yield takeEvery(API_CONSTANTS.GET_EDUCATION_LIST, getEducationList);
   yield takeEvery(API_CONSTANTS.ADD_EDUCATION, addEducation);
   yield takeEvery(API_CONSTANTS.ADD_EXPERIENCE, addExperience);
   yield takeEvery(API_CONSTANTS.ADD_REPORT, addReportsubmit);
   yield takeEvery(API_CONSTANTS.ADD_SELECTED_REPORT, addSelectedReport);
   yield takeEvery(API_CONSTANTS.GET_REPORT_LIST, getReportList);
-  yield takeEvery(API_CONSTANTS.GET_SUBMITTED_REPORT_LIST, getSubmittedReportList);
+  yield takeEvery(
+    API_CONSTANTS.GET_SUBMITTED_REPORT_LIST,
+    getSubmittedReportList
+  );
   yield takeEvery(API_CONSTANTS.SUBMIT_REPORT, submitReport);
   yield takeEvery(API_CONSTANTS.GET_APPROVED_REPORT, getApproved);
   yield takeEvery(API_CONSTANTS.GET_REJECTED_REPORT, getRejected);
@@ -226,12 +239,35 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.UPDATE_TRAVEL, updateTravel);
   yield takeEvery(API_CONSTANTS.SUBMIT_TRAVEL_REQUEST, submitTravelRequest);
 
-  yield takeEvery(API_CONSTANTS.GET_TRAVEL_REQUEST_APPROVALS, getTravelApproval);
-  yield takeEvery(API_CONSTANTS.REJECT_TRAVEL_REQUEST_APPROVALS,  rejectTravelApprovals);
-  yield takeEvery(API_CONSTANTS.APPROVE_TRAVEL_REQUEST_APPROVALS,  approveTravelApprovals);
+  yield takeEvery(
+    API_CONSTANTS.GET_TRAVEL_REQUEST_APPROVALS,
+    getTravelApproval
+  );
+  yield takeEvery(
+    API_CONSTANTS.REJECT_TRAVEL_REQUEST_APPROVALS,
+    rejectTravelApprovals
+  );
+  yield takeEvery(
+    API_CONSTANTS.APPROVE_TRAVEL_REQUEST_APPROVALS,
+    approveTravelApprovals
+  );
 
   yield takeEvery(API_CONSTANTS.GET_ALL_USER, getAllUser);
   yield takeEvery(API_CONSTANTS.ADD_ALL_USER, addAllUser);
 
   // ============================================================
+
+  yield takeEvery(API_CONSTANTS.EXPORT_COMPANY_PANEL, exportCompanypanel);
+
+  // -------------------- SUDARSHAN ------------------
+
+  yield takeEvery(API_CONSTANTS.ADD_BULK_EXPENSE_REPORT, postCommonGenerator);
+  yield takeEvery(
+    API_CONSTANTS.GET_CATEGORY_LIST_BULK_EXPENSE,
+    getCommonGenerator
+  );
+  yield takeEvery(API_CONSTANTS.GET_DISTANCE_FOR_TOTAL, postCommonGenerator);
+  yield takeEvery(API_CONSTANTS.POST_MILEAGE_DETAILS, postCommonGenerator);
+  yield takeEvery(API_CONSTANTS.DELETE_EXPENSE, commonDeleteRole);
+  yield takeEvery(API_CONSTANTS.UPDATE_EXPENSE, putCommonGenerator);
 }
