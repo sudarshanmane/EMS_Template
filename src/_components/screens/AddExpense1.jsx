@@ -22,10 +22,12 @@ const AddMileage = () => {
     let dateObject = new Date(vals);
     let month = (dateObject.getMonth() + 1).toString();
     let finalMonth = month.length == 1 ? `0${month}` : month;
+    let day =
+      String(dateObject.getDate()).length == 1
+        ? `0${dateObject.getDate()}`
+        : dateObject.getDate();
 
-    return (
-      dateObject.getFullYear() + "-" + finalMonth + "-" + dateObject.getDate()
-    );
+    return dateObject.getFullYear() + "-" + finalMonth + "-" + day;
   }
   const [form] = Form.useForm();
   const dispatch = useDispatch();
@@ -33,7 +35,9 @@ const AddMileage = () => {
   const [selectedOption, setSelectedOption] = useState("Distance traveled");
 
   function onFinish(values) {
+  
     values.expense_date = getFullDate(values.date);
+
     let formData = new FormData();
     for (const el in values) {
       if (el != "expense_bill") formData.append(el, values[el]);
@@ -272,6 +276,7 @@ const AddMileage = () => {
             ]}
           >
             <InputNumber
+              disabled
               size="large"
               placeholder="Amount"
               style={{ width: "100%" }}

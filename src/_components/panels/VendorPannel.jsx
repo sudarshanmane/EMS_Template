@@ -38,7 +38,6 @@ const VendorPannel = () => {
   const validationSchema = Yup.object().shape({
     paid_amount: Yup.string().required("Paid amount is required!"),
     amount: Yup.string().required("Amount is required!"),
-    
   });
 
   const handleFileChange = (e) => {
@@ -50,13 +49,11 @@ const VendorPannel = () => {
   const navigate = useNavigate();
   const [submittedValues, setSubmittedValues] = useState(null);
 
-  const { 
-    register: updateregister, 
-    handleSubmit: handleUpdate,    
+  const {
+    register: updateregister,
+    handleSubmit: handleUpdate,
     setValue,
-   } = useForm({
-   
-  });
+  } = useForm({});
 
   const {
     register: recordpayment,
@@ -65,9 +62,7 @@ const VendorPannel = () => {
     formState: { errors },
   } = useForm({ resolver: yupResolver(validationSchema) });
 
-  const { register, handleSubmit, reset } = useForm({
-  
-  });
+  const { register, handleSubmit, reset } = useForm({});
   const { handleSubmit: handleDelete } = useForm({});
 
   const onAddVendor = (values) => {
@@ -83,7 +78,7 @@ const VendorPannel = () => {
     setValue("mail_id", record.mail_id);
     setValue("website", record.website);
     setValue("fax", record.fax);
-    setEditVendorData(record.id)
+    setEditVendorData(record.id);
   };
   const onUpdate = (values) => {
     dispatch(updateVendorTable({ id: editVendorData, payload: values }));
@@ -140,7 +135,7 @@ const VendorPannel = () => {
     console.log("Submitted Values:", values);
     dispatch(createVendorPaymentAction(formData));
     setIsAddFormVisible(false);
-    document.querySelector("#close_modall_popup_form").click()
+    document.querySelector("#close_modall_popup_form").click();
   };
 
   const viewVendor = (record) => {
@@ -160,11 +155,11 @@ const VendorPannel = () => {
   function fetchPageDetials(url) {
     dispatch(getVendor({ payload: {}, URL: url }));
   }
+  
   useEffect(() => {
     fetchPageDetials(url);
   }, []);
 
-  
   const getVendorSelector = useSelector((state) => state.getVendorSuccess);
   useEffect(() => {
     if (getVendorSelector) {
@@ -352,7 +347,7 @@ const VendorPannel = () => {
           <div className="col-sm-12">
             <div className="card mb-0">
               <div className="card-header">
-              <h4 className="card-title mb-0">Vendor</h4>
+                <h4 className="card-title mb-0">Vendor</h4>
               </div>
               <div className="card-body">
                 <div className="table-responsive">
@@ -462,7 +457,9 @@ const VendorPannel = () => {
                   <button
                     className="btn btn-primary submit-btn"
                     data-bs-dismiss="modal"
-                  >Submit</button>
+                  >
+                    Submit
+                  </button>
                 </div>
               </form>
             </div>
@@ -633,7 +630,6 @@ const VendorPannel = () => {
                         {...recordpayment("vendor")}
                       />
                     </div>
-                  
                   </div>
                 </div>
 
@@ -643,16 +639,15 @@ const VendorPannel = () => {
                       <label>Vendor Bill</label>
                       <input
                         className="form-control"
-                        required 
+                        required
                         type="file"
                         {...register("vendor_bill")}
                         onChange={(e) => handleFileChange(e)}
                       />
-                         <span className="text-warning">
-                      {errors.vendor_bill?.message}
-                    </span>
-                    </div>  
-                 
+                      <span className="text-warning">
+                        {errors.vendor_bill?.message}
+                      </span>
+                    </div>
                   </div>
                 </div>
                 <div className="input-block">
@@ -689,7 +684,7 @@ const VendorPannel = () => {
                       <input
                         className="form-control"
                         type="number"
-                        {...recordpayment("amount") } 
+                        {...recordpayment("amount")}
                       />
                       <span className="text-warning">
                         {errors.amount?.message}
@@ -707,11 +702,10 @@ const VendorPannel = () => {
                     Submit
                   </button>
                   <button
-                  id="close_modall_popup_form"
-                  className="d-none"
+                    id="close_modall_popup_form"
+                    className="d-none"
                     data-bs-dismiss="modal"
-                  >
-                  </button>
+                  ></button>
                 </div>
               </form>
             </div>

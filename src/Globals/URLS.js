@@ -13,9 +13,10 @@ export const URLS = {
   GET_ALL_DROPDOWN_URL: "/users/api/v2/getalluserlist/",
   GET_USERROLE_PERMISSION_URL: "/users/api/v2/userrolepermissionlist",
   GET_USER_ATTENDANCE_URL: "/attendance/api/v2/attendanceFilter/",
-  GET_USER_ATTENDANCE_DYNAMIC_URL: "/attendance/api/v2/attendanceFilterForAllData/",
+  GET_USER_ATTENDANCE_DYNAMIC_URL:
+    "/attendance/api/v2/attendanceFilterForAllData/",
   GET_CURRENT_ROLE_URL: "/users/api/v2/getcurrentuserrole/",
-  GET_CURRENT_USER_URL: "/users/api/v2/getalluser/",
+  GET_CURRENT_USER_URL: "/users/api/v2/getcurrentuser/",
   GET_USER_SETTING_URL: "/usersettings/api/v2/getusersettingsbyid/",
 
   GET_LEAVES_LIST_URL: "/leave/api/v2/LeavesViewSelfData/",
@@ -33,7 +34,8 @@ export const URLS = {
   ADD_EDUCATION_URL: "/userhrms/api/v2/educationpost/",
   ADD_EXPERIENCE_URL: "/userhrms/api/v2/userexperience/",
   GET_PERSONAL_INFORMATION_URL: "/userhrms/api/v2/UserPersonalInformation/?id=",
-  UPDATE_PERSONAL_INFORMATION_URL: "/userhrms/api/v2/UserPersonalInformationpost/",
+  UPDATE_PERSONAL_INFORMATION_URL:
+    "/userhrms/api/v2/UserPersonalInformationpost/",
   GET_CERTIFICATE_URL: "/userhrms/api/v2/certificate/?id",
   UPDATE_CERTIFICATE_URL: "/userhrms/api/v2/certificate/?id",
   GET_EDUCATION_URL: "/userhrms/api/v2/education/?user_id=",
@@ -53,10 +55,12 @@ export const URLS = {
   ADD_REPORT_URL: "/api/version_0/expense/expensereport/",
   ADD_SELECTED_REPORT_URL: "/api/version_0/expense/modify_expense/",
   GET_REPORT_LIST_URL: "/api/version_0/expense/expensereport/",
-  GET_SUBMITTED_REPORT_LIST_URL: "/api/version_0/expense/get_submitted_reports/",
+  GET_SUBMITTED_REPORT_LIST_URL:
+    "/api/version_0/expense/get_submitted_reports/",
   GET_APPROVED_REPORT_URL: "/api/version_0/expense/get_approved_reports/",
   GET_REJECTED_REPORT_URL: "/api/version_0/expense/get_rejected_reports_user/",
-  GET_REIMBURSE_REPORT_URL: "/api/version_0/expense/get_reimbursed_reports_user/",
+  GET_REIMBURSE_REPORT_URL:
+    "/api/version_0/expense/get_reimbursed_reports_user/",
   GET_APPROVED_REPORT_LIST_URL: "/api/version_0/expense/getreportsforapproval/",
   UPDATE_REPORT: "/api/version_0/expense/expensereport/",
   GET_EXPENSE_LIST_URL: "/api/version_0/expense/create_expense/",
@@ -99,11 +103,11 @@ export const URLS = {
   REJECT_CARD_URL: "/card/reject_card/",
   APPROVE_CARD_URL: "/card/reject_card/",
 
-  CREATE_VENDOR_URL: "/expense/register_vendor/",
-  GET_VENDOR_URL: "/expense/register_vendor/",
+  CREATE_VENDOR_URL: "/api/version_0/expense/register_vendor/",
+  GET_VENDOR_URL: "/api/version_0/expense/register_vendor/",
 
-  DELETE_VENDOR_TABLE_URL: "/expense/register_vendor/",
-  UPDATE_VENDOR_TABLE_URL: "/expense/register_vendor/",
+  DELETE_VENDOR_TABLE_URL: "/api/version_0/expense/register_vendor/",
+  UPDATE_VENDOR_TABLE_URL: "/api/version_0/expense/register_vendor/",
 
   CREATE_TRAVEL_URL: "/api/version_0/expense/request_travel/",
   GET_TRAVEL_URL: "/api/version_0/expense/request_travel/",
@@ -111,13 +115,16 @@ export const URLS = {
   UPDATE_TRAVEL_URL: "/api/version_0/expense/request_travel_details/",
   SUBMIT_TRAVEL_REQUEST_URL: "/api/version_0/expense/submit_travel/",
 
-  GET_TRAVEL_REQUEST_APPROVALS_URL: "/api/version_0/expense/request_for_approval/",
-  REJECT_TRAVEL_REQUEST_APPROVALS_URL: "/api/version_0/expense/reject_travel_request/",
-  APPROVE_TRAVEL_REQUEST_APPROVALS_URL: "/api/version_0/expense/approve_travel_request/",
-  GET_APPROVE_TRAVEL_REQUEST_APPROVALS_URL: "/api/version_0/expense/approved_request/",
-  GET_REJECT_TRAVEL_REQUEST_APPROVALS_URL: "/api/version_0/expense/rejected_request/",
- 
-
+  GET_TRAVEL_REQUEST_APPROVALS_URL:
+    "/api/version_0/expense/request_for_approval/",
+  REJECT_TRAVEL_REQUEST_APPROVALS_URL:
+    "/api/version_0/expense/reject_travel_request/",
+  APPROVE_TRAVEL_REQUEST_APPROVALS_URL:
+    "/api/version_0/expense/approve_travel_request/",
+  GET_APPROVE_TRAVEL_REQUEST_APPROVALS_URL:
+    "/api/version_0/expense/approved_request/",
+  GET_REJECT_TRAVEL_REQUEST_APPROVALS_URL:
+    "/api/version_0/expense/rejected_request/",
 
   GET_ALL_USER_URL: "/api/v2/getalluser/",
   ADD_ALL_USER_URL: "/api/v2/userrole/",

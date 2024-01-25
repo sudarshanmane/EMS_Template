@@ -163,7 +163,7 @@ const Sidebar = () => {
                         Add Expense{" "}
                       </Link>
                     </li>
-                    <li>
+                    {/* <li>
                       <Link
                         className={
                           pathname.includes("expenseapprovemanager")
@@ -174,7 +174,7 @@ const Sidebar = () => {
                       >
                         Approve Manager{" "}
                       </Link>
-                    </li>
+                    </li> */}
                   </ul>
                 ) : (
                   ""
