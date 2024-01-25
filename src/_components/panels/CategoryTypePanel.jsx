@@ -5,9 +5,7 @@ import { Link } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
 import { Table } from "antd";
 import "antd/dist/antd.min.css";
-import {
-  itemRender,
-} from "../../MainPage/paginationfunction";
+import { itemRender } from "../../MainPage/paginationfunction";
 import "antd/dist/antd.min.css";
 import Offcanvas from "../../Entryfile/offcanvance";
 import { URLS } from "../../Globals/URLS";
@@ -49,10 +47,7 @@ const CategoryTypePanel = () => {
     formState: { errors },
   } = useForm({});
 
-  const {
-    register: createregister,
-    handleSubmit: handleCreate,
-  } = useForm({});
+  const { register: createregister, handleSubmit: handleCreate } = useForm({});
 
   const { handleSubmit: handleDelete } = useForm({});
 
@@ -70,6 +65,7 @@ const CategoryTypePanel = () => {
 
   const onSubmit = (values) => {
     dispatch(addCategoryAction(values));
+    reset();
   };
 
   const onEdit = (record) => {
@@ -149,7 +145,7 @@ const CategoryTypePanel = () => {
       setIsAddFormVisible(false);
     }
   }, [createCategoryItemSelector, submittedValues]);
-  
+
   const addCategorylSelector = useSelector((state) => state.categoryresult);
 
   useEffect(() => {
@@ -273,30 +269,27 @@ const CategoryTypePanel = () => {
       title: "Action",
       render: (record) => (
         <div className="dropdown dropdown-action text-end">
-         
-          
-            <Link
-                className="btn btn-success btn-sm m-r-5"
-              to="#"
-              data-bs-toggle="modal"
-              data-bs-target="#edit_expense"
-              onClick={() => onEdit(record)}
-            >
-              <i className="fa-solid fa-pen-to-square"></i>
-            </Link>
-            <Link
-              className="btn btn-danger btn-sm"
-              to="#"
-              data-bs-toggle="modal"
-              data-bs-target="#delete_expense"
-              onClick={() => {
-                deleteCategory(record);
-              }}
-            >
-              <i className="fa-regular fa-trash-can " />
-            </Link>
-          </div>
-       
+          <Link
+            className="btn btn-success btn-sm m-r-5"
+            to="#"
+            data-bs-toggle="modal"
+            data-bs-target="#edit_expense"
+            onClick={() => onEdit(record)}
+          >
+            <i className="fa-solid fa-pen-to-square"></i>
+          </Link>
+          <Link
+            className="btn btn-danger btn-sm"
+            to="#"
+            data-bs-toggle="modal"
+            data-bs-target="#delete_expense"
+            onClick={() => {
+              deleteCategory(record);
+            }}
+          >
+            <i className="fa-regular fa-trash-can " />
+          </Link>
+        </div>
       ),
     },
   ];
@@ -320,7 +313,7 @@ const CategoryTypePanel = () => {
                 <Link
                   to="#"
                   className="btn add-btn"
-                  data-bs-toggle="modal"  
+                  data-bs-toggle="modal"
                   data-bs-target="#add_category_item"
                 >
                   <i className="fa fa-plus" /> Add Category Item
@@ -426,20 +419,26 @@ const CategoryTypePanel = () => {
                   <div className="row">
                     <div className="col-md-6">
                       <div className="input-block">
-                        <label>Category Name</label>
+                        <label>
+                          Category Name<span className="text-danger">*</span>
+                        </label>
                         <input
                           className="form-control"
                           type="text"
+                          required
                           {...register("category_name")}
                         />
                       </div>
                     </div>
                     <div className="col-md-6">
                       <div className="input-block">
-                        <label>Accounting Code</label>
+                        <label>
+                          Accounting Code<span className="text-danger">*</span>
+                        </label>
                         <input
                           className="form-control"
                           type="text"
+                          required
                           {...register("accounting_code")}
                         />
                       </div>
@@ -449,22 +448,30 @@ const CategoryTypePanel = () => {
                   <div className="row">
                     <div className="col-md-6">
                       <div className="input-block">
-                        <label>Expense amount limit</label>
+                        <label>
+                          Expense amount limit
+                          <span className="text-danger">*</span>
+                        </label>
                         <input
                           placeholder="$50"
                           className="form-control"
                           type="number"
+                          required
                           {...register("expense_amount_limit")}
                         />
                       </div>
                     </div>
                     <div className="col-md-6">
                       <div className="input-block">
-                        <label>Receipt require limit</label>
+                        <label>
+                          Receipt require limit
+                          <span className="text-danger">*</span>
+                        </label>
                         <input
                           placeholder="$50"
                           className="form-control"
                           type="number"
+                          required
                           {...register("receipt_require_limit")}
                         />
                       </div>
@@ -474,11 +481,15 @@ const CategoryTypePanel = () => {
                   <div className="row">
                     <div className="col-md-6">
                       <div className="input-block">
-                        <label>Auto approve limit</label>
+                        <label>
+                          Auto approve limit
+                          <span className="text-danger">*</span>
+                        </label>
                         <input
                           placeholder="$50"
                           className="form-control"
                           type="number"
+                          required
                           {...register("auto_approve_limit")}
                         />
                       </div>
@@ -491,9 +502,11 @@ const CategoryTypePanel = () => {
                           class="form-check-input"
                           type="checkbox"
                           value="True"
+                          required
                           {...register("override_general_policy")}
                         />{" "}
                         Override general policy
+                        <span className="text-danger">*</span>
                       </label>
                     </div>
                   </div>
@@ -512,7 +525,7 @@ const CategoryTypePanel = () => {
           </div>
         </div>
         {/* /Add Expense Modal */}
-      
+
         {/* category item modal  */}
         <div
           id="add_category_item"
@@ -541,11 +554,12 @@ const CategoryTypePanel = () => {
                     <div className="col-md-6">
                       <div className="input-block">
                         <label className="col-form-label">
-                          Default Category
+                          Default Category<span className="text-danger">*</span>
                         </label>
 
                         <select
                           className="form-control"
+                          required
                           {...createregister("category")}
                         >
                           <option value="">Select </option>
@@ -560,20 +574,27 @@ const CategoryTypePanel = () => {
                         </select>
                       </div>
                       <div className="input-block">
-                        <label>Accounting Code</label>
+                        <label>
+                          Accounting Code<span className="text-danger">*</span>
+                        </label>
                         <input
                           className="form-control"
                           type="text"
+                          required
                           {...createregister("acc_code")}
                         />
                       </div>
                     </div>
                     <div className="col-md-6">
                       <div className="input-block">
-                        <label>Category Item Name</label>
+                        <label>
+                          Category Item Name
+                          <span className="text-danger">*</span>
+                        </label>
                         <input
                           className="form-control"
                           type="text"
+                          required
                           {...createregister("item_name")}
                         />
                       </div>
@@ -620,20 +641,26 @@ const CategoryTypePanel = () => {
                   <div className="row">
                     <div className="col-md-6">
                       <div className="input-block">
-                        <label>Category Name</label>
+                        <label>
+                          Category Name<span className="text-danger">*</span>
+                        </label>
                         <input
                           className="form-control"
                           type="text"
+                          required
                           {...updateregister("category_name")}
                         />
                       </div>
                     </div>
                     <div className="col-md-6">
                       <div className="input-block">
-                        <label>Accounting Code</label>
+                        <label>
+                          Accounting Code<span className="text-danger">*</span>
+                        </label>
                         <input
                           className="form-control"
                           type="text"
+                          required
                           {...updateregister("accounting_code")}
                         />
                       </div>
@@ -643,22 +670,30 @@ const CategoryTypePanel = () => {
                   <div className="row">
                     <div className="col-md-6">
                       <div className="input-block">
-                        <label>Expense amount limit</label>
+                        <label>
+                          Expense amount limit
+                          <span className="text-danger">*</span>
+                        </label>
                         <input
                           placeholder="$50"
                           className="form-control"
                           type="number"
+                          required
                           {...updateregister("expense_amount_limit")}
                         />
                       </div>
                     </div>
                     <div className="col-md-6">
                       <div className="input-block">
-                        <label>Receipt require limit</label>
+                        <label>
+                          Receipt require limit
+                          <span className="text-danger">*</span>
+                        </label>
                         <input
                           placeholder="$50"
                           className="form-control"
                           type="number"
+                          required
                           {...updateregister("receipt_require_limit")}
                         />
                       </div>
@@ -668,11 +703,15 @@ const CategoryTypePanel = () => {
                   <div className="row">
                     <div className="col-md-6">
                       <div className="input-block">
-                        <label>Auto approve limit</label>
+                        <label>
+                          Auto approve limit
+                          <span className="text-danger">*</span>
+                        </label>
                         <input
                           placeholder="$50"
                           className="form-control"
                           type="number"
+                          required
                           {...updateregister("auto_approve_limit")}
                         />
                       </div>
@@ -685,9 +724,11 @@ const CategoryTypePanel = () => {
                           class="form-check-input"
                           type="checkbox"
                           value="True"
+                          required
                           {...updateregister("override_general_policy")}
                         />{" "}
                         Override general policy
+                        <span className="text-danger">*</span>
                       </label>
                     </div>
                   </div>

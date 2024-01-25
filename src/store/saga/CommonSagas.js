@@ -126,7 +126,7 @@ function* getCertificate(action) {
 
 function* updateCertificate(action) {
   try {
-    let result = yield call(Method.putData, action);
+    let result = yield call(Method.patchData, action);
     if (result.status === 200) {
       yield put({
         type: `${action.type}_SUCCESS`,
@@ -370,7 +370,6 @@ function* getUserAttendance(action) {
 function* updatePersonalInfo(action) {
   try {
     let result = yield call(Method.patchData, action);
-    console.log(result, "syugdysgdyg");
     if (result.status === 200) {
       yield put({
         type: `${action.type}_SUCCESS`,

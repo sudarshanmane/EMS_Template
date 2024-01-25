@@ -262,7 +262,6 @@ const AllReports = () => {
     }
   }, [deleteReportlSelector]);
 
-
   const submitReport = (record) => {
     dispatch(submitReportAction({ id: record?.id }));
   };
@@ -309,7 +308,7 @@ const AllReports = () => {
       dataIndex: "status",
       sorter: (a, b) => a.status.length - b.status.length,
     },
-     {
+    {
       title: "Action",
       render: (record) => (
         <div className="dropdown dropdown-action text-end">
@@ -614,7 +613,9 @@ const AllReports = () => {
                     <div className="input-block">
                       <div className="col-md-12">
                         <div className="input-block">
-                          <label>Description</label>
+                          <label>
+                            Description<span className="text-danger">*</span>
+                          </label>
                           <input
                             className="form-control"
                             type="text"
@@ -723,7 +724,9 @@ const AllReports = () => {
                     <div className="input-block">
                       <div className="col-md-12">
                         <div className="input-block">
-                          <label>Description</label>
+                          <label>
+                            Description<span className="text-danger">*</span>
+                          </label>
                           <input
                             className="form-control"
                             type="text"

@@ -69,6 +69,7 @@ const Mileage = () => {
     await dispatch(addMileage(values));
     dispatch(getMileage({ payload: {}, URL: url }));
     setIsAddFormVisible(false);
+    reset();
   };
 
   const onEdit = (record) => {
@@ -150,16 +151,16 @@ const Mileage = () => {
   useEffect(() => {
     if (addMileageSelector) {
       dispatch(getMileage({ payload: {}, URL: url }));
-      
-      reset();
       setIsAddFormVisible(false);
+      reset();
+
     }
   }, [addMileageSelector]);
 
   const updatemilageSelector = useSelector(
     (state) => state.updateMileageResult
   );
- 
+
   useEffect(() => {
     if (updatemilageSelector) {
       dispatch(getMileage({ payload: {}, URL: url }));
@@ -203,30 +204,27 @@ const Mileage = () => {
       title: "Action",
       render: (record) => (
         <div className="dropdown dropdown-action text-end">
-         
-         
-            <Link
-             className="btn btn-success btn-sm m-r-5"
-              to="#"
-              data-bs-toggle="modal"
-              data-bs-target="#edit_mileage"
-              onClick={() => onEdit(record)}
-            >
-              <i className="fa-solid fa-pen-to-square"></i>
-            </Link>
-            <Link
-                className="btn btn-danger btn-sm"
-              to="#"
-              data-bs-toggle="modal"
-              data-bs-target="#delete_mileage"
-              onClick={() => {
-                DeleteMileage(record);
-              }}
-            >
-              <i className="fa-regular fa-trash-can " />
-            </Link>
-          </div>
-      
+          <Link
+            className="btn btn-success btn-sm m-r-5"
+            to="#"
+            data-bs-toggle="modal"
+            data-bs-target="#edit_mileage"
+            onClick={() => onEdit(record)}
+          >
+            <i className="fa-solid fa-pen-to-square"></i>
+          </Link>
+          <Link
+            className="btn btn-danger btn-sm"
+            to="#"
+            data-bs-toggle="modal"
+            data-bs-target="#delete_mileage"
+            onClick={() => {
+              DeleteMileage(record);
+            }}
+          >
+            <i className="fa-regular fa-trash-can " />
+          </Link>
+        </div>
       ),
     },
   ];
@@ -345,9 +343,12 @@ const Mileage = () => {
                   <div className="input-block">
                     <div className="col-sm-12">
                       <div className="input-block">
-                        <label>Default Unit</label>
+                        <label>
+                          Default Unit<span className="text-danger">*</span>
+                        </label>
                         <select
                           className="form-control"
+                          required
                           {...register("default_unit")}
                         >
                           <option value="">Select </option>
@@ -362,11 +363,12 @@ const Mileage = () => {
                     <div className="col-sm-12">
                       <div className="input-block">
                         <label className="col-form-label">
-                          Default Category
+                          Default Category<span className="text-danger">*</span>
                         </label>
 
                         <select
                           className="form-control"
+                          required
                           {...register("default_category")}
                         >
                           <option value="">Select </option>
@@ -385,11 +387,14 @@ const Mileage = () => {
                   <div className="input-block">
                     <div className="col-md-12">
                       <div className="input-block">
-                        <label>Mileage Rate</label>
+                        <label>
+                          Mileage Rate<span className="text-danger">*</span>
+                        </label>
                         <input
                           placeholder="$50"
                           className="form-control"
                           type="number"
+                          required
                           {...register("rate")}
                         />
                       </div>
@@ -397,7 +402,7 @@ const Mileage = () => {
 
                     <div className="input-block">
                       <label className="col-form-label" id="date">
-                        Start Date
+                        Start Date<span className="text-danger">*</span>
                       </label>
                       <div className="">
                         <Controller
@@ -466,9 +471,12 @@ const Mileage = () => {
                   <div className="input-block">
                     <div className="col-sm-12">
                       <div className="input-block">
-                        <label>Default Unit</label>
+                        <label>
+                          Default Unit<span className="text-danger">*</span>
+                        </label>
                         <select
                           className="form-control"
+                          required
                           {...updateregister("default_unit")}
                         >
                           <option value="">Select </option>
@@ -483,10 +491,11 @@ const Mileage = () => {
                     <div className="col-sm-12">
                       <div className="input-block">
                         <label className="col-form-label">
-                          Default Category
+                          Default Category<span className="text-danger">*</span>
                         </label>
                         <select
                           className="form-control"
+                          required
                           {...updateregister("default_category")}
                         >
                           <option value="">Select </option>
@@ -505,11 +514,14 @@ const Mileage = () => {
                   <div className="input-block">
                     <div className="col-md-12">
                       <div className="input-block">
-                        <label>Mileage Rate</label>
+                        <label>
+                          Mileage Rate<span className="text-danger">*</span>
+                        </label>
                         <input
                           placeholder="$50"
                           className="form-control"
                           type="number"
+                          required
                           {...updateregister("rate")}
                         />
                       </div>
@@ -517,7 +529,7 @@ const Mileage = () => {
 
                     <div className="input-block">
                       <label className="col-form-label col-lg-6" id="date">
-                        Start Date
+                        Start Date<span className="text-danger">*</span>
                       </label>
                       <div className="">
                         <Controller

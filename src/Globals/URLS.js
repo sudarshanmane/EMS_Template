@@ -35,7 +35,7 @@ export const URLS = {
   GET_PERSONAL_INFORMATION_URL: "/userhrms/api/v2/UserPersonalInformation/?id=",
   UPDATE_PERSONAL_INFORMATION_URL: "/userhrms/api/v2/UserPersonalInformationpost/",
   GET_CERTIFICATE_URL: "/userhrms/api/v2/certificate/?id",
-  UPDATE_CERTIFICATE_URL: "/userhrms/api/v2/certificate/",
+  UPDATE_CERTIFICATE_URL: "/userhrms/api/v2/certificate/?id",
   GET_EDUCATION_URL: "/userhrms/api/v2/education/?user_id=",
   UPDATE_EDUCATION_URL: "/userhrms/api/v2/educationpost/",
   GET_EXPERIENCE_URL: "/userhrms/api/v2/userexperience/?user_id=",

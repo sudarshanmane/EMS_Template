@@ -55,6 +55,7 @@ const ExpensePolicies = () => {
 
   const onSubmit = (values) => {
     dispatch(addExpensePolicy(values));
+    reset();
   };
 
   const onEdit = (record) => {
@@ -183,29 +184,27 @@ const ExpensePolicies = () => {
       title: "Action",
       render: (record) => (
         <div className="dropdown dropdown-action text-end">
-         
-            <Link
-                className="btn btn-success btn-sm m-r-5"
-              to="#"
-              data-bs-toggle="modal"
-              data-bs-target="#edit_company"
-              onClick={() => onEdit(record)}
-            >
-             <i className="fa-solid fa-pen-to-square"></i>
-            </Link>
-            <Link
-               className="btn btn-danger btn-sm"
-              to="#"
-              data-bs-toggle="modal"
-              data-bs-target="#delete_company"
-              onClick={() => {
-                DeleteExpense(record);
-              }}
-            >
-             <i className="fa-regular fa-trash-can " />
-            </Link>
-          </div>
-        
+          <Link
+            className="btn btn-success btn-sm m-r-5"
+            to="#"
+            data-bs-toggle="modal"
+            data-bs-target="#edit_company"
+            onClick={() => onEdit(record)}
+          >
+            <i className="fa-solid fa-pen-to-square"></i>
+          </Link>
+          <Link
+            className="btn btn-danger btn-sm"
+            to="#"
+            data-bs-toggle="modal"
+            data-bs-target="#delete_company"
+            onClick={() => {
+              DeleteExpense(record);
+            }}
+          >
+            <i className="fa-regular fa-trash-can " />
+          </Link>
+        </div>
       ),
     },
   ];
@@ -239,8 +238,8 @@ const ExpensePolicies = () => {
           </div>
           {/* {/ /Page Header /} */}
 
-            {/* Search Filter */}
-            <div className="row filter-row">
+          {/* Search Filter */}
+          <div className="row filter-row">
             <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
               <div
                 className={
@@ -266,7 +265,7 @@ const ExpensePolicies = () => {
             </div>
           </div>
           {/* /Search Filter */}
-          
+
           <div className="row">
             <div className="col-lg-12">
               <div className="card mb-0">
@@ -326,7 +325,10 @@ const ExpensePolicies = () => {
               <div className="modal-body">
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="input-block">
-                    <label> Expense Amount Limit</label>
+                    <label>
+                      {" "}
+                      Expense Amount Limit<span className="text-danger">*</span>
+                    </label>
 
                     <div className="col-md-12">
                       <div className="input-group">
@@ -336,6 +338,7 @@ const ExpensePolicies = () => {
                         <input
                           className="form-control"
                           type="number"
+                          required
                           {...register("expense_amt_limit")}
                         />
                       </div>
@@ -346,7 +349,11 @@ const ExpensePolicies = () => {
                   <br></br>
 
                   <div className="input-block">
-                    <label> Receipt Required limit</label>
+                    <label>
+                      {" "}
+                      Receipt Required limit
+                      <span className="text-danger">*</span>
+                    </label>
 
                     <div className="col-md-12">
                       <div className="input-group">
@@ -356,6 +363,7 @@ const ExpensePolicies = () => {
                         <input
                           className="form-control"
                           type="number"
+                          required
                           {...register("receipt_require_limit")}
                         />
                       </div>
@@ -365,7 +373,10 @@ const ExpensePolicies = () => {
                   <br></br>
 
                   <div className="input-block">
-                    <label> Cash limit</label>
+                    <label>
+                      {" "}
+                      Cash limit<span className="text-danger">*</span>
+                    </label>
 
                     <div className="col-md-12">
                       <div className="input-group">
@@ -375,6 +386,7 @@ const ExpensePolicies = () => {
                         <input
                           className="form-control"
                           type="number"
+                          required
                           {...register("cash_limit")}
                         />
                       </div>
@@ -385,7 +397,10 @@ const ExpensePolicies = () => {
                   <br></br>
 
                   <div className="input-block">
-                    <label> Card limit</label>
+                    <label>
+                      {" "}
+                      Card limit<span className="text-danger">*</span>
+                    </label>
 
                     <div className="col-md-12">
                       <div className="input-group">
@@ -395,6 +410,7 @@ const ExpensePolicies = () => {
                         <input
                           className="form-control"
                           type="number"
+                          required
                           {...register("card_limit")}
                         />
                       </div>
@@ -411,9 +427,11 @@ const ExpensePolicies = () => {
                           class="form-check-input"
                           type="checkbox"
                           value="True"
+                          required
                           {...register("make_description_mandotary")}
                         />{" "}
                         Make Description Mandatory
+                        <span className="text-danger">*</span>
                       </label>
                     </div>
                   </div>
@@ -427,12 +445,13 @@ const ExpensePolicies = () => {
                           class="form-check-input"
                           type="checkbox"
                           value="True"
+                          required
                           {...register(
                             "allow_uncategorized_expe_to_be_part_of_expense_report"
                           )}
                         />{" "}
                         Allow Uncategorized Expenses To Be The Part Of Expense
-                        Report
+                        Report<span className="text-danger">*</span>
                       </label>
                     </div>
                   </div>
@@ -446,9 +465,11 @@ const ExpensePolicies = () => {
                           class="form-check-input"
                           type="checkbox"
                           value="True"
+                          required
                           {...register("make_expense_reimbursable_by_default")}
                         />{" "}
                         Make Expense Reimbursable By Default
+                        <span className="text-danger">*</span>
                       </label>
                     </div>
                   </div>
@@ -457,9 +478,13 @@ const ExpensePolicies = () => {
 
                   <div className="col-lg-10">
                     <div className="input-block">
-                      <label>Expense Expiry period </label>
+                      <label>
+                        Expense Expiry period
+                        <span className="text-danger">*</span>{" "}
+                      </label>
                       <select
                         className="form-control"
+                        required
                         {...register("expense_expiry_period")}
                       >
                         <option value="">Select </option>
@@ -510,7 +535,10 @@ const ExpensePolicies = () => {
               <div className="modal-body">
                 <form onSubmit={handleUpdate(onUpdate)}>
                   <div className="input-block">
-                    <label> Expense Amount Limit</label>
+                    <label>
+                      {" "}
+                      Expense Amount Limit<span className="text-danger">*</span>
+                    </label>
 
                     <div className="col-md-12">
                       <div className="input-group">
@@ -520,6 +548,7 @@ const ExpensePolicies = () => {
                         <input
                           className="form-control"
                           type="number"
+                          required
                           {...updateregister("expense_amt_limit")}
                         />
                       </div>
@@ -530,7 +559,11 @@ const ExpensePolicies = () => {
                   <br></br>
 
                   <div className="input-block">
-                    <label> Receipt Required limit</label>
+                    <label>
+                      {" "}
+                      Receipt Required limit
+                      <span className="text-danger">*</span>
+                    </label>
 
                     <div className="col-md-12">
                       <div className="input-group">
@@ -540,6 +573,7 @@ const ExpensePolicies = () => {
                         <input
                           className="form-control"
                           type="number"
+                          required
                           {...updateregister("receipt_require_limit")}
                         />
                       </div>
@@ -549,7 +583,10 @@ const ExpensePolicies = () => {
                   <br></br>
 
                   <div className="input-block">
-                    <label> Cash limit</label>
+                    <label>
+                      {" "}
+                      Cash limit<span className="text-danger">*</span>
+                    </label>
 
                     <div className="col-md-12">
                       <div className="input-group">
@@ -559,6 +596,7 @@ const ExpensePolicies = () => {
                         <input
                           className="form-control"
                           type="number"
+                          required
                           {...updateregister("cash_limit")}
                         />
                       </div>
@@ -569,7 +607,10 @@ const ExpensePolicies = () => {
                   <br></br>
 
                   <div className="input-block">
-                    <label> Card limit</label>
+                    <label>
+                      {" "}
+                      Card limit<span className="text-danger">*</span>
+                    </label>
 
                     <div className="col-md-12">
                       <div className="input-group">
@@ -579,6 +620,7 @@ const ExpensePolicies = () => {
                         <input
                           className="form-control"
                           type="number"
+                          required
                           {...updateregister("card_limit")}
                         />
                       </div>
@@ -595,9 +637,11 @@ const ExpensePolicies = () => {
                           class="form-check-input"
                           type="checkbox"
                           value="True"
+                          required
                           {...updateregister("make_description_mandotary")}
                         />{" "}
                         Make Description Mandatory
+                        <span className="text-danger">*</span>
                       </label>
                     </div>
                   </div>
@@ -610,13 +654,14 @@ const ExpensePolicies = () => {
                         <input
                           class="form-check-input"
                           type="checkbox"
+                          required
                           value="True"
                           {...updateregister(
                             "allow_uncategorized_expe_to_be_part_of_expense_report"
                           )}
                         />{" "}
                         Allow Uncategorized Expenses To Be The Part Of Expense
-                        Report
+                        Report<span className="text-danger">*</span>
                       </label>
                     </div>
                   </div>
@@ -630,11 +675,13 @@ const ExpensePolicies = () => {
                           class="form-check-input"
                           type="checkbox"
                           value="True"
+                          required
                           {...updateregister(
                             "make_expense_reimbursable_by_default"
                           )}
                         />{" "}
                         Make Expense Reimbursable By Default
+                        <span className="text-danger">*</span>
                       </label>
                     </div>
                   </div>
@@ -643,9 +690,13 @@ const ExpensePolicies = () => {
 
                   <div className="col-lg-10">
                     <div className="input-block">
-                      <label>Expense Expiry period </label>
+                      <label>
+                        Expense Expiry period{" "}
+                        <span className="text-danger">*</span>
+                      </label>
                       <select
                         className="form-control"
+                        required
                         {...updateregister("expense_expiry_period")}
                       >
                         <option value="">Select </option>
