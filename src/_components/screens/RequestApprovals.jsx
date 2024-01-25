@@ -192,7 +192,7 @@ const RequestApprovals = () => {
             data-bs-target="#approveTravelApprovals"
             onClick={() => ApproveTravelApprovals(record)}
           >
-            <i className="fa fa-thumbs-up" aria-hidden="true"></i>
+            <i className="fa fa-check" aria-hidden="true"></i>
           </Link>
 
           <Link
@@ -204,7 +204,7 @@ const RequestApprovals = () => {
               RejectTravelApprovals(record);
             }}
           >
-            <i className="fa fa-thumbs-down" aria-hidden="true"></i>
+            <i className="fa fa-times" aria-hidden="true"></i>
           </Link>
         </div>
       ),
