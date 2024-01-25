@@ -2915,7 +2915,7 @@ function* commonDeleteRole(action) {
 function* putCommonGenerator(action) {
   try {
     let result = yield call(Method.putData, action);
-    if (result.status === 200) {
+    if (result.status === 200 || result.status === 202) {
       yield put({
         type: `${action.type}_SUCCESS`,
         status: "ok",

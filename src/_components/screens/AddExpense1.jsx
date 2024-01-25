@@ -14,6 +14,7 @@ import {
   getCategoryListBulkExpense,
   getTotalForDistance,
   postMileage,
+  setPostMileage,
 } from "../../store/Action/Actions";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -35,7 +36,6 @@ const AddMileage = () => {
   const [selectedOption, setSelectedOption] = useState("Distance traveled");
 
   function onFinish(values) {
-  
     values.expense_date = getFullDate(values.date);
 
     let formData = new FormData();
@@ -139,6 +139,7 @@ const AddMileage = () => {
     if (postMileageResult) {
       form.resetFields();
       message.success("Expense Added Successfully");
+      dispatch(setPostMileage());
     }
   }, [postMileageResult]);
 

@@ -25,16 +25,18 @@ import moment from "moment";
 
 const AddExpense = () => {
   const { record, setRecord } = useContext(ExpenseUpdatingContext);
+  console.log("recordrecord222222222222222222", record);
   const [form] = Form.useForm();
 
   function getFullDate(vals) {
     let dateObject = new Date(vals);
     let month = (dateObject.getMonth() + 1).toString();
     let finalMonth = month.length == 1 ? `0${month}` : month;
-
-    return (
-      dateObject.getFullYear() + "-" + finalMonth + "-" + dateObject.getDate()
-    );
+    let day =
+      String(dateObject.getDate()).length == 1
+        ? `0${dateObject.getDate()}`
+        : dateObject.getDate();
+    return dateObject.getFullYear() + "-" + finalMonth + "-" + day;
   }
 
   const dispatch = useDispatch();
@@ -42,7 +44,6 @@ const AddExpense = () => {
 
   function onFinish(values) {
     if (record) {
-      console.log("inside update");
       values.expense_date = getFullDate(values.expense_date);
       let formData = new FormData();
       for (const el in values) {
@@ -59,6 +60,7 @@ const AddExpense = () => {
         if (el != "expense_bill") formData.append(el, values[el]);
         else formData.append("expense_bill", categoryList1[0]);
       }
+      
       dispatch(postMileage(formData));
     }
   }
@@ -70,23 +72,16 @@ const AddExpense = () => {
   useEffect(() => {
     if (expenseUpdatingResultSelector) {
       message.success("Expense Updated Successfully!");
-      form.resetFields();
       setRecord(null);
+      form.resetFields();
       dispatch(setExpenseUpdationResFalse());
     }
   }, [expenseUpdatingResultSelector]);
 
   const [categoryList, setCategoryList] = useState([]);
 
-  if (record) {
-    console.log("recordrecordrecordrecord", record);
-  }
   useEffect(() => {
     if (record) {
-      console.log(
-        "record?.expense_date.split",
-        record?.expense_date.split("T")[0]
-      );
       form.setFieldsValue({
         amount: record?.amount,
         category: record?.category,
@@ -96,16 +91,16 @@ const AddExpense = () => {
         desc: record?.desc,
       });
     }
-    return () => {
-      setRecord(null);
-    };
+    // return () => {
+    //   setRecord(null);
+    // };
   }, [record]);
 
   useEffect(() => {
     dispatch(getCategoryListBulkExpense());
-    return () => {
-      setRecord(null);
-    };
+    // return () => {
+    //   setRecord(null);
+    // };
   }, []);
 
   const addBulkExpenseCategoryListSelector = useSelector(

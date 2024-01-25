@@ -268,7 +268,6 @@ function submitReportAction(payload) {
   };
 }
 
-
 function addSelectedReport(payload) {
   return {
     type: API_CONSTANTS.ADD_SELECTED_REPORT,
@@ -295,7 +294,6 @@ function getSubmittedReportList(payload) {
     contentType: contentType.json,
   };
 }
-
 
 function getEducationList(payload) {
   return {
@@ -341,7 +339,6 @@ function getReimbursedAction(payload) {
     contentType: contentType.json,
   };
 }
-
 
 function getExpenseList(payload) {
   return {
@@ -433,7 +430,6 @@ function addDocumentAction(payload) {
   };
 }
 
-
 function getDocumentAction(payload) {
   return {
     type: API_CONSTANTS.GET_DOCUMENT,
@@ -502,7 +498,6 @@ function getVendorData(payload) {
   };
 }
 
-
 function getVendorPayment(payload) {
   return {
     type: API_CONSTANTS.GET_VENDOR_PAYMENT,
@@ -511,7 +506,6 @@ function getVendorPayment(payload) {
     contentType: contentType.json,
   };
 }
-
 
 function createVendorPaymentAction(payload) {
   console.log("Payload before API call:", payload);
@@ -522,8 +516,6 @@ function createVendorPaymentAction(payload) {
     contentType: contentType.form,
   };
 }
-
-
 
 function approveReport(payload) {
   return {
@@ -817,7 +809,6 @@ function updateVendorPayment(payload) {
   };
 }
 
-
 function createTravel(payload) {
   return {
     type: API_CONSTANTS.CREATE_TRAVEL,
@@ -854,7 +845,7 @@ function updateTravel(payload) {
 }
 
 function submitTravelRequest(payload) {
-  console.log("payload",payload)
+  console.log("payload", payload);
   return {
     type: API_CONSTANTS.SUBMIT_TRAVEL_REQUEST,
     payload: payload.payload,
@@ -862,7 +853,6 @@ function submitTravelRequest(payload) {
     contentType: contentType.json,
   };
 }
-
 
 function getTravelApproval(payload) {
   return {
@@ -874,7 +864,7 @@ function getTravelApproval(payload) {
 }
 
 function rejectTravelApprovals(payload) {
- console.log("payload", payload)
+  console.log("payload", payload);
   return {
     type: API_CONSTANTS.REJECT_TRAVEL_REQUEST_APPROVALS,
     payload: payload.payload,
@@ -884,16 +874,15 @@ function rejectTravelApprovals(payload) {
 }
 
 function approveTravelApprovals(payload) {
-  console.log("payload", payload)
-   return {
-     type: API_CONSTANTS.APPROVE_TRAVEL_REQUEST_APPROVALS,
-     payload: payload.payload,
-     URL: URLS.APPROVE_TRAVEL_REQUEST_APPROVALS_URL + payload.id + "/",
-     contentType: contentType.json,
-   };
- }      
- 
- 
+  console.log("payload", payload);
+  return {
+    type: API_CONSTANTS.APPROVE_TRAVEL_REQUEST_APPROVALS,
+    payload: payload.payload,
+    URL: URLS.APPROVE_TRAVEL_REQUEST_APPROVALS_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
 function getApprove(payload) {
   return {
     type: API_CONSTANTS.GET_APPROVE_TRAVEL_REQUEST_APPROVALS,
@@ -903,8 +892,6 @@ function getApprove(payload) {
   };
 }
 
-
-
 function getReject(payload) {
   return {
     type: API_CONSTANTS.GET_REJECT_TRAVEL_REQUEST_APPROVALS,
@@ -913,7 +900,6 @@ function getReject(payload) {
     contentType: contentType.json,
   };
 }
-
 
 function addAllUser(payload) {
   return {
@@ -1700,6 +1686,12 @@ function postMileage(payload) {
   };
 }
 
+function setPostMileage() {
+  return {
+    type: API_CONSTANTS.POST_MILEAGE_DETAILS_RESULT_FALSE,
+  };
+}
+
 function setExpenseUpdationResFalse() {
   return {
     type: API_CONSTANTS.SET_EXPENSE_UPDATE_RESULT_FALSE,
@@ -1726,6 +1718,7 @@ function deleteExpenseAction(payload) {
 
 export {
   updateExpense,
+  setPostMileage,
   setExpenseUpdationResFalse,
   deleteExpenseAction,
   postMileage,

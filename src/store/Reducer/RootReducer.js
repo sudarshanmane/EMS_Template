@@ -2419,6 +2419,14 @@ export const RootReducer = (state = initialState, action) => {
       };
     }
 
+    case API_CONSTANTS.POST_MILEAGE_DETAILS_RESULT_FALSE: {
+      return {
+        ...state,
+        loding: false,
+        postMileageResult: false,
+      };
+    }
+
     case API_CONSTANTS.DELETE_EXPENSE: {
       return {
         ...state,
