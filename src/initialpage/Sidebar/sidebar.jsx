@@ -160,7 +160,7 @@ const Sidebar = () => {
                         }
                         to="/home/expensepanel"
                       >
-                        Add Expense{" "}
+                        All Expense{" "}
                       </Link>
                     </li>
                     {/* <li>

@@ -19,6 +19,11 @@ const Addexpense = () => {
           <div className="page-header">
             <div className="row">
               <div className="col">
+              <div>
+            <Link className="btn add-btn" to="/home/expensepanel">
+              <i className="fa fa-right" /> Back
+            </Link>
+          </div>
                 <h3 className="page-title">Add Expense</h3>
                 <ul className="breadcrumb">
                   <li className="breadcrumb-item">
@@ -26,6 +31,7 @@ const Addexpense = () => {
                   </li>
                   <li className="breadcrumb-item active">Expense Form</li>
                 </ul>
+                
               </div>
             </div>
           </div>

@@ -10,6 +10,7 @@ export default function SelfProfileHead() {
   const dispatch = useDispatch();
   const url = URLS.GET_CURRENT_USER_URL;
   const [user, setUser] = useState([]);
+
   function getPageDetails(url) {
     dispatch(getCurrentUser({ payload: {}, URL: url }));
   }
@@ -26,26 +27,26 @@ export default function SelfProfileHead() {
     fetchUserData(url);
   }, []);
 
-  const userSelector = useSelector((state) => state.getcurrentuser?.data);
-
-  useEffect(() => {
-    if (userSelector) {
-      const user = userSelector?.map((element) => {
-        return {
-          profile_image: element.profile_image,
-          emp_id: element.emp_id,
-          first_name: element.first_name,
-          last_name: element.last_name,
-          user_role: element.user_role,
-          mobile_no: element.mobile_no,
-          email: element.email,
-          date_of_birth: element.date_of_birth,
-          permanent_address: element.permanent_address,
-        };
-      });
-      setUser(user);
-    }
-  }, [userSelector]);
+  const userSelector = useSelector((state) => state.getcurrentuser?.[0]);
+console.log("userrrrrrr",userSelector)
+  // useEffect(() => {
+  //   if (userSelector) {
+  //     const user = userSelector?.map((element) => {
+  //       return {
+  //         profile_image: element.profile_image,
+  //         emp_id: element.emp_id,
+  //         first_name: element.first_name,
+  //         last_name: element.last_name,
+  //         user_role: element.user_role,
+  //         mobile_no: element.mobile_no,
+  //         email: element.email,
+  //         date_of_birth: element.date_of_birth,
+  //         permanent_address: element.permanent_address,
+  //       };
+  //     });
+  //     setUser(user);
+  //   }
+  // }, [userSelector]);
   
 
 
