@@ -57,10 +57,8 @@ const CategoryTypePanel = () => {
     setValue,
   } = useForm({});
 
-  const onCreate = async (values) => {
-    await dispatch(createCategoryItem(values));
-    dispatch(getCategoryPanelAction({ payload: {}, URL: url }));
-    setIsAddFormVisible(false);
+  const onCreate = (values) => {
+    dispatch(createCategoryItem(values));
   };
 
   const onSubmit = (values) => {
@@ -138,12 +136,11 @@ const CategoryTypePanel = () => {
   );
 
   useEffect(() => {
-    if (createCategoryItemSelector && submittedValues) {
-      dispatch(createVendor(submittedValues));
+    if (createCategoryItemSelector) {
+      dispatch(getCategoryPanelAction({ payload: {}, URL: url }));
       reset();
-      setSubmittedValues(null);
-      setIsAddFormVisible(false);
     }
+    setIsAddFormVisible(false);
   }, [createCategoryItemSelector, submittedValues]);
 
   const addCategorylSelector = useSelector((state) => state.categoryresult);
@@ -258,7 +255,6 @@ const CategoryTypePanel = () => {
       title: "Items",
       dataIndex: "sub_item",
       render: (subItems) => {
-        console.log(subItems, "subItems");
         return subItems.map((item) => {
           return <div>{item ? item : "-"}</div>;
         });

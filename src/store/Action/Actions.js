@@ -271,7 +271,7 @@ function submitReportAction(payload) {
 function addSelectedReport(payload) {
   return {
     type: API_CONSTANTS.ADD_SELECTED_REPORT,
-    payload: payload.payload,
+    payload: payload,
     URL: URLS.ADD_SELECTED_REPORT_URL + payload.id + "/",
     contentType: contentType.json,
   };
@@ -508,7 +508,6 @@ function getVendorPayment(payload) {
 }
 
 function createVendorPaymentAction(payload) {
-  console.log("Payload before API call:", payload);
   return {
     type: API_CONSTANTS.CREATE_VENDOR_PAYMENT,
     payload,
@@ -845,7 +844,6 @@ function updateTravel(payload) {
 }
 
 function submitTravelRequest(payload) {
-  console.log("payload", payload);
   return {
     type: API_CONSTANTS.SUBMIT_TRAVEL_REQUEST,
     payload: payload.payload,
@@ -864,7 +862,6 @@ function getTravelApproval(payload) {
 }
 
 function rejectTravelApprovals(payload) {
-  console.log("payload", payload);
   return {
     type: API_CONSTANTS.REJECT_TRAVEL_REQUEST_APPROVALS,
     payload: payload.payload,
@@ -874,7 +871,6 @@ function rejectTravelApprovals(payload) {
 }
 
 function approveTravelApprovals(payload) {
-  console.log("payload", payload);
   return {
     type: API_CONSTANTS.APPROVE_TRAVEL_REQUEST_APPROVALS,
     payload: payload.payload,
@@ -1281,7 +1277,6 @@ function getapprovedExpensepanelAction(payload) {
 }
 
 function exportaccountingcode(payload) {
-  console.log("EXPORT_BUTTON_ACCOUNTINGCODE", payload);
   return {
     type: API_CONSTANTS.EXPORT_BUTTON_ACCOUNTINGCODE,
     payload: payload.payload,
@@ -1475,7 +1470,6 @@ function setDeleteExternalAccountCodeFalse(payload) {
 }
 
 function exportExpenseTypeAction(payload) {
-  console.log("EXPORT_BUTTON", payload);
   return {
     type: API_CONSTANTS.EXPORT_EXPENSE_TYPE_LIST,
     payload: payload.payload,
@@ -1485,7 +1479,6 @@ function exportExpenseTypeAction(payload) {
 }
 
 function exportExpenseItemSetupAction(payload) {
-  console.log("EXPORT_BUTTON", payload);
   return {
     type: API_CONSTANTS.EXPORT_EXPENSE_ITEM_SETUP,
     payload: payload.payload,
@@ -1495,7 +1488,6 @@ function exportExpenseItemSetupAction(payload) {
 }
 
 function exportExternalAccountCodeAction(payload) {
-  console.log("EXPORT_BUTTON", payload);
   return {
     type: API_CONSTANTS.EXPORT_EXTERNAL_ACCOUNT_CODE,
     payload: payload.payload,

@@ -331,7 +331,6 @@ function* updateSelfLeave(action) {
 function* updateUserSetting(action) {
   try {
     let result = yield call(Method.patchData, action);
-    console.log(result, "syugdysgdyg");
     if (result.status === 200) {
       yield put({
         type: `${action.type}_SUCCESS`,
@@ -978,7 +977,7 @@ function* getExpenseList(action) {
 function* addSelectedReport(action) {
   try {
     let result = yield call(Method.putData, action);
-    if (result.status === 200) {
+    if (result.status === 202) {
       yield put({
         type: `${action.type}_SUCCESS`,
         status: "ok",
@@ -1036,7 +1035,7 @@ function* submitReport(action) {
 function* updateReport(action) {
   try {
     let result = yield call(Method.putData, action);
-    if (result.status === 200) {
+    if (result.status === 202) {
       yield put({
         type: `${action.type}_SUCCESS`,
         status: "ok",
@@ -1231,10 +1230,8 @@ function* rejectExpense(action) {
 }
 
 function* addreimbursementRecord(action) {
-  console.log("comman sagaaaaaaaaaaa", action);
   try {
     let result = yield call(Method.postData, action);
-    console.log("resultresultresultresultresultresult", result);
     if (result.status === 201 || result.status === 200) {
       yield put({
         type: `${action.type}_SUCCESS`,
@@ -1269,7 +1266,6 @@ function* rejectReportByAccount(action) {
 
 function* categoryPanelList(action) {
   try {
-    console.log("actionaction", action);
     let result = yield call(Method.getData, action);
     if (result.status === 200) {
       yield put({
@@ -1305,7 +1301,6 @@ function* getAddCategoryList(action) {
 
 function* updateCategoryPanel(action) {
   try {
-    console.log("actionaction", action);
     let result = yield call(Method.putData, action);
     if (result.status === 200) {
       yield put({
@@ -1341,7 +1336,7 @@ function* deleteCategory(action) {
 function* createCategoryItem(action) {
   try {
     let result = yield call(Method.postData, action);
-    if (result.status === 201 || result.status === 200) {
+    if (result.status === 201) {
       yield put({
         type: `${action.type}_SUCCESS`,
         status: "ok",
@@ -1513,7 +1508,7 @@ function* addMileage(action) {
 function* updateMileage(action) {
   try {
     let result = yield call(Method.putData, action);
-    if (result.status === 200) {
+    if (result.status === 202) {
       yield put({
         type: `${action.type}_SUCCESS`,
         status: "ok",
@@ -1693,7 +1688,7 @@ function* updateVendor(action) {
 function* updateVendorTable(action) {
   try {
     let result = yield call(Method.putData, action);
-    if (result.status === 200) {
+    if (result.status === 202) {
       yield put({
         type: `${action.type}_SUCCESS`,
         status: "ok",
@@ -1853,7 +1848,6 @@ function* approveTravelApprovals(action) {
 }
 function* getApprove(action) {
   try {
-    console.log("reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
 
     let result = yield call(Method.getData, action);
     if (
@@ -1861,7 +1855,6 @@ function* getApprove(action) {
       result.status === 201 ||
       result.status === 200
     ) {
-      console.log("reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", result);
       yield put({
         type: `${action.type}_SUCCESS`,
         status: "ok",
@@ -2038,7 +2031,6 @@ function* addExpenseType(action) {
 // }
 function* Updateuserprofile(action) {
   try {
-    console.log("actionaction", action);
     let result = yield call(Method.putData, action);
     if (result.status === 200) {
       yield put({
@@ -2266,7 +2258,6 @@ function* getExpenseTypePanel(action) {
 
 function* AboutUs(action) {
   try {
-    console.log("actionaction", action);
     let result = yield call(Method.putData, action);
     if (result.status === 200) {
       yield put({
@@ -2528,7 +2519,6 @@ function* searchExternalAccountCode(action) {
 }
 function* UpdateExpenseItemSetup(action) {
   try {
-    console.log("actionaction", action);
     let result = yield call(Method.putData, action);
     if (result.status === 200) {
       yield put({
@@ -2545,7 +2535,6 @@ function* UpdateExpenseItemSetup(action) {
 }
 function* updateExpenseType(action) {
   try {
-    console.log("actionaction", action);
     let result = yield call(Method.putData, action);
     if (result.status === 200) {
       yield put({
@@ -2563,7 +2552,6 @@ function* updateExpenseType(action) {
 
 function* updateExternalAccountCode(action) {
   try {
-    console.log("actionaction", action);
     let result = yield call(Method.putData, action);
     if (result.status === 200) {
       yield put({
@@ -2580,7 +2568,6 @@ function* updateExternalAccountCode(action) {
 }
 function* UpdateAccountcodePanel(action) {
   try {
-    console.log("actionaction", action);
     let result = yield call(Method.putData, action);
     if (result.status === 200) {
       yield put({
@@ -2598,7 +2585,6 @@ function* UpdateAccountcodePanel(action) {
 
 function* updateUser(action) {
   try {
-    console.log("actionaction", action);
     let result = yield call(Method.putData, action);
     if (result.status === 200) {
       yield put({
@@ -2633,7 +2619,6 @@ function* approvedExpensemanager(action) {
 
 function* UpdateExpenseItemization(action) {
   try {
-    console.log("actionaction", action);
     let result = yield call(Method.putData, action);
     if (result.status === 200) {
       yield put({
@@ -2734,7 +2719,6 @@ function* holdExpensemanager(action) {
 
 function* Expenseapprovedpanel(action) {
   try {
-    console.log("actionaction", action);
     let result = yield call(Method.getData, action);
     if (result.status === 200) {
       yield put({

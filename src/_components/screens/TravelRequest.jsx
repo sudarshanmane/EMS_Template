@@ -139,9 +139,8 @@ const TravelRequest = () => {
     return format(date, "yyyy-MM-dd");
   };
 
-  const onSubmit = async (values) => {
-    await dispatch(createTravel(values));
-    dispatch(getTravel({ payload: {}, URL: url }));
+  const onSubmit = (values) => {
+    dispatch(createTravel(values));
     setIsAddFormVisible(false);
   };
 
@@ -150,7 +149,7 @@ const TravelRequest = () => {
   );
 
   useEffect(() => {
-    if (createTravelSelector && submittedValues) {
+    if (createTravelSelector) {
       const createdTravel = createTravelSelector;
       if (createdTravel) {
         dispatch(getTravel({ payload: {}, URL: url }));
@@ -158,7 +157,7 @@ const TravelRequest = () => {
         setSubmittedValues(null);
       }
     }
-  }, [createTravelSelector, submittedValues]);
+  }, [createTravelSelector]);
 
   const onUpdate = (values) => {
     dispatch(updateTravel({ id: editTravelData.id, payload: values }));
@@ -179,9 +178,24 @@ const TravelRequest = () => {
   useEffect(() => {
     if (updatetravelSelector) {
       dispatch(getTravel({ payload: {}, URL: url }));
-    }
+      }
     setIsAddFormVisible(false);
   }, [updatetravelSelector]);
+
+  
+  const updateApprovalTravelSelector = useSelector((state) => state.updateTravelResult);
+  useEffect(() => {
+    if (updateApprovalTravelSelector) {
+      dispatch(getApprove({ payload: {}, URL: approveurl }));    }
+    setIsAddFormVisible(false);
+  }, [updateApprovalTravelSelector]);
+
+  const updateRejectedTravelSelector = useSelector((state) => state.updateTravelResult);
+  useEffect(() => {
+    if (updateRejectedTravelSelector) {
+      dispatch(getReject({ payload: {}, URL: rejecturl }));    }
+    setIsAddFormVisible(false);
+  }, [updateRejectedTravelSelector]);
 
   function fetchPageDetialsGetTravel(url) {
     dispatch(getTravel({ payload: {}, URL: url }));
@@ -237,6 +251,14 @@ const TravelRequest = () => {
   const onSubmitTravelRequest = (record) => {
     dispatch(submitTravelRequest({ id: record.id, payload: record }));
   };
+
+  const submitRequestSelector = useSelector((state)=>state.submitTravelRequestResult)
+
+  useEffect(() => {
+    if (submitRequestSelector) {
+      dispatch(getTravel({ payload: {}, URL: url }));
+    }
+  }, [submitRequestSelector]);
 
  
   const columns = [
@@ -684,7 +706,7 @@ const TravelRequest = () => {
           >
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">Add Travel Request</h5>
+                <h5 className="modal-title">Edit Travel Request</h5>
                 <button
                   type="button"
                   className="close"

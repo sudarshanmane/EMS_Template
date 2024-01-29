@@ -95,7 +95,6 @@ const CardApproval = () => {
   }, []);
 
   const cardSelector = useSelector((state) => state.getCardSuccess);
-console.log("cardSelector",cardSelector)
   useEffect(() => {
     if (cardSelector) {
       const allCards = cardSelector?.map((element) => ({

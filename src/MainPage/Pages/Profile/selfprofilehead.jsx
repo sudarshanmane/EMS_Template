@@ -28,7 +28,6 @@ export default function SelfProfileHead() {
   }, []);
 
   const userSelector = useSelector((state) => state.getcurrentuser?.[0]);
-console.log("userrrrrrr",userSelector)
   // useEffect(() => {
   //   if (userSelector) {
   //     const user = userSelector?.map((element) => {

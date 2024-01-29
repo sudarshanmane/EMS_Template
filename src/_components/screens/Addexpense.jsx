@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Offcanvas from "../../Entryfile/offcanvance";
 import AddExpenseBulk from "./AddExpenseBulk";
 import AddMileage from "./AddExpense1";
 import AddExpense from "./AddExpenseFirst";
+import { ExpenseUpdatingContext } from "./ContextForUpdatingRecord";
 
 const Addexpense = () => {
+  const { setRecord, record } = useContext(ExpenseUpdatingContext);
+
   return (
     <>
       <div className="page-wrapper">
@@ -19,11 +22,11 @@ const Addexpense = () => {
           <div className="page-header">
             <div className="row">
               <div className="col">
-              <div>
-            <Link className="btn add-btn" to="/home/expensepanel">
-              <i className="fa fa-right" /> Back
-            </Link>
-          </div>
+                <div onClick={() => setRecord(null)}>
+                  <Link className="btn add-btn" to="/home/expensepanel">
+                    <i className="fa fa-right" /> Back
+                  </Link>
+                </div>
                 <h3 className="page-title">Add Expense</h3>
                 <ul className="breadcrumb">
                   <li className="breadcrumb-item">
@@ -31,7 +34,6 @@ const Addexpense = () => {
                   </li>
                   <li className="breadcrumb-item active">Expense Form</li>
                 </ul>
-                
               </div>
             </div>
           </div>

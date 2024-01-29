@@ -17,8 +17,8 @@ import { useForm } from "react-hook-form";
 import "react-datepicker/dist/react-datepicker.css";
 
 const ExpensePolicies = () => {
+  
   const url = URLS.GET_EXPENSE_POLICY_URL;
-
   const dispatch = useDispatch();
   const [allExpensePolicies, setAllExpensePolicies] = useState([]);
   const [focused, setFocused] = useState(false);
@@ -475,7 +475,7 @@ const ExpensePolicies = () => {
 
                 <br></br>
 
-                  <div className="col-lg-10">
+                  {/* <div className="col-lg-10">
                     <div className="input-block">
                       <label>
                         Expense Expiry period
@@ -494,7 +494,7 @@ const ExpensePolicies = () => {
                         })}
                       </select>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="submit-section">
                     <button
                       className="btn btn-primary submit-btn"
@@ -687,7 +687,7 @@ const ExpensePolicies = () => {
 
                 <br></br>
 
-                  <div className="col-lg-10">
+                  {/* <div className="col-lg-10">
                     <div className="input-block">
                       <label>
                         Expense Expiry period{" "}
@@ -706,7 +706,7 @@ const ExpensePolicies = () => {
                         })}
                       </select>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="submit-section">
                     <button
                       className="btn btn-primary submit-btn"

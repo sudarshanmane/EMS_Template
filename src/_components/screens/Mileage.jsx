@@ -18,6 +18,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const Mileage = () => {
+  const url = URLS.GET_MILEAGE_URL;
+  const fetchurl = URLS.FETCH_CATEGORY_URL;
   const dispatch = useDispatch();
   const [selectedDate1, setSelectedDate1] = useState(null);
   const [focused, setFocused] = useState(false);
@@ -32,9 +34,6 @@ const Mileage = () => {
     pageSize: 10, // Set your default page size
     current: 1,
   });
-
-  const url = URLS.GET_MILEAGE_URL;
-  const fetchurl = URLS.FETCH_CATEGORY_URL;
 
   const DefaultUnit_drop = [
     { value: "Km", label: "Km" },
@@ -65,9 +64,8 @@ const Mileage = () => {
 
   const { handleSubmit: handleDelete } = useForm({});
 
-  const onSubmit = async (values) => {
-    await dispatch(addMileage(values));
-    dispatch(getMileage({ payload: {}, URL: url }));
+  const onSubmit = (values) => {
+    dispatch(addMileage(values));
     setIsAddFormVisible(false);
     reset();
   };
@@ -151,10 +149,9 @@ const Mileage = () => {
   useEffect(() => {
     if (addMileageSelector) {
       dispatch(getMileage({ payload: {}, URL: url }));
-      setIsAddFormVisible(false);
       reset();
-
     }
+    setIsAddFormVisible(false);
   }, [addMileageSelector]);
 
   const updatemilageSelector = useSelector(
@@ -165,6 +162,7 @@ const Mileage = () => {
     if (updatemilageSelector) {
       dispatch(getMileage({ payload: {}, URL: url }));
     }
+    setIsEditFormVisible(false);
   }, [updatemilageSelector]);
 
   const deleteMileageSelector = useSelector(

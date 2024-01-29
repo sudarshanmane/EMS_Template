@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
-import { getReportDetails, submitReport, submitReportAction } from "../../store/Action/Actions";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { getReportDetails, getReportList, submitReport, submitReportAction } from "../../store/Action/Actions";
 import { Modal, Space, Table } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
 import {
@@ -11,6 +11,7 @@ import {
 import { URLS } from "../../Globals/URLS";
 
 const ViewReportPage = () => {
+  const navigate = useNavigate();
   const [allExpenses, setAllExpenses] = useState([]);
   const [selectedReceiptUrl, setSelectedReceiptUrl] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
@@ -26,13 +27,15 @@ const ViewReportPage = () => {
     dispatch(submitReportAction({ id: id }));
   };
 
-  // const SubmitReportSelector = useSelector((state) => state.submitreport);
+  const SubmitReportSelector = useSelector((state) => state.submitreport);
 
-  // useEffect(() => {
-  //   if (SubmitReportSelector) {
-  //     alert(SubmitReportSelector?.Status);
-  //   }
-  // }, [SubmitReportSelector]);
+  useEffect(() => {
+    if (SubmitReportSelector) {
+       dispatch(getReportList({ payload: {}, URL: url }));
+        alert(SubmitReportSelector?.Status);
+        navigate("/home/AllReports");
+      }
+  }, [SubmitReportSelector]);
 
   const reportDetailsSelector = useSelector((state) => state.reportDetails);
   useEffect(() => {

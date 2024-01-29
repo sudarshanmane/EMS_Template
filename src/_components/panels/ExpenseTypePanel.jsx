@@ -88,7 +88,6 @@ const ExpenseTypePanel = () => {
 
   useEffect(() => {
     if (expensePanelSelector) {
-      console.log(expensePanelSelector);
       const expenseTypeList = expensePanelSelector.results.map(
         (element, index) => {
           return {
@@ -166,7 +165,6 @@ const ExpenseTypePanel = () => {
   useEffect(() => {
     if (csvUrlSelector) {
       let csvURL = URLS.BASE_URL_EXPORT + csvUrlSelector.csv_file_name;
-      console.log("csvURLcsvURL", csvURL);
 
       let a = document.createElement("a");
       a.setAttribute("href", csvURL);

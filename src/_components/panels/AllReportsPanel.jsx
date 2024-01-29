@@ -163,8 +163,10 @@ const AllReports = () => {
   }, []);
 
   const approveSelector = useSelector((state) => state.getapproved);
+
   useEffect(() => {
     if (approveSelector) {
+      
       const allApprovedList = approveSelector.map((element) => {
         return {
           id: element.id,
@@ -270,6 +272,7 @@ const AllReports = () => {
 
   useEffect(() => {
     if (SubmitReportSelector) {
+       dispatch(getReportList({ payload: {}, URL: url }));
       alert(SubmitReportSelector?.Status);
     }
   }, [SubmitReportSelector]);

@@ -180,7 +180,6 @@ function ExpenseApprovalManager() {
   useEffect(() => {
     if (managerListSelector && managerListSelector.results) {
       const managerResult = managerListSelector.results.map((element) => {
-        console.log("id Is ", element.id);
         return { value: element.id, label: element.username };
       });
       setManagerList(managerResult);
@@ -213,7 +212,6 @@ function ExpenseApprovalManager() {
   useEffect(() => {
     if (csvUrlSelector) {
       let csvURL = URLS.BASE_URL_EXPORT + csvUrlSelector.csv_file_name;
-      console.log("csvURLcsvURL", csvURL);
 
       let a = document.createElement("a");
       a.setAttribute("href", csvURL);

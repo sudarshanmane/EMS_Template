@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Modal, Space, Table } from "antd";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   addReport,
   addSelectedReport,
@@ -29,15 +29,23 @@ const ExpensePanel = () => {
   const [selectedOption, setSelectedOption] = useState("allReports");
   const dispatch = useDispatch();
 
-  const { setRecord, record } = useContext(ExpenseUpdatingContext);
+  const location = useLocation();
+
+  const { setRecord, record, setIsEditForm, isEditForm } = useContext(
+    ExpenseUpdatingContext
+  );
 
   const [tablePagination, setTablePagination] = useState({
     pageSize: 10, // Set your default page size
     current: 1,
   });
 
-  const { handleSubmit: handleUpdate } = useForm({});
-  const { handleSubmit: handleSelectReport } = useForm({});
+  const {
+    handleSubmit: handleSelectReport,
+    control: selectReportControl,
+    setValue: selectReportSetValue,
+  } = useForm({});
+
   const {
     reset,
     control,
@@ -71,7 +79,12 @@ const ExpensePanel = () => {
   };
 
   const onSelectReport = (data) => {
-    dispatch(addSelectedReport({ id: editReportData.id, payload: data.id }));
+    dispatch(
+      addSelectedReport({
+        id: editReportData.id,
+        report: data.selectedReportId,
+      })
+    );
   };
 
   const onAddReport = (data) => {
@@ -82,19 +95,16 @@ const ExpensePanel = () => {
 
   const onEdit = (record) => {
     setRecord(record);
+    setIsEditForm(true);
   };
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (record) {
+    if (record && isEditForm) {
       navigate("/home/addexpense");
     }
-  }, [record]);
-
-  const onUpdate = (values) => {
-    setIsEditFormVisible(false);
-  };
+  }, [record, isEditForm]);
 
   const DeleteExpense = (record) => {
     setDeleteExpenseData(record.id);
@@ -118,13 +128,13 @@ const ExpensePanel = () => {
     setEditReportData(data);
   };
 
-  function getPageDetails(url) {
-    dispatch(getExpenseList({ payload: {}, URL: url }));
-  }
+  // function getPageDetails(url) {
+  //   dispatch(getExpenseList({ payload: {}, URL: url }));
+  // }
 
-  useEffect(() => {
-    getPageDetails(url);
-  }, []);
+  // useEffect(() => {
+  //   getPageDetails(url);
+  // }, []);
 
   function fetchexpensepanel(url) {
     dispatch(getExpenseList({ payload: {}, URL: url }));
@@ -134,13 +144,13 @@ const ExpensePanel = () => {
     fetchexpensepanel(url);
   }, []);
 
-  function fetchPageDetails(fetchurl) {
-    dispatch(fetchReport({ payload: {}, URL: fetchurl }));
-  }
+  // function fetchPageDetails(fetchurl) {
+  //   dispatch(fetchReport({ payload: {}, URL: fetchurl }));
+  // }
 
-  useEffect(() => {
-    fetchPageDetails(fetchurl);
-  }, []);
+  // useEffect(() => {
+  //   fetchPageDetails(fetchurl);
+  // }, []);
 
   function fetchReportData(fetchurl) {
     dispatch(fetchReport({ payload: {}, URL: fetchurl }));
@@ -151,6 +161,7 @@ const ExpensePanel = () => {
   }, []);
 
   const reportSelector = useSelector((state) => state.fetchReportSuccess);
+
   const addreportresultSelector = useSelector((state) => state.addreportresult);
   useEffect(() => {
     if (addreportresultSelector) {
@@ -248,7 +259,7 @@ const ExpensePanel = () => {
       key: "submit",
       render: (text, data) => (
         <Link
-        className="btn btn-secondary btn-sm m-r-5"
+          className="btn btn-secondary btn-sm m-r-5"
           key={"data.id"}
           to="#"
           data-bs-toggle="modal"
@@ -263,28 +274,25 @@ const ExpensePanel = () => {
       title: "Action",
       render: (record) => (
         <div className="dropdown dropdown-action text-end">
-          
-          
-            <Link
-             className="btn btn-success btn-sm m-r-5"
-              to="#"
-              onClick={() => onEdit(record)}
-            >
-             <i className="fa-solid fa-pen-to-square"></i>
-            </Link>
-            <Link
-               className="btn btn-danger btn-sm"
-              to="#"
-              data-bs-toggle="modal"
-              data-bs-target="#delete_expense"
-              onClick={() => {
-                DeleteExpense(record);
-              }}
-            >
-              <i className="fa-regular fa-trash-can " />
-            </Link>
-          </div>
-       
+          <Link
+            className="btn btn-success btn-sm m-r-5"
+            to="#"
+            onClick={() => onEdit(record)}
+          >
+            <i className="fa-solid fa-pen-to-square"></i>
+          </Link>
+          <Link
+            className="btn btn-danger btn-sm"
+            to="#"
+            data-bs-toggle="modal"
+            data-bs-target="#delete_expense"
+            onClick={() => {
+              DeleteExpense(record);
+            }}
+          >
+            <i className="fa-regular fa-trash-can " />
+          </Link>
+        </div>
       ),
     },
   ];
@@ -448,7 +456,19 @@ const ExpensePanel = () => {
                       <div className="col-sm-12">
                         <div className="input-block">
                           <label>Select Report</label>
-                          <select className="form-control">
+
+                          <select
+                            className="form-control"
+                            {...selectReportControl}
+                            onChange={(e) => {
+                              const selectedId = e.target.value;
+                              selectReportSetValue(
+                                "selectedReportId",
+                                selectedId
+                              );
+                            }}
+                          >
+                            {console.log(reportSelector)}
                             <option value="">Select </option>
                             {reportSelector?.map((data) => (
                               <option value={data.id} key={data.id}>

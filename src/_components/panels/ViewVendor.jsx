@@ -44,7 +44,6 @@ const ViewVendor = () => {
   }, []);
 
   const onEdit = (record) => {
-    console.log("record", record);
     setIsEditFormVisible(true);
     setEditVendorData(record);
 

@@ -636,6 +636,45 @@ export const RootReducer = (state = initialState, action) => {
         getapprovedreportlist: action.result,
       };
 
+    case API_CONSTANTS.GET_APPROVED_REPORT:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_APPROVED_REPORT_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getapproved: action.result,
+      };
+
+    case API_CONSTANTS.GET_REJECTED_REPORT:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_REJECTED_REPORT_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getrejected: action.result,
+      };
+
+    case API_CONSTANTS.GET_REIMBURSED_REPORT:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_REIMBURSED_REPORT_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getreimbursed: action.result,
+      };
+
     case API_CONSTANTS.UPDATE_REPORT:
       return {
         ...state,
@@ -747,31 +786,6 @@ export const RootReducer = (state = initialState, action) => {
         rejectReportSuccess: action.result,
       };
 
-    case API_CONSTANTS.APPROVE_EXPENSE:
-      return {
-        ...state,
-        loding: true,
-      };
-
-    case API_CONSTANTS.APPROVE_EXPENSE_SUCCESS:
-      return {
-        ...state,
-        loding: false,
-        approveExpenseSuccess: action.result,
-      };
-
-    case API_CONSTANTS.REJECT_EXPENSE:
-      return {
-        ...state,
-        loding: true,
-      };
-
-    case API_CONSTANTS.REJECT_EXPENSE_SUCCESS:
-      return {
-        ...state,
-        loding: false,
-        rejectExpenseSuccess: action.result,
-      };
     case API_CONSTANTS.APPROVE_EXPENSE:
       return {
         ...state,
@@ -1091,7 +1105,6 @@ export const RootReducer = (state = initialState, action) => {
       };
 
     case API_CONSTANTS.CREATE_VENDOR_PAYMENT_SUCCESS:
-      console.log("Create Vendor Payment Result:", action.result);
       return {
         ...state,
         loding: false,

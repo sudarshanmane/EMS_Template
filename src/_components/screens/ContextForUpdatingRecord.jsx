@@ -4,8 +4,11 @@ export const ExpenseUpdatingContext = createContext();
 
 const ContextForUpdatingRecord = ({ children }) => {
   const [record, setRecord] = useState();
+  const [isEditForm, setIsEditForm] = useState(false);
   return (
-    <ExpenseUpdatingContext.Provider value={{ setRecord, record }}>
+    <ExpenseUpdatingContext.Provider
+      value={{ setRecord, record, isEditForm, setIsEditForm }}
+    >
       {children}
     </ExpenseUpdatingContext.Provider>
   );

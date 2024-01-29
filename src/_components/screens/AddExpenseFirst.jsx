@@ -24,8 +24,10 @@ import "antd/dist/antd.css";
 import moment from "moment";
 
 const AddExpense = () => {
-  const { record, setRecord } = useContext(ExpenseUpdatingContext);
-  console.log("recordrecord222222222222222222", record);
+  const { record, setRecord, isEditForm, setIsEditForm } = useContext(
+    ExpenseUpdatingContext
+  );
+  setIsEditForm(false);
   const [form] = Form.useForm();
 
   function getFullDate(vals) {
@@ -60,7 +62,7 @@ const AddExpense = () => {
         if (el != "expense_bill") formData.append(el, values[el]);
         else formData.append("expense_bill", categoryList1[0]);
       }
-      
+
       dispatch(postMileage(formData));
     }
   }
@@ -91,16 +93,17 @@ const AddExpense = () => {
         desc: record?.desc,
       });
     }
-    // return () => {
-    //   setRecord(null);
-    // };
+    return () => {
+      setRecord(null);
+    };
   }, [record]);
 
   useEffect(() => {
     dispatch(getCategoryListBulkExpense());
-    // return () => {
-    //   setRecord(null);
-    // };
+
+    return () => {
+      setRecord(null);
+    };
   }, []);
 
   const addBulkExpenseCategoryListSelector = useSelector(
