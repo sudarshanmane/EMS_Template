@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { getReportDetails, getReportList, submitReport, submitReportAction } from "../../store/Action/Actions";
+import {
+  getReportDetails,
+  getReportList,
+  submitReport,
+  submitReportAction,
+} from "../../store/Action/Actions";
 import { Modal, Space, Table } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
 import {
@@ -23,6 +28,8 @@ const ViewReportPage = () => {
     current: 1,
   });
 
+  const [submitButtonVisible, setSubmitButtonVisible] = useState(false);
+
   const onSubmitReport = () => {
     dispatch(submitReportAction({ id: id }));
   };
@@ -31,30 +38,47 @@ const ViewReportPage = () => {
 
   useEffect(() => {
     if (SubmitReportSelector) {
-       dispatch(getReportList({ payload: {}, URL: url }));
-        alert(SubmitReportSelector?.Status);
-        navigate("/home/AllReports");
-      }
+      dispatch(getReportList({ payload: {}, URL: url }));
+      alert(SubmitReportSelector?.Status);
+      navigate("/home/AllReports");
+    }
   }, [SubmitReportSelector]);
 
   const reportDetailsSelector = useSelector((state) => state.reportDetails);
+  // useEffect(() => {
+  //   if (reportDetailsSelector) {
+  //     const allExpenses = reportDetailsSelector?.expenses?.map((element) => ({
+  //       id: element.id,
+  //       expense_date: element.expense_date,
+  //       expense_bill: element.expense_bill,
+  //       category: element.category,
+  //       amount: element.amount,
+  //     }));
+
+  //     setAllExpenses(allExpenses);
+  //     const status = reportDetailsSelector?.Status;
+  //     if (status !== "pending") {
+  //       setSubmitButtonVisible(false);
+  //     } else {
+  //       setSubmitButtonVisible(true);
+  //     }
+  //   }
+  // }, [reportDetailsSelector]);
+
   useEffect(() => {
     if (reportDetailsSelector) {
-      const allExpenses = reportDetailsSelector?.expenses?.map((element) => ({
-        id: element.id,
-        expense_date: element.expense_date,
-        expense_bill: element.expense_bill,
-        category: element.category,
-        amount: element.amount,
-      }));
-
-      setAllExpenses(allExpenses);
+      const status = reportDetailsSelector?.status;
+      if (status == "Pending") {
+        setSubmitButtonVisible(true);
+      }
+    } else {
+      setSubmitButtonVisible(false);
     }
   }, [reportDetailsSelector]);
 
   useEffect(() => {
     dispatch(getReportDetails({ id }));
-  }, []);
+  }, [id]);
 
   const handleViewReceipt = (record) => {
     setSelectedReceiptUrl(record || "");
@@ -144,13 +168,15 @@ const ViewReportPage = () => {
                     </div>
 
                     <div className="col-auto float-end ms-auto">
-                      <Link
-                        to="#"
-                        className="btn add-btn"
-                        onClick={() => onSubmitReport()}
-                      >
-                        <i className="fa fa-right" /> Submit
-                      </Link>
+                      {submitButtonVisible ? (
+                        <Link
+                          to="#"
+                          className="btn add-btn"
+                          onClick={() => onSubmitReport()}
+                        >
+                          <i className="fa fa-right" /> Submit
+                        </Link>
+                      ) : null}
                     </div>
                   </form>
                 </div>
