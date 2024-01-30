@@ -120,9 +120,10 @@ const ExpensePanel = () => {
 
   useEffect(() => {
     if (expenseDeletedResultSelector) {
-      getPageDetails(url);
+      dispatch(getExpenseList({ payload: {}, URL: url }));
     }
   }, [expenseDeletedResultSelector]);
+
 
   const onAttach = (data) => {
     setEditReportData(data);
@@ -196,7 +197,7 @@ const ExpensePanel = () => {
 
   useEffect(() => {
     if (updateExpensepanelResultSelector) {
-      getPageDetails(url);
+      dispatch(getExpenseList({ payload: {}, URL: url }));
     }
   }, [updateExpensepanelResultSelector]);
 
