@@ -437,7 +437,7 @@ const Sidebar = () => {
                 )}
               </li>
 
-              <li>
+              {/* <li>
                 <Link to="#">
                   <i className="la la-file-text" /> <span>Documentation</span>
                 </Link>
@@ -533,7 +533,7 @@ const Sidebar = () => {
                 ) : (
                   ""
                 )}
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>

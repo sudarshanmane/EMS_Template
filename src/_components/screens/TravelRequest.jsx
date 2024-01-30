@@ -289,87 +289,54 @@ const TravelRequest = () => {
       title: "From_Date",
       dataIndex: "from_date",
       key: "from_date",
-      sorter: (a, b) => a.start_date.length - b.start_date.length,
+     
     },
     {
       title: "To_Date",
       dataIndex: "to_date",
       key: "to_date",
-      sorter: (a, b) => a.start_date.length - b.start_date.length,
+     
     },
   ];
   
-  // Conditionally render Estimated Budget column for Travel Request and Approved tables
-  if (selectedOption !== "rejected") {
+  if (selectedOption === "allTravels") {
     columns.push({
-      title: "Estimated Budget",
-      dataIndex: "estimated_budget",
-      key: "estimated_budget",
-      sorter: (a, b) => a.estimated_budget - b.estimated_budget,
+      title: "Action",
+      render: (record) => (
+        <div className="dropdown dropdown-action text-end">
+          <Link
+            className="btn btn-success btn-sm m-r-5"
+            to="#"
+            data-bs-toggle="modal"
+            data-bs-target="#edit_travel"
+            onClick={() => onEdit(record)}
+          >
+            <i className="fa-solid fa-pen-to-square"></i>
+          </Link>
+          <Link
+            className="btn btn-danger btn-sm m-r-5"
+            to="#"
+            data-bs-toggle="modal"
+            data-bs-target="#delete_travel"
+            onClick={() => {
+              DeleteTravel(record);
+            }}
+          >
+            <i className="fa-regular fa-trash-can " />
+          </Link>
+          <button
+            className="btn btn-info btn-sm m-r-5"
+            onClick={() => {
+              onSubmitTravelRequest(record);
+            }}
+            disabled={submittedValues && submittedValues.id === record.id}
+          >
+            <i className="fa fa-paper-plane"></i>
+          </button>
+        </div>
+      ),
     });
   }
-  
-  // Conditionally render Approved Budget column for the Approved table
-  if (selectedOption === "approved") {
-    columns.push({
-      title: "Approved Budget",
-      dataIndex: "approved_budget",
-      key: "approved_budget",
-      sorter: (a, b) => a.approved_budget - b.approved_budget,
-    });
-  } else if (selectedOption === "rejected") {
-    // Conditionally render Remark column for the Rejected table
-    columns.push({
-      title: "Remark",
-      dataIndex: "remark",
-      key: "remark",
-    });
-  }
-  
-  // Add Action column for all tables
-  columns.push({
-    title: "Action",
-    render: (record) => (
-      <div className="dropdown dropdown-action text-end">
-        <Link
-          className="btn btn-success btn-sm m-r-5"
-          to="#"
-          data-bs-toggle="modal"
-          data-bs-target="#edit_travel"
-          onClick={() => onEdit(record)}
-        >
-          <i className="fa-solid fa-pen-to-square"></i>
-        </Link>
-  
-        {selectedOption !== "approved" && selectedOption !== "rejected" && (
-          <>
-            <Link
-              className="btn btn-danger btn-sm m-r-5"
-              to="#"
-              data-bs-toggle="modal"
-              data-bs-target="#delete_travel"
-              onClick={() => {
-                DeleteTravel(record);
-              }}
-            >
-              <i className="fa-regular fa-trash-can " />
-            </Link>
-  
-            <button
-              className="btn btn-info btn-sm m-r-5"
-              onClick={() => {
-                onSubmitTravelRequest(record);
-              }}
-              disabled={submittedValues && submittedValues.id === record.id}
-            >
-              <i className="fa fa-paper-plane"></i>
-            </button>
-          </>
-        )}
-      </div>
-    ),
-  });
-  
 
   return (
     
