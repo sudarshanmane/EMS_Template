@@ -286,13 +286,13 @@ const TravelRequest = () => {
       sorter: (a, b) => a.start_date.length - b.start_date.length,
     },
     {
-      title: "From_Date",
+      title: "From Date",
       dataIndex: "from_date",
       key: "from_date",
      
     },
     {
-      title: "To_Date",
+      title: "To Date",
       dataIndex: "to_date",
       key: "to_date",
      

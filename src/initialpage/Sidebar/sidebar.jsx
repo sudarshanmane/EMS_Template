@@ -398,7 +398,7 @@ const Sidebar = () => {
                   ""
                 )}
               </li>
-              <li className="submenu">
+              {/* <li className="submenu">
                 <Link
                   to="#"
                   className={isSideMenu == "profile" ? "subdrop" : ""}
@@ -435,7 +435,7 @@ const Sidebar = () => {
                 ) : (
                   ""
                 )}
-              </li>
+              </li> */}
 
               {/* <li>
                 <Link to="#">
