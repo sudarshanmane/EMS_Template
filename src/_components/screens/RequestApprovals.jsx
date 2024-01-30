@@ -83,9 +83,9 @@ const RequestApprovals = () => {
     }
   }, [getTravelSelector]);
 
-  useEffect(() => {
-    dispatch(getTravelApproval({ id }));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getTravelApproval({ id }));
+  // }, []);
 
   const approveTravelSelector = useSelector(
     (state) => state.approveTravelApprovalsSuccess
