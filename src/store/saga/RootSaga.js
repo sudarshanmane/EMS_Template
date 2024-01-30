@@ -104,7 +104,7 @@ import {
   postCommonGenerator,
   putCommonGenerator,
   commonDeleteRole,
-  exportCompanypanel,
+  // exportCompanypanel,
   getApprove,
   getReject,
   // =======================================
@@ -230,7 +230,6 @@ export function* RootSaga() {
 
   yield takeEvery(API_CONSTANTS.CREATE_VENDOR, createVendor);
   yield takeEvery(API_CONSTANTS.GET_VENDOR, getVendor);
-  // yield takeEvery(API_CONSTANTS.UPDATE_VENDOR, updateVendor);
 
   yield takeEvery(API_CONSTANTS.DELETE_VENDOR_TABLE, deleteVendorTable);
   yield takeEvery(API_CONSTANTS.UPDATE_VENDOR_TABLE, updateVendorTable);
@@ -250,12 +249,6 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.GET_ALL_USER, getAllUser);
   yield takeEvery(API_CONSTANTS.ADD_ALL_USER, addAllUser);
 
-  // ============================================================
-
-  yield takeEvery(API_CONSTANTS.EXPORT_COMPANY_PANEL, exportCompanypanel);
-
-  // -------------------- SUDARSHAN ------------------
-
   yield takeEvery(API_CONSTANTS.ADD_BULK_EXPENSE_REPORT, postCommonGenerator);
   yield takeEvery(
     API_CONSTANTS.GET_CATEGORY_LIST_BULK_EXPENSE,
@@ -265,4 +258,11 @@ export function* RootSaga() {
   yield takeEvery(API_CONSTANTS.POST_MILEAGE_DETAILS, postCommonGenerator);
   yield takeEvery(API_CONSTANTS.DELETE_EXPENSE, commonDeleteRole);
   yield takeEvery(API_CONSTANTS.UPDATE_EXPENSE, putCommonGenerator);
+
+  // ============================================================
+
+  // yield takeEvery(API_CONSTANTS.EXPORT_COMPANY_PANEL, exportCompanypanel);
+
+
+ 
 }

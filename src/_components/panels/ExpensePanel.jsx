@@ -468,7 +468,6 @@ const ExpensePanel = () => {
                               );
                             }}
                           >
-                            {console.log(reportSelector)}
                             <option value="">Select </option>
                             {reportSelector?.map((data) => (
                               <option value={data.id} key={data.id}>

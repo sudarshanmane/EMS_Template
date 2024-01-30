@@ -23,10 +23,6 @@ const AddExpenseBulk = () => {
   const [form] = Form.useForm();
   const [categoryList, setCategoryList] = useState([]);
 
-  useEffect(() => {
-    dispatch(getCategoryListBulkExpense());
-  }, []);
-
   const addBulkExpenseCategoryListSelector = useSelector(
     (state) => state.addBulkExpenseCategoryList
   );
@@ -55,7 +51,9 @@ const AddExpenseBulk = () => {
     let firstObj = {};
     firstObj.desc = vals.desc;
     firstObj.amount = vals.amount;
-    firstObj.claim_reimbursement = vals.claim_reimbursement;
+    firstObj.claim_reimbursement = vals.claim_reimbursement
+      ? vals.claim_reimbursement
+      : false;
     firstObj.expense_bill = vals.first_file;
     firstObj.expense_date = getDate(vals.expense_date);
     firstObj.category = vals.category;
@@ -65,7 +63,10 @@ const AddExpenseBulk = () => {
     formData.append(`desc`, vals.desc);
     formData.append(`category`, vals.category);
     formData.append(`amount`, vals.amount);
-    formData.append(`claim_reimbursement`, vals.claim_reimbursement);
+    formData.append(
+      `claim_reimbursement`,
+      vals.claim_reimbursement ? vals.claim_reimbursement : false
+    );
     formData.append(`expense_bill`, selectedFiles["first_file"]);
 
     let index = 1;
@@ -78,7 +79,10 @@ const AddExpenseBulk = () => {
         formData.append(`desc`, el.desc);
         formData.append(`category`, el.category);
         formData.append(`amount`, el.amount);
-        formData.append(`claim_reimbursement`, el.claim_reimbursement);
+        formData.append(
+          `claim_reimbursement`,
+          el.claim_reimbursement ? el.claim_reimbursement : false
+        );
         formData.append(`expense_bill`, selectedFiles[index]);
         dispatch(addBulkExpenseReport(formData));
         index++;

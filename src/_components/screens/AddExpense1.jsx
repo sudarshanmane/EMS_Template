@@ -38,6 +38,10 @@ const AddMileage = () => {
   function onFinish(values) {
     values.expense_date = getFullDate(values.date);
 
+    values.claim_reimbursement = values.claim_reimbursement
+      ? values.claim_reimbursement
+      : false;
+
     let formData = new FormData();
     for (const el in values) {
       if (el != "expense_bill") formData.append(el, values[el]);
@@ -52,10 +56,6 @@ const AddMileage = () => {
   }
 
   const [categoryList, setCategoryList] = useState([]);
-
-  useEffect(() => {
-    dispatch(getCategoryListBulkExpense());
-  }, []);
 
   const addBulkExpenseCategoryListSelector = useSelector(
     (state) => state.addBulkExpenseCategoryList

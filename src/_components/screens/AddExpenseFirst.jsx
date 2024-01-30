@@ -47,6 +47,10 @@ const AddExpense = () => {
   function onFinish(values) {
     if (record) {
       values.expense_date = getFullDate(values.expense_date);
+      values.claim_reimbursement = values.claim_reimbursement
+      ? values.claim_reimbursement
+      : false;
+
       let formData = new FormData();
       for (const el in values) {
         if (el != "expense_bill") formData.append(el, values[el]);
@@ -57,6 +61,10 @@ const AddExpense = () => {
       dispatch(updateExpense(formData, record.id));
     } else {
       values.expense_date = getFullDate(values.expense_date);
+      values.claim_reimbursement = values.claim_reimbursement
+        ? values.claim_reimbursement
+        : false;
+
       let formData = new FormData();
       for (const el in values) {
         if (el != "expense_bill") formData.append(el, values[el]);
