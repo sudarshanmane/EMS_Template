@@ -343,7 +343,7 @@ function getReimbursedAction(payload) {
 function getExpenseList(payload) {
   return {
     type: API_CONSTANTS.GET_EXPENSE_LIST,
-    // payload: payload.payload,
+    payload: payload.payload,
     URL: payload.URL,
     contentType: contentType.json,
   };

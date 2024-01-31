@@ -9,15 +9,14 @@ import { getCurrentUser } from "../../../store/Action/Actions";
 export default function SelfProfileHead() {
   const dispatch = useDispatch();
   const url = URLS.GET_CURRENT_USER_URL;
-  const [user, setUser] = useState([]);
 
-  function getPageDetails(url) {
-    dispatch(getCurrentUser({ payload: {}, URL: url }));
-  }
+  // function getPageDetails(url) {
+  //   dispatch(getCurrentUser({ payload: {}, URL: url }));
+  // }
 
-  useEffect(() => {
-    getPageDetails(url);
-  }, []);
+  // useEffect(() => {
+  //   getPageDetails(url);
+  // }, []);
 
   function fetchUserData(url) {
     dispatch(getCurrentUser({ payload: {}, URL: url }));

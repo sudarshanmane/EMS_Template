@@ -80,7 +80,7 @@ const AllReports = () => {
 
   const onSubmit = (values) => {
     dispatch(addReport(values));
-    message.success(addreportPanelSelector?.Status);
+    // message.success(addreportPanelSelector?.Status);
   };
 
   const viewReport = (record) => {
@@ -99,7 +99,7 @@ const AllReports = () => {
 
   const onUpdate = (values) => {
     dispatch(updateReportAction({ id: editReportData.id, payload: values }));
-    message.success(updatereportPanelSelector?.Status);
+    // message.success(updatereportPanelSelector?.Status);
     setIsEditFormVisible(false);
   };
 
@@ -237,8 +237,8 @@ const AllReports = () => {
   const addreportPanelSelector = useSelector((state) => state.addreportresult);
   useEffect(() => {
     if (addreportPanelSelector) {
-      message.success(addreportPanelSelector.Status);
       dispatch(getReportList({ payload: {}, URL: url }));
+      // message.success(addreportPanelSelector.Status);
       reset();
     }
     setIsAddFormVisible(false);
@@ -250,8 +250,8 @@ const AllReports = () => {
 
   useEffect(() => {
     if (updatereportPanelSelector) {
-      message.success(updatereportPanelSelector.Status);
       dispatch(getReportList({ payload: {}, URL: url }));
+      // message.success(updatereportPanelSelector.Status);
     }
     setIsAddFormVisible(false);
   }, [updatereportPanelSelector]);
@@ -262,8 +262,8 @@ const AllReports = () => {
 
   useEffect(() => {
     if (deleteReportlSelector) {
-      message.success("Report deleted successfully");
       dispatch(getReportList({ payload: {}, URL: url }));
+      // message.success("Report deleted successfully");
     }
   }, [deleteReportlSelector]);
 
@@ -275,16 +275,11 @@ const AllReports = () => {
 
   const SubmitReportSelector = useSelector((state) => state.submitreport);
 
-  // useEffect(() => {
-  //   console.log("SubmitReportSelector:", SubmitReportSelector);
-  //   if (SubmitReportSelector) {
-  //     dispatch(getReportList({ payload: {}, URL: url }));
-  //     // alert(SubmitReportSelector?.Status)
-  //     console.log("SubmitReportSelector?.Status",SubmitReportSelector?.Status)
-  //     // console.log("Status message:", `Report submitted successfully with status: ${SubmitReportSelector?.Status}`);
-  //     // message.success(`Report submitted successfully with status: ${SubmitReportSelector?.Status}`);
-  //   }
-  // }, [SubmitReportSelector]);
+  useEffect(() => {
+    if (SubmitReportSelector) {
+      dispatch(getReportList({ payload: {}, URL: url }));
+    }
+  }, [SubmitReportSelector]);
 
   const columns = [
     {

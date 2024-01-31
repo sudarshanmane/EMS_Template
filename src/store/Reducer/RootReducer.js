@@ -981,19 +981,6 @@ export const RootReducer = (state = initialState, action) => {
         fetchReportSuccess: action.result,
       };
 
-    case API_CONSTANTS.FETCH_REPORT:
-      return {
-        ...state,
-        loding: true,
-      };
-
-    case API_CONSTANTS.FETCH_REPORT_SUCCESS:
-      return {
-        ...state,
-        loding: false,
-        fetchReportSuccess: action.result,
-      };
-
     case API_CONSTANTS.UPDATE_MILEAGE:
       return {
         ...state,

@@ -67,7 +67,7 @@ const ViewReportPage = () => {
 
   const onSubmitReport = () => {
     dispatch(submitReportAction({ id: id }));
-    message.success(SubmitReportSelector?.Status);
+    // message.success(SubmitReportSelector?.Status);
   };
 
   const handleViewReceipt = (record) => {
