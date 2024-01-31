@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet";
 import { Link, useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { Table } from "antd";
+import { Table, message } from "antd";
 import { format } from "date-fns";
 import "antd/dist/antd.min.css";
 import {
@@ -80,6 +80,7 @@ const AllReports = () => {
 
   const onSubmit = (values) => {
     dispatch(addReport(values));
+    message.success(addreportPanelSelector?.Status);
   };
 
   const viewReport = (record) => {
@@ -98,6 +99,7 @@ const AllReports = () => {
 
   const onUpdate = (values) => {
     dispatch(updateReportAction({ id: editReportData.id, payload: values }));
+    message.success(updatereportPanelSelector?.Status);
     setIsEditFormVisible(false);
   };
 
@@ -166,7 +168,6 @@ const AllReports = () => {
 
   useEffect(() => {
     if (approveSelector) {
-      
       const allApprovedList = approveSelector.map((element) => {
         return {
           id: element.id,
@@ -234,9 +235,9 @@ const AllReports = () => {
   }, [reimbursedSelector]);
 
   const addreportPanelSelector = useSelector((state) => state.addreportresult);
-
   useEffect(() => {
     if (addreportPanelSelector) {
+      message.success(addreportPanelSelector.Status);
       dispatch(getReportList({ payload: {}, URL: url }));
       reset();
     }
@@ -249,6 +250,7 @@ const AllReports = () => {
 
   useEffect(() => {
     if (updatereportPanelSelector) {
+      message.success(updatereportPanelSelector.Status);
       dispatch(getReportList({ payload: {}, URL: url }));
     }
     setIsAddFormVisible(false);
@@ -260,22 +262,29 @@ const AllReports = () => {
 
   useEffect(() => {
     if (deleteReportlSelector) {
+      message.success("Report deleted successfully");
       dispatch(getReportList({ payload: {}, URL: url }));
     }
   }, [deleteReportlSelector]);
 
   const submitReport = (record) => {
     dispatch(submitReportAction({ id: record?.id }));
+    // alert(SubmitReportSelector?.Status)
+    message.success(SubmitReportSelector?.Status);
   };
 
   const SubmitReportSelector = useSelector((state) => state.submitreport);
 
-  useEffect(() => {
-    if (SubmitReportSelector) {
-       dispatch(getReportList({ payload: {}, URL: url }));
-      alert(SubmitReportSelector?.Status);
-    }
-  }, [SubmitReportSelector]);
+  // useEffect(() => {
+  //   console.log("SubmitReportSelector:", SubmitReportSelector);
+  //   if (SubmitReportSelector) {
+  //     dispatch(getReportList({ payload: {}, URL: url }));
+  //     // alert(SubmitReportSelector?.Status)
+  //     console.log("SubmitReportSelector?.Status",SubmitReportSelector?.Status)
+  //     // console.log("Status message:", `Report submitted successfully with status: ${SubmitReportSelector?.Status}`);
+  //     // message.success(`Report submitted successfully with status: ${SubmitReportSelector?.Status}`);
+  //   }
+  // }, [SubmitReportSelector]);
 
   const columns = [
     {

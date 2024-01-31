@@ -4,10 +4,9 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   getReportDetails,
   getReportList,
-  submitReport,
   submitReportAction,
 } from "../../store/Action/Actions";
-import { Modal, Space, Table } from "antd";
+import { Modal, Space, Table, message } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
 import {
   onShowSizeChange,
@@ -15,11 +14,13 @@ import {
 } from "../../MainPage/paginationfunction";
 import { URLS } from "../../Globals/URLS";
 
+
 const ViewReportPage = () => {
   const navigate = useNavigate();
   const [allExpenses, setAllExpenses] = useState([]);
   const [selectedReceiptUrl, setSelectedReceiptUrl] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
+  const [submitButtonVisible, setSubmitButtonVisible] = useState(false); 
   const { id } = useParams();
   const dispatch = useDispatch();
   const url = URLS.VIEW_REPORT_URL;
@@ -28,63 +29,51 @@ const ViewReportPage = () => {
     current: 1,
   });
 
-  const [submitButtonVisible, setSubmitButtonVisible] = useState(false);
-
-  const onSubmitReport = () => {
-    dispatch(submitReportAction({ id: id }));
-  };
-
   const SubmitReportSelector = useSelector((state) => state.submitreport);
 
-  useEffect(() => {
-    if (SubmitReportSelector) {
-      dispatch(getReportList({ payload: {}, URL: url }));
-      alert(SubmitReportSelector?.Status);
-      navigate("/home/AllReports");
-    }
-  }, [SubmitReportSelector]);
-
-  const reportDetailsSelector = useSelector((state) => state.reportDetails);
-  // useEffect(() => {
-  //   if (reportDetailsSelector) {
-  //     const allExpenses = reportDetailsSelector?.expenses?.map((element) => ({
-  //       id: element.id,
-  //       expense_date: element.expense_date,
-  //       expense_bill: element.expense_bill,
-  //       category: element.category,
-  //       amount: element.amount,
-  //     }));
-
-  //     setAllExpenses(allExpenses);
-  //     const status = reportDetailsSelector?.Status;
-  //     if (status !== "pending") {
-  //       setSubmitButtonVisible(false);
-  //     } else {
-  //       setSubmitButtonVisible(true);
-  //     }
-  //   }
-  // }, [reportDetailsSelector]);
-
-  useEffect(() => {
-    if (reportDetailsSelector) {
-      const status = reportDetailsSelector?.status;
-      if (status == "Pending") {
-        setSubmitButtonVisible(true);
-      }
-    } else {
-      setSubmitButtonVisible(false);
-    }
-  }, [reportDetailsSelector]);
+//   useEffect(() => {
+//     if (SubmitReportSelector) {
+//       dispatch(getReportList({ payload: {}, URL: url }));
+//       navigate("/home/AllReports");
+//     }
+//   }, [SubmitReportSelector]);
 
   useEffect(() => {
     dispatch(getReportDetails({ id }));
+  }, [id, dispatch]);
+
+  useEffect(() => {
+    if (!id) return;
+    setAllExpenses([]); 
+    setSubmitButtonVisible(false); 
   }, [id]);
+
+  const reportDetailsSelector = useSelector((state) => state.reportDetails);
+
+  useEffect(() => {
+    if (reportDetailsSelector) {
+      const status = reportDetailsSelector.status;
+      setSubmitButtonVisible(status === "Pending"); 
+      const allExpenses = reportDetailsSelector?.expenses?.map((element) => ({
+        id: element.id,
+        expense_date: element.expense_date,
+        expense_bill: element.expense_bill,
+        category: element.category,
+        amount: element.amount,
+      }));
+      setAllExpenses(allExpenses);
+    }
+  }, [reportDetailsSelector]);
+
+  const onSubmitReport = () => {
+    dispatch(submitReportAction({ id: id }));
+    message.success(SubmitReportSelector?.Status);
+  };
 
   const handleViewReceipt = (record) => {
     setSelectedReceiptUrl(record || "");
     setModalVisible(true);
   };
-
   const columns = [
     {
       title: "Sr No",
