@@ -277,7 +277,7 @@ const TravelRequest = () => {
     },
   ];
   
-  // Conditionally render Estimated Budget column for Travel Request and Approved tables
+
   if (selectedOption !== "rejected") {
     columns.push({
       title: "Estimated Budget",
@@ -287,7 +287,7 @@ const TravelRequest = () => {
     });
   }
   
-  // Conditionally render Approved Budget column for the Approved table
+
   if (selectedOption === "approved") {
     columns.push({
       title: "Approved Budget",
@@ -296,7 +296,7 @@ const TravelRequest = () => {
       sorter: (a, b) => a.approved_budget - b.approved_budget,
     });
   } else if (selectedOption === "rejected") {
-    // Conditionally render Remark column for the Rejected table
+
     columns.push({
       title: "Remark",
       dataIndex: "remark",

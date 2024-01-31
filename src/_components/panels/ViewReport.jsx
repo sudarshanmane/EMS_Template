@@ -194,7 +194,7 @@ const ViewReportPage = () => {
   ];
 
   return (
-    <>
+   
       <div className="page-wrapper">
         <div className="content container-fluid">
           <div>
@@ -434,7 +434,7 @@ const ViewReportPage = () => {
           </div>
         </div>
       </div>
-    </>
+
   );
 };
 
