@@ -1,10 +1,8 @@
-
 import React from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import PrivateRoute from "../Screens/Login/PrivateRoute";
 import Card from "../../_components/screens/Card";
 import Addexpense from "../../_components/screens/Addexpense";
-import ExpensePanel from "../../_components/panels/ExpensePanel";
 import CategoryTypePanel from "../../_components/panels/CategoryTypePanel";
 import Expenseapprovedpanel from "../../_components/panels/Expenseapprovedpanel";
 import ExpenseApprovalManager from "../../_components/panels/ExpenseApprovalManager";
@@ -22,7 +20,7 @@ import RolePermisson from "../../MainPage/Administration/Settings/rolespermissio
 import Registrationpage from "../../initialpage/RegistrationPage";
 import ViewReport from "../../_components/panels/ViewReport";
 import Employeeslist from "../../MainPage/Employees/Employees/employeeslist";
-import Addemployees from "../../MainPage/Employees/Employees/addemployee"; 
+import Addemployees from "../../MainPage/Employees/Employees/addemployee";
 import Certification from "../../MainPage/Employees/Employees/certification";
 import Educationform from "../../MainPage/Employees/Employees/educationform";
 import Experience from "../../MainPage/Employees/Employees/experience";
@@ -51,128 +49,206 @@ import LeavesList from "../../MainPage/Pages/Profile/leavelist";
 import ViewVendor from "../../_components/panels/ViewVendor";
 import TravelRequest from "../../_components/screens/TravelRequest";
 import RequestApprovals from "../../_components/screens/RequestApprovals";
-
 import AttendaceUser from "../../MainPage/Pages/Profile/attendaceuser";
-
+import AllReports from "../../_components/panels/AllReportsPanel";
+import ViewReportManager from "../../_components/panels/ViewReportManager";
+import ExpensePanel from "./../../_components/panels/ExpensePanel";
+import ContextForUpdatingRecord from "../../_components/screens/ContextForUpdatingRecord";
 
 const Navigates = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={<Navigate to="/home/addexpense"></Navigate>}
-        ></Route>
+    <ContextForUpdatingRecord>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={<Navigate to="/home/addexpense"></Navigate>}
+          ></Route>
 
-        <Route path="/home" element={<PrivateRoute></PrivateRoute>}>
-          <Route path="applyforcard" element={<Card></Card>}></Route>
-          <Route path="travelRequest" element={<TravelRequest></TravelRequest>}></Route>
-          <Route path="requestApprovals" element={<RequestApprovals></RequestApprovals>}></Route>
-          <Route path="/home/viewReport/:id" element={<ViewReport />} />
-          <Route path="/home/viewReportApproved/:id" element={<ViewReportApproved/>}></Route>
-          <Route path="/home/viewVendor/:id" element={<ViewVendor/>}></Route>
-
-          
-          
-          <Route path="addexpense" element={<Addexpense></Addexpense>}></Route>
-          <Route path="addemployee" element={<Addemployees></Addemployees>}></Route>
-          <Route path="certification" element={<Certification></Certification>}></Route>
-          <Route path="educationform" element={<Educationform></Educationform>}></Route>
-          <Route path="experience" element={<Experience></Experience>}></Route>
-          <Route path="salary" element={<Salary></Salary>}></Route>
-          <Route path="userRegistrationSetting" element={<UserRegistrationSetting></UserRegistrationSetting>}></Route>
-          <Route path="userRegistration" element={<UserRegistration></UserRegistration>}></Route>
-          <Route path="PersonalInformation" element={<PersonalInformation></PersonalInformation>}></Route>
-          <Route path="selfProfile" element={<SelfProfile></SelfProfile>}></Route>
-          <Route path="selfprofilehead" element={<SelfProfileHead></SelfProfileHead>}></Route>
-          <Route path="/home/viewEmployee/:id" element={<ViewEmployee></ViewEmployee>}></Route>
-          <Route path="profilePage" element={<ProfilePage></ProfilePage>}></Route>
-          <Route path="projects" element={<Projects></Projects>}></Route>
-          <Route path="bankstatutory" element={<BankStatutory></BankStatutory>}></Route>
-          <Route path="assets" element={<Assets></Assets>}></Route>
-          <Route path="userSetting" element={<Usersetting></Usersetting>}></Route>
-          <Route path="attendaceuser" element={<AttendaceUser></AttendaceUser>}></Route>
-          <Route path="leavelist" element={<LeavesList></LeavesList>}></Route>
-
-          <Route path="personalinfo" element={<PersonalInfo></PersonalInfo>}></Route>
-          <Route path="emergencycontact" element={<EmergencyContact></EmergencyContact>}></Route>
-          <Route path="bankinfo" element={<BankInfo></BankInfo>}></Route>
-          <Route path="certificateinfo" element={<CertificateInfo></CertificateInfo>}></Route>
-          <Route path="educationprofile" element={<EducationProfile></EducationProfile>}></Route>
-          <Route path="experienceprofile" element={<ExperienceProfile></ExperienceProfile>}></Route>
-          <Route path="documentprofile" element={<DocumentProfile></DocumentProfile>}></Route>
-
-
-
-
-          <Route
-            path="expensepanel"
-            element={<ExpensePanel></ExpensePanel>}
-          ></Route>
-          <Route
-            path="expensecategorypanel"
-            element={<CategoryTypePanel></CategoryTypePanel>}
-          ></Route>
-          <Route
-            path="expenseapproval"
-            element={<Expenseapprovedpanel></Expenseapprovedpanel>}
-          ></Route>
-          <Route
-            path="expenseapprovalbyfinancemanager"
-            element={<ExpenseApprovalManager></ExpenseApprovalManager>}
-          ></Route>
-          <Route
-            path="client-profile"
-            element={<ClientProfile></ClientProfile>}
-          ></Route>
-          <Route
-            path="employee-profile"
-            element={<EmployeeProfile></EmployeeProfile>}
-          ></Route>
-          <Route
-            path="Reports"
-            element={<ExpenseReportPanel></ExpenseReportPanel>}
-          ></Route>
-          <Route
-            path="ExpenseApprovals"
-            element={<ExpenseApprovals></ExpenseApprovals>}
-          ></Route>
-          
+          <Route path="/home" element={<PrivateRoute></PrivateRoute>}>
+            <Route path="applyforcard" element={<Card></Card>}></Route>
+            <Route
+              path="travelRequest"
+              element={<TravelRequest></TravelRequest>}
+            ></Route>
+            <Route
+              path="requestApprovals"
+              element={<RequestApprovals></RequestApprovals>}
+            ></Route>
+            <Route path="/home/viewReport/:id" element={<ViewReport />} />
+            <Route
+              path="viewReportManager/:id"
+              element={<ViewReportManager></ViewReportManager>}
+            ></Route>
+            <Route
+              path="/home/viewReportApproved/:id"
+              element={<ViewReportApproved />}
+            ></Route>
+            <Route path="/home/viewVendor/:id" element={<ViewVendor />}></Route>
 
             <Route
-            path="employeeslist"
-            element={<Employeeslist></Employeeslist>}
-          ></Route>
+              path="addexpense"
+              element={<Addexpense></Addexpense>}
+            ></Route>
+
+            <Route
+              path="addemployee"
+              element={<Addemployees></Addemployees>}
+            ></Route>
+            <Route
+              path="certification"
+              element={<Certification></Certification>}
+            ></Route>
+            <Route
+              path="educationform"
+              element={<Educationform></Educationform>}
+            ></Route>
+            <Route
+              path="experience"
+              element={<Experience></Experience>}
+            ></Route>
+            <Route path="salary" element={<Salary></Salary>}></Route>
+            <Route
+              path="userRegistrationSetting"
+              element={<UserRegistrationSetting></UserRegistrationSetting>}
+            ></Route>
+            <Route
+              path="userRegistration"
+              element={<UserRegistration></UserRegistration>}
+            ></Route>
+            <Route
+              path="PersonalInformation"
+              element={<PersonalInformation></PersonalInformation>}
+            ></Route>
+            <Route
+              path="selfProfile"
+              element={<SelfProfile></SelfProfile>}
+            ></Route>
+            <Route
+              path="selfprofilehead"
+              element={<SelfProfileHead></SelfProfileHead>}
+            ></Route>
+            <Route
+              path="/home/viewEmployee/:id"
+              element={<ViewEmployee></ViewEmployee>}
+            ></Route>
+            <Route
+              path="profilePage"
+              element={<ProfilePage></ProfilePage>}
+            ></Route>
+            <Route path="projects" element={<Projects></Projects>}></Route>
+            <Route
+              path="bankstatutory"
+              element={<BankStatutory></BankStatutory>}
+            ></Route>
+            <Route path="assets" element={<Assets></Assets>}></Route>
+            <Route
+              path="userSetting"
+              element={<Usersetting></Usersetting>}
+            ></Route>
+            <Route
+              path="attendaceuser"
+              element={<AttendaceUser></AttendaceUser>}
+            ></Route>
+            <Route path="leavelist" element={<LeavesList></LeavesList>}></Route>
+
+            <Route
+              path="personalinfo"
+              element={<PersonalInfo></PersonalInfo>}
+            ></Route>
+            <Route
+              path="emergencycontact"
+              element={<EmergencyContact></EmergencyContact>}
+            ></Route>
+            <Route path="bankinfo" element={<BankInfo></BankInfo>}></Route>
+            <Route
+              path="certificateinfo"
+              element={<CertificateInfo></CertificateInfo>}
+            ></Route>
+            <Route
+              path="educationprofile"
+              element={<EducationProfile></EducationProfile>}
+            ></Route>
+            <Route
+              path="experienceprofile"
+              element={<ExperienceProfile></ExperienceProfile>}
+            ></Route>
+            <Route
+              path="documentprofile"
+              element={<DocumentProfile></DocumentProfile>}
+            ></Route>
+            <Route
+              path="AllReports"
+              element={<AllReports></AllReports>}
+            ></Route>
+
+            <Route
+              path="expensepanel"
+              element={<ExpensePanel></ExpensePanel>}
+            ></Route>
+            <Route
+              path="expensecategorypanel"
+              element={<CategoryTypePanel></CategoryTypePanel>}
+            ></Route>
+            <Route
+              path="expenseapproval"
+              element={<Expenseapprovedpanel></Expenseapprovedpanel>}
+            ></Route>
+            <Route
+              path="expenseapprovalbyfinancemanager"
+              element={<ExpenseApprovalManager></ExpenseApprovalManager>}
+            ></Route>
+            <Route
+              path="client-profile"
+              element={<ClientProfile></ClientProfile>}
+            ></Route>
+            <Route
+              path="employee-profile"
+              element={<EmployeeProfile></EmployeeProfile>}
+            ></Route>
+            <Route
+              path="Reports"
+              element={<ExpenseReportPanel></ExpenseReportPanel>}
+            ></Route>
+            <Route
+              path="ExpenseApprovals"
+              element={<ExpenseApprovals></ExpenseApprovals>}
+            ></Route>
+            <Route
+              path="employeeslist"
+              element={<Employeeslist></Employeeslist>}
+            ></Route>
+            <Route
+              path="cardapproval"
+              element={<CardApproval></CardApproval>}
+            ></Route>
+            <Route
+              path="ExpensePolicies"
+              element={<ExpensePolicies></ExpensePolicies>}
+            ></Route>
+            <Route path="mileage" element={<Mileage></Mileage>}></Route>
+            <Route path="expenses" element={<Expenses></Expenses>}></Route>
+            <Route
+              path="VendorPannel"
+              element={<VendorPannel></VendorPannel>}
+            ></Route>
+            <Route
+              path="changepassword"
+              element={<ChangePassword></ChangePassword>}
+            ></Route>
+            <Route
+              path="rolespermission"
+              element={<RolePermisson></RolePermisson>}
+            ></Route>
+          </Route>
+          <Route path="/login" element={<Loginpage></Loginpage>}></Route>
           <Route
-            path="cardapproval"
-            element={<CardApproval></CardApproval>}
+            path="/register"
+            element={<Registrationpage></Registrationpage>}
           ></Route>
-          <Route
-            path="ExpensePolicies"
-            element={<ExpensePolicies></ExpensePolicies>}
-          ></Route>
-          <Route path="mileage" element={<Mileage></Mileage>}></Route>
-          <Route path="expenses" element={<Expenses></Expenses>}></Route>
-          <Route
-            path="VendorPannel"
-            element={<VendorPannel></VendorPannel>}
-          ></Route>
-          <Route
-            path="changepassword"
-            element={<ChangePassword></ChangePassword>}
-          ></Route>
-          <Route
-            path="rolespermission"
-            element={<RolePermisson></RolePermisson>}
-          ></Route>
-        </Route>
-        <Route path="/login" element={<Loginpage></Loginpage>}></Route>
-        <Route
-          path="/register"
-          element={<Registrationpage></Registrationpage>}
-        ></Route>
-      </Routes>
-    </BrowserRouter>
+        </Routes>
+      </BrowserRouter>
+    </ContextForUpdatingRecord>
   );
 };
 

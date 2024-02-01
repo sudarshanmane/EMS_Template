@@ -59,12 +59,13 @@ const RequestApprovals = () => {
     setSelectedDate2(date);
   };
 
-  function getPageDetails(url) {
-    dispatch(getTravelApproval({ payload: {}, URL: url }));
-  }
-  useEffect(() => {
-    getPageDetails(url);
-  }, []);
+  // function getPageDetails(url) {
+  //   dispatch(getTravelApproval({ payload: {}, URL: url }));
+  // }
+  // useEffect(() => {
+  //   getPageDetails(url);
+  // }, []);
+
   function fetchPageDetials(url) {
     dispatch(getTravelApproval({ payload: {}, URL: url }));
   }
@@ -82,16 +83,21 @@ const RequestApprovals = () => {
     }
   }, [getTravelSelector]);
 
-  useEffect(() => {
-    dispatch(getTravelApproval({ id }));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getTravelApproval({ id }));
+  // }, []);
 
   const approveTravelSelector = useSelector(
     (state) => state.approveTravelApprovalsSuccess
   );
 
+  useEffect(() => {
+    if (approveTravelSelector) {
+      dispatch(getTravelApproval({ payload: {}, URL: url }));
+    }
+  }, [approveTravelSelector]);
+
   const onApproveTravelApprovals = (record) => {
-    console.log("values", record);
     dispatch(
       approveTravelApprovals({ id: approveTravleData.id, payload: record })
     );
@@ -104,9 +110,16 @@ const RequestApprovals = () => {
     ApproveSetValue("approved_budget", record.estimated_budget);
   };
 
+  
   const rejectTravelSelector = useSelector(
     (state) => state.rejectTravelApprovalsSuccess
   );
+
+  useEffect(() => {
+    if (rejectTravelSelector) {
+      dispatch(getTravelApproval({ payload: {}, URL: url }));
+    }
+  }, [rejectTravelSelector]);
 
   const onRejectTravelApprovals = (record) => {
     dispatch(

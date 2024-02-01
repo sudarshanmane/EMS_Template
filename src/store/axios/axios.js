@@ -3,8 +3,9 @@ import { http } from "./http";
 
 export const Method = {
   async postData(action) {
+    console.log("actionaction", action);
     try {
-      const response = http.post(action.URL, action.payload, {
+      const response = await http.post(action.URL, action.payload, {
         headers: {
           "Content-Type": action.contentType,
           Authorization: `Token ${getToken() ? getToken() : ""}`,
@@ -18,7 +19,7 @@ export const Method = {
 
   async getData(action) {
     try {
-      const response = http.get(action.URL, {
+      const response = await http.get(action.URL, {
         headers: {
           "Content-Type": action.contentType,
           Authorization: `Token ${getToken() ? getToken() : ""}`,

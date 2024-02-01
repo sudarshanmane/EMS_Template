@@ -259,10 +259,19 @@ function addReport(payload) {
   };
 }
 
+function submitReportAction(payload) {
+  return {
+    type: API_CONSTANTS.SUBMIT_REPORT,
+    payload: payload.payload,
+    URL: URLS.SUBMIT_REPORT_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
 function addSelectedReport(payload) {
   return {
     type: API_CONSTANTS.ADD_SELECTED_REPORT,
-    payload: payload.payload,
+    payload: payload,
     URL: URLS.ADD_SELECTED_REPORT_URL + payload.id + "/",
     contentType: contentType.json,
   };
@@ -271,6 +280,15 @@ function addSelectedReport(payload) {
 function getReportList(payload) {
   return {
     type: API_CONSTANTS.GET_REPORT_LIST,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
+function getSubmittedReportList(payload) {
+  return {
+    type: API_CONSTANTS.GET_SUBMITTED_REPORT_LIST,
     payload: payload.payload,
     URL: payload.URL,
     contentType: contentType.json,
@@ -295,10 +313,37 @@ function getApprovedReportList(payload) {
   };
 }
 
+function getApprovedAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_APPROVED_REPORT,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
+function getRejectedAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_REJECTED_REPORT,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
+function getReimbursedAction(payload) {
+  return {
+    type: API_CONSTANTS.GET_REIMBURSED_REPORT,
+    payload: payload.payload,
+    URL: payload.URL,
+    contentType: contentType.json,
+  };
+}
+
 function getExpenseList(payload) {
   return {
     type: API_CONSTANTS.GET_EXPENSE_LIST,
-    payload: payload.payload,
+    // payload: payload.payload,
     URL: payload.URL,
     contentType: contentType.json,
   };
@@ -385,7 +430,6 @@ function addDocumentAction(payload) {
   };
 }
 
-
 function getDocumentAction(payload) {
   return {
     type: API_CONSTANTS.GET_DOCUMENT,
@@ -396,7 +440,6 @@ function getDocumentAction(payload) {
 }
 
 function updateDocumentAction(payload) {
-  console.log("payload",payload)
   return {
     type: API_CONSTANTS.UPDATE_DOCUMENT,
     payload: payload,
@@ -455,7 +498,6 @@ function getVendorData(payload) {
   };
 }
 
-
 function getVendorPayment(payload) {
   return {
     type: API_CONSTANTS.GET_VENDOR_PAYMENT,
@@ -465,9 +507,7 @@ function getVendorPayment(payload) {
   };
 }
 
-
 function createVendorPaymentAction(payload) {
-  console.log("Payload before API call:", payload);
   return {
     type: API_CONSTANTS.CREATE_VENDOR_PAYMENT,
     payload,
@@ -475,8 +515,6 @@ function createVendorPaymentAction(payload) {
     contentType: contentType.form,
   };
 }
-
-
 
 function approveReport(payload) {
   return {
@@ -495,7 +533,6 @@ function rejectReport(payload) {
     contentType: contentType.json,
   };
 }
-
 
 function addreimbursementRecord(payload) {
   return {
@@ -700,15 +737,6 @@ function approveCard(payload) {
   };
 }
 
-// function getExpensePolicy(payload) {
-//   return {
-//     type: API_CONSTANTS.GET_EXPENSE_POLICY,
-//     payload: payload.payload,
-//     URL: payload.URL,
-//     contentType: contentType.json,
-//   };
-// }
-
 function rejectCard(payload) {
   return {
     type: API_CONSTANTS.REJECT_CARD,
@@ -744,15 +772,6 @@ function deleteVendorTable(payload) {
   };
 }
 
-// function updateVendor(payload) {
-//   return {
-//     type: API_CONSTANTS.UPDATE_VENDOR,
-//     payload: payload.payload,
-//     URL: URLS.UPDATE_VENDOR_URL + payload.id + "/",
-//     contentType: contentType.json,
-//   };
-// }
-
 function updateVendorTable(payload) {
   return {
     type: API_CONSTANTS.UPDATE_VENDOR_TABLE,
@@ -770,7 +789,6 @@ function updateVendorPayment(payload) {
     contentType: contentType.json,
   };
 }
-
 
 function createTravel(payload) {
   return {
@@ -808,7 +826,6 @@ function updateTravel(payload) {
 }
 
 function submitTravelRequest(payload) {
-  console.log("payload",payload)
   return {
     type: API_CONSTANTS.SUBMIT_TRAVEL_REQUEST,
     payload: payload.payload,
@@ -816,7 +833,6 @@ function submitTravelRequest(payload) {
     contentType: contentType.json,
   };
 }
-
 
 function getTravelApproval(payload) {
   return {
@@ -828,7 +844,6 @@ function getTravelApproval(payload) {
 }
 
 function rejectTravelApprovals(payload) {
- console.log("payload", payload)
   return {
     type: API_CONSTANTS.REJECT_TRAVEL_REQUEST_APPROVALS,
     payload: payload.payload,
@@ -838,16 +853,14 @@ function rejectTravelApprovals(payload) {
 }
 
 function approveTravelApprovals(payload) {
-  console.log("payload", payload)
-   return {
-     type: API_CONSTANTS.APPROVE_TRAVEL_REQUEST_APPROVALS,
-     payload: payload.payload,
-     URL: URLS.APPROVE_TRAVEL_REQUEST_APPROVALS_URL + payload.id + "/",
-     contentType: contentType.json,
-   };
- }      
- 
- 
+  return {
+    type: API_CONSTANTS.APPROVE_TRAVEL_REQUEST_APPROVALS,
+    payload: payload.payload,
+    URL: URLS.APPROVE_TRAVEL_REQUEST_APPROVALS_URL + payload.id + "/",
+    contentType: contentType.json,
+  };
+}
+
 function getApprove(payload) {
   return {
     type: API_CONSTANTS.GET_APPROVE_TRAVEL_REQUEST_APPROVALS,
@@ -856,8 +869,6 @@ function getApprove(payload) {
     contentType: contentType.json,
   };
 }
-
-
 
 function getReject(payload) {
   return {
@@ -868,27 +879,6 @@ function getReject(payload) {
   };
 }
 
-
-function addAllUser(payload) {
-  return {
-    type: API_CONSTANTS.ADD_ALL_USER,
-    payload,
-    URL: URLS.ADD_ALL_USER_URL,
-    contentType: contentType.json,
-  };
-}
-
-function getAllUser(payload) {
-  return {
-    type: API_CONSTANTS.GET_ALL_USER,
-    payload: payload.payload,
-    URL: payload.URL,
-    contentType: contentType.json,
-  };
-}
-
-// ================================================================================
-
 function addExpenseItemSetup(payload) {
   return {
     type: API_CONSTANTS.ADD_EXPENSE_ITEM_SETUP,
@@ -897,194 +887,286 @@ function addExpenseItemSetup(payload) {
     contentType: contentType.json,
   };
 }
-function updateExpenseItemSetup(payload) {
-  return {
-    type: API_CONSTANTS.UPDATE_EXPENSE_ITEM_SETUP,
-    payload: payload.payload,
-    URL: payload.URL,
-    contentType: contentType.json,
-  };
-}
 
-function addExpenseTypeSetup(payload) {
+function addBulkExpenseReport(payload) {
   return {
-    type: API_CONSTANTS.ADD_EXPENSE_TYPE_SETUP,
+    type: API_CONSTANTS.ADD_BULK_EXPENSE_REPORT,
     payload,
-    URL: URLS.EXPENSE_TYPE_URL,
-    contentType: contentType.json,
-  };
-}
-
-function getAccountingCodeAction(payload) {
-  return {
-    type: API_CONSTANTS.GET_ACCOUNTING_CODE,
-    payload,
-    URL: URLS.GET_ACCOUNTING_CODE_URL,
-    contentType: contentType.json,
-  };
-}
-function addExternalAccountCodeAction(payload) {
-  return {
-    type: API_CONSTANTS.ADD_EXTERNAL_ACCOUNT_CODE,
-    payload,
-    URL: URLS.EXTERNAL_ACCOUNT_CODE_URL,
-    contentType: contentType.json,
-  };
-}
-
-function updateProfileuser(payload) {
-  return {
-    type: API_CONSTANTS.UPDATE_USER_PROFILE,
-    payload,
-    URL: URLS.UPDATE_USER_PROFILE_URL,
-    contentType: contentType.json,
-  };
-}
-
-function addUserAction(payload) {
-  return {
-    type: API_CONSTANTS.ADD_USER,
-    payload,
-    URL: URLS.ADD_USER_URL,
-    contentType: contentType.json,
-  };
-}
-
-function getRoleAction(payload) {
-  return {
-    type: API_CONSTANTS.GET_ROLE,
-    payload,
-    URL: URLS.GET_ROLE_URL,
-    contentType: contentType.json,
-  };
-}
-
-function getManagerListAction(payload) {
-  return {
-    type: API_CONSTANTS.GET_MANAGER_LIST,
-    payload,
-    URL: URLS.GET_MANAGER_LIST_URL,
-    contentType: contentType.json,
-  };
-}
-
-function addRoleAction(payload) {
-  return {
-    type: API_CONSTANTS.ADD_ROLE,
-    payload,
-    URL: URLS.GET_ROLE_URL,
-    contentType: contentType.json,
-  };
-}
-
-function Accountingcodesubmit(payload) {
-  return {
-    type: API_CONSTANTS.ACCOUNTING_CODE_SUBMIT,
-    payload,
-    URL: URLS.GET_ACCOUNTING_CODE_URL,
-    contentType: contentType.json,
-  };
-}
-function Getexpensetypelist(payload) {
-  return {
-    type: API_CONSTANTS.GET_EXPENSE_TYPE_LIST,
-    payload,
-    URL: URLS.EXPENSE_TYPE_URL,
-    contentType: contentType.json,
-  };
-}
-function getItemListonItemization(payload) {
-  return {
-    type: API_CONSTANTS.GET_ITEMNAME_LIST,
-    payload,
-    URL: URLS.EXPENSE_ITEM_SETUP_URL,
-  };
-}
-
-function EXpenseItemizationsubmit(payload) {
-  return {
-    type: API_CONSTANTS.EXPENSE_ITEMIZATION,
-    payload,
-    URL: URLS.ITEMIZATION_SUBMIT_URL,
-    contentType: contentType.json,
-  };
-}
-function addExpense(payload) {
-  return {
-    type: API_CONSTANTS.ADD_EXPENSE,
-    payload,
-    URL: URLS.ADD_EXPENSE_URL,
+    URL: URLS.ADD_BULK_EXPENSE_REPORT_URL,
     contentType: contentType.form,
   };
 }
 
-function getExpenseTypePanelAction(payload) {
+function setAddBulkExpenseReport() {
   return {
-    type: API_CONSTANTS.GET_EXPENSE_TYPE_PANEL,
-    payload: payload.payload,
-    URL: payload.URL,
+    type: API_CONSTANTS.SET_ADD_BULK_EXPENSE_FALSE,
+  };
+}
+
+function getCategoryListBulkExpense() {
+  return {
+    type: API_CONSTANTS.GET_CATEGORY_LIST_BULK_EXPENSE,
+    URL: URLS.GET_CATEGORY_PANEL_URL,
+    contentType: contentType.form,
+  };
+}
+
+function getTotalForDistance(payload) {
+  return {
+    type: API_CONSTANTS.GET_DISTANCE_FOR_TOTAL,
+    payload,
+    URL: URLS.GET_AMOUNT_FROM_DISTANCE_TRAVELED,
     contentType: contentType.json,
   };
 }
 
-function getExternalAccountCodePanelAction(payload) {
+function postMileage(payload) {
   return {
-    type: API_CONSTANTS.GET_EXTERNAL_ACCOUNT_CODE_PANEL,
-    payload: payload.payload,
-    URL: payload.URL,
-    contentType: contentType.json,
-  };
-}
-function aboutUs(payload) {
-  return {
-    type: API_CONSTANTS.UPDATE_ABOUTUS,
+    type: API_CONSTANTS.POST_MILEAGE_DETAILS,
     payload,
-    URL: URLS.UPDATE_ABOUTUS_URL,
-    contentType: contentType.json,
-  };
-}
-function contactUs(payload) {
-  return {
-    type: API_CONSTANTS.UPDATE_CONTACTUS,
-    payload,
-    URL: URLS.UPDATE_CONTACTUS_URL,
-    contentType: contentType.json,
+    URL: URLS.CREATE_EXPENSE_COMMON_URL,
+    contentType: contentType.form,
   };
 }
 
-function aboutUsPage(payload) {
+function setPostMileage() {
   return {
-    type: API_CONSTANTS.GET_ABOUTUS,
-    payload,
-    URL: URLS.UPDATE_ABOUTUS_URL,
-    contentType: contentType.json,
-  };
-}
-function contactUsPage(payload) {
-  return {
-    type: API_CONSTANTS.GET_CONTACTUS,
-    payload,
-    URL: URLS.GET_CONTACTUS_URL,
-    contentType: contentType.json,
+    type: API_CONSTANTS.POST_MILEAGE_DETAILS_RESULT_FALSE,
   };
 }
 
-function getCompanyList(payload) {
+function setExpenseUpdationResFalse() {
   return {
-    type: API_CONSTANTS.GET_COMPANY_LIST,
-    payload: payload.payload,
-    URL: payload.URL,
+    type: API_CONSTANTS.SET_EXPENSE_UPDATE_RESULT_FALSE,
+  };
+}
+
+function updateExpense(payload, id) {
+  return {
+    type: API_CONSTANTS.UPDATE_EXPENSE,
+    payload,
+    URL: URLS.UPDATE_EXPENSE + id + "/",
+    contentType: contentType.form,
+  };
+}
+
+function deleteExpenseAction(payload) {
+  return {
+    type: API_CONSTANTS.DELETE_EXPENSE,
+    payload,
+    URL: URLS.DELETE_EXPENSE_URL + payload.id + "/",
     contentType: contentType.json,
   };
 }
-function updateCompanyList(payload) {
-  return {
-    type: API_CONSTANTS.UPDATE_COMPANY_LIST,
-    payload: payload.payload,
-    URL: payload.URL,
-    contentType: contentType.json,
-  };
-}
+// function addAllUser(payload) {
+//   return {
+//     type: API_CONSTANTS.ADD_ALL_USER,
+//     payload,
+//     URL: URLS.ADD_ALL_USER_URL,
+//     contentType: contentType.json,
+//   };
+// }
+
+// function getAllUser(payload) {
+//   return {
+//     type: API_CONSTANTS.GET_ALL_USER,
+//     payload: payload.payload,
+//     URL: payload.URL,
+//     contentType: contentType.json,
+//   };
+// }
+
+// ================================================================================
+
+
+// function updateExpenseItemSetup(payload) {
+//   return {
+//     type: API_CONSTANTS.UPDATE_EXPENSE_ITEM_SETUP,
+//     payload: payload.payload,
+//     URL: payload.URL,
+//     contentType: contentType.json,
+//   };
+// }
+
+// function addExpenseTypeSetup(payload) {
+//   return {
+//     type: API_CONSTANTS.ADD_EXPENSE_TYPE_SETUP,
+//     payload,
+//     URL: URLS.EXPENSE_TYPE_URL,
+//     contentType: contentType.json,
+//   };
+// }
+
+// function getAccountingCodeAction(payload) {
+//   return {
+//     type: API_CONSTANTS.GET_ACCOUNTING_CODE,
+//     payload,
+//     URL: URLS.GET_ACCOUNTING_CODE_URL,
+//     contentType: contentType.json,
+//   };
+// }
+// function addExternalAccountCodeAction(payload) {
+//   return {
+//     type: API_CONSTANTS.ADD_EXTERNAL_ACCOUNT_CODE,
+//     payload,
+//     URL: URLS.EXTERNAL_ACCOUNT_CODE_URL,
+//     contentType: contentType.json,
+//   };
+// }
+
+// function updateProfileuser(payload) {
+//   return {
+//     type: API_CONSTANTS.UPDATE_USER_PROFILE,
+//     payload,
+//     URL: URLS.UPDATE_USER_PROFILE_URL,
+//     contentType: contentType.json,
+//   };
+// }
+
+// function addUserAction(payload) {
+//   return {
+//     type: API_CONSTANTS.ADD_USER,
+//     payload,
+//     URL: URLS.ADD_USER_URL,
+//     contentType: contentType.json,
+//   };
+// }
+
+// function getRoleAction(payload) {
+//   return {
+//     type: API_CONSTANTS.GET_ROLE,
+//     payload,
+//     URL: URLS.GET_ROLE_URL,
+//     contentType: contentType.json,
+//   };
+// }
+
+// function getManagerListAction(payload) {
+//   return {
+//     type: API_CONSTANTS.GET_MANAGER_LIST,
+//     payload,
+//     URL: URLS.GET_MANAGER_LIST_URL,
+//     contentType: contentType.json,
+//   };
+// }
+
+// function addRoleAction(payload) {
+//   return {
+//     type: API_CONSTANTS.ADD_ROLE,
+//     payload,
+//     URL: URLS.GET_ROLE_URL,
+//     contentType: contentType.json,
+//   };
+// }
+
+// function Accountingcodesubmit(payload) {
+//   return {
+//     type: API_CONSTANTS.ACCOUNTING_CODE_SUBMIT,
+//     payload,
+//     URL: URLS.GET_ACCOUNTING_CODE_URL,
+//     contentType: contentType.json,
+//   };
+// }
+// function Getexpensetypelist(payload) {
+//   return {
+//     type: API_CONSTANTS.GET_EXPENSE_TYPE_LIST,
+//     payload,
+//     URL: URLS.EXPENSE_TYPE_URL,
+//     contentType: contentType.json,
+//   };
+// }
+// function getItemListonItemization(payload) {
+//   return {
+//     type: API_CONSTANTS.GET_ITEMNAME_LIST,
+//     payload,
+//     URL: URLS.EXPENSE_ITEM_SETUP_URL,
+//   };
+// }
+
+// function EXpenseItemizationsubmit(payload) {
+//   return {
+//     type: API_CONSTANTS.EXPENSE_ITEMIZATION,
+//     payload,
+//     URL: URLS.ITEMIZATION_SUBMIT_URL,
+//     contentType: contentType.json,
+//   };
+// }
+// function addExpense(payload) {
+//   return {
+//     type: API_CONSTANTS.ADD_EXPENSE,
+//     payload,
+//     URL: URLS.ADD_EXPENSE_URL,
+//     contentType: contentType.form,
+//   };
+// }
+
+// function getExpenseTypePanelAction(payload) {
+//   return {
+//     type: API_CONSTANTS.GET_EXPENSE_TYPE_PANEL,
+//     payload: payload.payload,
+//     URL: payload.URL,
+//     contentType: contentType.json,
+//   };
+// }
+
+// function getExternalAccountCodePanelAction(payload) {
+//   return {
+//     type: API_CONSTANTS.GET_EXTERNAL_ACCOUNT_CODE_PANEL,
+//     payload: payload.payload,
+//     URL: payload.URL,
+//     contentType: contentType.json,
+//   };
+// }
+// function aboutUs(payload) {
+//   return {
+//     type: API_CONSTANTS.UPDATE_ABOUTUS,
+//     payload,
+//     URL: URLS.UPDATE_ABOUTUS_URL,
+//     contentType: contentType.json,
+//   };
+// }
+// function contactUs(payload) {
+//   return {
+//     type: API_CONSTANTS.UPDATE_CONTACTUS,
+//     payload,
+//     URL: URLS.UPDATE_CONTACTUS_URL,
+//     contentType: contentType.json,
+//   };
+// }
+
+// function aboutUsPage(payload) {
+//   return {
+//     type: API_CONSTANTS.GET_ABOUTUS,
+//     payload,
+//     URL: URLS.UPDATE_ABOUTUS_URL,
+//     contentType: contentType.json,
+//   };
+// }
+// function contactUsPage(payload) {
+//   return {
+//     type: API_CONSTANTS.GET_CONTACTUS,
+//     payload,
+//     URL: URLS.GET_CONTACTUS_URL,
+//     contentType: contentType.json,
+//   };
+// }
+
+// function getCompanyList(payload) {
+//   return {
+//     type: API_CONSTANTS.GET_COMPANY_LIST,
+//     payload: payload.payload,
+//     URL: payload.URL,
+//     contentType: contentType.json,
+//   };
+// }
+// function updateCompanyList(payload) {
+//   return {
+//     type: API_CONSTANTS.UPDATE_COMPANY_LIST,
+//     payload: payload.payload,
+//     URL: payload.URL,
+//     contentType: contentType.json,
+//   };
+// }
 
 // function getaccountingcodePanelAction(payload) {
 //   return {
@@ -1095,525 +1177,532 @@ function updateCompanyList(payload) {
 //   };
 // }
 
-function addUserPanelAction(payload) {
-  return {
-    type: API_CONSTANTS.GET_USER_PANEL,
-    payload: payload.payload,
-    URL: payload.URL,
-    contentType: contentType.json,
-  };
-}
+// function addUserPanelAction(payload) {
+//   return {
+//     type: API_CONSTANTS.GET_USER_PANEL,
+//     payload: payload.payload,
+//     URL: payload.URL,
+//     contentType: contentType.json,
+//   };
+// }
 
-function getExpenseItemSetupPanelAction(payload) {
-  return {
-    type: API_CONSTANTS.GET_EXPENSE_ITEM_SETUP_PANEL,
-    payload: payload.payload,
-    URL: payload.URL,
-    contentType: contentType.json,
-  };
-}
+// function getExpenseItemSetupPanelAction(payload) {
+//   return {
+//     type: API_CONSTANTS.GET_EXPENSE_ITEM_SETUP_PANEL,
+//     payload: payload.payload,
+//     URL: payload.URL,
+//     contentType: contentType.json,
+//   };
+// }
 
-function getPanelItemization(payload) {
-  return {
-    type: API_CONSTANTS.GET_ITEMIZATION_PANEL,
-    payload: payload.payload,
-    URL: payload.URL,
-    contentType: contentType.json,
-  };
-}
-function getaccountingcodePanelAction(payload) {
-  return {
-    type: API_CONSTANTS.GET_ACCOUNTINGCODE_PANEL,
-    payload: payload.payload,
-    URL: payload.URL,
-    contentType: contentType.json,
-  };
-}
+// function getPanelItemization(payload) {
+//   return {
+//     type: API_CONSTANTS.GET_ITEMIZATION_PANEL,
+//     payload: payload.payload,
+//     URL: payload.URL,
+//     contentType: contentType.json,
+//   };
+// }
+// function getaccountingcodePanelAction(payload) {
+//   return {
+//     type: API_CONSTANTS.GET_ACCOUNTINGCODE_PANEL,
+//     payload: payload.payload,
+//     URL: payload.URL,
+//     contentType: contentType.json,
+//   };
+// }
 
-function applyCardAction(payload) {
-  return {
-    type: API_CONSTANTS.APPLY_CARD,
-    payload,
-    URL: URLS.APPLY_CARD_URL,
-    contentType: contentType.json,
-  };
-}
+// function applyCardAction(payload) {
+//   return {
+//     type: API_CONSTANTS.APPLY_CARD,
+//     payload,
+//     URL: URLS.APPLY_CARD_URL,
+//     contentType: contentType.json,
+//   };
+// }
 
-function searchExpenseTypeAction(payload) {
-  return {
-    type: API_CONSTANTS.SEARCH_EXPENSE_TYPE,
-    payload,
-    URL: URLS.SEARCH_EXPENSE_TYPE_URL,
-    contentType: contentType.json,
-  };
-}
+// function searchExpenseTypeAction(payload) {
+//   return {
+//     type: API_CONSTANTS.SEARCH_EXPENSE_TYPE,
+//     payload,
+//     URL: URLS.SEARCH_EXPENSE_TYPE_URL,
+//     contentType: contentType.json,
+//   };
+// }
 
-function searchExternalAccountCodeAction(payload) {
-  return {
-    type: API_CONSTANTS.SEARCH_EXTERNAL_ACCOUNT_CODE,
-    payload,
-    URL: URLS.SEARCH_EXTERNAL_ACCOUNT_CODE_URL,
-    contentType: contentType.json,
-  };
-}
+// function searchExternalAccountCodeAction(payload) {
+//   return {
+//     type: API_CONSTANTS.SEARCH_EXTERNAL_ACCOUNT_CODE,
+//     payload,
+//     URL: URLS.SEARCH_EXTERNAL_ACCOUNT_CODE_URL,
+//     contentType: contentType.json,
+//   };
+// }
 
-function updateExpenseTypeAction(payload) {
-  return {
-    type: API_CONSTANTS.UPDATE_EXPENSE_TYPE,
-    payload: payload.payload,
-    URL: payload.URL,
-    contentType: contentType.json,
-  };
-}
-function updateAccountingcodepanelAction(payload) {
-  return {
-    type: API_CONSTANTS.UPDATE_ACCOUNTINGCODE_PANEL,
-    payload: payload.payload,
-    URL: payload.URL,
-    contentType: contentType.json,
-  };
-}
-function updateUserAction(payload) {
-  return {
-    type: API_CONSTANTS.UPDATE_USER,
-    payload: payload.payload,
-    URL: payload.URL,
-    contentType: contentType.json,
-  };
-}
+// function updateExpenseTypeAction(payload) {
+//   return {
+//     type: API_CONSTANTS.UPDATE_EXPENSE_TYPE,
+//     payload: payload.payload,
+//     URL: payload.URL,
+//     contentType: contentType.json,
+//   };
+// }
+// function updateAccountingcodepanelAction(payload) {
+//   return {
+//     type: API_CONSTANTS.UPDATE_ACCOUNTINGCODE_PANEL,
+//     payload: payload.payload,
+//     URL: payload.URL,
+//     contentType: contentType.json,
+//   };
+// }
+// function updateUserAction(payload) {
+//   return {
+//     type: API_CONSTANTS.UPDATE_USER,
+//     payload: payload.payload,
+//     URL: payload.URL,
+//     contentType: contentType.json,
+//   };
+// }
 
-function updateExternalAccountCodeAction(payload) {
-  return {
-    type: API_CONSTANTS.UPDATE_EXTERNAL_ACCOUNT_CODE,
-    payload: payload.payload,
-    URL: payload.URL,
-    contentType: contentType.json,
-  };
-}
+// function updateExternalAccountCodeAction(payload) {
+//   return {
+//     type: API_CONSTANTS.UPDATE_EXTERNAL_ACCOUNT_CODE,
+//     payload: payload.payload,
+//     URL: payload.URL,
+//     contentType: contentType.json,
+//   };
+// }
 
-function updateexpenseitemizationpanel(payload) {
-  return {
-    type: API_CONSTANTS.UPDATE_EXPENSEITEMIZATION_PANEL,
-    payload: payload.payload,
-    URL: payload.URL,
-    contentType: contentType.json,
-  };
-}
-function updateexpensepanel(payload) {
-  return {
-    type: API_CONSTANTS.UPDATE_EXPENSE_PANEL,
-    payload: payload.payload,
-    URL: payload.URL,
-    contentType: contentType.form,
-  };
-}
-function expensetableTrueSubmit(payload) {
-  return {
-    type: API_CONSTANTS.EXPENSETABLE_SUBMIT_API,
-    payload: payload.payload,
-    URL: URLS.EXPENSETABLE_SUBMIT_TRUE_URL + payload.id + "/",
-    contentType: contentType.json,
-  };
-}
-function expenseApprovedmanager(payload) {
-  return {
-    type: API_CONSTANTS.EXPENSE_APROVED_MANAGER,
-    payload,
-    URL: URLS.EXPENSE_APPROVED_MANEGER_URL + payload.id + "/",
-    contentType: contentType.json,
-  };
-}
-function expenseRejectmanager(payload) {
-  return {
-    type: API_CONSTANTS.EXPENSE_REJECT_MANGER,
-    payload,
-    URL: URLS.EXPENSE_REJECT_MANAGER_URL + payload.id + "/",
-    contentType: contentType.json,
-  };
-}
-function expenseHoldmanager(payload) {
-  return {
-    type: API_CONSTANTS.EXPENSE_HOLD_MANAGER,
-    payload,
-    URL: URLS.EXPENSE_HOLD_MANGER_URL + payload.id + "/",
-    contentType: contentType.json,
-  };
-}
-function getapprovedExpensepanelAction(payload) {
-  return {
-    type: API_CONSTANTS.EXPENSE_APPROVED_PPANEL_MANGER,
-    payload,
-    URL: URLS.GET_MANEGERAPPROVED_LIST_URL,
-    contentType: contentType.json,
-  };
-}
+// function updateexpenseitemizationpanel(payload) {
+//   return {
+//     type: API_CONSTANTS.UPDATE_EXPENSEITEMIZATION_PANEL,
+//     payload: payload.payload,
+//     URL: payload.URL,
+//     contentType: contentType.json,
+//   };
+// }
+// function updateexpensepanel(payload) {
+//   return {
+//     type: API_CONSTANTS.UPDATE_EXPENSE_PANEL,
+//     payload: payload.payload,
+//     URL: payload.URL,
+//     contentType: contentType.form,
+//   };
+// }
+// function expensetableTrueSubmit(payload) {
+//   return {
+//     type: API_CONSTANTS.EXPENSETABLE_SUBMIT_API,
+//     payload: payload.payload,
+//     URL: URLS.EXPENSETABLE_SUBMIT_TRUE_URL + payload.id + "/",
+//     contentType: contentType.json,
+//   };
+// }
+// function expenseApprovedmanager(payload) {
+//   return {
+//     type: API_CONSTANTS.EXPENSE_APROVED_MANAGER,
+//     payload,
+//     URL: URLS.EXPENSE_APPROVED_MANEGER_URL + payload.id + "/",
+//     contentType: contentType.json,
+//   };
+// }
+// function expenseRejectmanager(payload) {
+//   return {
+//     type: API_CONSTANTS.EXPENSE_REJECT_MANGER,
+//     payload,
+//     URL: URLS.EXPENSE_REJECT_MANAGER_URL + payload.id + "/",
+//     contentType: contentType.json,
+//   };
+// }
+// function expenseHoldmanager(payload) {
+//   return {
+//     type: API_CONSTANTS.EXPENSE_HOLD_MANAGER,
+//     payload,
+//     URL: URLS.EXPENSE_HOLD_MANGER_URL + payload.id + "/",
+//     contentType: contentType.json,
+//   };
+// }
+// function getapprovedExpensepanelAction(payload) {
+//   return {
+//     type: API_CONSTANTS.EXPENSE_APPROVED_PPANEL_MANGER,
+//     payload,
+//     URL: URLS.GET_MANEGERAPPROVED_LIST_URL,
+//     contentType: contentType.json,
+//   };
+// }
 
-function exportaccountingcode(payload) {
-  console.log("EXPORT_BUTTON_ACCOUNTINGCODE", payload);
-  return {
-    type: API_CONSTANTS.EXPORT_BUTTON_ACCOUNTINGCODE,
-    payload: payload.payload,
-    URL: payload.URL,
-    contentType: contentType.json,
-  };
-}
+// function exportaccountingcode(payload) {
+//   return {
+//     type: API_CONSTANTS.EXPORT_BUTTON_ACCOUNTINGCODE,
+//     payload: payload.payload,
+//     URL: payload.URL,
+//     contentType: contentType.json,
+//   };
+// }
 
-function getFinanceManagerExpenseListAction(payload) {
-  return {
-    type: API_CONSTANTS.FINANCE_MANAGER_EXPENSE_LIST,
-    payload,
-    URL: payload.URL,
-    contentType: contentType.form,
-  };
-}
-function financeManagerRejectAction(payload) {
-  return {
-    type: API_CONSTANTS.FINANCE_MANAGER_EXPENSE_REJECT,
-    payload: payload.payload,
-    URL: URLS.FINANCE_MANAGER_EXPENSE_REJECT_URL + payload.id + "/",
-    contentType: contentType.json,
-  };
-}
-function financeManagerHoldAction(payload) {
-  return {
-    type: API_CONSTANTS.FINANCE_MANAGER_EXPENSE_HOLD,
-    payload: payload.payload,
-    URL: URLS.FINANCE_MANAGER_EXPENSE_HOLD_URL + payload.id + "/",
-    contentType: contentType.json,
-  };
-}
-function financeManagerApproveAction(payload) {
-  return {
-    type: API_CONSTANTS.FINANCE_MANAGER_EXPENSE_APPROVE,
-    payload: payload.payload,
-    URL: URLS.FINANCE_MANAGER_EXPENSE_APPROVE_URL + payload.id + "/",
-    contentType: contentType.json,
-  };
-}
+// function getFinanceManagerExpenseListAction(payload) {
+//   return {
+//     type: API_CONSTANTS.FINANCE_MANAGER_EXPENSE_LIST,
+//     payload,
+//     URL: payload.URL,
+//     contentType: contentType.form,
+//   };
+// }
+// function financeManagerRejectAction(payload) {
+//   return {
+//     type: API_CONSTANTS.FINANCE_MANAGER_EXPENSE_REJECT,
+//     payload: payload.payload,
+//     URL: URLS.FINANCE_MANAGER_EXPENSE_REJECT_URL + payload.id + "/",
+//     contentType: contentType.json,
+//   };
+// }
+// function financeManagerHoldAction(payload) {
+//   return {
+//     type: API_CONSTANTS.FINANCE_MANAGER_EXPENSE_HOLD,
+//     payload: payload.payload,
+//     URL: URLS.FINANCE_MANAGER_EXPENSE_HOLD_URL + payload.id + "/",
+//     contentType: contentType.json,
+//   };
+// }
+// function financeManagerApproveAction(payload) {
+//   return {
+//     type: API_CONSTANTS.FINANCE_MANAGER_EXPENSE_APPROVE,
+//     payload: payload.payload,
+//     URL: URLS.FINANCE_MANAGER_EXPENSE_APPROVE_URL + payload.id + "/",
+//     contentType: contentType.json,
+//   };
+// }
 
-function addAccountByFinanceManagerAction(payload) {
-  return {
-    type: API_CONSTANTS.ACCOUNT_ADD_BY_FINANCE_MANAGER,
-    payload,
-    URL: URLS.ADD_ACCOUNT_BY_FINANCE_MANAGER_URL,
-    contentType: contentType.json,
-  };
-}
+// function addAccountByFinanceManagerAction(payload) {
+//   return {
+//     type: API_CONSTANTS.ACCOUNT_ADD_BY_FINANCE_MANAGER,
+//     payload,
+//     URL: URLS.ADD_ACCOUNT_BY_FINANCE_MANAGER_URL,
+//     contentType: contentType.json,
+//   };
+// }
 
-function CreateRoleAction(payload) {
-  return {
-    type: API_CONSTANTS.CREATE_ROLE,
-    URL: URLS.ROLE_COMMON_URL,
-    payload,
-    contentType: contentType.json,
-  };
-}
+// function CreateRoleAction(payload) {
+//   return {
+//     type: API_CONSTANTS.CREATE_ROLE,
+//     URL: URLS.ROLE_COMMON_URL,
+//     payload,
+//     contentType: contentType.json,
+//   };
+// }
 
-function updateRoleAction(payload) {
-  return {
-    type: API_CONSTANTS.UPDATE_ROLE,
-    URL: URLS.ROLE_COMMON_URL + payload.role_id + "/",
-    payload: payload.payload,
-    contentType: contentType.json,
-  };
-}
+// function updateRoleAction(payload) {
+//   return {
+//     type: API_CONSTANTS.UPDATE_ROLE,
+//     URL: URLS.ROLE_COMMON_URL + payload.role_id + "/",
+//     payload: payload.payload,
+//     contentType: contentType.json,
+//   };
+// }
 
-function getRoleListAction() {
-  return {
-    type: API_CONSTANTS.GET_ROLE_LIST_ACTION,
-    URL: URLS.ROLE_COMMON_URL,
-    contentType: contentType.json,
-  };
-}
+// function getRoleListAction() {
+//   return {
+//     type: API_CONSTANTS.GET_ROLE_LIST_ACTION,
+//     URL: URLS.ROLE_COMMON_URL,
+//     contentType: contentType.json,
+//   };
+// }
 
-function setStoreFeildFalse() {
-  return {
-    type: API_CONSTANTS.SET_STORE_VALUE_FALSE,
-  };
-}
+// function setStoreFeildFalse() {
+//   return {
+//     type: API_CONSTANTS.SET_STORE_VALUE_FALSE,
+//   };
+// }
 
-function deleteRoleAction(payload) {
-  return {
-    type: API_CONSTANTS.DELETE_ROLE,
-    URL: URLS.ROLE_COMMON_URL + payload.id + "/",
-    contentType: contentType.json,
-  };
-}
+// function deleteRoleAction(payload) {
+//   return {
+//     type: API_CONSTANTS.DELETE_ROLE,
+//     URL: URLS.ROLE_COMMON_URL + payload.id + "/",
+//     contentType: contentType.json,
+//   };
+// }
 
-function setDeleteRoleSuccessFalse(payload) {
-  return {
-    type: API_CONSTANTS.SET_DELETE_ROLE_SUCCESS_FALSE,
-  };
-}
-function setUpdateRoleSuccessFalse(payload) {
-  return {
-    type: API_CONSTANTS.SET_UPDATE_ROLE_FALSE,
-  };
-}
+// function setDeleteRoleSuccessFalse(payload) {
+//   return {
+//     type: API_CONSTANTS.SET_DELETE_ROLE_SUCCESS_FALSE,
+//   };
+// }
+// function setUpdateRoleSuccessFalse(payload) {
+//   return {
+//     type: API_CONSTANTS.SET_UPDATE_ROLE_FALSE,
+//   };
+// }
 
-function getUserRolePermissions(payload) {
-  return {
-    type: API_CONSTANTS.GET_USER_PERMISSIONS_HEADERS_AND_LIST,
-    URLS: {
-      headersURL: payload.headersURL,
-      permissionsURL: payload.permissionsURL,
-    },
-    contentType: contentType.json,
-  };
-}
+// function getUserRolePermissions(payload) {
+//   return {
+//     type: API_CONSTANTS.GET_USER_PERMISSIONS_HEADERS_AND_LIST,
+//     URLS: {
+//       headersURL: payload.headersURL,
+//       permissionsURL: payload.permissionsURL,
+//     },
+//     contentType: contentType.json,
+//   };
+// }
 
-function addEmployeeAccountNoAction(payload) {
-  return {
-    type: API_CONSTANTS.GET_EMPLOYEE_ACCOUNT_NO,
-    URL: URLS.GET_EMPLOYEE_ACCOUNTNO_URL + payload.employee_id + "/",
-    payload: payload.payload,
-    contentType: contentType.json,
-  };
-}
-function deleteExpenseItemSetupAction(payload) {
-  return {
-    type: API_CONSTANTS.DELETE_EXPENSE_ITEM_SETUP,
-    URL: URLS.EXPENSE_ITEM_SETUP_URL + payload.id + "/",
-    contentType: contentType.json,
-  };
-}
+// function addEmployeeAccountNoAction(payload) {
+//   return {
+//     type: API_CONSTANTS.GET_EMPLOYEE_ACCOUNT_NO,
+//     URL: URLS.GET_EMPLOYEE_ACCOUNTNO_URL + payload.employee_id + "/",
+//     payload: payload.payload,
+//     contentType: contentType.json,
+//   };
+// }
+// function deleteExpenseItemSetupAction(payload) {
+//   return {
+//     type: API_CONSTANTS.DELETE_EXPENSE_ITEM_SETUP,
+//     URL: URLS.EXPENSE_ITEM_SETUP_URL + payload.id + "/",
+//     contentType: contentType.json,
+//   };
+// }
 
-function setDeleteExpenseItemSetupFalse(payload) {
-  return {
-    type: API_CONSTANTS.SET_DELETE_EXPENSE_ITEM_SETUP_SUCCESS_FALSE,
-  };
-}
+// function setDeleteExpenseItemSetupFalse(payload) {
+//   return {
+//     type: API_CONSTANTS.SET_DELETE_EXPENSE_ITEM_SETUP_SUCCESS_FALSE,
+//   };
+// }
 
-function deleteExpenseTypeAction(payload) {
-  return {
-    type: API_CONSTANTS.DELETE_EXPENSE_TYPE,
-    URL: URLS.EXPENSE_TYPE_URL + payload.id + "/",
-    contentType: contentType.json,
-  };
-}
+// function deleteExpenseTypeAction(payload) {
+//   return {
+//     type: API_CONSTANTS.DELETE_EXPENSE_TYPE,
+//     URL: URLS.EXPENSE_TYPE_URL + payload.id + "/",
+//     contentType: contentType.json,
+//   };
+// }
 
-function deleteCompanyListAction(payload) {
-  return {
-    type: API_CONSTANTS.DELETE_EXPENSE_TYPE,
-    URL: URLS.DELETE_COMPANY_LIST_URL + payload.id + "/",
-    contentType: contentType.json,
-  };
-}
+// function deleteCompanyListAction(payload) {
+//   return {
+//     type: API_CONSTANTS.DELETE_EXPENSE_TYPE,
+//     URL: URLS.DELETE_COMPANY_LIST_URL + payload.id + "/",
+//     contentType: contentType.json,
+//   };
+// }
 
-function getDropdownFinanceManager(payload) {
-  return {
-    type: API_CONSTANTS.GET_FINANCE_MANAGER_LIST,
-    payload,
-    URL: URLS.GET_FINANCE_MANAGER_LIST_URL,
-    contentType: contentType.json,
-  };
-}
+// function getDropdownFinanceManager(payload) {
+//   return {
+//     type: API_CONSTANTS.GET_FINANCE_MANAGER_LIST,
+//     payload,
+//     URL: URLS.GET_FINANCE_MANAGER_LIST_URL,
+//     contentType: contentType.json,
+//   };
+// }
 
-function setDeleteExpenseTypeFalse(payload) {
-  return {
-    type: API_CONSTANTS.SET_DELETE_EXPENSE_TYPE_SUCCESS_FALSE,
-  };
-}
+// function setDeleteExpenseTypeFalse(payload) {
+//   return {
+//     type: API_CONSTANTS.SET_DELETE_EXPENSE_TYPE_SUCCESS_FALSE,
+//   };
+// }
 
-function deleteUserAction(payload) {
-  return {
-    type: API_CONSTANTS.DELETE_USER,
-    URL: URLS.DELETE_USER_URL + payload.id + "/",
-    contentType: contentType.json,
-  };
-}
+// function deleteUserAction(payload) {
+//   return {
+//     type: API_CONSTANTS.DELETE_USER,
+//     URL: URLS.DELETE_USER_URL + payload.id + "/",
+//     contentType: contentType.json,
+//   };
+// }
 
-function setDeleteUserFalse(payload) {
-  return {
-    type: API_CONSTANTS.SET_DELETE_USER_SUCCESS_FALSE,
-  };
-}
-function deleteExternalAccountCodeAction(payload) {
-  return {
-    type: API_CONSTANTS.DELETE_USER,
-    URL: URLS.EXTERNAL_ACCOUNT_CODE_URL + payload.id + "/",
-    contentType: contentType.json,
-  };
-}
+// function setDeleteUserFalse(payload) {
+//   return {
+//     type: API_CONSTANTS.SET_DELETE_USER_SUCCESS_FALSE,
+//   };
+// }
+// function deleteExternalAccountCodeAction(payload) {
+//   return {
+//     type: API_CONSTANTS.DELETE_USER,
+//     URL: URLS.EXTERNAL_ACCOUNT_CODE_URL + payload.id + "/",
+//     contentType: contentType.json,
+//   };
+// }
 
-function setDeleteExternalAccountCodeFalse(payload) {
-  return {
-    type: API_CONSTANTS.SET_DELETE_USER_SUCCESS_FALSE,
-  };
-}
+// function setDeleteExternalAccountCodeFalse(payload) {
+//   return {
+//     type: API_CONSTANTS.SET_DELETE_USER_SUCCESS_FALSE,
+//   };
+// }
 
-function exportExpenseTypeAction(payload) {
-  console.log("EXPORT_BUTTON", payload);
-  return {
-    type: API_CONSTANTS.EXPORT_EXPENSE_TYPE_LIST,
-    payload: payload.payload,
-    URL: payload.URL,
-    contentType: contentType.json,
-  };
-}
+// function exportExpenseTypeAction(payload) {
+//   return {
+//     type: API_CONSTANTS.EXPORT_EXPENSE_TYPE_LIST,
+//     payload: payload.payload,
+//     URL: payload.URL,
+//     contentType: contentType.json,
+//   };
+// }
 
-function exportExpenseItemSetupAction(payload) {
-  console.log("EXPORT_BUTTON", payload);
-  return {
-    type: API_CONSTANTS.EXPORT_EXPENSE_ITEM_SETUP,
-    payload: payload.payload,
-    URL: payload.URL,
-    contentType: contentType.json,
-  };
-}
+// function exportExpenseItemSetupAction(payload) {
+//   return {
+//     type: API_CONSTANTS.EXPORT_EXPENSE_ITEM_SETUP,
+//     payload: payload.payload,
+//     URL: payload.URL,
+//     contentType: contentType.json,
+//   };
+// }
 
-function exportExternalAccountCodeAction(payload) {
-  console.log("EXPORT_BUTTON", payload);
-  return {
-    type: API_CONSTANTS.EXPORT_EXTERNAL_ACCOUNT_CODE,
-    payload: payload.payload,
-    URL: payload.URL,
-    contentType: contentType.json,
-  };
-}
+// function exportExternalAccountCodeAction(payload) {
+//   return {
+//     type: API_CONSTANTS.EXPORT_EXTERNAL_ACCOUNT_CODE,
+//     payload: payload.payload,
+//     URL: payload.URL,
+//     contentType: contentType.json,
+//   };
+// }
 
-function exportUserAction(payload) {
-  console.log("EXPORT_BUTTON", payload);
-  return {
-    type: API_CONSTANTS.EXPORT_USER,
-    payload: payload.payload,
-    URL: payload.URL,
-    contentType: contentType.json,
-  };
-}
+// function exportUserAction(payload) {
+//   return {
+//     type: API_CONSTANTS.EXPORT_USER,
+//     payload: payload.payload,
+//     URL: payload.URL,
+//     contentType: contentType.json,
+//   };
+// }
 
-function exportFinanceMangerListAction(payload) {
-  console.log("EXPORT_BUTTON", payload);
-  return {
-    type: API_CONSTANTS.EXPORT_FINANCE_MANAGER_LIST,
-    payload: payload.payload,
-    URL: payload.URL,
-    contentType: contentType.json,
-  };
-}
-function exportCategorylistAction(payload) {
-  return {
-    type: API_CONSTANTS.EXPORT_CATEGORY_LIST,
-    payload: payload.payload,
-    URL: payload.URL,
-    contentType: contentType.json,
-  };
-}
-function exportItemizationListAction(payload) {
-  return {
-    type: API_CONSTANTS.EXPORT_EXPENSE_ITEMIZATION_LIST,
-    payload: payload.payload,
-    URL: payload.URL,
-    contentType: contentType.json,
-  };
-}
-function exportExpenseListAction(payload) {
-  return {
-    type: API_CONSTANTS.EXPORT_EXPENSE_LIST,
-    payload: payload.payload,
-    URL: payload.URL,
-    contentType: contentType.json,
-  };
-}
-function exportExpenseApprovedAction(payload) {
-  return {
-    type: API_CONSTANTS.EXPORT_EXPENSEAPPROVED_LIST,
-    payload: payload.payload,
-    URL: payload.URL,
-    contentType: contentType.json,
-  };
-}
+// function exportFinanceMangerListAction(payload) {
+//   return {
+//     type: API_CONSTANTS.EXPORT_FINANCE_MANAGER_LIST,
+//     payload: payload.payload,
+//     URL: payload.URL,
+//     contentType: contentType.json,
+//   };
+// }
+// function exportCategorylistAction(payload) {
+//   return {
+//     type: API_CONSTANTS.EXPORT_CATEGORY_LIST,
+//     payload: payload.payload,
+//     URL: payload.URL,
+//     contentType: contentType.json,
+//   };
+// }
+// function exportItemizationListAction(payload) {
+//   return {
+//     type: API_CONSTANTS.EXPORT_EXPENSE_ITEMIZATION_LIST,
+//     payload: payload.payload,
+//     URL: payload.URL,
+//     contentType: contentType.json,
+//   };
+// }
+// function exportExpenseListAction(payload) {
+//   return {
+//     type: API_CONSTANTS.EXPORT_EXPENSE_LIST,
+//     payload: payload.payload,
+//     URL: payload.URL,
+//     contentType: contentType.json,
+//   };
+// }
+// function exportExpenseApprovedAction(payload) {
+//   return {
+//     type: API_CONSTANTS.EXPORT_EXPENSEAPPROVED_LIST,
+//     payload: payload.payload,
+//     URL: payload.URL,
+//     contentType: contentType.json,
+//   };
+// }
 
-function ownExpenseDraftAction(payload) {
-  return {
-    type: API_CONSTANTS.OWN_EXPENSE_DRAFT_LIST,
-    payload,
-    URL: URLS.OWN_EXPENSE_DRAFT_URL,
-    contentType: contentType.json,
-  };
-}
+// function ownExpenseDraftAction(payload) {
+//   return {
+//     type: API_CONSTANTS.OWN_EXPENSE_DRAFT_LIST,
+//     payload,
+//     URL: URLS.OWN_EXPENSE_DRAFT_URL,
+//     contentType: contentType.json,
+//   };
+// }
 
-function ownExpenseRejectAction(payload) {
-  return {
-    type: API_CONSTANTS.OWN_EXPENSE_REJECT_LIST,
-    payload,
-    URL: URLS.OWN_EXPENSE_REJECT_URL,
-    contentType: contentType.json,
-  };
-}
-function ownExpenseHoldAction(data) {
-  return {
-    type: API_CONSTANTS.OWN_EXPENSE_HOLD_LIST,
-    payload: data,
-    URL: URLS.OWN_EXPENSE_HOLD_URL,
-    contentType: contentType.json,
-  };
-}
+// function ownExpenseRejectAction(payload) {
+//   return {
+//     type: API_CONSTANTS.OWN_EXPENSE_REJECT_LIST,
+//     payload,
+//     URL: URLS.OWN_EXPENSE_REJECT_URL,
+//     contentType: contentType.json,
+//   };
+// }
+// function ownExpenseHoldAction(data) {
+//   return {
+//     type: API_CONSTANTS.OWN_EXPENSE_HOLD_LIST,
+//     payload: data,
+//     URL: URLS.OWN_EXPENSE_HOLD_URL,
+//     contentType: contentType.json,
+//   };
+// }
 
-function deleteExpenseitemizationAction(payload) {
-  return {
-    type: API_CONSTANTS.DELETE_EXPENSEITEMIZAION_PANEL,
-    URL: URLS.ITEMIZATION_SUBMIT_URL + payload.id + "/",
-    contentType: contentType.json,
-  };
-}
-function deleteAccountingcodeAction(payload) {
-  return {
-    type: API_CONSTANTS.DELETE_ACCOUNTINGCODE_PANEL,
-    URL: URLS.GET_ACCOUNTING_CODE_URL + payload.id + "/",
-    contentType: contentType.json,
-  };
-}
-function deleteExpensepanelAction(payload) {
-  return {
-    type: API_CONSTANTS.DELETE_EXPENSE_PANEL,
-    URL: URLS.UPDATE_EXPENSE_PANEL_URL + payload.id + "/",
-    contentType: contentType.json,
-  };
-}
-function managercardapprovelAction(payload) {
-  return {
-    type: API_CONSTANTS.MANAGER_CARD_APPROVED_LIST,
-    payload,
-    URL: URLS.MANAGER_CARD_APPROVED_LIST_URL,
-    contentType: contentType.json,
-  };
-}
-function managercardRejectAction(payload) {
-  return {
-    type: API_CONSTANTS.MANAGER_CARD_REJECT_LIST,
-    payload,
-    URL: URLS.MANAGER_CARD_REJECT_LIST_URL,
-    contentType: contentType.json,
-  };
-}
-function managercardHoldAction(payload) {
-  return {
-    type: API_CONSTANTS.MANAGER_CARD_HOLD_LIST,
-    payload,
-    URL: URLS.MANAGER_CARD_HOLD_LIST_URL,
-    contentType: contentType.json,
-  };
-}
-function ownExpenseApproveAction(payload) {
-  return {
-    type: API_CONSTANTS.OWN_EXPENSE_APPROVE_LIST,
-    payload,
-    URL: URLS.OWN_EXPENSE_APPROVE_URL,
-    contentType: contentType.json,
-  };
-}
+// function deleteExpenseitemizationAction(payload) {
+//   return {
+//     type: API_CONSTANTS.DELETE_EXPENSEITEMIZAION_PANEL,
+//     URL: URLS.ITEMIZATION_SUBMIT_URL + payload.id + "/",
+//     contentType: contentType.json,
+//   };
+// }
+// function deleteAccountingcodeAction(payload) {
+//   return {
+//     type: API_CONSTANTS.DELETE_ACCOUNTINGCODE_PANEL,
+//     URL: URLS.GET_ACCOUNTING_CODE_URL + payload.id + "/",
+//     contentType: contentType.json,
+//   };
+// }
+// function deleteExpensepanelAction(payload) {
+//   return {
+//     type: API_CONSTANTS.DELETE_EXPENSE_PANEL,
+//     URL: URLS.UPDATE_EXPENSE_PANEL_URL + payload.id + "/",
+//     contentType: contentType.json,
+//   };
+// }
+// function managercardapprovelAction(payload) {
+//   return {
+//     type: API_CONSTANTS.MANAGER_CARD_APPROVED_LIST,
+//     payload,
+//     URL: URLS.MANAGER_CARD_APPROVED_LIST_URL,
+//     contentType: contentType.json,
+//   };
+// }
+// function managercardRejectAction(payload) {
+//   return {
+//     type: API_CONSTANTS.MANAGER_CARD_REJECT_LIST,
+//     payload,
+//     URL: URLS.MANAGER_CARD_REJECT_LIST_URL,
+//     contentType: contentType.json,
+//   };
+// }
+// function managercardHoldAction(payload) {
+//   return {
+//     type: API_CONSTANTS.MANAGER_CARD_HOLD_LIST,
+//     payload,
+//     URL: URLS.MANAGER_CARD_HOLD_LIST_URL,
+//     contentType: contentType.json,
+//   };
+// }
+// function ownExpenseApproveAction(payload) {
+//   return {
+//     type: API_CONSTANTS.OWN_EXPENSE_APPROVE_LIST,
+//     payload,
+//     URL: URLS.OWN_EXPENSE_APPROVE_URL,
+//     contentType: contentType.json,
+//   };
+// }
 
-function exportCompanyPanelAction(payload) {
-  return {
-    type: API_CONSTANTS.EXPORT_COMPANY_PANEL,
-    payload: payload.payload,
-    URL: payload.URL,
-    contentType: contentType.json,
-  };
-}
+// function exportCompanyPanelAction(payload) {
+//   return {
+//     type: API_CONSTANTS.EXPORT_COMPANY_PANEL,
+//     payload: payload.payload,
+//     URL: payload.URL,
+//     contentType: contentType.json,
+//   };
+// }
+
+
+
+
 
 export {
+  updateExpense,
+  setPostMileage,
+  setExpenseUpdationResFalse,
+  deleteExpenseAction,
+  postMileage,
+  getTotalForDistance,
+  getCategoryListBulkExpense,
+  setAddBulkExpenseReport,
+  addBulkExpenseReport,
   userLogin,
   changePassword,
   userRegister,
@@ -1674,7 +1763,6 @@ export {
   createVendor,
   getVendor,
   deleteVendorTable,
-  // updateVendor,
   updateVendorTable,
   updateVendorPayment,
   createTravel,
@@ -1707,94 +1795,99 @@ export {
   getDocumentAction,
   updateDocumentAction,
   removeDocumentAction,
-
-  // ===========================================================
-  addExpenseItemSetup,
-  getAccountingCodeAction,
-  addExpenseTypeSetup,
-  addExternalAccountCodeAction,
-  addUserAction,
-  getRoleAction,
-  getManagerListAction,
-  addRoleAction,
-  Accountingcodesubmit,
-  Getexpensetypelist,
-  getItemListonItemization,
-  EXpenseItemizationsubmit,
-  addExpense,
-  updateProfileuser,
-  getExpenseTypePanelAction,
-  getExternalAccountCodePanelAction,
-  aboutUs,
-  aboutUsPage,
-  contactUsPage,
-  contactUs,
-  getCompanyList,
-  updateCompanyList,
-  getExpenseItemSetupPanelAction,
-  addUserPanelAction,
-  getPanelItemization,
-  getaccountingcodePanelAction,
-  applyCardAction,
-  searchExpenseTypeAction,
-  searchExternalAccountCodeAction,
-  updateExpenseItemSetup,
-  updateExpenseTypeAction,
-  updateUserAction,
-  updateExternalAccountCodeAction,
-  updateAccountingcodepanelAction,
-  updateexpenseitemizationpanel,
-  updateexpensepanel,
-  expensetableTrueSubmit,
-  expenseApprovedmanager,
-  expenseRejectmanager,
-  expenseHoldmanager,
-  getapprovedExpensepanelAction,
-  exportaccountingcode,
-  getFinanceManagerExpenseListAction,
-  financeManagerRejectAction,
-  financeManagerHoldAction,
-  financeManagerApproveAction,
-  addAccountByFinanceManagerAction,
-  getRoleListAction,
-  setStoreFeildFalse,
-  deleteRoleAction,
-  setDeleteRoleSuccessFalse,
-  setUpdateRoleSuccessFalse,
-  CreateRoleAction,
-  updateRoleAction,
-  getUserRolePermissions,
-  addEmployeeAccountNoAction,
-  deleteExpenseItemSetupAction,
-  setDeleteExpenseItemSetupFalse,
-  deleteExpenseTypeAction,
-  setDeleteExpenseTypeFalse,
-  deleteUserAction,
-  setDeleteUserFalse,
-  deleteExternalAccountCodeAction,
+  submitReportAction,
+  getSubmittedReportList,
+  getApprovedAction,
+  getRejectedAction,
+  getReimbursedAction,
   getReportList,
   getApprovedReportList,
-  setDeleteExternalAccountCodeFalse,
-  exportExpenseTypeAction,
-  exportExpenseItemSetupAction,
-  exportExternalAccountCodeAction,
-  exportUserAction,
-  exportFinanceMangerListAction,
-  getDropdownFinanceManager,
-  exportCategorylistAction,
-  exportItemizationListAction,
-  exportExpenseListAction,
-  exportExpenseApprovedAction,
-  ownExpenseDraftAction,
-  ownExpenseRejectAction,
-  ownExpenseHoldAction,
-  deleteExpenseitemizationAction,
-  deleteAccountingcodeAction,
-  deleteExpensepanelAction,
-  managercardapprovelAction,
-  managercardRejectAction,
-  managercardHoldAction,
-  deleteCompanyListAction,
-  ownExpenseApproveAction,
-  exportCompanyPanelAction,
+  addExpenseItemSetup,
+
+  // ===========================================================
+  // getAccountingCodeAction,
+  // addExpenseTypeSetup,
+  // addExternalAccountCodeAction,
+  // addUserAction,
+  // getRoleAction,
+  // getManagerListAction,
+  // addRoleAction,
+  // Accountingcodesubmit,
+  // Getexpensetypelist,
+  // getItemListonItemization,
+  // EXpenseItemizationsubmit,
+  // addExpense,
+  // updateProfileuser,
+  // getExpenseTypePanelAction,
+  // getExternalAccountCodePanelAction,
+  // aboutUs,
+  // aboutUsPage,
+  // contactUsPage,
+  // contactUs,
+  // getCompanyList,
+  // updateCompanyList,
+  // getExpenseItemSetupPanelAction,
+  // addUserPanelAction,
+  // getPanelItemization,
+  // getaccountingcodePanelAction,
+  // applyCardAction,
+  // searchExpenseTypeAction,
+  // searchExternalAccountCodeAction,
+  // updateExpenseItemSetup,
+  // updateExpenseTypeAction,
+  // updateUserAction,
+  // updateExternalAccountCodeAction,
+  // updateAccountingcodepanelAction,
+  // updateexpenseitemizationpanel,
+  // updateexpensepanel,
+  // expensetableTrueSubmit,
+  // expenseApprovedmanager,
+  // expenseRejectmanager,
+  // expenseHoldmanager,
+  // getapprovedExpensepanelAction,
+  // exportaccountingcode,
+  // getFinanceManagerExpenseListAction,
+  // financeManagerRejectAction,
+  // financeManagerHoldAction,
+  // financeManagerApproveAction,
+  // addAccountByFinanceManagerAction,
+  // getRoleListAction,
+  // setStoreFeildFalse,
+  // deleteRoleAction,
+  // setDeleteRoleSuccessFalse,
+  // setUpdateRoleSuccessFalse,
+  // CreateRoleAction,
+  // updateRoleAction,
+  // getUserRolePermissions,
+  // addEmployeeAccountNoAction,
+  // deleteExpenseItemSetupAction,
+  // setDeleteExpenseItemSetupFalse,
+  // deleteExpenseTypeAction,
+  // setDeleteExpenseTypeFalse,
+  // deleteUserAction,
+  // setDeleteUserFalse,
+  // deleteExternalAccountCodeAction,
+  // setDeleteExternalAccountCodeFalse,
+  // exportExpenseTypeAction,
+  // exportExpenseItemSetupAction,
+  // exportExternalAccountCodeAction,
+  // exportUserAction,
+  // exportFinanceMangerListAction,
+  // getDropdownFinanceManager,
+  // exportCategorylistAction,
+  // exportItemizationListAction,
+  // exportExpenseListAction,
+  // exportExpenseApprovedAction,
+  // ownExpenseDraftAction,
+  // ownExpenseRejectAction,
+  // ownExpenseHoldAction,
+  // deleteExpenseitemizationAction,
+  // deleteAccountingcodeAction,
+  // deleteExpensepanelAction,
+  // managercardapprovelAction,
+  // managercardRejectAction,
+  // managercardHoldAction,
+  // deleteCompanyListAction,
+  // ownExpenseApproveAction,
+  // exportCompanyPanelAction,
 };

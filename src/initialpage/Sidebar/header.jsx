@@ -78,7 +78,7 @@ const Header = (props) => {
       {/* Header Menu */}
       <ul className="nav user-menu">
         {/* Search */}
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <div className="top-nav-search">
             <Link to="#" className="responsive-search">
               <i className="fa fa-search" />
@@ -94,10 +94,10 @@ const Header = (props) => {
               </button>
             </form>
           </div>
-        </li>
+        </li> */}
         {/* /Search */}
         {/* Flag */}
-        <li className="nav-item dropdown has-arrow flag-nav">
+        {/* <li className="nav-item dropdown has-arrow flag-nav">
           <Link
             className="nav-link dropdown-toggle"
             data-bs-toggle="dropdown"
@@ -120,10 +120,10 @@ const Header = (props) => {
               <img src={lnGerman} alt="" height={16} /> German
             </Link>
           </div>
-        </li>
+        </li> */}
         {/* /Flag */}
         {/* Notifications */}
-        <li className="nav-item dropdown">
+        {/* <li className="nav-item dropdown">
           <Link
             to="#"
             className="dropdown-toggle nav-link"
@@ -194,10 +194,10 @@ const Header = (props) => {
               </Link>
             </div>
           </div>
-        </li>
+        </li> */}
         {/* /Notifications */}
         {/* Message Notifications */}
-        <li className="nav-item dropdown">
+        {/* <li className="nav-item dropdown">
           <Link
             to="#"
             className="dropdown-toggle nav-link"
@@ -217,7 +217,7 @@ const Header = (props) => {
             <div className="noti-content"></div>
             <div className="topnav-dropdown-footer"></div>
           </div>
-        </li>
+        </li> */}
         {/* /Message Notifications */}
         <li className="nav-item dropdown has-arrow main-drop">
           <Link

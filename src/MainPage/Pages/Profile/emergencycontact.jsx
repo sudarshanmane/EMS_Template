@@ -128,7 +128,7 @@ export default function EmergencyContact({ userId }) {
         role="dialog"
       >
         <div
-          className="modal-dialog modal-dialog-centered modal-lg"
+          className="modal-dialog modal-dialog-centered modal-md"
           role="document"
         >
           <div className="modal-content">
@@ -146,7 +146,7 @@ export default function EmergencyContact({ userId }) {
             <div className="modal-body">
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="row">
-                  <div className="col-sm-6">
+                  <div className="col-sm-12">
                     <div className="input-block">
                       <label>Relation Name</label>
                       <input

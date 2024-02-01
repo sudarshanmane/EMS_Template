@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Modal, Space, Table } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   addReport,
   addSelectedReport,
-  deleteExpensepanelAction,
+  deleteExpenseAction,
   fetchReport,
   getExpenseList,
 } from "../../store/Action/Actions";
@@ -15,6 +15,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Controller, useForm } from "react-hook-form";
 import { format } from "date-fns";
+import { ExpenseUpdatingContext } from "../screens/ContextForUpdatingRecord";
 
 const ExpensePanel = () => {
   const [allExpenseList, setAllExpense] = useState([]);
@@ -28,13 +29,23 @@ const ExpensePanel = () => {
   const [selectedOption, setSelectedOption] = useState("allReports");
   const dispatch = useDispatch();
 
+  const location = useLocation();
+
+  const { setRecord, record, setIsEditForm, isEditForm } = useContext(
+    ExpenseUpdatingContext
+  );
+
   const [tablePagination, setTablePagination] = useState({
     pageSize: 10, // Set your default page size
     current: 1,
   });
 
-  const { handleSubmit: handleUpdate } = useForm({});
-  const { handleSubmit: handleSelectReport } = useForm({});
+  const {
+    handleSubmit: handleSelectReport,
+    control: selectReportControl,
+    setValue: selectReportSetValue,
+  } = useForm({});
+
   const {
     reset,
     control,
@@ -43,6 +54,7 @@ const ExpensePanel = () => {
     setValue,
     formState: { errors },
   } = useForm({});
+
   const { handleSubmit: handleDelete } = useForm({});
 
   const [focused, setFocused] = useState(false);
@@ -56,58 +68,74 @@ const ExpensePanel = () => {
   const handleDateChange1 = (date) => {
     setSelectedDate1(date);
   };
+
   const handleDateChange2 = (date) => {
     setSelectedDate2(date);
   };
 
-  const handleViewReceipt = (record) => {
-    setSelectedReceiptUrl(record || "");
+  const handleViewReceipt = (isPdf, record) => {
+    setSelectedReceiptUrl({ expense_bill: record || "", isPdf });
     setModalVisible(true);
   };
 
   const onSelectReport = (data) => {
-    dispatch(addSelectedReport({ id: editReportData.id, payload: data.id }));
+    dispatch(
+      addSelectedReport({
+        id: editReportData.id,
+        report: data.selectedReportId,
+      })
+    );
   };
 
-  const onAddReport = async(data) => {
-   await dispatch(addReport(data));
+  const onAddReport = (data) => {
+    dispatch(addReport(data));
     reset();
-    dispatch(fetchReport({ payload: {}, URL: fetchurl }));
     setSelectedOption("allReports");
   };
 
   const onEdit = (record) => {
-    setIsEditFormVisible(true);
+    setRecord(record);
+    setIsEditForm(true);
   };
 
-  const onUpdate = (values) => {
-    dispatch();
-    setIsEditFormVisible(false);
-  };
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (record && isEditForm) {
+      navigate("/home/addexpense");
+    }
+  }, [record, isEditForm]);
 
   const DeleteExpense = (record) => {
-    setDeleteExpenseData(record);
+    setDeleteExpenseData(record.id);
   };
 
   const onDelete = () => {
-    const deletedItemId = deleteItemData.id;
-    dispatch(deleteExpensepanelAction({ id: deletedItemId }));
-    setAllExpense((prevItems) =>
-      prevItems.filter((item) => item.id !== deletedItemId)
-    );
+    dispatch(deleteExpenseAction({ id: deleteItemData }));
   };
+
+  const expenseDeletedResultSelector = useSelector(
+    (state) => state.expenseDeletedResult
+  );
+
+  useEffect(() => {
+    if (expenseDeletedResultSelector) {
+      dispatch(getExpenseList({ payload: {}, URL: url }));
+    }
+  }, [expenseDeletedResultSelector]);
+
 
   const onAttach = (data) => {
     setEditReportData(data);
   };
 
-  function getPageDetails(url) {
-    dispatch(getExpenseList({ payload: {}, URL: url }));
-  }
+  // function getPageDetails(url) {
+  //   dispatch(getExpenseList({ payload: {}, URL: url }));
+  // }
 
-  useEffect(() => {
-    getPageDetails(url);
-  }, []);
+  // useEffect(() => {
+  //   getPageDetails(url);
+  // }, []);
 
   function fetchexpensepanel(url) {
     dispatch(getExpenseList({ payload: {}, URL: url }));
@@ -117,13 +145,13 @@ const ExpensePanel = () => {
     fetchexpensepanel(url);
   }, []);
 
-  function fetchPageDetails(fetchurl) {
-    dispatch(fetchReport({ payload: {}, URL: fetchurl }));
-  }
+  // function fetchPageDetails(fetchurl) {
+  //   dispatch(fetchReport({ payload: {}, URL: fetchurl }));
+  // }
 
-  useEffect(() => {
-    fetchPageDetails(fetchurl);
-  }, []);
+  // useEffect(() => {
+  //   fetchPageDetails(fetchurl);
+  // }, []);
 
   function fetchReportData(fetchurl) {
     dispatch(fetchReport({ payload: {}, URL: fetchurl }));
@@ -135,32 +163,41 @@ const ExpensePanel = () => {
 
   const reportSelector = useSelector((state) => state.fetchReportSuccess);
 
+  const addreportresultSelector = useSelector((state) => state.addreportresult);
+  useEffect(() => {
+    if (addreportresultSelector) {
+      dispatch(fetchReport({ payload: {}, URL: fetchurl }));
+    }
+  }, [addreportresultSelector]);
+
   const expensePanelSelector = useSelector((state) => state.getexpenselist);
+
   useEffect(() => {
     if (expensePanelSelector) {
-      const allExpenseList = expensePanelSelector.map((element) => {
-        return {
-          id: element.id,
-          desc: element.desc,
-          amount: element.amount,
-          paid_by: element.paid_by,
-          expense_date: element.expense_date,
-          attachment: element.attachment,
-          approved_amt: element.approved_amt,
-          submit: element.submit,
-          approved_by: element.approved_by,
-        };
-      });
-      setAllExpense(allExpenseList);
+      // const allExpenseList = expensePanelSelector.map((element) => {
+      //   return {
+      //     id: element?.id,
+      //     desc: element?.desc,
+      //     amount: element.amount,
+      //     paid_by: element.paid_by,
+      //     expense_date: element.expense_date,
+      //     attachment: element.expense_bill,
+      //     approved_amt: element.approved_amt,
+      //     submit: element.submit,
+      //     approved_by: element.approved_by,
+      //   };
+      // });
+      setAllExpense(expensePanelSelector);
     }
   }, [expensePanelSelector]);
 
   const updateExpensepanelResultSelector = useSelector(
     (state) => state.updateexpenseResult
   );
+
   useEffect(() => {
     if (updateExpensepanelResultSelector) {
-      getPageDetails(url);
+      dispatch(getExpenseList({ payload: {}, URL: url }));
     }
   }, [updateExpensepanelResultSelector]);
 
@@ -172,6 +209,7 @@ const ExpensePanel = () => {
         const { pageSize, current } = tablePagination;
         return index + 1 + pageSize * (current - 1);
       },
+
       sorter: (a, b) => a.id.length - b.id.length,
       width: "10%",
     },
@@ -202,21 +240,28 @@ const ExpensePanel = () => {
     {
       title: "Attachment",
       dataIndex: "attachment",
-      render: (text, record) => (
-        <Space>
-          <EyeOutlined
-            style={{ color: "blue", cursor: "pointer" }}
-            onClick={() => handleViewReceipt(record.attachment)}
-          />
-        </Space>
-      ),
+      render: (text, record) => {
+        let recordType = record?.expense_bill?.split(".");
+        let isPdf = false;
+        if (recordType?.includes("pdf")) isPdf = true;
+        return (
+          <Space>
+            <EyeOutlined
+              style={{ color: "blue", cursor: "pointer" }}
+              onClick={() => handleViewReceipt(isPdf, record?.expense_bill)}
+            />
+          </Space>
+        );
+      },
     },
     {
       title: "Attach To Report ",
       dataIndex: "submit",
       key: "submit",
       render: (text, data) => (
-        <Link key={'data.id'}
+        <Link
+          className="btn btn-secondary btn-sm m-r-5"
+          key={"data.id"}
           to="#"
           data-bs-toggle="modal"
           data-bs-target="#attachReport"
@@ -231,427 +276,386 @@ const ExpensePanel = () => {
       render: (record) => (
         <div className="dropdown dropdown-action text-end">
           <Link
+            className="btn btn-success btn-sm m-r-5"
             to="#"
-            className="action-icon dropdown-toggle"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
+            onClick={() => onEdit(record)}
           >
-            <i className="material-icons">more_vert</i>
+            <i className="fa-solid fa-pen-to-square"></i>
           </Link>
-          <div className="dropdown-menu dropdown-menu-right">
-            <Link
-              className="dropdown-item"
-              to="#"
-              data-bs-toggle="modal"
-              data-bs-target="#edit_expense"
-              onClick={() => onEdit(record)}
-            >
-              <i className="fa fa-pencil m-r-5" /> Edit
-            </Link>
-            <Link
-              className="dropdown-item"
-              to="#"
-              data-bs-toggle="modal"
-              data-bs-target="#delete_expense"
-              onClick={() => {
-                DeleteExpense(record);
-              }}
-            >
-              <i className="fa fa-trash m-r-5" /> Delete
-            </Link>
-          </div>
+          <Link
+            className="btn btn-danger btn-sm"
+            to="#"
+            data-bs-toggle="modal"
+            data-bs-target="#delete_expense"
+            onClick={() => {
+              DeleteExpense(record);
+            }}
+          >
+            <i className="fa-regular fa-trash-can " />
+          </Link>
         </div>
       ),
     },
   ];
+
   return (
-    <>
-      <div className="page-wrapper">
-        <div className="content container-fluid">
-          <div className="page-header">
-            <div className="row">
-              <div className="col">
-                <ul className="breadcrumb">
-                  <li className="breadcrumb-item">
-                    <Link to="/app/main/dashboard">Dashboard</Link>
-                  </li>
-                  <li className="breadcrumb-item active">Expense List</li>
-                </ul>
-              </div>
-              <div className="col-auto float-end ms-auto">
-                <Link to="/home/addexpense" className="btn add-btn">
-                  <i className="fa fa-plus" /> Add Expense
-                </Link>
-              </div>
+    <div className="page-wrapper">
+      <div className="content container-fluid">
+        <div className="page-header">
+          <div className="row">
+            <div className="col">
+              <ul className="breadcrumb">
+                <li className="breadcrumb-item">
+                  <Link to="/app/main/dashboard">Dashboard</Link>
+                </li>
+                <li className="breadcrumb-item active">Expense List</li>
+              </ul>
             </div>
-          </div>
-          <div className="row filter-row">
-            <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-              <div
-                className={
-                  focused
-                    ? "input-block form-focus focused"
-                    : "input-block form-focus"
-                }
-              >
-                <input
-                  type="text"
-                  className="form-control floating"
-                  onFocus={() => setFocused(true)}
-                  onBlur={() => setFocused(false)}
-                />
-                <label className="focus-label">Search</label>
-              </div>
-            </div>
-            <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-              <div className="input-block form-focus select-focus">
-                <div className="cal-icon">
-                  <DatePicker
-                    selected={selectedDate1}
-                    onChange={handleDateChange1}
-                    className="form-control floating datetimepicker"
-                    type="date"
-                  />
-                </div>
-                <label className="focus-label">Date</label>
-              </div>
-            </div>
-            <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-              <div className="input-block form-focus select-focus">
-                <div className="cal-icon">
-                  <DatePicker
-                    selected={selectedDate2}
-                    onChange={handleDateChange2}
-                    className="form-control floating datetimepicker"
-                    type="date"
-                  />
-                </div>
-                <label className="focus-label">Date</label>
-              </div>
-            </div>
-            <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-              <Link to="#" className="btn btn-success btn-block w-100">
-                {" "}
-                Search{" "}
+            <div className="col-auto float-end ms-auto">
+              <Link to="/home/addexpense" className="btn add-btn">
+                <i className="fa fa-plus" /> Add Expense
               </Link>
             </div>
           </div>
-          <div className="row">
-            <div className="col-md-12">
-              <div className="card mb-0">
-                <div className="card-header">
-                  <h4 className="card-title mb-0">Expense List</h4>
-                </div>
-                <div className="card-body">
-                  <div className="table-responsive">
-                    <Table
-                      className="table-striped"
-                      pagination={{
-                        total: allExpenseList ? allExpenseList.length : 0,
-                        showTotal: (total, range) =>
-                          `Showing ${range[0]} to ${range[1]} of ${total} entries`,
-                        showSizeChanger: true,
-                        onShowSizeChange: (current, pageSize) => {
-                          setTablePagination({
-                            ...tablePagination,
-                            pageSize,
-                            current,
-                          });
-                        },
-                        onChange: (current) => {
-                          setTablePagination({ ...tablePagination, current });
-                        },
-                      }}
-                      style={{ overflowX: "auto" }}
-                      columns={columns}
-                      dataSource={allExpenseList}
-                      rowKey={(record) => record.id}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
-        <div
-          id="attachReport"
-          className="modal custom-modal fade"
-          role="dialog"
-        >
-          <div
-            className="modal-dialog modal-dialog-centered modal-md"
-            role="document"
-          >
-            <div className="modal-content">
-              <div className="modal-header">
-                {/* <h5 className="modal-title">Attach Report</h5> */}
-                <ul className="nav nav-tabs card-header-tabs">
-                  <li className="nav-item">
-                    <a
-                      key={"allReport"}
-                      className={`nav-link ${
-                        selectedOption === "allReports" && "active"
-                      }`}
-                      onClick={() => setSelectedOption("allReports")}
-                    >
-                      Select Report
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a
-                      key={"addReport"}
-                      className={`nav-link ${
-                        selectedOption === "addReports" && "active"
-                      }`}
-                      onClick={() => setSelectedOption("addReports")}
-                    >
-                      Add New Report
-                    </a>
-                  </li>
-                </ul>
-
-                <button
-                  type="button"
-                  className="close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">×</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                {selectedOption === "allReports" && (
-                  <div className="tab-pane fade show active" id="allReports">
-                    <form onSubmit={handleSelectReport(onSelectReport)}>
-                      {/* Form for selecting a report */}
-                      <div className="input-block">
-                        <div className="col-sm-12">
-                          <div className="input-block">
-                            <label>Select Report</label>
-                            <select className="form-control">
-                              <option value="">Select </option>
-                              {reportSelector?.map((data) => (
-                                <option value={data.id} key={data.id}>
-                                  {data.description}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="submit-section">
-                        <button
-                          className="btn btn-primary submit-btn"
-                          data-bs-dismiss="modal"
-                        >
-                          Save
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                )}
-
-                {selectedOption === "addReports" && (
-                  <div className="tab-pane fade show active" id="addReports">
-                    <form onSubmit={handleAddReport(onAddReport)}>
-                      {/* Form for adding a report */}
-                      <div className="input-block">
-                        <div className="col-sm-12">
-                          <div className="input-block">
-                            <label>Description</label>
-                            <input
-                              className="form-control"
-                              type="text"
-                              {...addreport("description")}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="input-block">
-                        <label className="col-form-label" id="start_date">
-                          Start Date <span className="text-danger">*</span>
-                        </label>
-                        <div className="">
-                          <Controller
-                            control={control}
-                            name="start_date"
-                            render={({ field }) => (
-                              <DatePicker
-                                selected={
-                                  field.value ? new Date(field.value) : null
-                                }
-                                onChange={(date) => {
-                                  const formattedDate = formatDate(date);
-                                  field.onChange(formattedDate);
-                                  setValue("start_date", formattedDate);
-                                }}
-                                dateFormat="yyyy-MM-dd"
-                                className="form-control"
-                              />
-                            )}
-                          />
-                          <div className="text-danger">
-                            {errors.start_date?.message}
-                          </div>
-                        </div>
-                      </div>
-                      <div className="input-block">
-                        <label className="col-form-label" id="end_date">
-                          End Date <span className="text-danger">*</span>
-                        </label>
-                        <div className="">
-                          <Controller
-                            control={control}
-                            name="end_date"
-                            render={({ field }) => (
-                              <DatePicker
-                                selected={
-                                  field.value ? new Date(field.value) : null
-                                }
-                                onChange={(date) => {
-                                  const formattedDate = formatDate(date);
-                                  field.onChange(formattedDate);
-                                  setValue("end_date", formattedDate);
-                                }}
-                                dateFormat="yyyy-MM-dd"
-                                className="form-control"
-                              />
-                            )}
-                          />
-                          <div className="text-danger">
-                            {errors.end_date?.message}
-                          </div>
-                        </div>
-                      </div>
-                      <div className="submit-section">
-                        <button
-                          className="btn btn-primary submit-btn"
-                          // data-bs-dismiss="modal"
-                        >
-                          Save
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* {/ view Receipt Modal /}  */}
-        <Modal
-          title="Receipt"
-          open={modalVisible}
-          onCancel={() => {
-            setModalVisible(false);
-            setSelectedReceiptUrl("");
-          }}
-        >
-          {selectedReceiptUrl && (
+        <div className="row filter-row">
+          <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
             <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
+              className={
+                focused
+                  ? "input-block form-focus focused"
+                  : "input-block form-focus"
+              }
             >
+              <input
+                type="text"
+                className="form-control floating"
+                onFocus={() => setFocused(true)}
+                onBlur={() => setFocused(false)}
+              />
+              <label className="focus-label">Search</label>
+            </div>
+          </div>
+          <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+            <div className="input-block form-focus select-focus">
+              <div className="cal-icon">
+                <DatePicker
+                  selected={selectedDate1}
+                  onChange={handleDateChange1}
+                  className="form-control floating datetimepicker"
+                  type="date"
+                />
+              </div>
+              <label className="focus-label">Date</label>
+            </div>
+          </div>
+          <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+            <div className="input-block form-focus select-focus">
+              <div className="cal-icon">
+                <DatePicker
+                  selected={selectedDate2}
+                  onChange={handleDateChange2}
+                  className="form-control floating datetimepicker"
+                  type="date"
+                />
+              </div>
+              <label className="focus-label">Date</label>
+            </div>
+          </div>
+          <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+            <Link to="#" className="btn btn-success btn-block w-100">
+              {" "}
+              Search{" "}
+            </Link>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="card mb-0">
+              <div className="card-header">
+                <h4 className="card-title mb-0">Expense List</h4>
+              </div>
+              <div className="card-body">
+                <div className="table-responsive">
+                  <Table
+                    className="table-striped"
+                    pagination={{
+                      total: allExpenseList ? allExpenseList.length : 0,
+                      showTotal: (total, range) =>
+                        `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+                      showSizeChanger: true,
+                      onShowSizeChange: (current, pageSize) => {
+                        setTablePagination({
+                          ...tablePagination,
+                          pageSize,
+                          current,
+                        });
+                      },
+                      onChange: (current) => {
+                        setTablePagination({ ...tablePagination, current });
+                      },
+                    }}
+                    style={{ overflowX: "auto" }}
+                    columns={columns}
+                    dataSource={allExpenseList}
+                    rowKey={(record) => record.id}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="attachReport" className="modal custom-modal fade" role="dialog">
+        <div
+          className="modal-dialog modal-dialog-centered modal-md"
+          role="document"
+        >
+          <div className="modal-content">
+            <div className="modal-header">
+              {/* <h5 className="modal-title">Attach Report</h5> */}
+              <ul className="nav nav-tabs card-header-tabs">
+                <li className="nav-item">
+                  <a
+                    key={"allReport"}
+                    className={`nav-link ${
+                      selectedOption === "allReports" && "active"
+                    }`}
+                    onClick={() => setSelectedOption("allReports")}
+                  >
+                    Select Report
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a
+                    key={"addReport"}
+                    className={`nav-link ${
+                      selectedOption === "addReports" && "active"
+                    }`}
+                    onClick={() => setSelectedOption("addReports")}
+                  >
+                    Add New Report
+                  </a>
+                </li>
+              </ul>
+
+              <button
+                type="button"
+                className="close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div className="modal-body">
+              {selectedOption === "allReports" && (
+                <div className="tab-pane fade show active" id="allReports">
+                  <form onSubmit={handleSelectReport(onSelectReport)}>
+                    {/* Form for selecting a report */}
+                    <div className="input-block">
+                      <div className="col-sm-12">
+                        <div className="input-block">
+                          <label>Select Report</label>
+
+                          <select
+                            className="form-control"
+                            {...selectReportControl}
+                            onChange={(e) => {
+                              const selectedId = e.target.value;
+                              selectReportSetValue(
+                                "selectedReportId",
+                                selectedId
+                              );
+                            }}
+                          >
+                            <option value="">Select </option>
+                            {reportSelector?.map((data) => (
+                              <option value={data.id} key={data.id}>
+                                {data.description}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="submit-section">
+                      <button
+                        className="btn btn-primary submit-btn"
+                        data-bs-dismiss="modal"
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              )}
+
+              {selectedOption === "addReports" && (
+                <div className="tab-pane fade show active" id="addReports">
+                  <form onSubmit={handleAddReport(onAddReport)}>
+                    {/* Form for adding a report */}
+                    <div className="input-block">
+                      <div className="col-sm-12">
+                        <div className="input-block">
+                          <label>Description</label>
+                          <input
+                            className="form-control"
+                            type="text"
+                            {...addreport("description")}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="input-block">
+                      <label className="col-form-label" id="start_date">
+                        Start Date <span className="text-danger">*</span>
+                      </label>
+                      <div className="">
+                        <Controller
+                          control={control}
+                          name="start_date"
+                          render={({ field }) => (
+                            <DatePicker
+                              selected={
+                                field.value ? new Date(field.value) : null
+                              }
+                              onChange={(date) => {
+                                const formattedDate = formatDate(date);
+                                field.onChange(formattedDate);
+                                setValue("start_date", formattedDate);
+                              }}
+                              dateFormat="yyyy-MM-dd"
+                              className="form-control"
+                            />
+                          )}
+                        />
+                        <div className="text-danger">
+                          {errors.start_date?.message}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="input-block">
+                      <label className="col-form-label" id="end_date">
+                        End Date <span className="text-danger">*</span>
+                      </label>
+                      <div className="">
+                        <Controller
+                          control={control}
+                          name="end_date"
+                          render={({ field }) => (
+                            <DatePicker
+                              selected={
+                                field.value ? new Date(field.value) : null
+                              }
+                              onChange={(date) => {
+                                const formattedDate = formatDate(date);
+                                field.onChange(formattedDate);
+                                setValue("end_date", formattedDate);
+                              }}
+                              dateFormat="yyyy-MM-dd"
+                              className="form-control"
+                            />
+                          )}
+                        />
+                        <div className="text-danger">
+                          {errors.end_date?.message}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="submit-section">
+                      <button
+                        className="btn btn-primary submit-btn"
+                        // data-bs-dismiss="modal"
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* {/ view Receipt Modal /}  */}
+      <Modal
+        title="Receipt"
+        open={modalVisible}
+        onCancel={() => {
+          setModalVisible(false);
+          setSelectedReceiptUrl("");
+        }}
+        footer=""
+      >
+        {selectedReceiptUrl.expense_bill && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            {!selectedReceiptUrl.isPdf ? (
               <img
-                src={"http://192.168.1.219:8001" + selectedReceiptUrl}
+                src={
+                  "http://192.168.1.219:8001" + selectedReceiptUrl.expense_bill
+                }
                 alt="Receipt"
                 style={{ maxWidth: "100%", maxHeight: "80vh" }}
                 onError={() => console.error("Error loading image")}
               />
-            </div>
-          )}
-        </Modal>
-        <div
-          id="edit_expense"
-          className="modal custom-modal fade"
-          role="dialog"
-        >
-          <div
-            className="modal-dialog modal-dialog-centered modal-md"
-            role="document"
-          >
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Update Policy</h5>
-                <button
-                  type="button"
-                  className="close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
+            ) : (
+              selectedReceiptUrl.isPdf && (
+                <a
+                  target="_blank"
+                  href={
+                    "http://192.168.1.219:8001" +
+                    selectedReceiptUrl.expense_bill
+                  }
                 >
-                  <span aria-hidden="true">×</span>
-                </button>
+                  Click to see expense bill.
+                </a>
+              )
+            )}
+          </div>
+        )}
+      </Modal>
+
+      <div
+        className="modal custom-modal fade"
+        id="delete_expense"
+        role="dialog"
+      >
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-body">
+              <div className="form-header">
+                <h3>Delete Expense</h3>
+                <p>Are you sure want to delete?</p>
               </div>
-              <div className="modal-body">
-                <form onSubmit={handleUpdate(onUpdate)}>
-                  <div className="input-block">
-                    <label> Expense Amount Limit</label>
-
-                    <div className="col-md-12">
-                      <div className="input-group">
-                        <div className="input-group-prepend">
-                          <span className="input-group-text">$USD</span>
-                        </div>
-                        <input
-                          className="form-control"
-                          type="number"
-                          // {...updateregister("expense_amt_limit")}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="submit-section">
-                    <button
-                      className="btn btn-primary submit-btn"
+              <div className="modal-btn delete-action">
+                <div className="row">
+                  <div className="col-6">
+                    <Link
+                      to=""
+                      className="btn btn-primary continue-btn"
+                      onClick={handleDelete(onDelete)}
                       data-bs-dismiss="modal"
                     >
-                      Update
-                    </button>
+                      Delete
+                    </Link>
                   </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          className="modal custom-modal fade"
-          id="delete_expense"
-          role="dialog"
-        >
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-body">
-                <div className="form-header">
-                  <h3>Delete Expense</h3>
-                  <p>Are you sure want to delete?</p>
-                </div>
-                <div className="modal-btn delete-action">
-                  <div className="row">
-                    <div className="col-6">
-                      <Link
-                        to=""
-                        className="btn btn-primary continue-btn"
-                        onClick={handleDelete(onDelete)}
-                        data-bs-dismiss="modal"
-                      >
-                        Delete
-                      </Link>
-                    </div>
-                    <div className="col-6">
-                      <Link
-                        to=""
-                        data-bs-dismiss="modal"
-                        className="btn btn-primary cancel-btn"
-                      >
-                        Cancel
-                      </Link>
-                    </div>
+                  <div className="col-6">
+                    <Link
+                      to=""
+                      data-bs-dismiss="modal"
+                      className="btn btn-primary cancel-btn"
+                    >
+                      Cancel
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -659,7 +663,7 @@ const ExpensePanel = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
-  approveExpense,
-  approveReport,
   getReportDetails,
-  rejectExpense,
-  rejectReport,
+  getReportList,
+  submitReportAction,
 } from "../../store/Action/Actions";
-import { useForm } from "react-hook-form";
-import { Modal, Space, Table } from "antd";
+import { Modal, Space, Table, message } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
 import {
   onShowSizeChange,
@@ -17,13 +14,13 @@ import {
 } from "../../MainPage/paginationfunction";
 import { URLS } from "../../Globals/URLS";
 
+
 const ViewReportPage = () => {
-  const [rejectReportData, setRejectReportData] = useState(null);
-  const [rejectExpenseData, setRejectExpenseData] = useState(null);
-  const [isRejectFormVisible, setIsRejectFormVisible] = useState(false);
+  const navigate = useNavigate();
   const [allExpenses, setAllExpenses] = useState([]);
   const [selectedReceiptUrl, setSelectedReceiptUrl] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
+  const [submitButtonVisible, setSubmitButtonVisible] = useState(false); 
   const { id } = useParams();
   const dispatch = useDispatch();
   const url = URLS.VIEW_REPORT_URL;
@@ -32,92 +29,51 @@ const ViewReportPage = () => {
     current: 1,
   });
 
-  const {
-    register: registerReport,
-    handleSubmit: handleRejectReport,
-    setValue: ReportSetValue,
-    formState: { errors },
-  } = useForm({});
+  const SubmitReportSelector = useSelector((state) => state.submitreport);
 
-  const {
-    register: registerExpense,
-    handleSubmit: handleRejectExpense,
-    setValue: ExpenseSetValue,
-    formState,
-  } = useForm({});
+//   useEffect(() => {
+//     if (SubmitReportSelector) {
+//       dispatch(getReportList({ payload: {}, URL: url }));
+//       navigate("/home/AllReports");
+//     }
+//   }, [SubmitReportSelector]);
 
-  const onApproveReport = () => {
-    dispatch(approveReport({ id: id }));
-  };
+  useEffect(() => {
+    dispatch(getReportDetails({ id }));
+  }, [id, dispatch]);
 
-  const onRejectReport = (values) => {
-    dispatch(rejectReport({ id: id, payload: values }));
-  };
-
-  const RejectReport = (remark) => {
-    setIsRejectFormVisible(true);
-    setRejectReportData();
-    ReportSetValue("remark", remark);
-  };
-
-  const onApproveExpense = () => {
-    dispatch(approveExpense({ id: id }));
-  };
-
-  const onRejectExpense = (values) => {
-    dispatch(rejectExpense({ id: id, payload: values }));
-  };
-
-  const RejectExpense = (record) => {
-    setIsRejectFormVisible(true);
-    setRejectExpenseData(record);
-    ExpenseSetValue("remark", record.remark);
-  };
+  useEffect(() => {
+    if (!id) return;
+    setAllExpenses([]); 
+    setSubmitButtonVisible(false); 
+  }, [id]);
 
   const reportDetailsSelector = useSelector((state) => state.reportDetails);
+
   useEffect(() => {
     if (reportDetailsSelector) {
+      const status = reportDetailsSelector.status;
+      setSubmitButtonVisible(status === "Pending"); 
       const allExpenses = reportDetailsSelector?.expenses?.map((element) => ({
         id: element.id,
         expense_date: element.expense_date,
         expense_bill: element.expense_bill,
         category: element.category,
         amount: element.amount,
-      }));  
-
+      }));
       setAllExpenses(allExpenses);
     }
   }, [reportDetailsSelector]);
 
-  const approveReportSelector = useSelector(
-    (state) => state.approveReportSuccess
-  );
-  useEffect(() => {
-    if (approveReportSelector) {
-      dispatch(approveReport({ payload: {}, URL: url }));
-    }
-  }, [approveReportSelector]);
-
-  const rejectReportSelector = useSelector(
-    (state) => state.rejectReportSuccess
-  );
-
-  useEffect(() => {
-    if (rejectReportSelector) {
-      dispatch(rejectReport({ payload: {}, URL: url }));
-    }
-    setIsRejectFormVisible(false);
-  }, [rejectReportSelector]);
-
-  useEffect(() => {
-    dispatch(getReportDetails({ id }));
-  }, []);
+  const onSubmitReport = () => {
+    dispatch(submitReportAction({ id: id }));
+    message.success(SubmitReportSelector?.Status);
+  };
 
   const handleViewReceipt = (record) => {
     setSelectedReceiptUrl(record || "");
     setModalVisible(true);
   };
-
   const columns = [
     {
       title: "Sr No",
@@ -154,43 +110,6 @@ const ViewReportPage = () => {
       dataIndex: "amount",
       sorter: (a, b) => a.amount.length - b.amount.length,
     },
-    {
-      title: "Action",
-      render: (record) => (
-        <div className="dropdown dropdown-action text-end">
-          <Link
-            to="#"
-            className="action-icon dropdown-toggle"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <i className="material-icons">more_vert</i>
-          </Link>
-          <div className="dropdown-menu dropdown-menu-right">
-            <Link
-              className="dropdown-item"
-              to="#"
-              data-bs-toggle="modal"
-              data-bs-target="#approveExpense"
-              onClick={() => onApproveExpense()}
-            > 
-              <i className="fa fa-check m-r-5" /> Approve
-            </Link>
-            <Link
-              className="dropdown-item"
-              to="#"
-              data-bs-toggle="modal"
-              data-bs-target="#rejectExpense"
-              onClick={() => {
-                RejectExpense(record);
-              }}
-            >
-              <i className="fa fa-times m-r-5" /> Reject
-            </Link>
-          </div>
-        </div>
-      ),
-    },
   ];
 
   return (
@@ -198,7 +117,7 @@ const ViewReportPage = () => {
       <div className="page-wrapper">
         <div className="content container-fluid">
           <div>
-            <Link className="btn add-btn" to="/home/Reports">
+            <Link className="btn add-btn" to="/home/AllReports">
               <i className="fa fa-right" /> Back
             </Link>
           </div>
@@ -237,29 +156,16 @@ const ViewReportPage = () => {
                       </div>
                     </div>
 
-                    <div className="col-auto float-start ms-auto">
-                      <Link
-                        to="#"
-                        className="btn add-btn"
-                        data-bs-toggle="modal"
-                        data-bs-target="#approveReport"
-                        onClick={() => onApproveReport()}
-                      >
-                        <i className="fa fa-right" /> Approve
-                      </Link>
-                    </div>
                     <div className="col-auto float-end ms-auto">
-                      <Link
-                        to="#"
-                        className="btn add-btn"
-                        data-bs-toggle="modal"
-                        data-bs-target="#rejectReport"
-                        onClick={() => {
-                          RejectReport();
-                        }}
-                      >
-                        <i className="fa fa-wrong" /> Reject
-                      </Link>
+                      {submitButtonVisible ? (
+                        <Link
+                          to="#"
+                          className="btn add-btn"
+                          onClick={() => onSubmitReport()}
+                        >
+                          <i className="fa fa-right" /> Submit
+                        </Link>
+                      ) : null}
                     </div>
                   </form>
                 </div>
@@ -292,108 +198,6 @@ const ViewReportPage = () => {
               </div>
             )}
           </Modal>
-
-          {/* {/ Reject Report Modal /}  */}
-          <div
-            id="rejectReport"
-            className="modal custom-modal fade"
-            role="dialog"
-          >
-            <div
-              className="modal-dialog modal-dialog-centered modal-md"
-              role="document"
-            >
-              <div className="modal-content">
-                <div className="modal-header">
-                  <button
-                    type="button"
-                    className="close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    <span aria-hidden="true">×</span>
-                  </button>
-                </div>
-                <div className="modal-body">
-                  <form onSubmit={handleRejectReport(onRejectReport)}>
-                    <div className="row">
-                      <div className="col-md-16">
-                        <div className="input-block">
-                          <label>Remark</label>
-                          <input
-                            className="form-control"
-                            type="text"
-                            {...registerReport("remark")}
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="submit-section">
-                      <button
-                        className="btn btn-primary submit-btn"
-                        data-bs-dismiss="modal"
-                      >
-                        Reject
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* {/ /Reject Modal /} */}
-
-          {/* {/ Reject Expense Modal /}  */}
-          <div
-            id="rejectExpense"
-            className="modal custom-modal fade"
-            role="dialog"
-          >
-            <div
-              className="modal-dialog modal-dialog-centered modal-md"
-              role="document"
-            >
-              <div className="modal-content">
-                <div className="modal-header">
-                  <button
-                    type="button"
-                    className="close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    <span aria-hidden="true">×</span>
-                  </button>
-                </div>
-                <div className="modal-body">
-                  <form onSubmit={handleRejectExpense(onRejectExpense)}>
-                    <div className="row">
-                      <div className="col-md-16">
-                        <div className="input-block">
-                          <label>Remark</label>
-                          <input
-                            className="form-control"
-                            type="text"
-                            {...registerExpense("remark")}
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="submit-section">
-                      <button
-                        className="btn btn-primary submit-btn"
-                        data-bs-dismiss="modal"
-                      >
-                        Reject
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* {/ /Reject Modal /} */}
 
           <div className="row">
             <div className="col-sm-12">

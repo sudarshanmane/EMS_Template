@@ -49,6 +49,8 @@ const VendorPannel = () => {
   const navigate = useNavigate();
   const [submittedValues, setSubmittedValues] = useState(null);
 
+  const { register, handleSubmit, reset } = useForm({});
+
   const {
     register: updateregister,
     handleSubmit: handleUpdate,
@@ -62,7 +64,6 @@ const VendorPannel = () => {
     formState: { errors },
   } = useForm({ resolver: yupResolver(validationSchema) });
 
-  const { register, handleSubmit, reset } = useForm({});
   const { handleSubmit: handleDelete } = useForm({});
 
   const onAddVendor = (values) => {
@@ -87,6 +88,7 @@ const VendorPannel = () => {
   const updatevendorSelector = useSelector(
     (state) => state.updateVendorTableResult
   );
+
   useEffect(() => {
     if (updatevendorSelector) {
       dispatch(getVendor({ payload: {}, URL: url }));
@@ -94,14 +96,7 @@ const VendorPannel = () => {
     setIsAddFormVisible(false);
   }, [updatevendorSelector]);
 
-  const deleteVendorSelector = useSelector(
-    (state) => state.deleteVendorSuccess
-  );
-  useEffect(() => {
-    if (deleteVendorSelector) {
-      dispatch(getVendor({ payload: {}, URL: url }));
-    }
-  }, [deleteVendorSelector]);
+ 
 
   const DeleteVendor = (record) => {
     setDeleteVendorData(record);
@@ -141,7 +136,6 @@ const VendorPannel = () => {
         formData.append(key, values[key]);
       }
     }
-
     dispatch(createVendorPaymentAction(formData));
     setIsAddFormVisible(false);
     document.querySelector("#close_modall_popup_form").click();
@@ -156,6 +150,7 @@ const VendorPannel = () => {
   function fetchPageDetials(url) {
     dispatch(getVendor({ payload: {}, URL: url }));
   }
+
   useEffect(() => {
     fetchPageDetials(url);
   }, []);
@@ -188,11 +183,18 @@ const VendorPannel = () => {
     if (createVendorSelector && submittedValues) {
       dispatch(createVendor(submittedValues));
       reset();
-      setSubmittedValues(null);
-      setIsAddFormVisible(false);
     }
-  }, [createVendorSelector, submittedValues]);
+    setIsAddFormVisible(false);
+  }, [createVendorSelector]);
 
+  const deleteVendorSelector = useSelector(
+    (state) => state.deleteVendorSuccess
+  );
+  useEffect(() => {
+    if (deleteVendorSelector) {
+      dispatch(getVendor({ payload: {}, URL: url }));
+    }
+  }, [deleteVendorSelector]);
 
   const columns = [
     {

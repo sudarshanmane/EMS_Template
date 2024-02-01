@@ -77,7 +77,7 @@ export default function EducationProfile({ userId }) {
     setValue("college_name", record.college_name);
     setValue("in_year", record.in_year);
     setValue("passout_year", record.passout_year);
-    // const documenturl = `${baseurl}${record.marksheet}`;
+    const documenturl = `${baseurl}${record.marksheet}`;
     setInitialDocument(documenturl);
   };
 

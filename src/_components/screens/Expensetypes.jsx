@@ -36,7 +36,6 @@ const Expensetypes = ({ initialData, setIsAddFormVisible, isAddForm }) => {
 
   useEffect(() => {
     if (!isAddForm) {
-      console.log("isAddFormisAddFormisAddForm", isAddForm);
       form.resetFields();
     }
   }, [isAddForm]);

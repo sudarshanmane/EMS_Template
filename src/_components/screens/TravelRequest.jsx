@@ -139,9 +139,8 @@ const TravelRequest = () => {
     return format(date, "yyyy-MM-dd");
   };
 
-  const onSubmit = async (values) => {
-    await dispatch(createTravel(values));
-    dispatch(getTravel({ payload: {}, URL: url }));
+  const onSubmit = (values) => {
+    dispatch(createTravel(values));
     setIsAddFormVisible(false);
   };
 
@@ -150,7 +149,7 @@ const TravelRequest = () => {
   );
 
   useEffect(() => {
-    if (createTravelSelector && submittedValues) {
+    if (createTravelSelector) {
       const createdTravel = createTravelSelector;
       if (createdTravel) {
         dispatch(getTravel({ payload: {}, URL: url }));
@@ -158,7 +157,7 @@ const TravelRequest = () => {
         setSubmittedValues(null);
       }
     }
-  }, [createTravelSelector, submittedValues]);
+  }, [createTravelSelector]);
 
   const onUpdate = (values) => {
     dispatch(updateTravel({ id: editTravelData.id, payload: values }));
@@ -179,9 +178,24 @@ const TravelRequest = () => {
   useEffect(() => {
     if (updatetravelSelector) {
       dispatch(getTravel({ payload: {}, URL: url }));
-    }
+      }
     setIsAddFormVisible(false);
   }, [updatetravelSelector]);
+
+  
+  const updateApprovalTravelSelector = useSelector((state) => state.updateTravelResult);
+  useEffect(() => {
+    if (updateApprovalTravelSelector) {
+      dispatch(getApprove({ payload: {}, URL: approveurl }));    }
+    setIsAddFormVisible(false);
+  }, [updateApprovalTravelSelector]);
+
+  const updateRejectedTravelSelector = useSelector((state) => state.updateTravelResult);
+  useEffect(() => {
+    if (updateRejectedTravelSelector) {
+      dispatch(getReject({ payload: {}, URL: rejecturl }));    }
+    setIsAddFormVisible(false);
+  }, [updateRejectedTravelSelector]);
 
   function fetchPageDetialsGetTravel(url) {
     dispatch(getTravel({ payload: {}, URL: url }));
@@ -238,6 +252,14 @@ const TravelRequest = () => {
     dispatch(submitTravelRequest({ id: record.id, payload: record }));
   };
 
+  const submitRequestSelector = useSelector((state)=>state.submitTravelRequestResult)
+
+  useEffect(() => {
+    if (submitRequestSelector) {
+      dispatch(getTravel({ payload: {}, URL: url }));
+    }
+  }, [submitRequestSelector]);
+
  
   const columns = [
     {
@@ -264,90 +286,57 @@ const TravelRequest = () => {
       sorter: (a, b) => a.start_date.length - b.start_date.length,
     },
     {
-      title: "From_Date",
+      title: "From Date",
       dataIndex: "from_date",
       key: "from_date",
-      sorter: (a, b) => a.start_date.length - b.start_date.length,
+     
     },
     {
-      title: "To_Date",
+      title: "To Date",
       dataIndex: "to_date",
       key: "to_date",
-      sorter: (a, b) => a.start_date.length - b.start_date.length,
+     
     },
   ];
   
-
-  if (selectedOption !== "rejected") {
+  if (selectedOption === "allTravels") {
     columns.push({
-      title: "Estimated Budget",
-      dataIndex: "estimated_budget",
-      key: "estimated_budget",
-      sorter: (a, b) => a.estimated_budget - b.estimated_budget,
+      title: "Action",
+      render: (record) => (
+        <div className="dropdown dropdown-action text-end">
+          <Link
+            className="btn btn-success btn-sm m-r-5"
+            to="#"
+            data-bs-toggle="modal"
+            data-bs-target="#edit_travel"
+            onClick={() => onEdit(record)}
+          >
+            <i className="fa-solid fa-pen-to-square"></i>
+          </Link>
+          <Link
+            className="btn btn-danger btn-sm m-r-5"
+            to="#"
+            data-bs-toggle="modal"
+            data-bs-target="#delete_travel"
+            onClick={() => {
+              DeleteTravel(record);
+            }}
+          >
+            <i className="fa-regular fa-trash-can " />
+          </Link>
+          <button
+            className="btn btn-info btn-sm m-r-5"
+            onClick={() => {
+              onSubmitTravelRequest(record);
+            }}
+            disabled={submittedValues && submittedValues.id === record.id}
+          >
+            <i className="fa fa-paper-plane"></i>
+          </button>
+        </div>
+      ),
     });
   }
-  
-
-  if (selectedOption === "approved") {
-    columns.push({
-      title: "Approved Budget",
-      dataIndex: "approved_budget",
-      key: "approved_budget",
-      sorter: (a, b) => a.approved_budget - b.approved_budget,
-    });
-  } else if (selectedOption === "rejected") {
-
-    columns.push({
-      title: "Remark",
-      dataIndex: "remark",
-      key: "remark",
-    });
-  }
-  
-  // Add Action column for all tables
-  columns.push({
-    title: "Action",
-    render: (record) => (
-      <div className="dropdown dropdown-action text-end">
-        <Link
-          className="btn btn-success btn-sm m-r-5"
-          to="#"
-          data-bs-toggle="modal"
-          data-bs-target="#edit_travel"
-          onClick={() => onEdit(record)}
-        >
-          <i className="fa-solid fa-pen-to-square"></i>
-        </Link>
-  
-        {selectedOption !== "approved" && selectedOption !== "rejected" && (
-          <>
-            <Link
-              className="btn btn-danger btn-sm m-r-5"
-              to="#"
-              data-bs-toggle="modal"
-              data-bs-target="#delete_travel"
-              onClick={() => {
-                DeleteTravel(record);
-              }}
-            >
-              <i className="fa-regular fa-trash-can " />
-            </Link>
-  
-            <button
-              className="btn btn-info btn-sm m-r-5"
-              onClick={() => {
-                onSubmitTravelRequest(record);
-              }}
-              disabled={submittedValues && submittedValues.id === record.id}
-            >
-              <i className="fa fa-paper-plane"></i>
-            </button>
-          </>
-        )}
-      </div>
-    ),
-  });
-  
 
   return (
     
@@ -684,7 +673,7 @@ const TravelRequest = () => {
           >
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">Add Travel Request</h5>
+                <h5 className="modal-title">Edit Travel Request</h5>
                 <button
                   type="button"
                   className="close"

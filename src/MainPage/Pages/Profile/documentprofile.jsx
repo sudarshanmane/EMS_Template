@@ -129,13 +129,13 @@ export default function DocumentProfile({ userId }) {
   };
 
 
-  function fetchDocumentData(url) {
-    dispatch(getDocumentAction({ payload: {userId}, URL: url }));
-  }
+  // function fetchDocumentData(url) {
+  //   dispatch(getDocumentAction({ payload: {userId}, URL: url }));
+  // }
 
-  useEffect(() => {
-    fetchDocumentData(url);
-  }, []);
+  // useEffect(() => {
+  //   fetchDocumentData(url);
+  // }, []);
 
   useEffect(() => {
     if (userRoles || per_add_documents || per_update_docs || per_delete_docs) {

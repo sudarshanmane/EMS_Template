@@ -79,7 +79,7 @@ const Sidebar = () => {
                     toggleSidebar(isSideMenu == "user" ? "" : "user")
                   }
                 >
-                  <i className="la la-user" /> <span>User Management</span>{" "}
+                  <i className="la fa-users" /> <span>User Management</span>{" "}
                   <span className="menu-arrow" />
                 </Link>
 
@@ -160,10 +160,10 @@ const Sidebar = () => {
                         }
                         to="/home/expensepanel"
                       >
-                        Add Expense{" "}
+                        All Expense{" "}
                       </Link>
                     </li>
-                    <li>
+                    {/* <li>
                       <Link
                         className={
                           pathname.includes("expenseapprovemanager")
@@ -174,7 +174,7 @@ const Sidebar = () => {
                       >
                         Approve Manager{" "}
                       </Link>
-                    </li>
+                    </li> */}
                   </ul>
                 ) : (
                   ""
@@ -273,6 +273,17 @@ const Sidebar = () => {
                 </Link>
                 {isSideMenu == "reports" ? (
                   <ul>
+                     <li>
+                      <Link
+                        className={
+                          pathname.includes("expense-") ? "active" : ""
+                        }
+                        to="/home/AllReports"
+                      >
+                        {" "}
+                        All Reports{" "}
+                      </Link>
+                    </li>
                     <li>
                       <Link
                         className={
@@ -281,7 +292,7 @@ const Sidebar = () => {
                         to="/home/Reports"
                       >
                         {" "}
-                        All Reports{" "}
+                        Approve Manager{" "}
                       </Link>
                     </li>
                     <li>
@@ -313,7 +324,7 @@ const Sidebar = () => {
                     )
                   }
                 >
-                  <i className="la la-file-text" /> <span> Vendors </span>{" "}
+                  <i className="la fa-university" /> <span> Vendors </span>{" "}
                   {/* <span className="menu-arrow" /> */}
                 </Link>
               </li>
@@ -387,7 +398,7 @@ const Sidebar = () => {
                   ""
                 )}
               </li>
-              <li className="submenu">
+              {/* <li className="submenu">
                 <Link
                   to="#"
                   className={isSideMenu == "profile" ? "subdrop" : ""}
@@ -424,9 +435,9 @@ const Sidebar = () => {
                 ) : (
                   ""
                 )}
-              </li>
+              </li> */}
 
-              <li>
+              {/* <li>
                 <Link to="#">
                   <i className="la la-file-text" /> <span>Documentation</span>
                 </Link>
@@ -522,7 +533,7 @@ const Sidebar = () => {
                 ) : (
                   ""
                 )}
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>

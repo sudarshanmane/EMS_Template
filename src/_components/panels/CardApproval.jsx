@@ -39,19 +39,18 @@ const CardApproval = () => {
     formState: { errors },
   } = useForm({});
 
-  const {
-    register: approveregister,
-    handleSubmit: handleApprove,
-  } = useForm({});
-
+ 
   const onApprove = () => {
     dispatch(approveCard({ id: approveCardData.id }));
   };
 
-  const Approve = (record) => {
-    setIsApproveFormVisible(true);
-    setApproveCardData(record);
-  };
+  const ApproveSelector = useSelector((state) => state.approveCardSuccess);
+
+  useEffect(() => {
+    if (ApproveSelector) {
+      alert(ApproveSelector?.Status);
+    }
+  }, [ApproveSelector]);
 
   const onReject = (values) => {
     dispatch(rejectCard({ id: rejectCardData.id, payload: values }));
@@ -63,6 +62,15 @@ const CardApproval = () => {
     setValue("remark", record.remark);
   };
 
+  const RejectSelector = useSelector((state) => state.rejectCardSuccess);
+
+  useEffect(() => {
+    if (RejectSelector) {
+      alert(RejectSelector?.Status);
+    }
+  }, [RejectSelector]);
+  
+
   const handleDateChange1 = (date) => {
     setSelectedDate1(date);
   };
@@ -70,13 +78,13 @@ const CardApproval = () => {
     setSelectedDate2(date);
   };
 
-  function getPageDetails(url) {
-    dispatch(getCard({ payload: {}, URL: url }));
-  }
+  // function getPageDetails(url) {
+  //   dispatch(getCard({ payload: {}, URL: url }));
+  // }
 
-  useEffect(() => {
-    getPageDetails(url);
-  }, []);
+  // useEffect(() => {
+  //   getPageDetails(url);
+  // }, []);
 
   function fetchcard(url) {
     dispatch(getCard({ payload: {}, URL: url }));
@@ -87,17 +95,16 @@ const CardApproval = () => {
   }, []);
 
   const cardSelector = useSelector((state) => state.getCardSuccess);
-
   useEffect(() => {
     if (cardSelector) {
       const allCards = cardSelector?.map((element) => ({
-        id: element.id,
-        full_name: element.full_name,
-        mobile_no: element.mobile_no,
-        email: element.email,
-        aadhar_no: element.aadhar_no,
-        pan_no: element.pan_no,
-        status: element.status,
+        id: element?.id,
+        full_name: element?.full_name,
+        mobile_no: element?.mobile_no,
+        email: element?.email,
+        aadhar_no: element?.aadhar_no,
+        pan_no: element?.pan_no,
+        status: element?.status,
       }));
 
       setAllCards(allCards);
@@ -169,7 +176,7 @@ const CardApproval = () => {
               to="#"
               data-bs-toggle="modal"
               data-bs-target="#approve-card"
-              onClick={() => Approve(record)}
+              onClick={() => onApprove(record)}
             >
               <i className="fa fa-check m-r-5" />
             </Link>
@@ -278,53 +285,6 @@ const CardApproval = () => {
             </div>
           </div>
         </div>
-         {/* Approve Modal */}
-         <div id="approve-card" className="modal custom-modal fade" role="dialog">
-          <div
-            className="modal-dialog modal-dialog-centered modal-md"
-            role="document"
-          >
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Remark</h5>
-                <button
-                  type="button"
-                  className="close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">×</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                <form onSubmit={handleApprove(onApprove)}>
-                  <div className="row">
-                    <div className="col-md-16">
-                      <div className="input-block">
-                        <label>Remark</label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          {...approveregister("remark")}
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="submit-section">
-                    <button
-                      className="btn btn-primary submit-btn"
-                      data-bs-dismiss="modal"
-                    >
-                    Approve
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* /Approve Modal */}
         {/* Reject Modal */}
         <div id="reject-card" className="modal custom-modal fade" role="dialog">
           <div
