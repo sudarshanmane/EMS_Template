@@ -128,6 +128,16 @@ function getAllStaff(payload) {
   };
 }
 
+function getRejectedExpenseAction(payload){
+return{
+  type: API_CONSTANTS.GET_REJECTED_EXPENSE_LIST,
+  payload: payload.payload,
+  URL: payload.URL,
+  contentType: contentType.json,
+};
+}
+
+
 function getDepartmentAction(payload) {
   return {
     type: API_CONSTANTS.GET_DEPARTMENT_LIST,
@@ -1810,6 +1820,7 @@ export {
   getApprovedReportList,
   addExpenseItemSetup,
   setsubmitReportAction,
+  getRejectedExpenseAction,
 
   // ===========================================================
   // getAccountingCodeAction,

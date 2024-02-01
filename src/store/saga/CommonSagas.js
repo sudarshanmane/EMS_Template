@@ -974,6 +974,27 @@ function* getExpenseList(action) {
   }
 }
 
+function* getRejectedExpenseList(action) {
+  try {
+    let result = yield call(Method.getData, action);
+    if (
+      result.status === 202 ||
+      result.status === 201 ||
+      result.status === 200
+    ) {
+      yield put({
+        type: `${action.type}_SUCCESS`,
+        status: "ok",
+        result: result.data,
+      });
+    } else {
+      yield call(failSaga, "Server Down!");
+    }
+  } catch (error) {
+    yield call(errorSaga, "The credentials you entered are incorrect!");
+  }
+}
+
 function* addSelectedReport(action) {
   try {
     let result = yield call(Method.putData, action);
@@ -3314,6 +3335,12 @@ export {
   getApproved,
   getRejected,
   getReimbursed,
+  getRejectedExpenseList,
+  getCommonGenerator,
+  postCommonGenerator,
+  commonDeleteRole,
+  putCommonGenerator,
+
 
   // =========================================
   // approvedExpensemanager,
@@ -3327,7 +3354,6 @@ export {
   // getItemNameList,
   // accountingCodeSubmit,
   // Updateuserprofile,
-  getCommonGenerator,
   // getAccountingCodeList,
   // itemizationsubmit,
   // AddExpesnesubmit,
@@ -3366,9 +3392,7 @@ export {
   // financemanagerapprove,
   // accountAddByFinanceManager,
   // getUserRolePermissions,
-  postCommonGenerator,
-  commonDeleteRole,
-  putCommonGenerator,
+ 
   // addEmployeeAccountNumber,
   // exportExpenseType,
   // exportExpenseItemSetup,

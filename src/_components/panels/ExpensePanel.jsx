@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useContext } from "react";
-import { Modal, Space, Table } from "antd";
+import React, { useEffect, useState, useContext ,useMemo} from "react";
+import { Modal, Space, Table, } from "antd"; 
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   addReport,
@@ -7,6 +7,7 @@ import {
   deleteExpenseAction,
   fetchReport,
   getExpenseList,
+  getRejectedExpenseAction,
 } from "../../store/Action/Actions";
 import { useDispatch, useSelector } from "react-redux";
 import { SendOutlined, EyeOutlined } from "@ant-design/icons";
@@ -19,17 +20,24 @@ import { ExpenseUpdatingContext } from "../screens/ContextForUpdatingRecord";
 
 const ExpensePanel = () => {
   const [allExpenseList, setAllExpense] = useState([]);
+  const [rejectedExpenseList, setAllRejectedExpense]= useState([]);
   const [editReportData, setEditReportData] = useState(null);
-  const [isEditFormVisible, setIsEditFormVisible] = useState(false);
   const [deleteItemData, setDeleteExpenseData] = useState(null);
   const [selectedReceiptUrl, setSelectedReceiptUrl] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const url = URLS.GET_EXPENSE_LIST_URL;
   const fetchurl = URLS.FETCH_REPORT_URL;
-  const [selectedOption, setSelectedOption] = useState("allReports");
+  const rejectedUrl = URLS.GET_REJECTED_EXPENSE_URL;
   const dispatch = useDispatch();
-
-  const location = useLocation();
+  const [selectedOption, setSelectedOption] = useState("allReports");
+  const filteredExpenseList = useMemo(() => {
+    if (selectedOption === "allReports") {
+      return allExpenseList;
+    } 
+     else {
+      return rejectedExpenseList;
+    }
+  }, [selectedOption, allExpenseList, rejectedExpenseList]);
 
   const { setRecord, record, setIsEditForm, isEditForm } = useContext(
     ExpenseUpdatingContext
@@ -154,6 +162,15 @@ const ExpensePanel = () => {
     fetchexpensepanel(url);
   }, []);
 
+
+  function fetchrejectedexpense(rejectedUrl) {
+    dispatch(getRejectedExpenseAction({ payload: {}, URL: rejectedUrl }));
+  }
+
+  useEffect(() => {
+    fetchrejectedexpense(rejectedUrl);
+  }, []);
+
   // function fetchPageDetails(fetchurl) {
   //   dispatch(fetchReport({ payload: {}, URL: fetchurl }));
   // }
@@ -178,6 +195,15 @@ const ExpensePanel = () => {
       dispatch(fetchReport({ payload: {}, URL: fetchurl }));
     }
   }, [addreportresultSelector]);
+
+  const rejectedExpenseSelector =useSelector((state)=> state.getrejectedexpenselist);
+
+  useEffect(()=>{
+    if(rejectedExpenseSelector){
+     
+      setAllRejectedExpense(rejectedExpenseSelector);
+    }
+  },[rejectedExpenseSelector]);
 
   const expensePanelSelector = useSelector((state) => state.getexpenselist);
 
@@ -306,6 +332,34 @@ const ExpensePanel = () => {
       ),
     },
   ];
+  // if (selectedOption === "allReports") {
+  //   columns.push({
+  //     title: "Action",
+  //     render: (record) => (
+  //       <div className="dropdown dropdown-action text-end">
+  //        <Link
+  //           className="btn btn-success btn-sm m-r-5"
+  //           to="#"
+  //           onClick={() => onEdit(record)}
+  //         >
+  //           <i className="fa-solid fa-pen-to-square"></i>
+  //         </Link>
+  //         <Link
+  //           className="btn btn-danger btn-sm"
+  //           to="#"
+  //           data-bs-toggle="modal"
+  //           data-bs-target="#delete_expense"
+  //           onClick={() => {
+  //             DeleteExpense(record);
+  //           }}
+  //         >
+  //           <i className="fa-regular fa-trash-can " />
+  //         </Link>
+          
+  //       </div>
+  //     ),
+  //   });
+  // }
 
   return (
     <div className="page-wrapper">
@@ -320,11 +374,13 @@ const ExpensePanel = () => {
                 <li className="breadcrumb-item active">Expense List</li>
               </ul>
             </div>
+            {selectedOption !== "rejected" && (
             <div className="col-auto float-end ms-auto">
               <Link to="/home/addexpense" className="btn add-btn">
                 <i className="fa fa-plus" /> Add Expense
               </Link>
             </div>
+            )}
           </div>
         </div>
         <div className="row filter-row">
@@ -382,10 +438,38 @@ const ExpensePanel = () => {
           <div className="col-md-12">
             <div className="card mb-0">
               <div className="card-header">
-                <h4 className="card-title mb-0">Expense List</h4>
+              <ul className="nav nav-tabs card-header-tabs">
+                  <li className="nav-item">
+                    <a
+                      className={`nav-link ${
+                        selectedOption === "allExpenseList" && "active"
+                      }`}
+                      onClick={() => setSelectedOption("allExpenseList")}
+                    >
+                      All Expense
+                    </a>
+                  </li>
+        
+                  <li className="nav-item">
+                    <a
+                      className={`nav-link ${
+                        selectedOption === "rejected" && "active"
+                      }`}
+                      onClick={() => setSelectedOption("rejected")}
+                    >
+                      Rejected Expense
+                    </a>
+                  </li>
+                </ul>
               </div>
               <div className="card-body">
-                <div className="table-responsive">
+              <div className="tab-content">
+              <div
+                    className={`tab-pane fade ${
+                      selectedOption === "allExpenseList" && "show active"
+                    }`}
+                    id="allExpenseList"
+                  >
                   <Table
                     className="table-striped"
                     pagination={{
@@ -410,7 +494,39 @@ const ExpensePanel = () => {
                     rowKey={(record) => record.id}
                   />
                 </div>
+                <div
+                    className={`tab-pane fade ${
+                      selectedOption === "rejected" && "show active"
+                    }`}
+                    id="rejected"
+                  >
+                    <Table
+                      className="table-striped"
+                      pagination={{
+                        total: rejectedExpenseList.length,
+                        showTotal: (total, range) =>
+                          `Showing ${range[0]} to ${range[1]} of ${total} entries`,
+                        showSizeChanger: true,
+                        onShowSizeChange: (current, pageSize) => {
+                          setTablePagination({
+                            ...tablePagination,
+                            pageSize,
+                            current,
+                          });
+                        },
+                        onChange: (current) => {
+                          setTablePagination({ ...tablePagination, current });
+                        },
+                      }}
+                      style={{ overflowX: "auto" }}
+                      columns={columns}
+                      dataSource={rejectedExpenseList}
+                      rowKey={(record) => record.id}
+                    />
+                  </div>
               </div>
+              </div>
+
             </div>
           </div>
         </div>

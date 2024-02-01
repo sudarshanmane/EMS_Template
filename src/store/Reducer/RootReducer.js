@@ -571,13 +571,13 @@ export const RootReducer = (state = initialState, action) => {
         submitreport: action.result,
       };
 
-      case API_CONSTANTS.SUBMIT_REPORT_SUCCESS_FALSE: {
-        return {
-          ...state,
-          loding: false,
-          submitreport: false,
-        };
-      }
+    case API_CONSTANTS.SUBMIT_REPORT_SUCCESS_FALSE: {
+      return {
+        ...state,
+        loding: false,
+        submitreport: false,
+      };
+    }
 
     case API_CONSTANTS.ADD_REPORT:
       return {
@@ -629,6 +629,19 @@ export const RootReducer = (state = initialState, action) => {
         ...state,
         loding: false,
         getexpenselist: action.result,
+      };
+
+    case API_CONSTANTS.GET_REJECTED_EXPENSE_LIST:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_REJECTED_EXPENSE_LIST_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getrejectedexpenselist: action.result,
       };
 
     case API_CONSTANTS.GET_APPROVED_REPORT_LIST:
