@@ -571,6 +571,14 @@ export const RootReducer = (state = initialState, action) => {
         submitreport: action.result,
       };
 
+      case API_CONSTANTS.SUBMIT_REPORT_SUCCESS_FALSE: {
+        return {
+          ...state,
+          loding: false,
+          submitreport: false,
+        };
+      }
+
     case API_CONSTANTS.ADD_REPORT:
       return {
         ...state,
@@ -966,19 +974,6 @@ export const RootReducer = (state = initialState, action) => {
         ...state,
         loding: false,
         fetchCategorySuccess: action.result,
-      };
-
-    case API_CONSTANTS.FETCH_REPORT:
-      return {
-        ...state,
-        loding: true,
-      };
-
-    case API_CONSTANTS.FETCH_REPORT_SUCCESS:
-      return {
-        ...state,
-        loding: false,
-        fetchReportSuccess: action.result,
       };
 
     case API_CONSTANTS.FETCH_REPORT:

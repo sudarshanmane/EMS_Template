@@ -58,7 +58,6 @@ const ViewReportManager = () => {
   //   }
   // }, [ApproveReportSelector]);
 
-
   const onRejectReport = (values) => {
     dispatch(rejectReport({ id: id, payload: values }));
   };
@@ -77,9 +76,8 @@ const ViewReportManager = () => {
   //   }
   // }, [RejectReportSelector]);
 
-
-  const onApproveExpense = () => {
-    dispatch(approveExpense({ id: id }));
+  const onApproveExpense = (record) => {
+    dispatch(approveExpense({ id: record.id }));
   };
 
   // const ApproveExpenseSelector = useSelector((state) => state.approveExpenseSuccess);
@@ -90,9 +88,8 @@ const ViewReportManager = () => {
   //   }
   // }, [ApproveExpenseSelector]);
 
-  
   const onRejectExpense = (values) => {
-    dispatch(rejectExpense({ id: id, payload: values }));
+    dispatch(rejectExpense({ id: rejectExpenseData.id, payload: values }));
   };
 
   const RejectExpense = (record) => {
@@ -173,12 +170,14 @@ const ViewReportManager = () => {
       title: "Action",
       render: (record) => (
         <div className="dropdown dropdown-action text-end">
-          <button  className="btn btn-success btn-sm m-r-5" 
-          onClick={() => onApproveExpense()}>
+          <button
+            className="btn btn-success btn-sm m-r-5"
+            onClick={() => onApproveExpense(record)}
+          >
             <i className="fa fa-check m-r-5" />
           </button>
           <Link
-             className="btn btn-danger btn-sm"
+            className="btn btn-danger btn-sm"
             to="#"
             data-bs-toggle="modal"
             data-bs-target="#rejectExpense"

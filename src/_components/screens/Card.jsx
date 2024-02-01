@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { applyCard, getCard } from "../../store/Action/Actions";
 import { useForm } from "react-hook-form";
 import { URLS } from "../../Globals/URLS";
+import { message } from "antd";
 
 function Card() {
   const [url, setUrl] = useState(URLS.APPLY_CARD_URL);
@@ -37,14 +38,16 @@ function Card() {
       }
     }
     dispatch(applyCard(formData));
+    message.success(applyCardSelector?.Status)
   };
 
   const applyCardSelector = useSelector((state) => state.applyCardresult);
 
   useEffect(() => {
     if (applyCardSelector) {
-      alert(applyCardSelector?.Status);
-      dispatch(getCard({ payload: {}, URL: url }));
+      // alert(applyCardSelector?.Status);
+      message.success(applyCardSelector?.Status)
+      // dispatch(getCard({ payload: {}, URL: url }));
       reset();
     }
     setIsAddFormVisible(false);

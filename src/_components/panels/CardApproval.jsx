@@ -13,7 +13,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import { rejectCard, approveCard } from "../../store/Action/Actions";
 import { useForm } from "react-hook-form";
 
-
 const CardApproval = () => {
   const [allCards, setAllCards] = useState([]);
 
@@ -31,15 +30,13 @@ const CardApproval = () => {
     current: 1,
   });
 
-  
   const {
-    register : rejectregister,
+    register: rejectregister,
     handleSubmit: handleReject,
     setValue,
     formState: { errors },
   } = useForm({});
 
- 
   const onApprove = () => {
     dispatch(approveCard({ id: approveCardData.id }));
   };
@@ -69,7 +66,6 @@ const CardApproval = () => {
       alert(RejectSelector?.Status);
     }
   }, [RejectSelector]);
-  
 
   const handleDateChange1 = (date) => {
     setSelectedDate1(date);
@@ -170,29 +166,27 @@ const CardApproval = () => {
       title: "Action",
       render: (record) => (
         <div className="dropdown dropdown-action text-end">
-        
-            <Link
-              className="btn btn-success btn-sm m-r-5"
-              to="#"
-              data-bs-toggle="modal"
-              data-bs-target="#approve-card"
-              onClick={() => onApprove(record)}
-            >
-              <i className="fa fa-check m-r-5" />
-            </Link>
-            <Link
-                className="btn btn-danger btn-sm"
-              to="#"
-              data-bs-toggle="modal"
-              data-bs-target="#reject-card"
-              onClick={() => {
-               Reject(record);
-              }}
-            >
-              <i className="fa fa-times m-r-5" />
-            </Link>
-          </div>
-       
+          <Link
+            className="btn btn-success btn-sm m-r-5"
+            to="#"
+            data-bs-toggle="modal"
+            data-bs-target="#approve-card"
+            onClick={() => onApprove(record)}
+          >
+            <i className="fa fa-check m-r-5" />
+          </Link>
+          <Link
+            className="btn btn-danger btn-sm"
+            to="#"
+            data-bs-toggle="modal"
+            data-bs-target="#reject-card"
+            onClick={() => {
+              Reject(record);
+            }}
+          >
+            <i className="fa fa-times m-r-5" />
+          </Link>
+        </div>
       ),
     },
   ];
@@ -256,7 +250,8 @@ const CardApproval = () => {
                 <div className="card-body">
                   <div className="table-responsive">
                     <Table
-                      dataSource={allCards}
+                      className="table-striped"
+                     
                       pagination={{
                         total: allCards.length,
                         showTotal: (total, range) =>
@@ -276,6 +271,7 @@ const CardApproval = () => {
                       }}
                       style={{ overflowX: "auto" }}
                       columns={columns}
+                      dataSource={allCards}
                       bordered
                       rowKey={(record) => record.id}
                     />

@@ -4428,6 +4428,10 @@ td.ant-table-cell a {
   color: #fff;
 }
 
+td.ant-table-cell a {
+  color: #fff;
+}
+
 .ant-table-cell p {
   white-space: nowrap !important;
 }

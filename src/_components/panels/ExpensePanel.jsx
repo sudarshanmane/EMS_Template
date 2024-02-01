@@ -87,6 +87,16 @@ const ExpensePanel = () => {
     );
   };
 
+  const addSelectedReportSelector = useSelector(
+    (state) => state.addSelectedReportSuccess
+  );
+
+  useEffect(() => {
+    if (addSelectedReportSelector) {
+      dispatch(getExpenseList({ payload: {}, URL: url }));
+    }
+  }, [addSelectedReportSelector]);
+
   const onAddReport = (data) => {
     dispatch(addReport(data));
     reset();
@@ -123,7 +133,6 @@ const ExpensePanel = () => {
       dispatch(getExpenseList({ payload: {}, URL: url }));
     }
   }, [expenseDeletedResultSelector]);
-
 
   const onAttach = (data) => {
     setEditReportData(data);
