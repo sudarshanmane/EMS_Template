@@ -16,6 +16,7 @@ import {
   getApprovedAction,
   getReimbursedAction,
   getRejectedAction,
+  setsubmitReportAction,
 } from "../../store/Action/Actions";
 import { URLS } from "../../Globals/URLS";
 import Offcanvas from "../../Entryfile/offcanvance";
@@ -80,7 +81,6 @@ const AllReports = () => {
 
   const onSubmit = (values) => {
     dispatch(addReport(values));
-    // message.success(addreportPanelSelector?.Status);
   };
 
   const viewReport = (record) => {
@@ -99,7 +99,6 @@ const AllReports = () => {
 
   const onUpdate = (values) => {
     dispatch(updateReportAction({ id: editReportData.id, payload: values }));
-    // message.success(updatereportPanelSelector?.Status);
     setIsEditFormVisible(false);
   };
 
@@ -238,7 +237,6 @@ const AllReports = () => {
   useEffect(() => {
     if (addreportPanelSelector) {
       dispatch(getReportList({ payload: {}, URL: url }));
-      // message.success(addreportPanelSelector.Status);
       reset();
     }
     setIsAddFormVisible(false);
@@ -251,7 +249,6 @@ const AllReports = () => {
   useEffect(() => {
     if (updatereportPanelSelector) {
       dispatch(getReportList({ payload: {}, URL: url }));
-      // message.success(updatereportPanelSelector.Status);
     }
     setIsAddFormVisible(false);
   }, [updatereportPanelSelector]);
@@ -263,20 +260,19 @@ const AllReports = () => {
   useEffect(() => {
     if (deleteReportlSelector) {
       dispatch(getReportList({ payload: {}, URL: url }));
-      // message.success("Report deleted successfully");
     }
   }, [deleteReportlSelector]);
 
   const submitReport = (record) => {
     dispatch(submitReportAction({ id: record?.id }));
-    // alert(SubmitReportSelector?.Status)
-    message.success(SubmitReportSelector?.Status);
   };
 
   const SubmitReportSelector = useSelector((state) => state.submitreport);
 
   useEffect(() => {
     if (SubmitReportSelector) {
+      message.success(SubmitReportSelector?.Status);
+      dispatch(setsubmitReportAction());
       dispatch(getReportList({ payload: {}, URL: url }));
     }
   }, [SubmitReportSelector]);

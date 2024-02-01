@@ -268,6 +268,12 @@ function submitReportAction(payload) {
   };
 }
 
+function setsubmitReportAction() {
+  return {
+    type: API_CONSTANTS.SUBMIT_REPORT_SUCCESS_FALSE,
+  };
+}
+
 function addSelectedReport(payload) {
   return {
     type: API_CONSTANTS.ADD_SELECTED_REPORT,
@@ -1803,6 +1809,7 @@ export {
   getReportList,
   getApprovedReportList,
   addExpenseItemSetup,
+  setsubmitReportAction,
 
   // ===========================================================
   // getAccountingCodeAction,
