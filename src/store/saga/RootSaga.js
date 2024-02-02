@@ -200,7 +200,10 @@ export function* RootSaga() {
     API_CONSTANTS.REJECT_REPORT_BY_ACCOUNT,
     rejectReportByAccount
   );
-yield takeEvery(API_CONSTANTS.GET_REJECTED_EXPENSE_LIST, getRejectedExpenseList)
+  yield takeEvery(
+    API_CONSTANTS.GET_REJECTED_EXPENSE_LIST,
+    getRejectedExpenseList
+  );
   yield takeEvery(API_CONSTANTS.ADD_CATEGORY, getAddCategoryList);
   yield takeEvery(API_CONSTANTS.GET_CATEGORYLIST_PANEL, categoryPanelList);
   yield takeEvery(API_CONSTANTS.UPDATE_CATEGORY_PANEL, updateCategoryPanel);
@@ -241,11 +244,23 @@ yield takeEvery(API_CONSTANTS.GET_REJECTED_EXPENSE_LIST, getRejectedExpenseList)
   yield takeEvery(API_CONSTANTS.UPDATE_TRAVEL, updateTravel);
   yield takeEvery(API_CONSTANTS.SUBMIT_TRAVEL_REQUEST, submitTravelRequest);
 
-  yield takeEvery(API_CONSTANTS.GET_TRAVEL_REQUEST_APPROVALS, getTravelApproval);
-  yield takeEvery(API_CONSTANTS.REJECT_TRAVEL_REQUEST_APPROVALS,  rejectTravelApprovals);
-  yield takeEvery(API_CONSTANTS.APPROVE_TRAVEL_REQUEST_APPROVALS,  approveTravelApprovals);
-  yield takeEvery(API_CONSTANTS.GET_APPROVE_TRAVEL_REQUEST_APPROVALS,  getApprove);
-  yield takeEvery(API_CONSTANTS.GET_REJECT_TRAVEL_REQUEST_APPROVALS,  getReject);
+  yield takeEvery(
+    API_CONSTANTS.GET_TRAVEL_REQUEST_APPROVALS,
+    getTravelApproval
+  );
+  yield takeEvery(
+    API_CONSTANTS.REJECT_TRAVEL_REQUEST_APPROVALS,
+    rejectTravelApprovals
+  );
+  yield takeEvery(
+    API_CONSTANTS.APPROVE_TRAVEL_REQUEST_APPROVALS,
+    approveTravelApprovals
+  );
+  yield takeEvery(
+    API_CONSTANTS.GET_APPROVE_TRAVEL_REQUEST_APPROVALS,
+    getApprove
+  );
+  yield takeEvery(API_CONSTANTS.GET_REJECT_TRAVEL_REQUEST_APPROVALS, getReject);
 
   yield takeEvery(API_CONSTANTS.GET_ALL_USER, getAllUser);
   yield takeEvery(API_CONSTANTS.ADD_ALL_USER, addAllUser);
@@ -259,11 +274,4 @@ yield takeEvery(API_CONSTANTS.GET_REJECTED_EXPENSE_LIST, getRejectedExpenseList)
   yield takeEvery(API_CONSTANTS.POST_MILEAGE_DETAILS, postCommonGenerator);
   yield takeEvery(API_CONSTANTS.DELETE_EXPENSE, commonDeleteRole);
   yield takeEvery(API_CONSTANTS.UPDATE_EXPENSE, putCommonGenerator);
-
-  // ============================================================
-
-  // yield takeEvery(API_CONSTANTS.EXPORT_COMPANY_PANEL, exportCompanypanel);
-
-
- 
 }
