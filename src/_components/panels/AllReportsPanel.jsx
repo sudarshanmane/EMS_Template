@@ -280,7 +280,7 @@ const AllReports = () => {
   const columns = [
     {
       title: "Report No",
-      dataIndex: "report_number",L
+      dataIndex: "report_number",
     },
     {
       title: "Description",
