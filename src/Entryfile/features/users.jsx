@@ -12,6 +12,7 @@ const initialState = {
   patchRolePermissionResult: false,
   createNewPermissionRoleResult: false,
   paramRole: null,
+  
 };
 
 export const userSlice = createSlice({
@@ -75,8 +76,8 @@ export const getLoginData = (loginData) => async (dispatch) => {
       url: `/users/api/v2/login_web/`,
       data: bodyData,
     });
-    if(res.data){
-      localStorage.setItem('user_id', (res?.data?.user_id).toString());
+    if (res.data) {
+      localStorage.setItem("user_id", (res?.data?.user_id).toString());
       dispatch(login(res.data));
     } else {
       console.log("In Login error", error);

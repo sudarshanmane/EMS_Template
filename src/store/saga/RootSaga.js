@@ -107,6 +107,7 @@ import {
   // exportCompanypanel,
   getApprove,
   getReject,
+  getRejectedExpenseList,
   // =======================================
 } from "./CommonSagas";
 
@@ -199,7 +200,7 @@ export function* RootSaga() {
     API_CONSTANTS.REJECT_REPORT_BY_ACCOUNT,
     rejectReportByAccount
   );
-
+yield takeEvery(API_CONSTANTS.GET_REJECTED_EXPENSE_LIST, getRejectedExpenseList)
   yield takeEvery(API_CONSTANTS.ADD_CATEGORY, getAddCategoryList);
   yield takeEvery(API_CONSTANTS.GET_CATEGORYLIST_PANEL, categoryPanelList);
   yield takeEvery(API_CONSTANTS.UPDATE_CATEGORY_PANEL, updateCategoryPanel);

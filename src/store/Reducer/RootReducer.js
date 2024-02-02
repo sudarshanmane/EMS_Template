@@ -8,6 +8,8 @@ const initialState = {
   email: "",
   mobile: "",
   changePasswordError: null,
+  expenseDeletedResult: null,
+  deletecategoryResult:null,
 };
 
 export const RootReducer = (state = initialState, action) => {
@@ -571,13 +573,13 @@ export const RootReducer = (state = initialState, action) => {
         submitreport: action.result,
       };
 
-      case API_CONSTANTS.SUBMIT_REPORT_SUCCESS_FALSE: {
-        return {
-          ...state,
-          loding: false,
-          submitreport: false,
-        };
-      }
+    case API_CONSTANTS.SUBMIT_REPORT_SUCCESS_FALSE: {
+      return {
+        ...state,
+        loding: false,
+        submitreport: false,
+      };
+    }
 
     case API_CONSTANTS.ADD_REPORT:
       return {
@@ -629,6 +631,19 @@ export const RootReducer = (state = initialState, action) => {
         ...state,
         loding: false,
         getexpenselist: action.result,
+      };
+
+    case API_CONSTANTS.GET_REJECTED_EXPENSE_LIST:
+      return {
+        ...state,
+        loding: true,
+      };
+
+    case API_CONSTANTS.GET_REJECTED_EXPENSE_LIST_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        getrejectedexpenselist: action.result,
       };
 
     case API_CONSTANTS.GET_APPROVED_REPORT_LIST:
@@ -870,6 +885,12 @@ export const RootReducer = (state = initialState, action) => {
         ...state,
         loding: false,
         deletecategoryResult: action.result,
+      };
+
+      case 'RESET_DELETED_RESULT_SELECTOR':
+      return {
+        ...state,
+        deletecategoryResult: null,
       };
 
     case API_CONSTANTS.CREATE_CATEGORY_ITEM:
@@ -1419,6 +1440,12 @@ export const RootReducer = (state = initialState, action) => {
         expenseDeletedResult: action.result,
       };
     }
+
+    case 'RESET_DELETED_RESULT_SELECTOR':
+      return {
+        ...state,
+        expenseDeletedResult: null,
+      };
 
     case API_CONSTANTS.UPDATE_EXPENSE: {
       return {

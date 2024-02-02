@@ -368,7 +368,7 @@ const TravelRequest = () => {
                   data-bs-toggle="modal"
                   data-bs-target="#add_travel"
                 >
-                  <i className="fa fa-plus" /> New Request
+                  <i className="fa fa-plus" /> Add Request
                 </Link>
               </div>
             )}

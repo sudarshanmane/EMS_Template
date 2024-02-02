@@ -62,6 +62,7 @@ const VendorPannel = () => {
     handleSubmit: handleSubmitRecord,
     setValue: setValueRecord,
     formState: { errors },
+    reset:recordPaymentReset,
   } = useForm({ resolver: yupResolver(validationSchema) });
 
   const { handleSubmit: handleDelete } = useForm({});
@@ -112,10 +113,6 @@ const VendorPannel = () => {
     );
   };
 
-  const createVendorPaymentSelector = useSelector(
-    (state) => state.createVendorPayment
-  );
-
   const onRecord = (record) => {
     if (record && record.id) {
       setRecordPaymentData(record);
@@ -139,7 +136,12 @@ const VendorPannel = () => {
     dispatch(createVendorPaymentAction(formData));
     setIsAddFormVisible(false);
     document.querySelector("#close_modall_popup_form").click();
+    recordPaymentReset();
   };
+
+  const createVendorPaymentSelector = useSelector(
+    (state) => state.createVendorPayment
+  );
 
   const viewVendor = (record) => {
     setViewVendorData(record);
@@ -178,13 +180,11 @@ const VendorPannel = () => {
   const createVendorSelector = useSelector(
     (state) => state.createVendorSuccess
   );
-
   useEffect(() => {
     if (createVendorSelector && submittedValues) {
       dispatch(createVendor(submittedValues));
       reset();
     }
-    setIsAddFormVisible(false);
   }, [createVendorSelector]);
 
   const deleteVendorSelector = useSelector(
