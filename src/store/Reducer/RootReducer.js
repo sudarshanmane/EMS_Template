@@ -8,6 +8,8 @@ const initialState = {
   email: "",
   mobile: "",
   changePasswordError: null,
+  expenseDeletedResult: null,
+  deletecategoryResult:null,
 };
 
 export const RootReducer = (state = initialState, action) => {
@@ -885,6 +887,12 @@ export const RootReducer = (state = initialState, action) => {
         deletecategoryResult: action.result,
       };
 
+      case 'RESET_DELETED_RESULT_SELECTOR':
+      return {
+        ...state,
+        deletecategoryResult: null,
+      };
+
     case API_CONSTANTS.CREATE_CATEGORY_ITEM:
       return {
         ...state,
@@ -1432,6 +1440,12 @@ export const RootReducer = (state = initialState, action) => {
         expenseDeletedResult: action.result,
       };
     }
+
+    case 'RESET_DELETED_RESULT_SELECTOR':
+      return {
+        ...state,
+        expenseDeletedResult: null,
+      };
 
     case API_CONSTANTS.UPDATE_EXPENSE: {
       return {

@@ -19,17 +19,22 @@ import { format } from "date-fns";
 import { ExpenseUpdatingContext } from "../screens/ContextForUpdatingRecord";
 
 const ExpensePanel = () => {
+  const url = URLS.GET_EXPENSE_LIST_URL;
+  const fetchurl = URLS.FETCH_REPORT_URL;
+  const rejectedUrl = URLS.GET_REJECTED_EXPENSE_URL;
+
+  const dispatch = useDispatch();
   const [allExpenseList, setAllExpense] = useState([]);
   const [rejectedExpenseList, setAllRejectedExpense]= useState([]);
   const [editReportData, setEditReportData] = useState(null);
   const [deleteItemData, setDeleteExpenseData] = useState(null);
   const [selectedReceiptUrl, setSelectedReceiptUrl] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
-  const url = URLS.GET_EXPENSE_LIST_URL;
-  const fetchurl = URLS.FETCH_REPORT_URL;
-  const rejectedUrl = URLS.GET_REJECTED_EXPENSE_URL;
-  const dispatch = useDispatch();
   const [selectedOption, setSelectedOption] = useState("allReports");
+  const [focused, setFocused] = useState(false);
+  const [selectedDate1, setSelectedDate1] = useState(null);
+  const [selectedDate2, setSelectedDate2] = useState(null);
+
   const filteredExpenseList = useMemo(() => {
     if (selectedOption === "allReports") {
       return allExpenseList;
@@ -65,10 +70,6 @@ const ExpensePanel = () => {
 
   const { handleSubmit: handleDelete } = useForm({});
 
-  const [focused, setFocused] = useState(false);
-  const [selectedDate1, setSelectedDate1] = useState(null);
-  const [selectedDate2, setSelectedDate2] = useState(null);
-
   const formatDate = (date) => {
     return format(date, "yyyy-MM-dd");
   };
@@ -94,16 +95,6 @@ const ExpensePanel = () => {
       })
     );
   };
-
-  const addSelectedReportSelector = useSelector(
-    (state) => state.addSelectedReportSuccess
-  );
-
-  useEffect(() => {
-    if (addSelectedReportSelector) {
-      dispatch(getExpenseList({ payload: {}, URL: url }));
-    }
-  }, [addSelectedReportSelector]);
 
   const onAddReport = (data) => {
     dispatch(addReport(data));
@@ -139,6 +130,9 @@ const ExpensePanel = () => {
   useEffect(() => {
     if (expenseDeletedResultSelector) {
       dispatch(getExpenseList({ payload: {}, URL: url }));
+      dispatch(getRejectedExpenseAction({payload:{}, URL:rejectedUrl}))
+      // setDeleteExpenseData(null);
+      dispatch({ type: 'RESET_DELETED_RESULT_SELECTOR' });
     }
   }, [expenseDeletedResultSelector]);
 
@@ -196,11 +190,34 @@ const ExpensePanel = () => {
     }
   }, [addreportresultSelector]);
 
+
+  const addSelectedReportSelector = useSelector(
+    (state) => state.addSelectedReportSuccess
+  );
+
+  useEffect(() => {
+    if (addSelectedReportSelector) {
+      dispatch(getExpenseList({ payload: {}, URL: url }));
+    }
+  }, [addSelectedReportSelector]);
+  ``
   const rejectedExpenseSelector =useSelector((state)=> state.getrejectedexpenselist);
 
   useEffect(()=>{
     if(rejectedExpenseSelector){
-     
+      //  const rejectedExpenseList = rejectedExpenseSelector.map((element) => {
+      //   return {
+      //     id: element?.id,
+      //     desc: element?.desc,
+      //     amount: element.amount,
+      //     paid_by: element.paid_by,
+      //     expense_date: element.expense_date,
+      //     attachment: element.expense_bill,
+      //     approved_amt: element.approved_amt,
+      //     submit: element.submit,
+      //     approved_by: element.approved_by,
+      //   };
+      // });
       setAllRejectedExpense(rejectedExpenseSelector);
     }
   },[rejectedExpenseSelector]);
@@ -226,15 +243,15 @@ const ExpensePanel = () => {
     }
   }, [expensePanelSelector]);
 
-  const updateExpensepanelResultSelector = useSelector(
-    (state) => state.updateexpenseResult
-  );
+  // const updateExpensepanelResultSelector = useSelector(
+  //   (state) => state.updateexpenseResult
+  // );
 
-  useEffect(() => {
-    if (updateExpensepanelResultSelector) {
-      dispatch(getExpenseList({ payload: {}, URL: url }));
-    }
-  }, [updateExpensepanelResultSelector]);
+  // useEffect(() => {
+  //   if (updateExpensepanelResultSelector) {
+  //     dispatch(getExpenseList({ payload: {}, URL: url }));
+  //   }
+  // }, [updateExpensepanelResultSelector]);
 
   const columns = [
     {
@@ -332,34 +349,6 @@ const ExpensePanel = () => {
       ),
     },
   ];
-  // if (selectedOption === "allReports") {
-  //   columns.push({
-  //     title: "Action",
-  //     render: (record) => (
-  //       <div className="dropdown dropdown-action text-end">
-  //        <Link
-  //           className="btn btn-success btn-sm m-r-5"
-  //           to="#"
-  //           onClick={() => onEdit(record)}
-  //         >
-  //           <i className="fa-solid fa-pen-to-square"></i>
-  //         </Link>
-  //         <Link
-  //           className="btn btn-danger btn-sm"
-  //           to="#"
-  //           data-bs-toggle="modal"
-  //           data-bs-target="#delete_expense"
-  //           onClick={() => {
-  //             DeleteExpense(record);
-  //           }}
-  //         >
-  //           <i className="fa-regular fa-trash-can " />
-  //         </Link>
-          
-  //       </div>
-  //     ),
-  //   });
-  // }
 
   return (
     <div className="page-wrapper">
@@ -384,6 +373,8 @@ const ExpensePanel = () => {
           </div>
         </div>
         <div className="row filter-row">
+        {/* <div className="col-sm-6 col-md-3 col-lg-3 col-xl-4 col-12">
+          </div> */}
           <div className="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
             <div
               className={
@@ -442,9 +433,9 @@ const ExpensePanel = () => {
                   <li className="nav-item">
                     <a
                       className={`nav-link ${
-                        selectedOption === "allExpenseList" && "active"
+                        selectedOption === "allReports" && "active"
                       }`}
-                      onClick={() => setSelectedOption("allExpenseList")}
+                      onClick={() => setSelectedOption("allReports")}
                     >
                       All Expense
                     </a>
@@ -466,9 +457,9 @@ const ExpensePanel = () => {
               <div className="tab-content">
               <div
                     className={`tab-pane fade ${
-                      selectedOption === "allExpenseList" && "show active"
+                      selectedOption === "allReports" && "show active"
                     }`}
-                    id="allExpenseList"
+                    id="allReports"
                   >
                   <Table
                     className="table-striped"

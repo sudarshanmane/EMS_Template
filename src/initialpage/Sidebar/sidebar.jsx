@@ -180,6 +180,57 @@ const Sidebar = () => {
                   ""
                 )}
               </li>
+              <li className="submenu">
+                <Link
+                  to="#"
+                  className={isSideMenu == "reports" ? "subdrop" : ""}
+                  onClick={() =>
+                    toggleSidebar(isSideMenu == "reports" ? "" : "reports")
+                  }
+                >
+                  <i className="la la-file-text" />{" "}
+                  <span>Expense Reports </span> <span className="menu-arrow" />
+                </Link>
+                {isSideMenu == "reports" ? (
+                  <ul>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("expense-") ? "active" : ""
+                        }
+                        to="/home/AllReports"
+                      >
+                        {" "}
+                        All Reports{" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("expense-") ? "active" : ""
+                        }
+                        to="/home/Reports"
+                      >
+                        {" "}
+                        Approve Manager{" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className={
+                          pathname.includes("expense-") ? "active" : ""
+                        }
+                        to="/home/ExpenseApprovals"
+                      >
+                        {" "}
+                        Expense Approvals{" "}
+                      </Link>
+                    </li>
+                  </ul>
+                ) : (
+                  ""
+                )}
+              </li>
 
               <li className="submenu">
                 <Link
@@ -223,13 +274,18 @@ const Sidebar = () => {
               <li className="submenu">
                 <Link
                   to="#"
-                  className={isSideMenu == "travelRequestPannel" ? "subdrop" : ""}
+                  className={
+                    isSideMenu == "travelRequestPannel" ? "subdrop" : ""
+                  }
                   onClick={() =>
-                    toggleSidebar(isSideMenu == "travelRequestPannel" ? "" : "travelRequestPannel")
+                    toggleSidebar(
+                      isSideMenu == "travelRequestPannel"
+                        ? ""
+                        : "travelRequestPannel"
+                    )
                   }
                 >
-                <i className='fas fa-taxi'></i>
-
+                  <i className="fas fa-taxi"></i>
                   <span>Travels Request</span> <span className="menu-arrow" />
                 </Link>
                 {isSideMenu == "travelRequestPannel" ? (
@@ -237,7 +293,9 @@ const Sidebar = () => {
                     <li>
                       <Link
                         className={
-                          pathname.includes("travelRequest-request") ? "active" : ""
+                          pathname.includes("travelRequest-request")
+                            ? "active"
+                            : ""
                         }
                         to="/home/travelRequest"
                       >
@@ -247,11 +305,13 @@ const Sidebar = () => {
                     <li>
                       <Link
                         className={
-                          pathname.includes("travelRequest-approval") ? "active" : ""
+                          pathname.includes("travelRequest-approval")
+                            ? "active"
+                            : ""
                         }
                         to="/home/requestApprovals"
                       >
-                       Request Approvals{" "}
+                        Request Approvals{" "}
                       </Link>
                     </li>
                   </ul>
@@ -259,60 +319,6 @@ const Sidebar = () => {
                   ""
                 )}
               </li>
-
-              <li className="submenu">
-                <Link
-                  to="#"
-                  className={isSideMenu == "reports" ? "subdrop" : ""}
-                  onClick={() =>
-                    toggleSidebar(isSideMenu == "reports" ? "" : "reports")
-                  }
-                >
-                  <i className="la la-file-text" />{" "}
-                  <span>Expense Reports </span> <span className="menu-arrow" />
-                </Link>
-                {isSideMenu == "reports" ? (
-                  <ul>
-                     <li>
-                      <Link
-                        className={
-                          pathname.includes("expense-") ? "active" : ""
-                        }
-                        to="/home/AllReports"
-                      >
-                        {" "}
-                        All Reports{" "}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className={
-                          pathname.includes("expense-") ? "active" : ""
-                        }
-                        to="/home/Reports"
-                      >
-                        {" "}
-                        Approve Manager{" "}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className={
-                          pathname.includes("expense-") ? "active" : ""
-                        }
-                        to="/home/ExpenseApprovals"
-                      >
-                        {" "}
-                        Expense Approvals{" "}
-                      </Link>
-                    </li>
-                  </ul>
-                ) : (
-                  ""
-                )}
-              </li>
-
-              
 
               <li className="submenu">
                 <Link

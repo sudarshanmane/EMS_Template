@@ -171,6 +171,7 @@ const CategoryTypePanel = () => {
   useEffect(() => {
     if (deleteCategorylSelector) {
       dispatch(getCategoryPanelAction({ payload: {}, URL: url }));
+      dispatch({ type: 'RESET_DELETED_RESULT_SELECTOR' });
     }
   }, [deleteCategorylSelector]);
 
